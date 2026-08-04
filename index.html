@@ -1207,19 +1207,30 @@
       /* ── Slot-Card: ausgeblendet im Landscape — Bottom Bar übernimmt ── */
       .hero .slot-card { display: none !important; }
 
-      /* ── Floating Bottom Bar (Landscape, kompakter) ── */
+      /* ── Floating Bottom Bar (Landscape, fixed positioniert) ── */
       .mobile-bottom-bar {
         display: flex !important;
+        position: fixed !important;
         bottom: 8px !important;
-        left: 16px !important;
-        right: 16px !important;
-        padding: 4px 4px !important;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.14) !important;
+        left: 12px !important;
+        right: 12px !important;
+        z-index: 9999 !important;
+        background: rgba(255,255,255,0.96) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        border: 1px solid rgba(110,145,98,0.25) !important;
+        border-radius: 50px !important;
+        padding: 4px !important;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.15) !important;
+        gap: 0 !important;
+        align-items: center !important;
+        transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease !important;
       }
-      .mobile-bottom-bar .bar-loc-btn { padding: 6px 10px; gap: 7px; }
-      .mobile-bottom-bar .bar-city { font-size: 0.95rem; }
-      .mobile-bottom-bar .bar-hint { font-size: 0.75rem; }
+      .mobile-bottom-bar .bar-loc-btn { padding: 6px 10px !important; gap: 7px !important; }
+      .mobile-bottom-bar .bar-city { font-size: 0.9rem !important; font-weight: 700 !important; }
+      .mobile-bottom-bar .bar-hint { font-size: 0.72rem !important; }
       .mobile-bottom-bar .bar-divider { height: 22px; }
+      .mobile-bottom-bar.bar-hidden { transform: translateY(140%) !important; opacity: 0 !important; pointer-events: none !important; }
 
       /* ── Sections ── */
       .compass-options {
@@ -1250,7 +1261,8 @@
       .download-center-v2 { padding: 16px 14px; border-radius: 12px; }
       .download-v2-head { flex-direction: column; align-items: flex-start; gap: 4px; margin-bottom: 12px; }
       .download-v2-head h3 { font-size: 1.15rem; }
-      .download-v2-grid { grid-template-columns: 1fr 1fr; }
+      .download-v2-grid { grid-template-columns: 1fr !important; }
+      .download-paper-card { padding: 11px 14px !important; min-height: 0 !important; }
       .loc-beide-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
       .team-grid { grid-template-columns: 1fr; gap: 14px; }
       .team-grid > div:first-child h2 { font-size: 1.5rem !important; }
@@ -1275,8 +1287,35 @@
       /* ── hero-text-col volle Breite ── */
       .hero-text-col { max-width: 100% !important; }
 
-      /* ── Footer: Platz für floating Bottom Bar ── */
-      footer { padding-bottom: 60px !important; }
+      /* ── Footer: Landscape — minimal (nur Name + Links) ── */
+      footer {
+        padding: 14px 14px 70px !important;
+        background: #192017 !important;
+        text-align: center !important;
+      }
+      footer .container > *:not(.footer-links-mob) { display: none !important; }
+      footer .container { display: flex !important; flex-direction: column !important; align-items: center !important; gap: 8px !important; }
+      footer .container::before {
+        content: 'Dr. med. Christian Müller';
+        display: block;
+        font-family: var(--font-serif);
+        font-size: 0.85rem;
+        color: rgba(255,255,255,0.6);
+      }
+      .footer-links-mob {
+        display: flex !important;
+        gap: 24px !important;
+        justify-content: center !important;
+        padding-bottom: max(60px, calc(50px + env(safe-area-inset-bottom))) !important;
+      }
+      .footer-links-mob a {
+        font-size: 0.78rem !important;
+        color: rgba(255,255,255,0.45) !important;
+        text-decoration: none !important;
+      }
+
+      /* ── Swipe-Hint ausblenden ── */
+      .swipe-hint { display: none !important; }
     }
 
     /* ==========================================================================
@@ -1514,40 +1553,52 @@
     <div class="container">
       <p class="leistungs-label-mob">Unsere Leistungen</p>
       <div class="chips-row leistungs-chips-desktop" style="display:flex; gap:14px; flex-wrap:wrap; align-items:stretch;">
-        <a href="#leistungen" onclick="document.querySelector('.service-item:nth-child(1)').classList.add('active')"
+        <a href="#leistungen" onclick="openLeistung(0); return false;"
            style="flex:1 1 200px; display:flex; align-items:flex-start; gap:12px; padding:16px 18px;
                   background:var(--bg); border:1px solid rgba(110,145,98,0.14); border-radius:12px;
                   text-decoration:none; transition:all .2s; cursor:pointer;"
-           onmouseover="this.style.borderColor='var(--olive-haupt)';this.style.background='var(--olive-soft)'"
-           onmouseout="this.style.borderColor='rgba(110,145,98,0.14)';this.style.background='var(--bg)'">
+           onmouseover="this.style.borderColor='var(--olive-haupt)';this.style.background='var(--olive-soft)';this.querySelector('.chip-arrow').style.opacity='1';this.querySelector('.chip-arrow').style.gap='8px'"
+           onmouseout="this.style.borderColor='rgba(110,145,98,0.14)';this.style.background='var(--bg)';this.querySelector('.chip-arrow').style.opacity='0.55';this.querySelector('.chip-arrow').style.gap='5px'">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--olive-haupt)" stroke-width="1.8" style="flex-shrink:0;margin-top:2px;" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           <div>
             <div style="font-family:var(--font-serif);font-size:1.0rem;color:var(--olive-haupt);font-weight:600;margin-bottom:3px;">Hausärztliche Versorgung</div>
             <div style="font-size:0.76rem;color:var(--text-muted);line-height:1.5;">Vollständige internistische Betreuung: von der Akutversorgung bis zur langfristigen Begleitung bei Bluthochdruck, Diabetes und Schilddrüsenproblemen. Labor, Ultraschall, EKG und DMP-Programme in einer Praxis.</div>
+            <div class="chip-arrow" style="display:flex;align-items:center;gap:5px;margin-top:10px;font-size:0.73rem;color:var(--olive-haupt);font-weight:500;opacity:0.55;transition:opacity .2s,gap .2s;">
+              <span>Mehr erfahren</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg>
+            </div>
           </div>
         </a>
-        <a href="#leistungen"
+        <a href="#leistungen" onclick="openLeistung(1); return false;"
            style="flex:1 1 200px; display:flex; align-items:flex-start; gap:12px; padding:16px 18px;
                   background:var(--bg); border:1px solid rgba(110,145,98,0.14); border-radius:12px;
-                  text-decoration:none; transition:all .2s;"
-           onmouseover="this.style.borderColor='var(--olive-haupt)';this.style.background='var(--olive-soft)'"
-           onmouseout="this.style.borderColor='rgba(110,145,98,0.14)';this.style.background='var(--bg)'">
+                  text-decoration:none; transition:all .2s; cursor:pointer;"
+           onmouseover="this.style.borderColor='var(--olive-haupt)';this.style.background='var(--olive-soft)';this.querySelector('.chip-arrow').style.opacity='1';this.querySelector('.chip-arrow').style.gap='8px'"
+           onmouseout="this.style.borderColor='rgba(110,145,98,0.14)';this.style.background='var(--bg)';this.querySelector('.chip-arrow').style.opacity='0.55';this.querySelector('.chip-arrow').style.gap='5px'">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--olive-haupt)" stroke-width="1.8" style="flex-shrink:0;margin-top:2px;" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M12 8v4l3 3"/></svg>
           <div>
             <div style="font-family:var(--font-serif);font-size:1.0rem;color:var(--olive-haupt);font-weight:600;margin-bottom:3px;">Ernährungsmedizin</div>
             <div style="font-size:0.76rem;color:var(--text-muted);line-height:1.5;">Spezialisierte ärztliche Beratung bei Nahrungsmittelunverträglichkeiten, Adipositas und Stoffwechselstörungen — wissenschaftlich fundiert, individuell und ohne Konzepte von der Stange.</div>
+            <div class="chip-arrow" style="display:flex;align-items:center;gap:5px;margin-top:10px;font-size:0.73rem;color:var(--olive-haupt);font-weight:500;opacity:0.55;transition:opacity .2s,gap .2s;">
+              <span>Mehr erfahren</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg>
+            </div>
           </div>
         </a>
-        <a href="#leistungen"
+        <a href="#leistungen" onclick="openLeistung(2); return false;"
            style="flex:1 1 200px; display:flex; align-items:flex-start; gap:12px; padding:16px 18px;
                   background:var(--bg); border:1px solid rgba(110,145,98,0.14); border-radius:12px;
-                  text-decoration:none; transition:all .2s;"
-           onmouseover="this.style.borderColor='var(--olive-haupt)';this.style.background='var(--olive-soft)'"
-           onmouseout="this.style.borderColor='rgba(110,145,98,0.14)';this.style.background='var(--bg)'">
+                  text-decoration:none; transition:all .2s; cursor:pointer;"
+           onmouseover="this.style.borderColor='var(--olive-haupt)';this.style.background='var(--olive-soft)';this.querySelector('.chip-arrow').style.opacity='1';this.querySelector('.chip-arrow').style.gap='8px'"
+           onmouseout="this.style.borderColor='rgba(110,145,98,0.14)';this.style.background='var(--bg)';this.querySelector('.chip-arrow').style.opacity='0.55';this.querySelector('.chip-arrow').style.gap='5px'">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--olive-haupt)" stroke-width="1.8" style="flex-shrink:0;margin-top:2px;" aria-hidden="true"><path d="M9 12l2 2 4-4"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
           <div>
             <div style="font-family:var(--font-serif);font-size:1.0rem;color:var(--olive-haupt);font-weight:600;margin-bottom:3px;">Prävention &amp; Check-Up</div>
             <div style="font-size:0.76rem;color:var(--text-muted);line-height:1.5;">Strukturierte Gesundheitschecks, Hautkrebsscreening und individuelle Risikoanalyse — damit Probleme erkannt werden, bevor sie entstehen.</div>
+            <div class="chip-arrow" style="display:flex;align-items:center;gap:5px;margin-top:10px;font-size:0.73rem;color:var(--olive-haupt);font-weight:500;opacity:0.55;transition:opacity .2s,gap .2s;">
+              <span>Mehr erfahren</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg>
+            </div>
           </div>
         </a>
       </div>
@@ -1816,6 +1867,10 @@
         </div>
       </div>
 
+      <div class="footer-links-mob">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </div>
     </div>
   </footer>
   </main>
@@ -1839,6 +1894,14 @@
       if (!isActive) { item.classList.add('active'); }
     }
 
+    function openLeistung(idx) {
+      document.querySelectorAll('.service-item').forEach(function(el){ el.classList.remove('active'); });
+      var items = document.querySelectorAll('.service-item');
+      if (items[idx]) items[idx].classList.add('active');
+      var sec = document.getElementById('leistungen');
+      if (sec) { setTimeout(function(){ sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 60); }
+    }
+
     function updatePraxisStatus() {
       var now = new Date();
       var day = now.getDay();
@@ -1852,14 +1915,20 @@
       if (day === 5 && t >= 540 && t <= 720) isOpen = true;
       var txt = document.getElementById('live-status-text');
       var dot = document.getElementById('live-status-dot');
+      var mobTxt = document.getElementById('mob-status-text');
+      var mobDot = document.getElementById('mob-status-dot');
       if (isOpen) {
         txt.textContent = 'Sprechstunde aktiv · Jetzt geöffnet';
         dot.style.backgroundColor = '#4CAF50';
         dot.style.animation = 'pulse 2s infinite';
+        if (mobTxt) mobTxt.textContent = 'Jetzt geöffnet';
+        if (mobDot) { mobDot.style.backgroundColor = '#4CAF50'; mobDot.style.animation = 'pulse 2s infinite'; }
       } else {
         txt.textContent = 'Geschlossen · Termine 24/7 online';
         dot.style.backgroundColor = '#A86553';
         dot.style.animation = 'none';
+        if (mobTxt) mobTxt.textContent = 'Aktuell geschlossen';
+        if (mobDot) { mobDot.style.backgroundColor = '#A86553'; mobDot.style.animation = 'none'; }
       }
     }
 
@@ -3088,6 +3157,10 @@ function filterStandort(which) {
       <button onclick="openTerminModal(); toggleMobMenu();" class="btn-smart dark" style="width:100%;justify-content:center;">
         <span>Termin buchen</span><span class="btn-circle">&#8594;</span>
       </button>
+    </div>
+    <div class="mob-status-row" style="padding:10px 22px 8px;border-bottom:1px solid rgba(110,145,98,0.08);display:flex;align-items:center;gap:9px;">
+      <span id="mob-status-dot" style="width:8px;height:8px;border-radius:50%;background:#A86553;display:inline-block;flex-shrink:0;"></span>
+      <span id="mob-status-text" style="font-size:0.82rem;color:var(--olive-haupt);font-weight:500;">Status wird geprüft...</span>
     </div>
     <ul class="mob-links">
       <li><a href="#kompass" onclick="toggleMobMenu()">Anliegen-Check</a></li>
