@@ -156,7 +156,7 @@
       --font-sans: 'Plus Jakarta Sans', sans-serif;
     }
     html { scroll-behavior: smooth; overflow-x: hidden; }
-    body { background-color: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 1.0625rem; line-height: 1.75; overflow-x: hidden; }
+    body { background-color: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 1.125rem; line-height: 1.8; overflow-x: hidden; }
     .container { width: 100%; max-width: 1220px; margin: 0 auto; padding: 0 28px; }
     /* NEWS BANNER */
     .news-banner { background: var(--olive-soft); border-bottom: 1px solid rgba(110,145,98,0.12); padding: 8px 0; font-size: 0.85rem; color: var(--olive-haupt); }
@@ -180,7 +180,7 @@
     .brand-mark { font-family: var(--font-serif); font-size: 1.45rem; font-weight: 700; color: var(--olive-haupt); text-decoration: none; line-height: 1.1; white-space: nowrap; }
     .brand-mark span { display: block; font-family: var(--font-sans); font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; color: var(--terracotta); margin-top: 2px; }
     .nav-menu { display: flex; gap: 28px; list-style: none; align-items: center; margin: 0; padding: 0; }
-    .nav-menu a { text-decoration: none; color: var(--text); font-size: 0.92rem; font-weight: 500; white-space: nowrap; transition: color .2s; }
+    .nav-menu a { text-decoration: none; color: var(--text); font-size: 1rem; font-weight: 500; white-space: nowrap; transition: color .2s; }
     .nav-menu a:hover { color: var(--olive-haupt); }
     .nav-right { display: flex; align-items: center; gap: 14px; }
     .live-status-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid rgba(110,145,98,0.15); padding: 6px 14px; border-radius: 50px; font-size: 0.82rem; font-weight: 600; color: var(--olive-haupt); white-space: nowrap; }
@@ -834,7 +834,7 @@
         -webkit-backdrop-filter: blur(16px) !important;
         border: 1px solid rgba(110, 145, 98, 0.25) !important;
         border-radius: 50px !important;
-        padding: 6px !important;
+        padding: 10px !important;
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15) !important;
         gap: 0 !important;
         align-items: center !important;
@@ -845,7 +845,7 @@
         align-items: center !important;
         justify-content: center !important;
         gap: 8px !important;
-        padding: 8px 4px !important;
+        padding: 12px 10px !important;
         background: none;
         border: none;
         border-radius: 40px;
@@ -862,9 +862,9 @@
       .mobile-bottom-bar .bar-loc-text {
         display: flex; flex-direction: column; gap: 1px; min-width: 0;
       }
-      .mobile-bottom-bar .bar-city { font-size: 0.8rem !important; font-weight: 700 !important; color: var(--text); white-space: nowrap; }
-      .mobile-bottom-bar .bar-hint { font-size: 0.58rem !important; color: var(--olive-haupt); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-      .terracotta-dot { width: 8px; height: 8px; background: var(--terracotta); border-radius: 50%; flex-shrink: 0; }
+      .mobile-bottom-bar .bar-city { font-size: 1rem !important; font-weight: 700 !important; color: var(--text); white-space: nowrap; }
+      .mobile-bottom-bar .bar-hint { font-size: 0.82rem !important; color: var(--olive-haupt); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .terracotta-dot { width: 10px; height: 10px; background: var(--terracotta); border-radius: 50%; flex-shrink: 0; }
 
       /* ── Mobile Leistungs-Kacheln (3 nebeneinander, kein Swipe) ── */
       .leistungs-label-mob { display: block !important; }
@@ -907,7 +907,7 @@
         margin-top: 2px !important;
       }
       #demo-buttons-wrap { display: none !important; }
-      .service-item-title { font-size: 0.95rem !important; }
+      .service-item-title { font-size: 1.05rem !important; }
       .compass-btn-desc { display: none !important; }
       .compass-options {
         display: flex !important;
@@ -1103,6 +1103,7 @@
         display: flex !important;
         gap: 24px !important;
         justify-content: center !important;
+        padding-bottom: max(110px, calc(90px + env(safe-area-inset-bottom))) !important;
       }
       .footer-links-mob a {
         font-size: 0.8rem !important;
@@ -1187,8 +1188,8 @@
         box-shadow: 0 6px 20px rgba(0,0,0,0.14) !important;
       }
       .mobile-bottom-bar .bar-loc-btn { padding: 6px 10px; gap: 7px; }
-      .mobile-bottom-bar .bar-city { font-size: 0.79rem; }
-      .mobile-bottom-bar .bar-hint { font-size: 0.56rem; }
+      .mobile-bottom-bar .bar-city { font-size: 0.95rem; }
+      .mobile-bottom-bar .bar-hint { font-size: 0.75rem; }
       .mobile-bottom-bar .bar-divider { height: 22px; }
 
       /* ── Sections ── */
