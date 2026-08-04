@@ -1118,7 +1118,8 @@
       }
       .modal-header { padding: 18px 20px 12px; flex-shrink: 0; }
       .modal-body { padding: 16px 20px 20px !important; flex: 1 !important; overflow-y: scroll !important; -webkit-overflow-scrolling: touch !important; overscroll-behavior: contain !important; touch-action: pan-y !important; will-change: scroll-position; }
-      .modal-footer-btns { padding: 12px 20px max(20px, env(safe-area-inset-bottom)) !important; flex-shrink: 0 !important; background: #ffffff !important; border-top: 1px solid var(--olive-soft) !important; }
+      .modal-footer-btns { padding: 12px 20px max(20px, env(safe-area-inset-bottom)) !important; flex-shrink: 0 !important; background: #ffffff !important; border-top: 1px solid var(--olive-soft) !important; flex-direction: column !important; align-items: stretch !important; gap: 8px !important; }
+      .modal-footer-btns > span { display: none !important; }
       /* Rezept-Senden Button: schlanker Textlink auf Mobile */
       .modal-footer-btns .btn-custom.btn-custom-dark {
         background: transparent !important;
@@ -1134,7 +1135,7 @@
       }
             .m-form-row, .radio-grid-2 { grid-template-columns: 1fr !important; }
       .m-form-row .m-form-group { min-width: 0; overflow: hidden; }
-      .m-form-row input[type="date"].m-form-input { width: 100% !important; max-width: 100% !important; min-width: 0 !important; padding: 10px 13px !important; font-size: 0.87rem !important; }
+      .m-form-row input[type="date"].m-form-input { width: 100% !important; max-width: 100% !important; min-width: 0 !important; padding: 10px 13px !important; font-size: 0.87rem !important; height: 44px !important; line-height: 1.4 !important; }
     }
 
         /* ==========================================================================
@@ -3056,7 +3057,7 @@ function filterStandort(which) {
       <span class="terracotta-dot"></span>
       <div class="bar-loc-text">
         <span class="bar-city">Wernigerode</span>
-        <span class="bar-hint" id="bar-hint-wn">Nächster Termin</span>
+        <span class="bar-hint" id="bar-hint-wn">Termin buchen</span>
       </div>
     </button>
     <div class="bar-divider"></div>
@@ -3064,7 +3065,7 @@ function filterStandort(which) {
       <span class="terracotta-dot"></span>
       <div class="bar-loc-text">
         <span class="bar-city">Ilsenburg</span>
-        <span class="bar-hint" id="bar-hint-ils">Nächster Termin</span>
+        <span class="bar-hint" id="bar-hint-ils">Termin buchen</span>
       </div>
     </button>
   </div>
