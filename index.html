@@ -1146,35 +1146,41 @@
       /* ── Sektions-Überschriften ── */
       .sec-title { font-size: 1.6rem; }
 
-      /* ── 5. FOOTER: Nur Name + Impressum + Datenschutz ── */
+      /* ── 5. FOOTER: Ultra-slim ── */
       footer {
-        padding: 16px 14px 24px !important;
+        padding: 12px 20px 16px !important;
         background: #192017 !important;
         text-align: center !important;
       }
       footer .container > *:not(.footer-links-mob) { display: none !important; }
-      footer .container { display: flex !important; flex-direction: column !important; align-items: center !important; gap: 10px !important; }
-      footer .container::before {
-        content: 'Land-Harz-Praxis · Dr. med. Christian Müller';
-        display: block;
-        font-family: var(--font-serif);
-        font-size: 0.9rem;
-        color: rgba(255,255,255,0.7);
-      }
-      footer .container::after {
-        content: '';
-        display: none;
-      }
-      .footer-links-mob {
+      footer .container {
         display: flex !important;
-        gap: 24px !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
         justify-content: center !important;
-        padding-bottom: max(110px, calc(90px + env(safe-area-inset-bottom))) !important;
+        gap: 4px 0 !important;
+      }
+      footer .container::before {
+        content: 'Dr. med. Christian Müller';
+        display: inline;
+        font-family: var(--font-serif);
+        font-size: 0.75rem;
+        color: rgba(255,255,255,0.45);
+        margin-right: 12px;
+      }
+      footer .container::after { content: ''; display: none; }
+      .footer-links-mob {
+        display: inline-flex !important;
+        gap: 16px !important;
+        justify-content: center !important;
+        padding-bottom: 0 !important;
       }
       .footer-links-mob a {
-        font-size: 0.8rem !important;
-        color: rgba(255,255,255,0.45) !important;
+        font-size: 0.75rem !important;
+        color: rgba(255,255,255,0.35) !important;
         text-decoration: none !important;
+        letter-spacing: 0.02em;
       }
 
       /* ── Bottom-Sheet Modals ── */
@@ -1325,30 +1331,39 @@
       /* ── hero-text-col volle Breite ── */
       .hero-text-col { max-width: 100% !important; }
 
-      /* ── Footer: Landscape — minimal (nur Name + Links) ── */
+      /* ── Footer: Landscape — ultra-slim ── */
       footer {
-        padding: 14px 14px 20px !important;
+        padding: 10px 20px 12px !important;
         background: #192017 !important;
         text-align: center !important;
       }
       footer .container > *:not(.footer-links-mob) { display: none !important; }
-      footer .container { display: flex !important; flex-direction: column !important; align-items: center !important; gap: 8px !important; }
+      footer .container {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 0 !important;
+      }
       footer .container::before {
         content: 'Dr. med. Christian Müller';
-        display: block;
+        display: inline;
         font-family: var(--font-serif);
-        font-size: 0.85rem;
-        color: rgba(255,255,255,0.6);
+        font-size: 0.72rem;
+        color: rgba(255,255,255,0.4);
+        margin-right: 12px;
       }
+      footer .container::after { content: ''; display: none; }
       .footer-links-mob {
-        display: flex !important;
-        gap: 24px !important;
+        display: inline-flex !important;
+        gap: 14px !important;
         justify-content: center !important;
-        padding-bottom: max(60px, calc(50px + env(safe-area-inset-bottom))) !important;
+        padding-bottom: 0 !important;
       }
       .footer-links-mob a {
-        font-size: 0.78rem !important;
-        color: rgba(255,255,255,0.45) !important;
+        font-size: 0.72rem !important;
+        color: rgba(255,255,255,0.32) !important;
         text-decoration: none !important;
       }
 
