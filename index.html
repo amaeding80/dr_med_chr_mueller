@@ -1024,6 +1024,7 @@
 
       /* ── Kompass-Bereich ── */
       #kompass { top: 52px; }
+      .compass-sec { margin-bottom: 28px !important; }
       .compass-title { font-size: 1.55rem; }
       .compass-sub { font-size: 0.8rem; margin-bottom: 12px; }
       .compass-result-box { padding: 16px; margin-top: 16px; }
@@ -1135,7 +1136,7 @@
       }
             .m-form-row, .radio-grid-2 { grid-template-columns: 1fr !important; }
       .m-form-row .m-form-group { min-width: 0; overflow: hidden; }
-      .m-form-row input[type="date"].m-form-input { width: 100% !important; max-width: 100% !important; min-width: 0 !important; padding: 10px 13px !important; font-size: 0.87rem !important; height: 44px !important; line-height: 1.4 !important; }
+      .m-form-row input[type="date"].m-form-input { min-width: 0 !important; }
     }
 
         /* ==========================================================================
@@ -1292,7 +1293,7 @@
     .m-form-group { margin-bottom: 15px; }
     .m-form-label { display: block; font-size: 0.71rem; font-weight: 700; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.07em; }
     .m-form-input { width: 100%; max-width: 100%; padding: 10px 13px; border: 1px solid rgba(110,145,98,0.25); border-radius: 10px; font-family: var(--font-sans); font-size: 0.87rem; color: var(--text); background: var(--bg); transition: border-color 0.2s, box-shadow 0.2s; outline: none; box-sizing: border-box; }
-    input[type="date"].m-form-input { width: 100% !important; max-width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; }
+    input[type="date"].m-form-input { min-width: 0 !important; box-sizing: border-box !important; }
     .m-form-input:focus { border-color: var(--olive-haupt); box-shadow: 0 0 0 3px rgba(110,145,98,0.12); background: #fff; }
     .m-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
     .radio-cards-grid { display: grid; gap: 8px; }
