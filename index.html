@@ -752,7 +752,30 @@
       .slot-card { bottom: 18px; right: 32px; width: 285px; }
       .compass-options { grid-template-columns: repeat(3, 1fr); }
       .journal-grid { grid-template-columns: 1fr 1fr; }
-    }
+    
+      /* ── Nav: Burger bei 1024px landscape ── */
+      .nav-menu, .nav-right { display: none !important; }
+      .burger-btn { display: flex !important; }
+
+      /* ── Team: single column ── */
+      .team-grid { grid-template-columns: 1fr; gap: 20px; }
+
+      /* ── Standort: 2-spaltig ── */
+      .loc-beide-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+
+      /* ── Leistungen: 1-spaltig (sidebar entfernen) ── */
+      .services-editorial { grid-template-columns: 1fr; gap: 24px; }
+      .services-sidebar { position: static; }
+
+      /* ── Download: 2-spaltig ── */
+      .download-v2-grid { grid-template-columns: 1fr 1fr; }
+
+      /* ── Footer ── */
+      .footer-flex { flex-direction: row; flex-wrap: wrap; gap: 12px; justify-content: center; }
+
+      /* ── Slot-Card: static für Nest Hub (knapper Viewport) ── */
+      .hero-text-col { max-width: 100%; }
+}
 
     /* ==========================================================================
        3. SMARTPHONE HOCHFORMAT — ECHTES MOBILE-FIRST REDESIGN (Portrait: ≤679px)
@@ -838,6 +861,7 @@
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15) !important;
         gap: 0 !important;
         align-items: center !important;
+        transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease !important;
       }
       .mobile-bottom-bar .bar-loc-btn {
         flex: 1 !important;
@@ -864,6 +888,11 @@
       }
       .mobile-bottom-bar .bar-city { font-size: 1rem !important; font-weight: 700 !important; color: var(--text); white-space: nowrap; }
       .mobile-bottom-bar .bar-hint { font-size: 0.82rem !important; color: var(--olive-haupt); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .mobile-bottom-bar.bar-hidden {
+        transform: translateY(140%) !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
       .terracotta-dot { width: 10px; height: 10px; background: var(--terracotta); border-radius: 50%; flex-shrink: 0; }
 
       /* ── Mobile Leistungs-Kacheln (3 nebeneinander, kein Swipe) ── */
@@ -1228,6 +1257,26 @@
       .footer-flex { flex-direction: column; gap: 10px; text-align: center; }
       .modal-overlay { align-items: center !important; }
       .modal-box { max-height: 96vh !important; border-radius: 16px !important; }
+
+      /* ── Demo-Buttons ausblenden ── */
+      #demo-buttons-wrap { display: none !important; }
+
+      /* ── sec-title + sec-tag kompakter ── */
+      .sec-title { font-size: 1.6rem !important; line-height: 1.1 !important; }
+      .sec-tag { font-size: 0.62rem !important; margin-bottom: 4px !important; }
+
+      /* ── Sections: weniger vertical padding (viewport nur 375–430px hoch) ── */
+      .compass-sec { padding-top: 22px !important; margin-bottom: 22px !important; }
+      .services-sec { padding: 22px 0 36px !important; }
+      .digital-journal { padding: 22px 18px !important; }
+      .team-sec { padding: 22px 0 !important; }
+      .locations-sec { padding: 18px 0 !important; }
+
+      /* ── hero-text-col volle Breite ── */
+      .hero-text-col { max-width: 100% !important; }
+
+      /* ── Footer: Platz für floating Bottom Bar ── */
+      footer { padding-bottom: 60px !important; }
     }
 
     /* ==========================================================================
@@ -3089,7 +3138,37 @@ function filterStandort(which) {
       }, { passive: true });
     });
   })();
-  </script>
+  
+    // ── Bottom Bar: bei Footer ausblenden ──────────────────────────────────
+    (function() {
+      var bar = document.querySelector('.mobile-bottom-bar');
+      var footer = document.querySelector('footer');
+      if (!bar || !footer) return;
+      
+      var ticking = false;
+      function checkFooter() {
+        var footerRect = footer.getBoundingClientRect();
+        var windowH = window.innerHeight;
+        // Footer ist sichtbar wenn oberer Rand weniger als 80px vom Bildschirmrand entfernt
+        if (footerRect.top < windowH - 20) {
+          bar.classList.add('bar-hidden');
+        } else {
+          bar.classList.remove('bar-hidden');
+        }
+        ticking = false;
+      }
+      
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          requestAnimationFrame(checkFooter);
+          ticking = true;
+        }
+      }, { passive: true });
+      
+      // Initial check
+      checkFooter();
+    })();
+</script>
 
   <!-- KOMPASS POPUP (mobile) -->
   <div id="compass-popup-overlay" onclick="closeCompassPopup()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9500;backdrop-filter:blur(2px);"></div>
