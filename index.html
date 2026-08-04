@@ -505,10 +505,14 @@
     .service-title-wrap { display: flex; align-items: baseline; gap: 16px; }
     .service-num { font-family: var(--font-serif); font-size: 1.1rem; color: rgba(110,145,98,0.55); font-weight: 600; }
     .service-item-title { font-family: var(--font-serif); font-size: 1.6rem; color: var(--olive-haupt); font-weight: 600; transition: color 0.3s ease; }
-    .service-toggle-icon { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid rgba(110,145,98,0.3); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; line-height: 1; color: var(--olive-haupt); transition: all 0.3s ease; flex-shrink: 0; font-weight: 300; }
+    .service-toggle-icon { width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid rgba(110,145,98,0.3); display: flex; align-items: center; justify-content: center; color: var(--olive-haupt); transition: all 0.3s ease; flex-shrink: 0; }
+    .service-toggle-icon .si-x { display: none; }
+    .service-item.active .service-toggle-icon { background: var(--olive-haupt); color: #fff; border-color: var(--olive-haupt); transform: none !important; }
+    .service-item.active .service-toggle-icon .si-plus { display: none; }
+    .service-item.active .service-toggle-icon .si-x { display: block; }
     .service-body { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease; padding-left: 34px; }
     .service-item.active .service-item-title { color: var(--olive-dark); }
-    .service-item.active .service-toggle-icon { background: var(--olive-haupt); color: #FFF; border-color: var(--olive-haupt); transform: rotate(45deg); }
+
     .service-item.active .service-body { max-height: 300px; padding-top: 16px; padding-bottom: 8px; }
     .service-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 14px; }
     .service-tags { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -896,7 +900,7 @@
         line-height: 1 !important;
       }
       #demo-buttons-wrap { display: none !important; }
-      .service-toggle-icon { display: none !important; }
+      .service-item-title { font-size: 0.95rem !important; }
       .compass-btn-desc { display: none !important; }
       .compass-options {
         display: flex !important;
@@ -1042,7 +1046,10 @@
       .team-grid > div:first-child h2 { font-size: 1.45rem !important; margin-bottom: 6px !important; line-height: 1.2; }
       .team-grid > div:first-child p { font-size: 0.82rem; }
       .team-members { margin-top: 8px; display: grid !important; grid-template-columns: 1fr !important; gap: 10px !important; }
-      .member-card { padding: 16px 18px; border-radius: 12px; display: block !important; }
+      .member-card { padding: 14px 16px !important; border-radius: 12px; display: flex !important; flex-direction: row !important; gap: 14px !important; align-items: flex-start !important; }
+      .member-avatar-wrap { flex-shrink: 0; }
+      .member-avatar { width: 46px; height: 46px; border-radius: 50%; background: var(--olive-haupt); color: #fff; font-family: var(--font-serif); font-size: 1.05rem; font-weight: 400; display: flex; align-items: center; justify-content: center; letter-spacing: 0.03em; }
+      .member-info { flex: 1; min-width: 0; }
       .member-card img { width: 52px !important; height: 52px !important; border-radius: 50% !important; object-fit: cover; }
       .member-card h3 { font-size: 1.1rem !important; margin-bottom: 6px !important; }
       .member-card h4 { font-size: 0.92rem !important; margin-bottom: 2px !important; }
@@ -1605,7 +1612,10 @@
           <div class="service-item active">
             <div class="service-header" onclick="toggleService(this)">
               <div class="service-title-wrap"><span class="service-num">01</span><h3 class="service-item-title">Hausärztliche Versorgung &amp; Internistik</h3></div>
-              <div class="service-toggle-icon">+</div>
+              <div class="service-toggle-icon">
+              <svg class="si-plus" width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="6.5" y1="1" x2="6.5" y2="12"/><line x1="1" y1="6.5" x2="12" y2="6.5"/></svg>
+              <svg class="si-x" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="1.5" y1="1.5" x2="10.5" y2="10.5"/><line x1="10.5" y1="1.5" x2="1.5" y2="10.5"/></svg>
+            </div>
             </div>
             <div class="service-body">
               <p class="service-desc">Als Facharzt für Innere Medizin begleitet Dr. Müller Sie bei akuten Erkrankungen genauso wie bei chronischen Verläufen. Bluthochdruck, Diabetes, Schilddrüsenprobleme, Herzrhythmusstörungen — diese Diagnosen brauchen keine Überweisung zum Spezialisten, sondern einen Hausarzt, der sie wirklich durchdringt. Mit eigenem Labor, Ultraschall und EKG in der Praxis werden die meisten Befunde direkt vor Ort geklärt.</p>
@@ -1615,7 +1625,10 @@
           <div class="service-item">
             <div class="service-header" onclick="toggleService(this)">
               <div class="service-title-wrap"><span class="service-num">02</span><h3 class="service-item-title">Ernährungsmedizin</h3></div>
-              <div class="service-toggle-icon">+</div>
+              <div class="service-toggle-icon">
+              <svg class="si-plus" width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="6.5" y1="1" x2="6.5" y2="12"/><line x1="1" y1="6.5" x2="12" y2="6.5"/></svg>
+              <svg class="si-x" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="1.5" y1="1.5" x2="10.5" y2="10.5"/><line x1="10.5" y1="1.5" x2="1.5" y2="10.5"/></svg>
+            </div>
             </div>
             <div class="service-body">
               <p class="service-desc">Ernährungsmedizin ist mehr als Diätberatung. Dr. Müller untersucht, welche Zusammenhänge zwischen Ihrem Stoffwechsel, Ihren Beschwerden und Ihrer Ernährung bestehen. Bei Unverträglichkeiten, Reizdarm, Übergewicht oder unerklärlichen Magen-Darm-Problemen bringt der kombinierende Blick aus Innerer Medizin und Ernährungsmedizin oft das entscheidende Puzzlestück — das andere Ärzte übersehen.</p>
@@ -1625,7 +1638,10 @@
           <div class="service-item">
             <div class="service-header" onclick="toggleService(this)">
               <div class="service-title-wrap"><span class="service-num">03</span><h3 class="service-item-title">Prävention &amp; Check-Up</h3></div>
-              <div class="service-toggle-icon">+</div>
+              <div class="service-toggle-icon">
+              <svg class="si-plus" width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="6.5" y1="1" x2="6.5" y2="12"/><line x1="1" y1="6.5" x2="12" y2="6.5"/></svg>
+              <svg class="si-x" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="1.5" y1="1.5" x2="10.5" y2="10.5"/><line x1="10.5" y1="1.5" x2="1.5" y2="10.5"/></svg>
+            </div>
             </div>
             <div class="service-body">
               <p class="service-desc">Viele Erkrankungen entwickeln sich still — über Jahre, ohne spürbare Symptome. Der Check-Up 35 und das Hautkrebsscreening sind Kassenleistungen, die genau hier ansetzen. Ergänzt durch eine individuelle Risikoanalyse (Herzinfarkt, Schlaganfall, Diabetes) entsteht ein persönliches Vorsorgeprofil, das nicht nur sagt, was gemessen wurde — sondern was es für Ihre Gesundheit bedeutet.</p>
@@ -1647,10 +1663,15 @@
         </div>
         <div class="team-members">
           <div class="member-card">
-            <span style="font-size:0.72rem; font-weight:700; text-transform:uppercase; color:var(--terracotta); display:block; margin-bottom:4px;">Praxisinhaber</span>
-            <h3 style="font-family:var(--font-serif); font-size:1.35rem; color:var(--olive-haupt); margin-bottom:8px;">Dr. med. Christian Müller</h3>
-            <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:12px;">Facharzt für Innere Medizin &amp; Ernährungsmedizin.</p>
-            <p style="font-size:0.79rem; color:var(--text-muted); line-height:1.6; border-top:1px solid rgba(110,145,98,0.1); padding-top:12px;">Unterstützt von einem erfahrenen Team medizinischer Fachangestellter in Wernigerode und Ilsenburg.</p>
+            <div class="member-avatar-wrap">
+              <div class="member-avatar">CM</div>
+            </div>
+            <div class="member-info">
+              <span style="font-size:0.68rem; font-weight:700; text-transform:uppercase; color:var(--terracotta); display:block; margin-bottom:4px; letter-spacing:0.08em;">Praxisinhaber</span>
+              <h3 style="font-family:var(--font-serif); font-size:1.2rem; color:var(--olive-haupt); margin-bottom:6px;">Dr. med. Christian Müller</h3>
+              <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:10px;">Facharzt für Innere Medizin &amp; Ernährungsmedizin.</p>
+              <p style="font-size:0.76rem; color:var(--text-muted); line-height:1.55; border-top:1px solid rgba(110,145,98,0.1); padding-top:10px;">Unterstützt von einem erfahrenen Team medizinischer Fachangestellter in Wernigerode und Ilsenburg.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -1796,32 +1817,55 @@
     }
 
     // PRAXIS-KOMPASS
+    function closeCompassPopup() {
+      document.getElementById('compass-popup').style.display = 'none';
+      document.getElementById('compass-popup-overlay').style.display = 'none';
+    }
+
     function showCompassResult(type) {
-      var resBox = document.getElementById('compass-result');
-      var resTitle = document.getElementById('compass-res-title');
-      var resText = document.getElementById('compass-res-text');
-      var resBtn = document.getElementById('compass-res-btn');
-      resBox.style.display = 'block';
+      var title = '', text = '', btnLabel = '', btnAction = null;
       if (type === 'akut') {
-        resTitle.textContent = 'Empfohlener Schritt: Sofort anrufen';
-        resText.innerHTML = 'Bei akuten Beschwerden rufen Sie uns direkt an:<br><strong style="font-size:1.1rem; color:var(--olive-haupt);">03943 / 48 13 3</strong>';
-        resBtn.textContent = 'Jetzt anrufen →';
-        resBtn.onclick = function() { window.location.href = 'tel:+49394348133'; };
+        title = 'Empfohlener Schritt: Sofort anrufen';
+        text = 'Bei akuten Beschwerden rufen Sie uns direkt an:<br><strong style="font-size:1.1rem;color:var(--olive-haupt);">03943 / 48 13 3</strong>';
+        btnLabel = 'Jetzt anrufen';
+        btnAction = function() { window.location.href = 'tel:+49394348133'; };
       } else if (type === 'ernaehrung') {
-        resTitle.textContent = 'Empfohlener Schritt: Erstgespräch Ernährungsmedizin';
-        resText.textContent = 'Bringen Sie zum Erstgespräch vorhandene Befunde oder unser Ernährungstagebuch mit.';
-        resBtn.textContent = 'Termin Ernährungsmedizin buchen →';
-        resBtn.onclick = function() { openTerminModal('ernaehrung'); };
+        title = 'Empfohlener Schritt: Erstgespräch Ernährungsmedizin';
+        text = 'Bringen Sie zum Erstgespräch vorhandene Befunde oder unser Ernährungstagebuch mit.';
+        btnLabel = 'Termin buchen';
+        btnAction = function() { closeCompassPopup(); openTerminModal('ernaehrung'); };
       } else if (type === 'rezept') {
-        resTitle.textContent = 'Empfohlener Schritt: Digitale Rezeptanforderung';
-        resText.textContent = 'Dauermedikamente bequem im Digitalen Empfang bestellen.';
-        resBtn.textContent = 'Rezept jetzt online bestellen →';
-        resBtn.onclick = function() { openRezeptModal(); };
+        title = 'Empfohlener Schritt: Digitale Rezeptanforderung';
+        text = 'Dauermedikamente bequem im Digitalen Empfang bestellen.';
+        btnLabel = 'Rezept online bestellen';
+        btnAction = function() { closeCompassPopup(); openRezeptModal(); };
       } else if (type === 'checkup') {
-        resTitle.textContent = 'Empfohlener Schritt: Vorsorge-Termin planen';
-        resText.textContent = 'Check-ups beinhalten Labor und Ultraschall. Bitte online mit Vorlauf buchen.';
-        resBtn.textContent = 'Check-up Termin wählen →';
-        resBtn.onclick = function() { openTerminModal('vorsorge'); };
+        title = 'Empfohlener Schritt: Vorsorge-Termin planen';
+        text = 'Check-ups beinhalten Labor und Ultraschall. Bitte online mit Vorlauf buchen.';
+        btnLabel = 'Termin wählen';
+        btnAction = function() { closeCompassPopup(); openTerminModal('vorsorge'); };
+      }
+
+      if (window.innerWidth <= 679) {
+        // Mobile: Popup
+        document.getElementById('compass-popup-title').textContent = title;
+        document.getElementById('compass-popup-text').innerHTML = text;
+        var popBtn = document.getElementById('compass-popup-btn');
+        document.getElementById('compass-popup-btn-label').textContent = btnLabel;
+        popBtn.onclick = btnAction;
+        document.getElementById('compass-popup').style.display = 'block';
+        document.getElementById('compass-popup-overlay').style.display = 'block';
+      } else {
+        // Desktop: inline
+        var resBox = document.getElementById('compass-result');
+        var resTitle = document.getElementById('compass-res-title');
+        var resText = document.getElementById('compass-res-text');
+        var resBtn = document.getElementById('compass-res-btn');
+        resBox.style.display = 'block';
+        resTitle.textContent = title;
+        resText.innerHTML = text;
+        resBtn.innerHTML = btnLabel + ' →';
+        resBtn.onclick = btnAction;
       }
     }
 
@@ -3031,5 +3075,22 @@ function filterStandort(which) {
     });
   })();
   </script>
+
+  <!-- KOMPASS POPUP (mobile) -->
+  <div id="compass-popup-overlay" onclick="closeCompassPopup()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9500;backdrop-filter:blur(2px);"></div>
+  <div id="compass-popup" style="display:none;position:fixed;left:0;right:0;bottom:0;z-index:9501;background:#fff;border-radius:20px 20px 0 0;padding:24px 22px max(24px,env(safe-area-inset-bottom));box-shadow:0 -4px 32px rgba(0,0,0,0.15);">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;">
+      <h3 id="compass-popup-title" style="font-family:var(--font-serif);font-size:1.2rem;color:var(--olive-haupt);line-height:1.3;flex:1;margin-right:12px;"></h3>
+      <button onclick="closeCompassPopup()" style="background:none;border:none;cursor:pointer;padding:2px;flex-shrink:0;color:var(--text-muted);">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="16" y2="16"/><line x1="16" y1="2" x2="2" y2="16"/></svg>
+      </button>
+    </div>
+    <p id="compass-popup-text" style="font-size:0.86rem;color:var(--text-muted);line-height:1.6;margin-bottom:20px;"></p>
+    <button id="compass-popup-btn" class="btn-smart dark" style="width:100%;justify-content:center;">
+      <span id="compass-popup-btn-label">Weiter</span>
+      <span class="btn-circle">→</span>
+    </button>
+  </div>
+
 </body>
 </html>
