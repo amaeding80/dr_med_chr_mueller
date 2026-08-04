@@ -240,7 +240,7 @@
     .hero-layout { display: block; }
     .hero-title-main { font-family: var(--font-serif); font-size: clamp(1.85rem, 3.2vw, 2.8rem); font-weight: 400; line-height: 1.15; color: var(--olive-haupt); margin-bottom: 14px; }
     .hero-title-main em { font-style: italic; font-weight: 400; color: var(--terracotta); }
-    .hero-lead-text { font-size: 1rem; color: var(--text-muted); line-height: 1.7; max-width: 520px; margin-bottom: 16px; }
+    .hero-lead-text { font-size: 1.2rem; color: var(--text-muted); line-height: 1.7; max-width: 520px; margin-bottom: 16px; }
     .hero-portrait-col { display: none; }
     .portrait-placeholder { display: none; }
     .portrait-caption { display: none; }
@@ -518,7 +518,7 @@
     .service-tags { display: flex; flex-wrap: wrap; gap: 8px; }
     .service-tag-pill { background: var(--olive-soft); color: var(--olive-haupt); font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 4px; }
     .sec-tag { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; color: var(--terracotta); margin-bottom: 8px; display: block; }
-    .sec-title { font-family: var(--font-serif); font-size: 2.6rem; color: var(--olive-haupt); font-weight: 400; }
+    .sec-title { font-family: var(--font-serif); font-size: 2.6rem; color: var(--olive-haupt); font-weight: 400; line-height: 1.15; }
     /* TEAM & STANDORTE */
     .team-sec { padding: 70px 0; background: var(--bg); border-top: 1px solid rgba(110,145,98,0.1); border-bottom: 1px solid rgba(110,145,98,0.1); }
     .team-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; align-items: center; }
@@ -532,7 +532,7 @@
     .loc-box { display: none; }
     .loc-box.active { display: block; }
     /* Standort-Tabs in der Sektion */
-    .standort-tabs { display: flex; gap: 10px; margin-bottom: 28px; }
+    .standort-tabs { display: flex; gap: 10px; margin-top: 14px; margin-bottom: 28px; }
     .standort-tab { padding: 9px 24px; border-radius: 50px; font-size: 0.83rem; font-weight: 600; border: 1px solid rgba(110,145,98,0.2); background: var(--surface); color: var(--text-muted); cursor: pointer; transition: all 0.25s; }
     .standort-tab:hover { border-color: var(--olive-haupt); color: var(--olive-haupt); }
     .standort-tab.active { background: var(--olive-haupt); border-color: var(--olive-haupt); color: #fff; }
@@ -1682,7 +1682,7 @@
       <div class="team-grid">
         <div>
           <span class="sec-tag">Persönlich &amp; Nah</span>
-          <h2 style="font-family:var(--font-serif); font-size:2.6rem; color:var(--olive-haupt); font-weight:400; margin-bottom:16px;">Ihr Praxis-Team vor Ort</h2>
+          <h2 style="font-family:var(--font-serif); font-size:2.6rem; color:var(--olive-haupt); font-weight:400; line-height:1.15; margin-bottom:16px;">Ihr Praxis-Team vor Ort</h2>
           <p style="color:var(--text-muted); font-size:0.95rem; line-height:1.7;">Medizin ist Vertrauenssache. Unser eingespieltes Team empfängt Sie mit Herzlichkeit und Fachkompetenz in Wernigerode und Ilsenburg.</p>
         </div>
         <div class="team-members">
@@ -1703,9 +1703,9 @@
   <!-- STANDORTE -->
   <section class="locations-sec reveal-sec" id="standort">
     <div class="container">
-      <div class="sec-header">
+      <div class="sec-header" style="margin-bottom:4px;">
         <span class="sec-tag">Kontakt &amp; Anfahrt</span>
-        <h2 class="sec-title">So finden Sie uns</h2>
+        <h2 class="sec-title" style="margin-bottom:0;">So finden Sie uns</h2>
       </div>
       <div class="standort-tabs">
         <button class="standort-tab active" id="tab-wn" onclick="filterStandort('wn')">Wernigerode</button>
@@ -1715,8 +1715,8 @@
         <div class="loc-box active" id="loc-wn" data-standort="wn">
           <span class="badge-wernigerode" style="padding:3px 10px; border-radius:4px; font-size:0.68rem; font-weight:700; text-transform:uppercase; display:inline-block; margin-bottom:12px;">Hauptstandort</span>
           <h3 style="font-family:var(--font-serif); font-size:1.7rem; color:var(--olive-haupt); margin-bottom:14px;">Praxis Wernigerode</h3>
-          <p style="font-size:0.86rem; color:var(--text-muted); margin-bottom:4px;"><strong>Adresse:</strong> Oberhof 9, 38855 Wernigerode</p>
-          <p style="font-size:0.86rem; color:var(--text-muted); margin-bottom:16px;"><strong>Telefon:</strong> 03943 / 48 13 3 · <strong>Fax:</strong> 03943 / 50 04 34</p>
+          <p style="font-size:1rem; color:var(--text-muted); margin-bottom:4px;"><strong>Adresse:</strong> Oberhof 9, 38855 Wernigerode</p>
+          <p style="font-size:1rem; color:var(--text-muted); margin-bottom:16px;"><strong>Telefon:</strong> 03943 / 48 13 3 · <strong>Fax:</strong> 03943 / 50 04 34</p>
           <p style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--olive-haupt); margin-top:12px;">Sprechzeiten</p>
           <table class="hours-table">
             <tr><td>Montag</td><td>08:00 – 12:00 &amp; 16:00 – 18:00 Uhr</td></tr>
@@ -1733,8 +1733,8 @@
         <div class="loc-box loc-box-ilsenburg" id="loc-ils" data-standort="ils">
           <span class="badge-ilsenburg" style="padding:3px 10px; border-radius:4px; font-size:0.68rem; font-weight:700; text-transform:uppercase; display:inline-block; margin-bottom:12px;">Zweigstandort</span>
           <h3 style="font-family:var(--font-serif); font-size:1.7rem; color:var(--olive-haupt); margin-bottom:14px;">Praxis Ilsenburg</h3>
-          <p style="font-size:0.86rem; color:var(--text-muted); margin-bottom:4px;"><strong>Adresse:</strong> Am Tiergarten 11, 38871 Ilsenburg</p>
-          <p style="font-size:0.86rem; color:var(--text-muted); margin-bottom:16px;"><strong>Telefon:</strong> 03943 / 48 13 3</p>
+          <p style="font-size:1rem; color:var(--text-muted); margin-bottom:4px;"><strong>Adresse:</strong> Am Tiergarten 11, 38871 Ilsenburg</p>
+          <p style="font-size:1rem; color:var(--text-muted); margin-bottom:16px;"><strong>Telefon:</strong> 03943 / 48 13 3</p>
           <p style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta); margin-top:12px;">Sprechzeiten</p>
           <table class="hours-table">
             <tr><td>Mo, Mi, Fr</td><td>08:00 – 12:00 Uhr</td></tr>
@@ -1766,11 +1766,7 @@
           <a href="datenschutz.html" style="color:rgba(255,255,255,0.45); text-decoration:none;">Datenschutz</a>
         </div>
       </div>
-      <!-- Mobile Footer: nur das Nötigste -->
-      <div class="footer-links-mob">
-        <a href="impressum.html" style="color:rgba(255,255,255,0.45); text-decoration:none; font-size:0.8rem;">Impressum</a>
-        <a href="datenschutz.html" style="color:rgba(255,255,255,0.45); text-decoration:none; font-size:0.8rem;">Datenschutz</a>
-      </div>
+
     </div>
   </footer>
   </main>
