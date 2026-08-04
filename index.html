@@ -677,6 +677,13 @@
 
     /* Floating Bottom Bar — standardmäßig unsichtbar, nur Phones zeigen sie */
     .mobile-bottom-bar { display: none; }
+    /* Leistungs-Kacheln Mobile — standardmäßig unsichtbar */
+    .leistungs-chips-mob { display: none; }
+    .leistungs-label-mob {
+      display: none;
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--olive-haupt); margin-bottom: 10px;
+    }
 
     /* ==========================================================================
        0. BASIS SMARTPHONE: Burger + Nav + Header (orientation-unabhängig)
@@ -1372,7 +1379,7 @@
   <!-- LEISTUNGS-CHIPS: kompakter Überblick direkt nach dem Hero -->
   <div style="background:#fff; border-bottom:1px solid rgba(110,145,98,0.12); padding:20px 0;" class="reveal-sec">
     <div class="container">
-      <p class="leistungs-label-mob" style="font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--olive-haupt);margin-bottom:10px;display:none;">Unsere Leistungen</p>
+      <p class="leistungs-label-mob">Unsere Leistungen</p>
       <div class="chips-row leistungs-chips-desktop" style="display:flex; gap:14px; flex-wrap:wrap; align-items:stretch;">
         <a href="#leistungen" onclick="document.querySelector('.service-item:nth-child(1)').classList.add('active')"
            style="flex:1 1 200px; display:flex; align-items:flex-start; gap:12px; padding:16px 18px;
@@ -1412,7 +1419,7 @@
         </a>
       </div>
       <!-- Mobile: 3 kompakte Kacheln nebeneinander, nur Titel -->
-      <div class="leistungs-chips-mob" style="display:none; gap:8px;">
+      <div class="leistungs-chips-mob">
         <a href="#leistungen" class="leistungs-kachel">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--olive-haupt)" stroke-width="2" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           <span>Hausärztlich</span>
