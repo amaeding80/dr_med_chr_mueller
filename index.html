@@ -787,6 +787,33 @@
       .hero-text-col { max-width: 100%; }
 }
 
+    /* ── Q3b: Große Tablets Querformat (iPad Air/Pro, Surface) 1025–1400px ── */
+    @media (min-width: 1025px) and (max-width: 1400px) and (orientation: landscape) and (max-height: 1024px) {
+      /* Nav: Burger + Status-Pill (keine Desktop-Links) */
+      .nav-menu { display: none !important; }
+      .nav-right { display: flex !important; margin-left: auto; margin-right: 10px; }
+      .live-status-pill { font-size: 0.72rem !important; padding: 4px 10px !important; gap: 6px !important; }
+      #live-status-text { max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .burger-btn { display: flex !important; }
+      /* Hero */
+      .hero-text-col { max-width: 100%; }
+      /* Slot-Card */
+      .slot-card { bottom: 18px; right: 32px; width: 300px; }
+      /* Team */
+      .team-grid { grid-template-columns: 1fr; gap: 20px; }
+      /* Standorte */
+      .loc-beide-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+      /* Leistungen */
+      .services-editorial { grid-template-columns: 1fr; gap: 24px; }
+      .services-sidebar { position: static; }
+      /* Download */
+      .download-v2-grid { grid-template-columns: 1fr 1fr; }
+      /* Footer */
+      .footer-flex { flex-direction: row; flex-wrap: wrap; gap: 12px; justify-content: center; }
+      /* Floating CTA */
+      .tablet-float-cta { display: flex !important; }
+    }
+
     /* ==========================================================================
        3. SMARTPHONE HOCHFORMAT — ECHTES MOBILE-FIRST REDESIGN (Portrait: ≤679px)
        ========================================================================== */
@@ -1469,72 +1496,60 @@
     @media (orientation: landscape) and (min-height: 501px) and (max-height: 700px) { .modal-box { max-height: 90vh; } #anamnese-canvas { height: 82px; } }
     @media (min-width: 601px) and (max-width: 1024px) and (orientation: portrait) { .anamnese-check-grid { grid-template-columns: 1fr 1fr; } #anamnese-canvas { height: 100px; } }
   
-    /* ── Tablet Float CTA: global hidden ── */
+    /* ── Tablet Float CTA: global hidden — Pill-Design ── */
     .tablet-float-cta {
       display: none;
       position: fixed;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%) translateX(110%);
-      opacity: 0;
-      z-index: 600;
+      right: 14px;
+      bottom: 32px;
+      top: auto;
+      left: auto;
       flex-direction: column;
-      align-items: stretch;
-      background: rgba(255,255,255,0.97);
-      border-radius: 14px 0 0 14px;
-      border: 1px solid rgba(110,145,98,0.22);
-      border-right: none;
-      box-shadow: -4px 0 20px rgba(0,0,0,0.12);
-      padding: 6px;
-      gap: 0;
+      align-items: flex-end;
+      gap: 8px;
+      z-index: 600;
+      opacity: 0;
+      transform: translateX(120%);
       transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease;
       pointer-events: none;
     }
     .tablet-float-cta.tfc-visible {
       opacity: 1;
-      transform: translateY(-50%) translateX(0);
+      transform: translateX(0);
       pointer-events: auto;
     }
     .tfc-btn {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
-      gap: 4px;
-      padding: 10px 10px;
-      background: none;
-      border: none;
+      gap: 8px;
+      padding: 10px 16px 10px 12px;
+      background: rgba(255,255,255,0.97);
+      border: 1px solid rgba(110,145,98,0.25);
+      border-radius: 50px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.13);
       cursor: pointer;
-      color: var(--olive-haupt);
-      transition: background 0.2s;
-      border-radius: 10px;
+      white-space: nowrap;
+      transition: background 0.2s, box-shadow 0.2s;
     }
-    .tfc-btn:hover { background: var(--olive-soft); }
+    .tfc-btn:hover { background: var(--olive-soft); box-shadow: 0 6px 22px rgba(0,0,0,0.18); }
     .tfc-city {
       font-family: var(--font-serif);
-      font-size: 0.72rem;
+      font-size: 0.85rem;
       font-weight: 600;
       color: var(--olive-haupt);
-      line-height: 1.2;
-      text-align: center;
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-      transform: rotate(180deg);
+      line-height: 1;
+      writing-mode: horizontal-tb;
     }
     .tfc-label {
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
       text-transform: uppercase;
       color: var(--terracotta);
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-      transform: rotate(180deg);
+      writing-mode: horizontal-tb;
     }
-    .tfc-divider {
-      height: 1px;
-      background: rgba(110,145,98,0.15);
-      margin: 2px 6px;
-    }
+    .tfc-divider { display: none; }
 </style>
 </head>
 <body>
@@ -3349,10 +3364,10 @@ function filterStandort(which) {
         var foot = footer.getBoundingClientRect();
         var wh = window.innerHeight;
         
-        // Zeige wenn Chips-Sektion nach oben raus gescrollt ist
-        // Verstecke wenn Footer sichtbar wird
-        var pastChips = chips.bottom < 0;
-        var footerVisible = foot.top < wh;
+        // Zeige sobald Chips-Oberkante 150px vom oberen Rand ist (früh triggern)
+        var pastChips = chips.top < 150;
+        // Verstecke wenn Footer ins Bild kommt
+        var footerVisible = foot.top < wh + 100;
         
         if (pastChips && !footerVisible) {
           floatCta.classList.add('tfc-visible');
