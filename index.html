@@ -893,11 +893,15 @@
       }
       .leistungs-kachel:active { background: var(--olive-soft) !important; }
       .kachel-arrow {
-        font-size: 0.85rem !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 30px !important;
+        height: 20px !important;
+        border-radius: 20px !important;
+        background: rgba(110,145,98,0.12) !important;
         color: var(--olive-haupt) !important;
-        font-weight: 700 !important;
-        margin-top: auto !important;
-        line-height: 1 !important;
+        margin-top: 2px !important;
       }
       #demo-buttons-wrap { display: none !important; }
       .service-item-title { font-size: 0.95rem !important; }
@@ -1043,8 +1047,8 @@
       .team-sec { padding: 24px 0; }
       .team-grid { grid-template-columns: 1fr !important; gap: 12px; }
       .team-grid > div:first-child { padding: 0; }
-      .team-grid > div:first-child h2 { font-size: 1.45rem !important; margin-bottom: 6px !important; line-height: 1.2; }
-      .team-grid > div:first-child p { font-size: 0.82rem; }
+      .team-grid > div:first-child h2 { font-size: 1.3rem !important; margin-bottom: 4px !important; line-height: 1.2; }
+      .team-grid > div:first-child p { display: none !important; }
       .team-members { margin-top: 8px; display: grid !important; grid-template-columns: 1fr !important; gap: 10px !important; }
       .member-card { padding: 14px 16px !important; border-radius: 12px; display: flex !important; flex-direction: row !important; gap: 14px !important; align-items: flex-start !important; }
       .member-avatar-wrap { flex-shrink: 0; }
@@ -1116,6 +1120,8 @@
       .modal-body { padding: 16px 20px 20px !important; flex: 1 !important; overflow-y: scroll !important; -webkit-overflow-scrolling: touch !important; overscroll-behavior: contain !important; touch-action: pan-y !important; will-change: scroll-position; }
       .modal-footer-btns { padding: 12px 20px max(20px, env(safe-area-inset-bottom)) !important; flex-shrink: 0 !important; background: #ffffff !important; border-top: 1px solid var(--olive-soft) !important; }
       .m-form-row, .radio-grid-2 { grid-template-columns: 1fr !important; }
+      .m-form-row .m-form-group { min-width: 0; overflow: hidden; }
+      .m-form-row input[type="date"].m-form-input { width: 100% !important; max-width: 100% !important; min-width: 0 !important; font-size: 0.84rem !important; padding: 9px 8px !important; }
     }
 
         /* ==========================================================================
@@ -1272,7 +1278,7 @@
     .m-form-group { margin-bottom: 15px; }
     .m-form-label { display: block; font-size: 0.71rem; font-weight: 700; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.07em; }
     .m-form-input { width: 100%; max-width: 100%; padding: 10px 13px; border: 1px solid rgba(110,145,98,0.25); border-radius: 10px; font-family: var(--font-sans); font-size: 0.87rem; color: var(--text); background: var(--bg); transition: border-color 0.2s, box-shadow 0.2s; outline: none; box-sizing: border-box; }
-    input[type="date"].m-form-input { width: 100% !important; max-width: 100% !important; min-width: 0 !important; }
+    input[type="date"].m-form-input { width: 100% !important; max-width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; }
     .m-form-input:focus { border-color: var(--olive-haupt); box-shadow: 0 0 0 3px rgba(110,145,98,0.12); background: #fff; }
     .m-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
     .radio-cards-grid { display: grid; gap: 8px; }
@@ -1483,17 +1489,17 @@
         <a href="#leistungen" onclick="openLeistung(0)" class="leistungs-kachel">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--olive-haupt)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6 6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>
           <span>Hausärztlich</span>
-          <span class="kachel-arrow">∨</span>
+          <span class="kachel-arrow"><svg width="13" height="8" viewBox="0 0 13 8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,1.5 6.5,6.5 11.5,1.5"/></svg></span>
         </a>
         <a href="#leistungen" onclick="openLeistung(1)" class="leistungs-kachel">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--olive-haupt)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
           <span>Ernährung</span>
-          <span class="kachel-arrow">∨</span>
+          <span class="kachel-arrow"><svg width="13" height="8" viewBox="0 0 13 8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,1.5 6.5,6.5 11.5,1.5"/></svg></span>
         </a>
         <a href="#leistungen" onclick="openLeistung(2)" class="leistungs-kachel">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--olive-haupt)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           <span>Prävention</span>
-          <span class="kachel-arrow">∨</span>
+          <span class="kachel-arrow"><svg width="13" height="8" viewBox="0 0 13 8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,1.5 6.5,6.5 11.5,1.5"/></svg></span>
         </a>
       </div>
     </div>
@@ -3022,7 +3028,6 @@ function filterStandort(which) {
       <button onclick="openTerminModal(); toggleMobMenu();" class="btn-smart dark" style="width:100%;justify-content:center;">
         <span>Termin buchen</span><span class="btn-circle">&#8594;</span>
       </button>
-      <a href="tel:+493943481330" style="display:block;text-align:center;margin-top:10px;font-size:0.84rem;color:var(--text-muted);text-decoration:none;">&#128222; 03943 / 48 13 3</a>
     </div>
     <ul class="mob-links">
       <li><a href="#kompass" onclick="toggleMobMenu()">Anliegen-Check</a></li>
