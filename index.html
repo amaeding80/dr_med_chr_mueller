@@ -896,30 +896,38 @@
         line-height: 1 !important;
       }
       #demo-buttons-wrap { display: none !important; }
-      .service-toggle-icon {
-        font-size: 1.3rem !important;
-        line-height: 1 !important;
-        font-weight: 400 !important;
-      }
+      .service-toggle-icon { display: none !important; }
       .compass-btn-desc { display: none !important; }
+      .compass-options {
+        display: flex !important;
+        flex-direction: column !important;
+        overflow-x: visible !important;
+        scroll-snap-type: none !important;
+        gap: 8px !important;
+        padding-bottom: 0 !important;
+        grid-template-columns: unset !important;
+      }
+      #swipe-hint-kompass { display: none !important; }
       .compass-btn {
-        padding: 12px 16px !important;
-        flex: 0 0 60% !important;
+        width: 100% !important;
+        flex: none !important;
         background: transparent !important;
-        border: 1.5px solid rgba(110,145,98,0.25) !important;
-        border-radius: 50px !important;
-        text-align: center !important;
+        border: 1px solid rgba(110,145,98,0.22) !important;
+        border-radius: 9px !important;
+        padding: 11px 14px !important;
+        text-align: left !important;
         display: flex !important;
         align-items: center !important;
-        justify-content: center !important;
+        justify-content: space-between !important;
         box-shadow: none !important;
-      }
-      .compass-btn:hover, .compass-btn:active {
-        background: var(--olive-soft) !important;
-        border-color: var(--olive-haupt) !important;
         transform: none !important;
+        scroll-snap-align: none !important;
+        min-width: 0 !important;
       }
-      .compass-btn-title { font-size: 0.95rem !important; font-weight: 600 !important; }
+      .compass-btn:active { background: var(--olive-soft) !important; border-color: var(--olive-haupt) !important; }
+      .compass-btn::after { content: "›"; color: var(--olive-haupt); font-size: 1.1rem; font-weight: 400; flex-shrink: 0; margin-left: 8px; }
+      .compass-btn-title { font-size: 0.92rem !important; font-weight: 600 !important; color: var(--text) !important; }
+      .compass-btn-desc { display: none !important; }
 
       /* ── 4. LEISTUNGS-CHIPS (Swipe-Container, andere Bereiche) ── */
       .chips-row {
@@ -1256,7 +1264,8 @@
     .step-intro { font-size: 0.87rem; font-weight: 600; color: var(--text); margin-bottom: 11px; }
     .m-form-group { margin-bottom: 15px; }
     .m-form-label { display: block; font-size: 0.71rem; font-weight: 700; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.07em; }
-    .m-form-input { width: 100%; padding: 10px 13px; border: 1px solid rgba(110,145,98,0.25); border-radius: 10px; font-family: var(--font-sans); font-size: 0.87rem; color: var(--text); background: var(--bg); transition: border-color 0.2s, box-shadow 0.2s; outline: none; box-sizing: border-box; }
+    .m-form-input { width: 100%; max-width: 100%; padding: 10px 13px; border: 1px solid rgba(110,145,98,0.25); border-radius: 10px; font-family: var(--font-sans); font-size: 0.87rem; color: var(--text); background: var(--bg); transition: border-color 0.2s, box-shadow 0.2s; outline: none; box-sizing: border-box; }
+    input[type="date"].m-form-input { width: 100% !important; max-width: 100% !important; min-width: 0 !important; }
     .m-form-input:focus { border-color: var(--olive-haupt); box-shadow: 0 0 0 3px rgba(110,145,98,0.12); background: #fff; }
     .m-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
     .radio-cards-grid { display: grid; gap: 8px; }
@@ -2926,12 +2935,8 @@ function filterStandort(which) {
         <div id="rz-med-container"></div>
         <button class="add-med-btn-m" id="rz-add-btn" onclick="addMedRow()">+ Weiteres Medikament hinzuf&#252;gen</button>
 
-        <div class="m-form-group" style="margin-top:16px;">
-          <label class="m-form-label">Abholstandort</label>
-          <div class="standort-toggle-m" style="max-width:280px;">
-            <button class="standort-btn-m active" id="rz-btn-wn" onclick="switchRezStandort('wn')">Wernigerode</button>
-            <button class="standort-btn-m" id="rz-btn-ils" onclick="switchRezStandort('ils')">Ilsenburg</button>
-          </div>
+        <div class="info-box-m" style="margin-top:16px;">
+          Das Rezept wird auf Ihre elektronische Gesundheitskarte (eGK) übertragen. Bitte beachten Sie, dass dies einige Stunden dauern kann.
         </div>
 
         <div class="m-checkbox-row">
