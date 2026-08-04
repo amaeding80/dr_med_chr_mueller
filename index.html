@@ -1118,7 +1118,7 @@
         overflow: hidden !important;
       }
       .modal-header { padding: 18px 20px 12px; flex-shrink: 0; }
-      .modal-body { padding: 16px 20px 20px !important; flex: 1 !important; overflow-y: scroll !important; -webkit-overflow-scrolling: touch !important; overscroll-behavior: contain !important; touch-action: pan-y !important; will-change: scroll-position; }
+      .modal-body { padding: 16px 20px 20px !important; flex: 1 !important; overflow-y: scroll !important; overflow-x: hidden !important; -webkit-overflow-scrolling: touch !important; overscroll-behavior: contain !important; touch-action: pan-y !important; will-change: scroll-position; }
       .modal-footer-btns { padding: 12px 20px max(20px, env(safe-area-inset-bottom)) !important; flex-shrink: 0 !important; background: #ffffff !important; border-top: 1px solid var(--olive-soft) !important; flex-direction: column !important; align-items: stretch !important; gap: 8px !important; }
       .modal-footer-btns > span { display: none !important; }
       /* Rezept-Senden Button: schlanker Textlink auf Mobile */
@@ -1134,7 +1134,7 @@
         width: 100% !important;
         justify-content: center !important;
       }
-            .m-form-row, .radio-grid-2 { grid-template-columns: 1fr !important; }
+            .m-form-row, .radio-grid-2 { grid-template-columns: 1fr !important; overflow: hidden !important; max-width: 100% !important; }
       .m-form-row .m-form-group { min-width: 0; overflow: hidden; }
 
     }
@@ -2889,8 +2889,7 @@ function filterStandort(which) {
               <input type="text" class="m-form-input" id="tm-nachname" placeholder="Mustermann" autocomplete="family-name">
             </div>
           </div>
-          <div class="m-form-row">
-            <div class="m-form-group">
+          <div class="m-form-group">
               <label class="m-form-label">Geburtsdatum</label>
               <input type="date" class="m-form-input" id="tm-gebdatum">
             </div>
@@ -2974,8 +2973,7 @@ function filterStandort(which) {
             <input type="text" class="m-form-input" id="rz-nachname" placeholder="Mustermann" autocomplete="family-name">
           </div>
         </div>
-        <div class="m-form-row">
-          <div class="m-form-group">
+        <div class="m-form-group">
             <label class="m-form-label">Geburtsdatum</label>
             <input type="date" class="m-form-input" id="rz-gebdatum">
           </div>
@@ -2983,7 +2981,6 @@ function filterStandort(which) {
             <label class="m-form-label">Krankenkasse</label>
             <input type="text" class="m-form-input" id="rz-kasse" placeholder="z.B. AOK, TK &#8230;">
           </div>
-        </div>
         <div class="m-form-row">
           <div class="m-form-group">
             <label class="m-form-label">Telefon</label>
