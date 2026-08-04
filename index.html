@@ -471,7 +471,7 @@
     }
     .compass-title { font-family: var(--font-serif); font-size: 2.2rem; color: var(--olive-haupt); margin-bottom: 8px; }
     .compass-sub { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 28px; }
-    .compass-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .compass-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .compass-btn { background: var(--bg); border: 1px solid rgba(110,145,98,0.12); border-radius: var(--radius-md); padding: 22px 18px; text-align: left; cursor: pointer; transition: all .25s; }
     .compass-btn:hover { background: var(--olive-soft); border-color: var(--olive-haupt); transform: translateY(-2px); }
     .compass-btn-title { font-family: var(--font-serif); font-size: 1.25rem; color: var(--olive-haupt); margin-bottom: 6px; display: block; }
@@ -747,7 +747,7 @@
       .hero-title-main { font-size: clamp(1.9rem, 2.8vw, 2.4rem); }
       .hero-lead-text { font-size: 0.88rem; }
       .slot-card { bottom: 18px; right: 32px; width: 285px; }
-      .compass-options { grid-template-columns: repeat(4, 1fr); }
+      .compass-options { grid-template-columns: repeat(3, 1fr); }
       .journal-grid { grid-template-columns: 1fr 1fr; }
     }
 
@@ -1119,9 +1119,22 @@
       .modal-header { padding: 18px 20px 12px; flex-shrink: 0; }
       .modal-body { padding: 16px 20px 20px !important; flex: 1 !important; overflow-y: scroll !important; -webkit-overflow-scrolling: touch !important; overscroll-behavior: contain !important; touch-action: pan-y !important; will-change: scroll-position; }
       .modal-footer-btns { padding: 12px 20px max(20px, env(safe-area-inset-bottom)) !important; flex-shrink: 0 !important; background: #ffffff !important; border-top: 1px solid var(--olive-soft) !important; }
-      .m-form-row, .radio-grid-2 { grid-template-columns: 1fr !important; }
+      /* Rezept-Senden Button: schlanker Textlink auf Mobile */
+      .modal-footer-btns .btn-custom.btn-custom-dark {
+        background: transparent !important;
+        color: var(--olive-haupt) !important;
+        border: 1px solid rgba(110,145,98,0.35) !important;
+        box-shadow: none !important;
+        font-size: 0.85rem !important;
+        padding: 10px 18px !important;
+        border-radius: 9px !important;
+        font-weight: 600 !important;
+        width: 100% !important;
+        justify-content: center !important;
+      }
+            .m-form-row, .radio-grid-2 { grid-template-columns: 1fr !important; }
       .m-form-row .m-form-group { min-width: 0; overflow: hidden; }
-      .m-form-row input[type="date"].m-form-input { width: 100% !important; max-width: 100% !important; min-width: 0 !important; font-size: 0.84rem !important; padding: 9px 8px !important; }
+      .m-form-row input[type="date"].m-form-input { width: 100% !important; max-width: 100% !important; min-width: 0 !important; padding: 10px 13px !important; font-size: 0.87rem !important; }
     }
 
         /* ==========================================================================
