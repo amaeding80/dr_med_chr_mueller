@@ -205,7 +205,7 @@
       color: var(--olive-haupt); line-height: 1;
     }
     .hero-stat-label {
-      font-size: 0.72rem; font-weight: 600;
+      font-size: 0.78rem; font-weight: 600;
       text-transform: uppercase; letter-spacing: 0.08em;
       color: var(--text-muted);
     }
@@ -1505,7 +1505,7 @@
       top: auto;
       right: auto;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: stretch;
       gap: 8px;
       z-index: 600;
       opacity: 0;
@@ -1522,8 +1522,8 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: 10px;
-      padding: 13px 20px 13px 15px;
+      gap: 12px;
+      padding: 16px 24px 16px 18px;
       background: rgba(255,255,255,0.97);
       border: 1px solid rgba(110,145,98,0.25);
       border-radius: 50px;
@@ -1531,19 +1531,20 @@
       cursor: pointer;
       white-space: nowrap;
       width: 100%;
+      min-width: 210px;
       transition: background 0.2s, box-shadow 0.2s;
     }
     .tfc-btn:hover { background: var(--olive-soft); box-shadow: 0 6px 22px rgba(0,0,0,0.18); }
     .tfc-city {
       font-family: var(--font-serif);
-      font-size: 0.95rem;
+      font-size: 1.05rem;
       font-weight: 600;
       color: var(--olive-haupt);
       line-height: 1;
       writing-mode: horizontal-tb;
     }
     .tfc-label {
-      font-size: 0.72rem;
+      font-size: 0.78rem;
       font-weight: 700;
       letter-spacing: 0.07em;
       text-transform: uppercase;
@@ -1970,13 +1971,13 @@
     <!-- TABLET FLOATING CTA (Q2+Q3 only, JS-controlled) -->
   <div class="tablet-float-cta" id="tablet-float-cta" aria-hidden="true">
     <button class="tfc-btn" onclick="openTerminModal(null,'wernigerode')" aria-label="Termin Wernigerode buchen">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
       <span class="tfc-city">Wernige­rode</span>
       <span class="tfc-label">Termin</span>
     </button>
     <div class="tfc-divider"></div>
     <button class="tfc-btn" onclick="openTerminModal(null,'ilsenburg')" aria-label="Termin Ilsenburg buchen">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
       <span class="tfc-city">Ilsen­burg</span>
       <span class="tfc-label">Termin</span>
     </button>
@@ -3070,7 +3071,7 @@ function filterStandort(which) {
             <div class="radio-cards-grid" id="rc-raucher" style="grid-template-columns:repeat(3,1fr);">
               <div class="radio-card-m" onclick="selectRadioM(this,'rc-raucher')" data-value="nein"><div class="radio-dot-m"></div><div><div class="radio-lbl">Nein</div></div></div>
               <div class="radio-card-m" onclick="selectRadioM(this,'rc-raucher')" data-value="ja"><div class="radio-dot-m"></div><div><div class="radio-lbl">Ja</div></div></div>
-              <div class="radio-card-m" onclick="selectRadioM(this,'rc-raucher')" data-value="ex"><div class="radio-dot-m"></div><div><div class="radio-lbl">Ex-Raucher</div></div></div>
+              <div class="radio-card-m" onclick="selectRadioM(this,'rc-raucher')" data-value="ex"><div class="radio-dot-m"></div><div><div class="radio-lbl">Ich habe aufgehört</div></div></div>
             </div>
           </div>
           <div class="m-form-group">
