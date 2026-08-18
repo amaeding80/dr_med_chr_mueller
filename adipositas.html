@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adipositas &amp; Gewichtsmedizin | Land-Harz-Praxis Dr. med. Christian Müller</title>
+  <meta name="description" content="Ärztliche Adipositastherapie im Harz: Gewichtsmedizin, GLP-1-Therapie und strukturierte Begleitung. Dr. med. Christian Müller, Wernigerode.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.landharzpraxis.de/adipositas">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      --bg:#F7F5F0;--surface:#FFFFFF;
+      --olive-haupt:#384E33;--olive-dark:#2A3A26;--olive-light:#5E7A58;--olive-soft:#EDF2EA;
+      --harz-sand:#D5CBBF;--harz-sand-soft:#F2ECE4;
+      --terracotta:#A36F5A;--terracotta-soft:#F8F1EE;--terracotta-dark:#9A6E5E;
+      --text:#212522;--text-muted:#535B54;
+      --radius-sm:8px;--radius-md:14px;--radius-lg:24px;
+      --font-serif:'Cormorant Garamond',Georgia,serif;
+      --font-sans:'Plus Jakarta Sans',sans-serif;
+    }
+    html{scroll-behavior:smooth;overflow-x:hidden;}
+    h1,h2,.hero-title-main,.sec-title{font-family:var(--font-serif) !important;font-weight:600 !important;letter-spacing:-0.01em;}.journal-title,.compass-btn-title,.d-title,.service-item-title,.modal-title,.wt-titel{font-family:var(--font-sans) !important;font-weight:600 !important;letter-spacing:-0.01em;}
+    body{background-color:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:1.05rem;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+    .container{width:100%;max-width:1220px;margin:0 auto;padding:0 28px;}
+
+    .btn-smart{display:inline-flex;align-items:center;gap:16px;background:var(--surface);border:1px solid rgba(56,78,51,0.2);padding:10px 12px 10px 22px;border-radius:50px;text-decoration:none;color:var(--text);font-family:var(--font-sans);font-size:0.84rem;font-weight:600;cursor:pointer;transition:all 0.35s cubic-bezier(0.16,1,0.3,1);white-space:nowrap;}
+    .btn-smart .btn-circle{width:32px;height:32px;border-radius:50%;background:var(--olive-soft);color:var(--olive-haupt);display:flex;align-items:center;justify-content:center;transition:all 0.35s cubic-bezier(0.16,1,0.3,1);}
+    .btn-smart:hover{border-color:var(--olive-haupt);background:#fff;transform:translateY(-2px);box-shadow:0 8px 24px rgba(56,78,51,0.12);}
+    .btn-smart:hover .btn-circle{background:var(--olive-haupt);color:#fff;transform:translateX(3px);}
+    .btn-smart.dark{background:var(--olive-haupt);color:#fff;border-color:var(--olive-haupt);}
+    .btn-smart.dark .btn-circle{background:rgba(255,255,255,0.15);color:#fff;}
+    .btn-smart.dark:hover{background:var(--olive-dark);border-color:var(--olive-dark);}
+
+    header{padding:18px 0;position:sticky;top:0;background:rgba(248,247,243,0.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:100;border-bottom:1px solid rgba(56,78,51,0.1);}
+    .nav-inner{display:flex;justify-content:space-between;align-items:center;gap:20px;}
+    .brand-mark{font-family:var(--font-serif);font-size:1.45rem;font-weight:700;color:var(--olive-haupt);text-decoration:none;line-height:1.1;white-space:nowrap;display:inline-flex;align-items:center;gap:11px;}
+    .brand-mark span{display:block;font-family:var(--font-sans);font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--terracotta);margin-top:2px;}
+    .nav-menu{display:flex;gap:24px;list-style:none;align-items:center;margin:0;padding:0;}
+    .nav-menu a{text-decoration:none;color:var(--text);font-size:0.92rem;font-weight:500;white-space:nowrap;transition:color .2s;}
+    .nav-menu a:hover,.nav-menu a.aktiv{color:var(--olive-haupt);}
+    .nav-right{display:flex;align-items:center;gap:14px;}
+    .live-status-pill{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid rgba(56,78,51,0.15);padding:6px 14px;border-radius:50px;font-size:0.82rem;font-weight:600;color:var(--olive-haupt);white-space:nowrap;}
+    .pulse-dot{width:8px;height:8px;background-color:#4E8752;border-radius:50%;flex-shrink:0;}
+    .burger-btn{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;border-radius:8px;transition:background 0.2s;}
+    .burger-btn:hover{background:var(--olive-soft);}
+    .nav-termin-btn { font-size: 0.88rem; font-weight: 600; color: var(--olive-haupt); text-decoration: none; white-space: nowrap; transition: opacity 0.2s; }
+    .nav-termin-btn:hover { opacity: 0.7; }
+    .burger-line{display:block;width:24px;height:2px;background:var(--text);border-radius:2px;transition:all 0.3s;}
+    .burger-btn.offen .burger-line:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .burger-btn.offen .burger-line:nth-child(2){opacity:0;}
+    .burger-btn.offen .burger-line:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:200;}
+    .mob-overlay.offen{display:block;}
+    .mob-menu{position:fixed;top:0;right:0;width:min(320px,85vw);height:100vh;background:#fff;z-index:300;transform:translateX(100%);transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);overflow-y:auto;}
+    .mob-menu.offen{transform:translateX(0);}
+    .mob-menu-head{display:flex;justify-content:space-between;align-items:center;padding:20px 22px;border-bottom:1px solid rgba(56,78,51,0.1);}
+    .mob-close{background:none;border:none;cursor:pointer;font-size:1.1rem;color:var(--text-muted);padding:4px;}
+    .mob-links{list-style:none;padding:12px 0;}
+    .mob-links li a{display:block;padding:13px 22px;color:var(--text);text-decoration:none;font-size:1rem;font-weight:500;border-bottom:1px solid rgba(56,78,51,0.06);transition:color 0.2s,background 0.2s;}
+    .mob-links li a:hover,.mob-links li a.aktiv{color:var(--olive-haupt);background:var(--olive-soft);}
+    .mob-menu-cta{padding:16px 22px 14px;border-bottom:1px solid rgba(56,78,51,0.1);}
+    .mob-status-row{padding:10px 22px 8px;border-bottom:1px solid rgba(56,78,51,0.08);display:flex;align-items:center;gap:9px;}
+
+    /* SEITEN-KOPF — Terracotta-Ton für Adipositas-Seite */
+    .seiten-kopf{
+      background:linear-gradient(160deg, #FFFFFF 0%, #F7F8F5 55%, #F0F2EC 100%);
+      padding:64px 0 0;
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(56,78,51,0.1);
+    }
+    .seiten-kopf::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle, rgba(56,78,51,0.06) 0%, transparent 70%);
+      pointer-events:none;
+    }
+    .kopf-inner{position:relative;z-index:1;padding-bottom:52px;}
+    .breadcrumb{font-size:0.75rem;color:var(--text-muted);margin-bottom:18px;display:flex;align-items:center;gap:6px;}
+    .breadcrumb a{color:var(--olive-haupt);text-decoration:none;}
+    .breadcrumb a:hover{color:#fff;}
+    .breadcrumb-sep{color:rgba(56,78,51,0.3);}
+    .page-tag{display:inline-block;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--terracotta);background:var(--terracotta-soft);border:1px solid rgba(163,111,90,0.22);padding:5px 14px;border-radius:20px;margin-bottom:16px;}
+    .seiten-kopf h1{font-family:var(--font-serif);font-size:clamp(2.2rem,4.5vw,3.6rem);font-weight:400;color:var(--olive-haupt);line-height:1.15;margin-bottom:16px;}
+    .seiten-kopf h1 em{font-style:italic;color:var(--terracotta);}
+    .seiten-kopf .lead{font-size:1.05rem;color:var(--text-muted);max-width:620px;line-height:1.75;}
+    .harz-welle{display:block;width:100%;height:52px;background:var(--bg);clip-path:ellipse(55% 100% at 50% 100%);margin-top:-2px;}
+
+    /* FACT-LEISTE */
+    .fact-leiste{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:1px;
+      background:rgba(56,78,51,0.12);
+      border:1px solid rgba(56,78,51,0.12);
+      border-radius:var(--radius-md);
+      overflow:hidden;
+      margin:48px 0 52px;
+    }
+    .fact-item{
+      background:var(--surface);
+      padding:24px 20px;
+      text-align:center;
+    }
+    .fact-zahl{font-family:var(--font-serif);font-size:2.6rem;font-weight:700;color:var(--terracotta);line-height:1;margin-bottom:6px;}
+    .fact-label{font-size:0.78rem;color:var(--text-muted);font-weight:500;line-height:1.4;}
+
+    /* INHALT */
+    .inhalt{padding:0 0 72px;}
+    .inhalt-grid{display:grid;grid-template-columns:1fr 340px;gap:64px;align-items:start;}
+    .prose h2{font-family:var(--font-serif);font-size:clamp(1.6rem,2.5vw,2.2rem);color:var(--olive-haupt);margin-bottom:16px;font-weight:400;line-height:1.2;}
+    .prose h3{font-family:var(--font-serif);font-size:1.35rem;color:var(--text);margin-bottom:10px;font-weight:600;margin-top:36px;}
+    .prose p{color:var(--text-muted);margin-bottom:20px;line-height:1.8;}
+    .leistungs-liste{list-style:none;margin:20px 0 28px;}
+    .leistungs-liste li{padding:10px 0;border-bottom:1px solid rgba(56,78,51,0.1);color:var(--text-muted);font-size:1rem;display:flex;align-items:flex-start;gap:12px;}
+    .leistungs-liste li:last-child{border-bottom:none;}
+    .leistungs-liste li::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--olive-haupt);flex-shrink:0;margin-top:10px;}
+
+    .glp1-box{
+      background:linear-gradient(135deg,#FAF3F0 0%,#FFF8F6 100%);
+      border:1px solid rgba(163,111,90,0.25);
+      border-radius:var(--radius-md);
+      padding:28px;
+      margin:32px 0;
+    }
+    .glp1-box h3{font-family:var(--font-serif);font-size:1.3rem;color:var(--terracotta-dark);margin-bottom:10px;font-weight:600;}
+    .glp1-box p{color:var(--text-muted);font-size:0.95rem;line-height:1.75;margin-bottom:12px;}
+    .glp1-box p:last-child{margin-bottom:0;}
+
+    .sidebar{display:flex;flex-direction:column;gap:20px;}
+    .sidebar-card{background:var(--surface);border:1px solid rgba(56,78,51,0.12);border-radius:var(--radius-md);padding:24px;}
+    .sidebar-card h4{font-family:var(--font-serif);font-size:1.15rem;color:var(--olive-haupt);margin-bottom:14px;}
+    .sidebar-link-box{background:var(--olive-soft);border:1px solid rgba(56,78,51,0.15);}
+    .sidebar-link-box p{font-size:0.9rem;color:var(--olive-dark);margin-bottom:14px;line-height:1.6;}
+    .schritt-liste{list-style:none;counter-reset:schritte;}
+    .schritt-liste li{counter-increment:schritte;display:flex;align-items:flex-start;gap:14px;padding:10px 0;border-bottom:1px solid rgba(56,78,51,0.08);font-size:0.88rem;color:var(--text-muted);}
+    .schritt-liste li:last-child{border-bottom:none;}
+    .schritt-liste li::before{content:counter(schritte);width:22px;height:22px;border-radius:50%;background:var(--terracotta);color:#fff;font-size:0.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+    .wochen-cta{
+      background:linear-gradient(135deg,var(--terracotta) 0%,var(--terracotta-dark) 100%);
+      border-radius:var(--radius-md);
+      padding:24px;
+      color:#fff;
+    }
+    .wochen-cta h4{font-family:var(--font-serif);font-size:1.15rem;color:#fff;margin-bottom:8px;}
+    .wochen-cta p{font-size:0.88rem;color:rgba(255,255,255,0.8);margin-bottom:16px;line-height:1.6;}
+    .wochen-cta .btn-smart{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.3);color:#fff;}
+    .wochen-cta .btn-smart .btn-circle{background:rgba(255,255,255,0.2);color:#fff;}
+    .wochen-cta .btn-smart:hover{background:rgba(255,255,255,0.25);transform:translateY(-2px);}
+
+    footer{background:#ECE8E0;border-top:1px solid rgba(56,78,51,0.10);padding:16px 0;font-size:0.8rem;color:var(--text-muted);}
+    .footer-slim-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+    .footer-brand-inline{color:var(--olive-haupt);}
+    .footer-links-inline{display:flex;gap:16px;align-items:center;}
+    .footer-links-inline a{color:var(--text-muted);text-decoration:none;transition:color 0.2s;}
+    .footer-links-inline a:hover{color:var(--olive-haupt);}
+    @media(max-width:679px){.footer-slim-inner{flex-direction:column;text-align:center;gap:6px;}}
+
+    @media (max-width:1024px){
+      .nav-menu,.nav-right{display:none;}
+      .burger-btn{display:flex!important;}
+      .fact-leiste{grid-template-columns:1fr 1fr;}
+      .fact-leiste .fact-item:last-child{grid-column:1/-1;}
+    }
+    @media (max-width:1024px) and (orientation:portrait){
+      .inhalt-grid{grid-template-columns:1fr;}
+      .sidebar{order:-1;}
+    }
+    @media (max-width:767px){
+      .inhalt-grid{grid-template-columns:1fr;}
+      .fact-leiste{grid-template-columns:1fr;}
+      .fact-leiste .fact-item:last-child{grid-column:auto;}
+      .inhalt{padding:0 0 48px;}
+      .sidebar{order:-1;}
+      .container{padding:0 20px;}
+      .seiten-kopf{padding:48px 0 0;}
+    }
+  
+    /* Kiesel-Link — Pill antwortet auf Hover */
+    .organisch-link{
+      display:inline-block;
+      color:var(--olive-haupt); font-weight:600;
+      text-decoration:none;
+      padding:4px 12px;
+      background:rgba(56,78,51,0.08);
+      border-radius:6px;
+      line-height:1.5;
+      transition:background 0.25s ease, color 0.25s ease, border-radius 0.35s ease;
+    }
+    .organisch-link:hover{
+      background:rgba(56,78,51,0.16);
+      color:var(--olive-dark);
+      border-radius:52% 48% 44% 56% / 58% 46% 54% 42%;
+      text-decoration:none;
+    }
+    
+    /* ====== MODAL + TERMIN ====== */
+    /* ── Modal: Hintergrund-Scroll sperren (iOS Safari Fix) ── */
+    body.modal-open {
+      overflow: hidden !important;
+      position: fixed !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .btn-custom {
+      display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px;
+      border-radius: 50px; font-family: var(--font-sans); font-size: 0.83rem; font-weight: 700;
+      cursor: pointer; border: 1.5px solid var(--olive-haupt); color: var(--olive-haupt);
+      background: transparent; transition: all 0.3s ease; text-decoration: none;
+      position: relative; overflow: hidden;
+    }
+    .btn-custom::before { content: ''; position: absolute; inset: 0; background: var(--olive-haupt); height: 0; transition: height 0.3s ease; z-index: -1; }
+    .btn-custom:hover { color: #FFFFFF !important; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(56,78,51,0.25); }
+    .btn-custom:hover::before { height: 100%; }
+    .btn-custom-dark { background: var(--olive-haupt); color: #FFFFFF; border-color: var(--olive-haupt); }
+    .btn-custom-dark::before { background: var(--olive-dark); }
+    /* ====== MODAL SYSTEM ====== */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(20,28,20,0.62);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-overlay.active ~ .mobile-bottom-bar,
+    body.modal-open .mobile-bottom-bar { display: none !important; }
+    .modal-box {
+      background: #FFFFFF; border-radius: 24px; width: 100%; max-width: 580px;
+      max-height: 90vh; overflow: hidden; display: flex; flex-direction: column;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.22); position: relative;
+    }
+    .modal-header {
+      padding: 26px 30px 18px; border-bottom: 1px solid var(--olive-soft);
+      display: flex; justify-content: space-between; align-items: flex-start;
+      position: sticky; top: 0; background: #fff; z-index: 2; border-radius: 24px 24px 0 0;
+    }
+    .modal-step-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.12em; color: var(--terracotta); margin-bottom: 3px; }
+    .modal-title { font-family: var(--font-serif); font-size: 1.65rem; color: var(--olive-haupt); margin: 0; }
+    .modal-close { background: none; border: none; cursor: pointer; color: var(--text-muted); width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; flex-shrink: 0; font-size: 1.3rem; line-height: 1; }
+    .modal-close:hover { background: var(--olive-soft); color: var(--text); }
+    .modal-body { padding: 22px 30px 24px; flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .modal-steps { display: flex; gap: 6px; margin-bottom: 16px; }
+    .step-dot { height: 4px; flex: 1; border-radius: 2px; background: var(--olive-soft); transition: background 0.35s; }
+    .step-dot.active { background: var(--olive-haupt); }
+    .step-dot.done { background: var(--olive-light); }
+    .step-intro { font-size: 0.87rem; font-weight: 600; color: var(--text); margin-bottom: 11px; }
+    .m-form-group { margin-bottom: 15px; }
+    .m-form-label { display: block; font-size: 0.71rem; font-weight: 700; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.07em; }
+    .m-form-input { width: 100%; max-width: 100%; padding: 10px 13px; border: 1px solid rgba(56,78,51,0.25); border-radius: 10px; font-family: var(--font-sans); font-size: 0.87rem; color: var(--text); background: var(--bg); transition: border-color 0.2s, box-shadow 0.2s; outline: none; box-sizing: border-box; }
+    .m-form-input:focus { border-color: var(--olive-haupt); box-shadow: 0 0 0 3px rgba(56,78,51,0.12); background: #fff; }
+    .m-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+    .radio-cards-grid { display: grid; gap: 8px; }
+    .radio-grid-2 { grid-template-columns: 1fr 1fr; }
+    .radio-card-m { display: flex; align-items: flex-start; gap: 11px; padding: 12px 13px; border: 1px solid rgba(56,78,51,0.18); border-radius: 12px; cursor: pointer; transition: all 0.2s; background: var(--bg); user-select: none; }
+    .radio-card-m:hover { border-color: var(--olive-haupt); background: var(--olive-soft); }
+    .radio-card-m.selected { border-color: var(--olive-haupt); background: var(--olive-soft); }
+    .radio-dot-m { width: 17px; height: 17px; border-radius: 50%; border: 2px solid rgba(56,78,51,0.3); flex-shrink: 0; margin-top: 1px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+    .radio-card-m.selected .radio-dot-m { border-color: var(--olive-haupt); background: var(--olive-haupt); }
+    .radio-card-m.selected .radio-dot-m::after { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #fff; display: block; }
+    .radio-lbl { font-size: 0.85rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+    .radio-desc-m { font-size: 0.73rem; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
+    .standort-toggle-m { display: flex; border: 1px solid rgba(56,78,51,0.2); border-radius: 50px; overflow: hidden; margin-bottom: 10px; }
+    .standort-btn-m { flex: 1; padding: 9px 14px; font-size: 0.79rem; font-weight: 700; border: none; background: transparent; cursor: pointer; color: var(--text-muted); transition: all 0.2s; font-family: var(--font-sans); }
+    .standort-btn-m.active { background: var(--olive-haupt); color: #fff; }
+    .slot-day-wrap { margin-bottom: 15px; }
+    .slot-day-lbl { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin-bottom: 7px; text-transform: uppercase; letter-spacing:0.12em; }
+    .slot-chips-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+    .slot-chip { padding: 7px 13px; border: 1px solid rgba(56,78,51,0.22); border-radius: 50px; font-size: 0.79rem; font-weight: 600; cursor: pointer; transition: all 0.2s; background: #fff; color: var(--text); font-family: var(--font-sans); }
+    .slot-chip:hover:not(.busy) { border-color: var(--olive-haupt); background: var(--olive-soft); }
+    .slot-chip.selected { background: var(--olive-haupt); color: #fff; border-color: var(--olive-haupt); }
+    .slot-chip.busy { background: var(--bg); color: #ccc; border-color: #eee; cursor: not-allowed; text-decoration: line-through; font-weight: 400; }
+    .slots-legend { display: flex; gap: 14px; font-size: 0.71rem; color: var(--text-muted); margin-bottom: 12px; align-items: center; }
+    .leg-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 4px; }
+    .modal-footer-btns { display: flex; justify-content: space-between; align-items: center; padding: 13px 30px 16px; border-top: 1px solid var(--olive-soft); flex-shrink: 0; background: #ffffff; }
+    .success-screen-m { text-align: center; padding: 12px 0; }
+    .success-icon-m { width: 64px; height: 64px; background: #E8F5E9; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+    .summary-box-m { background: var(--bg); border-radius: 12px; padding: 16px; text-align: left; margin: 18px 0; }
+    .summary-row-m { display: flex; justify-content: space-between; font-size: 0.83rem; padding: 5px 0; border-bottom: 1px solid rgba(56,78,51,0.08); }
+    .summary-row-m:last-child { border-bottom: none; }
+    .summary-row-m span:first-child { color: var(--text-muted); }
+    .summary-row-m span:last-child { font-weight: 600; color: var(--text); max-width: 60%; text-align: right; }
+    .med-row-wrap-m { margin-bottom: 9px; background: var(--bg); border-radius: 10px; padding: 11px; border: 1px solid rgba(56,78,51,0.1); }
+    .med-row-head-m { display: flex; justify-content: space-between; align-items: center; margin-bottom: 9px; }
+    .med-row-lbl { font-size: 0.69rem; font-weight: 700; color: var(--olive-haupt); text-transform: uppercase; letter-spacing:0.12em; }
+    .med-remove-m { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.79rem; padding: 2px 6px; border-radius: 4px; transition: color 0.2s; }
+    .med-remove-m:hover { color: var(--terracotta); }
+    .add-med-btn-m { background: none; border: 1px dashed rgba(56,78,51,0.3); border-radius: 10px; width: 100%; padding: 9px; font-family: var(--font-sans); font-size: 0.81rem; color: var(--olive-haupt); cursor: pointer; transition: all 0.2s; margin-top: 3px; }
+    .add-med-btn-m:hover { border-color: var(--olive-haupt); background: var(--olive-soft); }
+    .m-checkbox-row { display: flex; gap: 9px; align-items: flex-start; margin-top: 15px; }
+    .m-checkbox-row input[type="checkbox"] { margin-top: 3px; flex-shrink: 0; accent-color: var(--olive-haupt); width: 16px; height: 16px; cursor: pointer; }
+    .m-checkbox-row label { font-size: 0.78rem; color: var(--text-muted); line-height: 1.55; cursor: pointer; }
+    .info-box-m { background: var(--harz-sand-soft); border: 1px solid var(--harz-sand); border-radius: 10px; padding: 11px 14px; font-size: 0.79rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 10px; }
+    .info-box-m strong { color: var(--olive-haupt); }
+    @media (max-width: 600px) {
+      .modal-overlay { align-items: flex-end; padding: 0; }
+      .modal-box { border-radius: 20px 20px 0 0; max-height: 94vh; }
+      .modal-body { padding: 18px 18px 24px; }
+      .modal-header { padding: 18px 18px 14px; }
+      .m-form-row { grid-template-columns: 1fr; }
+      .radio-grid-2 { grid-template-columns: 1fr; }
+    }
+    /* ====== ANAMNESEBOGEN ====== */
+    .anamnese-check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+    .anamnese-check-item { display: flex; align-items: flex-start; gap: 9px; padding: 9px 12px; border: 1px solid rgba(56,78,51,0.18); border-radius: 10px; cursor: pointer; transition: all 0.2s; background: var(--bg); }
+    .anamnese-check-item:hover { border-color: var(--olive-haupt); background: var(--olive-soft); }
+    .anamnese-check-item input[type="checkbox"] { margin-top: 2px; flex-shrink: 0; accent-color: var(--olive-haupt); width: 16px; height: 16px; cursor: pointer; }
+    .anamnese-check-item label { font-size: 0.82rem; font-weight: 500; color: var(--text); line-height: 1.35; cursor: pointer; }
+    .anamnese-textarea { width: 100%; padding: 10px 13px; border: 1px solid rgba(56,78,51,0.25); border-radius: 10px; font-family: var(--font-sans); font-size: 1rem; color: var(--text); background: var(--bg); resize: vertical; min-height: 58px; outline: none; box-sizing: border-box; transition: border-color 0.2s, box-shadow 0.2s; }
+    .anamnese-textarea:focus { border-color: var(--olive-haupt); box-shadow: 0 0 0 3px rgba(56,78,51,0.12); background: #fff; }
+    .sig-wrap { border: 1.5px solid rgba(56,78,51,0.3); border-radius: 12px; overflow: hidden; background: #fafafa; position: relative; margin-top: 8px; }
+    #anamnese-canvas { display: block; width: 100%; height: 110px; touch-action: none; cursor: crosshair; }
+    .sig-clear { position: absolute; top: 6px; right: 8px; background: none; border: none; font-size: 0.7rem; color: var(--text-muted); cursor: pointer; padding: 2px 6px; border-radius: 4px; transition: color 0.2s; font-family: var(--font-sans); }
+    .sig-clear:hover { color: var(--terracotta); }
+    .sig-hint { font-size: 0.69rem; color: var(--text-muted); margin-top: 5px; text-align: center; }
+    .dsgvo-box { background: var(--olive-soft); border-radius: 10px; padding: 10px 13px; font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px; }
+    .dsgvo-box strong { color: var(--olive-haupt); }
+    @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(76,175,80,0.5); } 70% { box-shadow: 0 0 0 7px rgba(76,175,80,0); } }
+    @media (max-width: 600px) { .anamnese-check-grid { grid-template-columns: 1fr; } #anamnese-canvas { height: 90px; } }
+    @media (orientation: landscape) and (max-height: 500px) { .modal-box { max-height: 88vh; } #anamnese-canvas { height: 68px; } .modal-title { font-size: 1.25rem; } .modal-header { padding: 12px 18px 10px; } .modal-body { padding: 12px 18px 16px; } .anamnese-textarea { min-height: 46px; } }
+    @media (orientation: landscape) and (min-height: 501px) and (max-height: 700px) { .modal-box { max-height: 90vh; } #anamnese-canvas { height: 82px; } }
+    @media (min-width: 601px) and (max-width: 1024px) and (orientation: portrait) { .anamnese-check-grid { grid-template-columns: 1fr 1fr; } #anamnese-canvas { height: 100px; } }
+
+    /* ── Desktop Float Card ── */
+
+    /* ── Desktop Floating Annotation Card ── */
+    .desk-float-card {
+      display: none;
+      position: fixed;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%) translateX(-100%);
+      z-index: 900;
+      background: #ffffff;
+      border-left: 3px solid #384E33;
+      border-radius: 0 10px 10px 0;
+      box-shadow: 4px 6px 24px rgba(56,78,51,0.13);
+      padding: 14px 16px 14px 14px;
+      min-width: 152px;
+      transition: transform 0.42s cubic-bezier(0.22,1,0.36,1), opacity 0.42s;
+      opacity: 0;
+      cursor: default;
+    }
+    .desk-float-card.dfc-visible {
+      transform: translateY(-50%) translateX(0);
+      opacity: 1;
+    }
+    .dfc-label {
+      font-size: 0.58rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #384E33;
+      margin-bottom: 10px;
+      opacity: 0.7;
+    }
+    .dfc-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 0;
+      border-top: 1px solid rgba(56,78,51,0.1);
+      cursor: pointer;
+      transition: background 0.18s;
+      border-radius: 4px;
+      margin: 0 -4px;
+      padding-left: 4px;
+      padding-right: 4px;
+    }
+    .dfc-row:hover { background: rgba(56,78,51,0.05); }
+    .dfc-row:first-of-type { border-top: none; padding-top: 0; margin-top: 2px; }
+    .dfc-city {
+      font-size: 0.79rem;
+      font-weight: 600;
+      color: #2A3A26;
+      line-height: 1.2;
+    }
+    .dfc-arrow {
+      font-size: 0.85rem;
+      color: #384E33;
+      opacity: 0.6;
+    }
+    @media (min-width: 1025px) and (orientation: landscape) {
+      .desk-float-card { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="brand-mark">
+        <img src="data:image/webp;base64,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" alt="Land-Harz-Praxis" style="height:38px;width:auto;display:block;">
+        <div>Land-Harz-Praxis<span>Wernigerode &amp; Heudeber</span></div>
+      </a>
+      <ul class="nav-menu">
+        <li><a href="hausarztmedizin.html">Hausarztmedizin</a></li>
+        <li><a href="ernaehrungsmedizin.html">Ernährungsmedizin</a></li>
+        <li><a href="adipositas.html" class="aktiv">Adipositas</a></li>
+        <li><a href="team.html">Team</a></li>
+        <li><a href="index.html#empfang">Digitaler Empfang</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="live-status-pill">
+          <span id="live-dot" class="pulse-dot"></span>
+          <span id="live-txt">Status wird geprüft...</span>
+        </div>
+        <a href="javascript:void(0)" class="nav-termin-btn" onclick="openTerminModal()">Termin buchen</a>
+      </div>
+      <button class="burger-btn" id="burger-btn" onclick="toggleMobMenu()" aria-label="Menü öffnen" aria-expanded="false">
+        <span class="burger-line"></span><span class="burger-line"></span><span class="burger-line"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mob-overlay" id="mob-overlay" onclick="toggleMobMenu()"></div>
+<nav class="mob-menu" id="mob-menu" aria-hidden="true">
+  <div class="mob-menu-head">
+    <span style="font-family:var(--font-serif);font-size:1.1rem;color:var(--olive-haupt);">Land-Harz-Praxis</span>
+    <button class="mob-close" onclick="toggleMobMenu()">&#10005;</button>
+  </div>
+  <div class="mob-menu-cta">
+    <a href="javascript:void(0)" onclick="openTerminModal(); toggleMobMenu();" class="btn-smart dark" style="width:100%;justify-content:center;">
+      <span>Termin buchen</span><span class="btn-circle">&#8594;</span>
+    </a>
+  </div>
+  <div class="mob-status-row">
+    <span id="mob-dot" style="width:8px;height:8px;border-radius:50%;background:#ccc;display:inline-block;flex-shrink:0;"></span>
+    <span id="mob-txt" style="font-size:0.82rem;color:var(--olive-haupt);font-weight:500;">Status wird geprüft...</span>
+  </div>
+  <ul class="mob-links">
+    <li><a href="index.html" onclick="toggleMobMenu()">Startseite</a></li>
+    <li><a href="hausarztmedizin.html" onclick="toggleMobMenu()">Hausarztmedizin</a></li>
+    <li><a href="ernaehrungsmedizin.html" onclick="toggleMobMenu()">Ernährungsmedizin</a></li>
+    <li><a href="adipositas.html" onclick="toggleMobMenu()" class="aktiv">Adipositas &amp; Gewichtsmedizin</a></li>
+    <li><a href="12-wochen.html" onclick="toggleMobMenu()">12-Wochen-Programm</a></li>
+    <li><a href="team.html" onclick="toggleMobMenu()">Team</a></li>
+    <li><a href="index.html#standort" onclick="toggleMobMenu()">Anfahrt &amp; Standorte</a></li>
+  </ul>
+</nav>
+
+<div class="seiten-kopf">
+  <div class="container">
+    <div class="kopf-inner">
+      <div class="breadcrumb">
+        <a href="index.html">Startseite</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="ernaehrungsmedizin.html">Ernährungsmedizin</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Adipositas</span>
+      </div>
+      <span class="page-tag">Adipositas &amp; Gewichtsmedizin</span>
+      <h1>Abnehmen ist nicht<br><em>das eigentliche Ziel.</em></h1>
+      <p class="lead-sub" style="font-size:1.1rem;color:var(--text-muted);max-width:580px;margin-top:8px;font-style:italic;">Gesundheit zu verbessern schon.</p>
+      <p class="lead">Die Behandlung von Adipositas bedeutet für uns mehr als Kalorien zählen. Gemeinsam untersuchen wir mögliche Ursachen, Begleiterkrankungen und individuelle Risikofaktoren und entwickeln daraus eine langfristige Behandlungsstrategie.</p>
+    </div>
+  </div>
+  <span class="harz-welle"></span>
+</div>
+
+<div class="inhalt">
+  <div class="container">
+
+    <div class="fact-leiste">
+      <div class="fact-item">
+        <div class="fact-zahl">BMI&nbsp;30+</div>
+        <div class="fact-label">Medizinische Definition<br>Adipositas Grad I</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-zahl">&#8250;&#160;1&#160;von&#160;4</div>
+        <div class="fact-label">Erwachsenen in Deutschland<br>ist von Adipositas betroffen</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-zahl">Ärztlich</div>
+        <div class="fact-label">Begleitung — nicht allein<br>durch Diät lösbar</div>
+      </div>
+    </div>
+
+    <div class="inhalt-grid">
+      <div class="prose">
+        <h2>Adipositas-Therapie – medizinisch begleitet und individuell</h2>
+        <p>Eine erfolgreiche Adipositas-Therapie bedeutet für uns mehr als reine Gewichtsabnahme. Wir behandeln Übergewicht und Adipositas im Rahmen eines ärztlich begleiteten, individuell abgestimmten Gesamtkonzeptes. Dazu gehören die medizinische Diagnostik, Ernährungs- und Bewegungsstrategien sowie die Berücksichtigung von Stoffwechsel, Begleiterkrankungen und persönlichen Voraussetzungen.</p>
+        <p>Wenn eine medikamentöse Unterstützung, beispielsweise mit GLP-1-basierten Arzneimitteln, medizinisch sinnvoll und angezeigt ist, kann sie Bestandteil der Behandlung sein. Auch diese Therapie erfolgt bei uns nicht als isolierte „Abnehmspritze", sondern eingebettet in ein verantwortungsvolles Gesamtkonzept mit ärztlicher Beratung, Verlaufskontrollen und langfristiger Betreuung.</p>
+        <p>Unser Ziel ist nicht nur weniger Gewicht, sondern eine nachhaltige Verbesserung von Gesundheit, Stoffwechsel und Lebensqualität.</p>
+
+        <h2 style="margin-top:40px;">Ihr Weg könnte so aussehen</h2>
+        <div style="display:flex;flex-direction:column;gap:16px;margin-top:20px;">
+          <div style="display:flex;gap:16px;align-items:flex-start;"><div style="min-width:36px;height:36px;border-radius:50%;background:var(--olive-haupt);color:#fff;font-weight:700;font-size:0.9rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">01</div><div><strong style="color:var(--text);">Medizinische Bestandsaufnahme</strong><p style="margin:4px 0 0;color:var(--text-muted);font-size:0.95rem;">Anamnese, Gewichtsentwicklung, bisherige Therapieversuche, Begleiterkrankungen, Medikamente und relevante Laborparameter.</p></div></div>
+          <div style="display:flex;gap:16px;align-items:flex-start;"><div style="min-width:36px;height:36px;border-radius:50%;background:var(--olive-haupt);color:#fff;font-weight:700;font-size:0.9rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">02</div><div><strong style="color:var(--text);">Körperzusammensetzung</strong><p style="margin:4px 0 0;color:var(--text-muted);font-size:0.95rem;">Nicht nur Kilogramm zählen. Wo sinnvoll, erfassen wir mittels BIA die Körperzusammensetzung und betrachten insbesondere Fett- und Muskelmasse.</p></div></div>
+          <div style="display:flex;gap:16px;align-items:flex-start;"><div style="min-width:36px;height:36px;border-radius:50%;background:var(--olive-haupt);color:#fff;font-weight:700;font-size:0.9rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">03</div><div><strong style="color:var(--text);">Individuelle Ernährungsstrategie</strong><p style="margin:4px 0 0;color:var(--text-muted);font-size:0.95rem;">Keine starre „Diät", sondern eine Ernährungsweise, die medizinisch sinnvoll und langfristig im Alltag umsetzbar ist.</p></div></div>
+          <div style="display:flex;gap:16px;align-items:flex-start;"><div style="min-width:36px;height:36px;border-radius:50%;background:var(--olive-haupt);color:#fff;font-weight:700;font-size:0.9rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">04</div><div><strong style="color:var(--text);">Bewegung &amp; Muskelerhalt</strong><p style="margin:4px 0 0;color:var(--text-muted);font-size:0.95rem;">Eine erfolgreiche Gewichtsreduktion sollte möglichst Fettmasse reduzieren und gleichzeitig Muskelmasse erhalten.</p></div></div>
+          <div style="display:flex;gap:16px;align-items:flex-start;"><div style="min-width:36px;height:36px;border-radius:50%;background:var(--olive-haupt);color:#fff;font-weight:700;font-size:0.9rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">05</div><div><strong style="color:var(--text);">Medikamentöse Therapie</strong><p style="margin:4px 0 0;color:var(--text-muted);font-size:0.95rem;">Wenn medizinisch indiziert, kann eine medikamentöse Adipositastherapie Bestandteil eines umfassenden Behandlungskonzeptes sein. Sie ersetzt Ernährung, Bewegung und langfristige Betreuung nicht, sondern ergänzt sie. Das entspricht auch dem multimodalen Therapieprinzip.</p></div></div>
+          <div style="display:flex;gap:16px;align-items:flex-start;"><div style="min-width:36px;height:36px;border-radius:50%;background:var(--olive-haupt);color:#fff;font-weight:700;font-size:0.9rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">06</div><div><strong style="color:var(--text);">Langfristige Stabilisierung</strong><p style="margin:4px 0 0;color:var(--text-muted);font-size:0.95rem;">Nach der Gewichtsabnahme beginnt die entscheidende Phase: das erreichte Ergebnis möglichst langfristig zu halten.</p></div></div>
+        </div>
+
+        <p style="margin-top:32px;font-size:0.95rem;"><a href="12-wochen.html" class="organisch-link">12-Wochen-Programm</a> &nbsp;|&nbsp; <a href="glp1-therapie.html" class="organisch-link">GLP-1/GIP-Therapie</a></p>
+      </div>
+
+      <div class="sidebar">
+        <div class="wochen-cta">
+          <h4>12-Wochen-Programm</h4>
+          <p>Strukturierte ärztliche Begleitung über drei Monate — mit klaren Etappen und regelmäßigen Check-ins.</p>
+          <a href="12-wochen.html" class="btn-smart" style="width:100%;justify-content:center;">
+            <span>Zum Programm</span><span class="btn-circle">&#8594;</span>
+          </a>
+        </div>
+
+        <div class="sidebar-card">
+          <h4>So läuft es ab</h4>
+          <ul class="schritt-liste">
+            <li>Erstgespräch &amp; Eingangsdiagnostik (Labor, BMI)</li>
+            <li>BIA (Körperzusammensetzung) &amp; Zieldefinition</li>
+            <li>Individuelle Ernährungsplanung &amp; ggf. GLP-1/GIP-Therapie</li>
+            <li>Verlaufskontrollen &amp; Muskelerhalt sichern</li>
+            <li>Anpassung der Therapie nach Befund</li>
+            <li>Langfristige Stabilisierung &amp; Weiterplanung</li>
+          </ul>
+        </div>
+
+        <div class="sidebar-card">
+          <h4>Standorte</h4>
+          <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:8px;"><strong style="color:var(--text);">Benzingerode</strong><br>Oberhof 9 · 38855 Wernigerode<br>Tel 03943 / 48 13 3</p>
+          <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;"><strong style="color:var(--text);">Heudeber</strong><br>Bahnhofstraße 18 · 38855 Heudeber<br>Tel 039458 / 223</p>
+          <a href="javascript:void(0)" onclick="openTerminModal()" class="btn-smart dark" style="width:100%;justify-content:center;">
+            <span>Termin buchen</span><span class="btn-circle">&#8594;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-slim-inner">
+      <div class="footer-brand-inline">
+        <strong>Land-Harz-Praxis</strong> · Dr. med. Christian Müller
+      </div>
+      <div class="footer-links-inline">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <span>© <span id="jahr"></span></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var feiertage=[[1,1],[1,6],[5,1],[8,15],[10,3],[11,1],[12,24],[12,25],[12,26],[12,31]];
+  function osterSonntag(j){var a=j%19,b=Math.floor(j/100),c=j%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),n=Math.floor((h+l-7*m+114)/31),p=(h+l-7*m+114)%31+1;return[n,p];}
+  function istFeiertag(d){var j=d.getFullYear(),m=d.getMonth()+1,t=d.getDate();for(var i=0;i<feiertage.length;i++){if(feiertage[i][0]===m&&feiertage[i][1]===t)return true;}var o=osterSonntag(j),om=o[0],ot=o[1];var mov=[[om,ot-2],[om,ot+1],[om,ot+39],[om,ot+50],[om,ot+60]];for(var i=0;i<mov.length;i++){var md=new Date(j,mov[i][0]-1,mov[i][1]);if(md.getMonth()+1===m&&md.getDate()===t)return true;}return false;}
+  var oz=[[1,[8,12],[16,18]],[2,[13,17]],[3,[8,12]],[4,[8,13]],[5,[9,12]]];
+  function pruefeStatus(){var now=new Date();if(istFeiertag(now))return{offen:false,text:'Heute geschlossen (Feiertag)'};var wd=now.getDay();if(wd===0||wd===6)return{offen:false,text:'Wochenende – geschlossen'};var h=now.getHours(),t=h*60+now.getMinutes();var e=oz[wd-1];if(!e)return{offen:false,text:'Heute keine Sprechstunde'};for(var i=0;i<e[1].length;i++){var b=e[1][i];if(t>=b[0]*60&&t<b[1]*60)return{offen:true,text:'Praxis geöffnet'};}return{offen:false,text:'Aktuell geschlossen'};}
+  var s=pruefeStatus();
+  var dot=document.getElementById('live-dot'),txt=document.getElementById('live-txt');
+  var mdot=document.getElementById('mob-dot'),mtxt=document.getElementById('mob-txt');
+  if(dot)dot.style.backgroundColor=s.offen?'#4CAF50':'#A86553';
+  if(txt)txt.textContent=s.text;
+  if(mdot)mdot.style.backgroundColor=s.offen?'#4CAF50':'#A86553';
+  if(mtxt)mtxt.textContent=s.text;
+})();
+var burgerBtn=document.getElementById('burger-btn');
+var mobMenu=document.getElementById('mob-menu');
+var mobOverlay=document.getElementById('mob-overlay');
+function toggleMobMenu(){var offen=mobMenu.classList.toggle('offen');burgerBtn.classList.toggle('offen');mobOverlay.classList.toggle('offen');burgerBtn.setAttribute('aria-expanded',offen);mobMenu.setAttribute('aria-hidden',!offen);}
+document.getElementById('jahr').textContent=new Date().getFullYear();
+
+    // ====== MODAL + TERMIN ======
+// ====== MODAL SYSTEM ======
+    var terminStep = 1;
+    var terminAnamneseActive = false;
+    var sigCanvas, sigCtx, sigDrawing = false;
+    var selectedSlot = null;
+    var slotStandort = 'wn';
+    var rezStandort = 'wn';
+    var medCount = 0;
+
+    // Slot-Karte: simulierte nächste freie Termine pro Standort
+var tageKurz = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+var monateKurz = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+
+// Gibt das nächste Datum für einen bestimmten Wochentag zurück (0=So, 1=Mo...)
+function naechsterTag(wochentag, offsetWochen) {
+  var heute = new Date();
+  var diff = (wochentag - heute.getDay() + 7) % 7 || 7;
+  diff += (offsetWochen || 0) * 7;
+  var d = new Date(heute);
+  d.setDate(heute.getDate() + diff);
+  return d;
+}
+
+function formatDatum(d) {
+  return tageKurz[d.getDay()] + ', ' + d.getDate() + '. ' + monateKurz[d.getMonth()];
+}
+
+function tagLabel(d) {
+  var heute = new Date();
+  var morgen = new Date(heute); morgen.setDate(heute.getDate() + 1);
+  if (d.toDateString() === morgen.toDateString()) return 'Morgen';
+  if (d.toDateString() === heute.toDateString()) return 'Heute';
+  return formatDatum(d);
+}
+
+var slotDaten = {
+  wn: [
+    { wochentag: 1, zeit: '10:30', offset: 0 },
+    { wochentag: 3, zeit: '14:00', offset: 0 },
+    { wochentag: 4, zeit: '09:15', offset: 0 },
+    { wochentag: 1, zeit: '11:00', offset: 1 }
+  ],
+  ils: [
+    { wochentag: 2, zeit: '09:00', offset: 0 },
+    { wochentag: 4, zeit: '15:30', offset: 0 },
+    { wochentag: 2, zeit: '10:30', offset: 1 },
+    { wochentag: 3, zeit: '08:30', offset: 1 }
+  ]
+};
+
+function slotKarteInit() {
+  ['wn', 'ils'].forEach(function(standort) {
+    var s = slotDaten[standort][0];
+    var d = naechsterTag(s.wochentag, s.offset);
+    var el = document.getElementById('slot-' + standort);
+    if (el) el.textContent = formatDatum(d) + ' · ' + s.zeit;
+  });
+}
+
+document.addEventListener('DOMContentLoaded', slotKarteInit);
+
+// Weitere-Termine-Popup
+var wtDaten = {
+  wn: [
+    { wochentag: 1, offset: 0, zeit: '10:30' },
+    { wochentag: 3, offset: 0, zeit: '14:00' },
+    { wochentag: 4, offset: 0, zeit: '09:15' },
+    { wochentag: 5, offset: 0, zeit: '11:30' },
+    { wochentag: 1, offset: 1, zeit: '10:00' }
+  ],
+  ils: [
+    { wochentag: 2, offset: 0, zeit: '09:00' },
+    { wochentag: 4, offset: 0, zeit: '15:30' },
+    { wochentag: 2, offset: 1, zeit: '10:30' },
+    { wochentag: 3, offset: 1, zeit: '08:30' },
+    { wochentag: 5, offset: 1, zeit: '13:00' }
+  ]
+};
+
+function weitereTermineOeffnen() {
+  var inhalt = document.getElementById('wt-inhalt');
+  inhalt.innerHTML = '';
+  ['wn', 'ils'].forEach(function(standort) {
+    var label = standort === 'wn' ? 'Wernigerode' : 'Heudeber';
+    var lDiv = document.createElement('div');
+    lDiv.className = 'wt-ort-label';
+    lDiv.textContent = label;
+    inhalt.appendChild(lDiv);
+    wtDaten[standort].forEach(function(s) {
+      var d = naechsterTag(s.wochentag, s.offset);
+      var row = document.createElement('div');
+      row.className = 'wt-slot';
+      row.innerHTML = '<span class="wt-slot-datum">' + formatDatum(d) + '</span>' +
+                      '<span class="wt-slot-uhr">' + s.zeit + ' Uhr</span>' +
+                      '<button class="wt-slot-btn">Buchen</button>';
+      row.onclick = function() { weitereTermineSchliessen(); openTerminModal(); };
+      inhalt.appendChild(row);
+    });
+  });
+  document.getElementById('wt-overlay').classList.add('aktiv');
+  document.body.style.overflow = 'hidden';
+}
+
+function weitereTermineSchliessen() {
+  document.getElementById('wt-overlay').classList.remove('aktiv');
+  document.body.style.overflow = '';
+}
+
+function openTerminModal(vorauswahlAnliegen, vorauswahlStandort) {
+      terminStep = 1;
+      terminAnamneseActive = false;
+      selectedSlot = null;
+      // Standort-Vorauswahl (z.B. aus Bottom Bar)
+      if (vorauswahlStandort === 'wernigerode') { slotStandort = 'wn'; }
+      else if (vorauswahlStandort === 'heudeber') { slotStandort = 'ils'; }
+      else { slotStandort = 'wn'; }
+      // alle Radio-Cards zurücksetzen
+      document.querySelectorAll('.radio-card-m').forEach(function(c){ c.classList.remove('selected'); });
+      // Vorauswahl aus Praxis-Kompass übernehmen
+      if (vorauswahlAnliegen) {
+        var karte = document.querySelector('#rc-anliegen .radio-card-m[data-value="' + vorauswahlAnliegen + '"]');
+        if (karte) selectRadioM(karte, 'rc-anliegen');
+      }
+      // Textfelder leeren
+      ['tm-vorname','tm-nachname','tm-telefon','tm-email','tm-kasse',
+       'an-allergien','an-medikamente','an-anliegen-neu'].forEach(function(id){
+        var el = document.getElementById(id); if (el) el.value = '';
+      });
+      // Selects zurück
+      var versel = document.getElementById('tm-versicherung'); if (versel) versel.selectedIndex = 0;
+      var gebel = document.getElementById('tm-gebdatum'); if (gebel) gebel.value = '';
+      // Checkboxen Anamnese
+      ['an-blut','an-diab','an-herz','an-schild','an-niere','an-keine'].forEach(function(id){
+        var el = document.getElementById(id); if (el) el.checked = false;
+      });
+      // Datenschutz
+      var ds = document.getElementById('tm-datenschutz'); if (ds) ds.checked = false;
+      // Canvas löschen
+      if (sigCtx) { sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height); }
+      sigCanvas = null; sigCtx = null; sigDrawing = false;
+      // Canvas-Init-Flag zurücksetzen damit nächste Öffnung neu initialisiert
+      var cv = document.getElementById('anamnese-canvas');
+      if (cv) cv._sigInit = false;
+      document.getElementById('modal-termin').classList.add('active');
+      // iOS-sicheres Scroll-Sperren: Position merken, body fixieren
+      var _sy = window.scrollY || window.pageYOffset;
+      document.body.style.top = '-' + _sy + 'px';
+      document.body.classList.add('modal-open');
+      updateTerminStep();
+      setTimeout(function() {
+        var el = document.querySelector('#modal-termin .radio-card-m');
+        if (el) el.focus();
+      }, 120);
+    }
+    function openRezeptModal() {
+      document.getElementById('modal-rezept').classList.add('active');
+      var _sy = window.scrollY || window.pageYOffset;
+      document.body.style.top = '-' + _sy + 'px';
+      document.body.classList.add('modal-open');
+      initMedRows();
+      setTimeout(function() {
+        var el = document.getElementById('rz-vorname');
+        if (el) el.focus();
+      }, 120);
+      // reset standort
+      rezStandort = 'wn';
+      document.getElementById('rz-btn-wn').classList.add('active');
+      document.getElementById('rz-btn-ils').classList.remove('active');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+      // Scroll-Position nach body-Fixierung wiederherstellen
+      var _sy = Math.abs(parseInt(document.body.style.top || '0'));
+      document.body.classList.remove('modal-open');
+      document.body.style.top = '';
+      window.scrollTo(0, _sy);
+    }
+    function closeOnBackdrop(e, id) {
+      if (e.target === document.getElementById(id)) closeModal(id);
+    }
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') {
+        closeModal('modal-termin');
+        closeModal('modal-rezept');
+      }
+    });
+
+    // ====== TERMIN-WIZARD ======
+    var slotsData = {
+      wn: [
+        { key:'mo', slots:['08:00','08:30*','09:30','10:30*','11:00'] },
+        { key:'di', slots:['13:00*','13:30','14:00*','15:00','16:00'] },
+        { key:'mi', slots:['08:00','08:30*','09:30','10:30','11:30'] },
+        { key:'do', slots:['08:00','08:30','09:00*','12:00','12:30'] },
+        { key:'fr', slots:['09:00','09:30*','10:00','11:00'] }
+      ],
+      ils: [
+        { key:'mo', slots:['08:00','09:00*','10:00','11:30*'] },
+        { key:'mi', slots:['08:30','09:00*','10:30','11:00'] },
+        { key:'fr', slots:['08:00','09:30','10:00*','11:00'] }
+      ]
+    };
+
+    var dayNames = { mo:'Montag', di:'Dienstag', mi:'Mittwoch', do:'Donnerstag', fr:'Freitag' };
+    var dayOffsets = { mo:0, di:1, mi:2, do:3, fr:4 };
+
+    function getNextMonday() {
+      var d = new Date();
+      d.setDate(d.getDate() + 1); // start tomorrow
+      var dow = d.getDay();
+      // advance to next Monday
+      var toMon = (dow === 0) ? 1 : (dow === 6) ? 2 : (8 - dow) % 7;
+      if (toMon === 7) toMon = 0; // already Monday? push one week
+      d.setDate(d.getDate() + toMon);
+      return d;
+    }
+
+    function fmtDate(d) {
+      return d.toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit' });
+    }
+
+    function buildSlotContainer(containerId, data) {
+      var c = document.getElementById(containerId);
+      c.innerHTML = '';
+      var monday = getNextMonday();
+      data.forEach(function(dayData) {
+        var offset = dayOffsets[dayData.key] || 0;
+        var d = new Date(monday); d.setDate(monday.getDate() + offset);
+        var dayDiv = document.createElement('div'); dayDiv.className = 'slot-day-wrap';
+        var lbl = document.createElement('div'); lbl.className = 'slot-day-lbl';
+        lbl.textContent = dayNames[dayData.key] + ', ' + fmtDate(d);
+        dayDiv.appendChild(lbl);
+        var chips = document.createElement('div'); chips.className = 'slot-chips-wrap';
+        dayData.slots.forEach(function(s){
+          var busy = s.indexOf('*') > -1;
+          var time = s.replace('*','');
+          var chip = document.createElement('div'); chip.className = 'slot-chip' + (busy ? ' busy' : '');
+          chip.textContent = time;
+          if (!busy) {
+            var dayLabel = dayNames[dayData.key] + ', ' + fmtDate(d);
+            chip.onclick = function(){ selectSlotChip(this, time, dayLabel); };
+          }
+          chips.appendChild(chip);
+        });
+        dayDiv.appendChild(chips);
+        c.appendChild(dayDiv);
+      });
+    }
+
+    function selectSlotChip(el, time, dayStr) {
+      document.querySelectorAll('.slot-chip.selected').forEach(function(c){ c.classList.remove('selected'); });
+      el.classList.add('selected');
+      selectedSlot = { time: time, day: dayStr, standort: slotStandort === 'wn' ? 'Wernigerode' : 'Heudeber' };
+    }
+
+    function switchSlotStandort(type) {
+      slotStandort = type;
+      selectedSlot = null;
+      document.getElementById('slot-btn-wn').classList.toggle('active', type === 'wn');
+      document.getElementById('slot-btn-ils').classList.toggle('active', type === 'ils');
+      document.getElementById('slots-wn').style.display = type === 'wn' ? '' : 'none';
+      document.getElementById('slots-ils').style.display = type === 'ils' ? '' : 'none';
+    }
+
+    function selectRadioM(el, groupId) {
+      var grp = document.getElementById(groupId);
+      if (grp) grp.querySelectorAll('.radio-card-m').forEach(function(c){ c.classList.remove('selected'); });
+      el.classList.add('selected');
+    }
+
+    function getRadioVal(groupId) {
+      var grp = document.getElementById(groupId);
+      if (!grp) return null;
+      var sel = grp.querySelector('.radio-card-m.selected');
+      return sel ? sel.dataset.value : null;
+    }
+
+    var terminTitles = ['Anliegen wählen','Termin wählen','Ihre Daten','Bestätigung'];
+
+    function updateTerminStep() {
+      var isNeu = getRadioVal('rc-patienttyp') === 'neu';
+      var total = isNeu ? 5 : 4;
+      var dot1b = document.getElementById('sd-1b');
+      if (dot1b) dot1b.style.display = isNeu ? '' : 'none';
+      for (var i = 1; i <= 4; i++) {
+        var dot = document.getElementById('sd-' + i);
+        if (!dot) continue;
+        dot.classList.remove('active','done');
+        if (terminAnamneseActive) {
+          if (i === 1) dot.classList.add('done');
+        } else {
+          if (i === terminStep) dot.classList.add('active');
+          else if (i < terminStep) dot.classList.add('done');
+        }
+      }
+      if (dot1b) {
+        dot1b.classList.remove('active','done');
+        if (terminAnamneseActive) dot1b.classList.add('active');
+        else if (isNeu && terminStep > 1) dot1b.classList.add('done');
+      }
+      [1,'1b',2,3,4].forEach(function(s){
+        var el = document.getElementById('tm-s' + s);
+        if (el) el.style.display = 'none';
+      });
+      if (terminAnamneseActive) {
+        document.getElementById('tm-s1b').style.display = '';
+      } else {
+        var el = document.getElementById('tm-s' + terminStep);
+        if (el) el.style.display = '';
+      }
+      if (terminAnamneseActive) {
+        document.getElementById('tm-step-label').textContent = 'Schritt 2 von ' + total;
+        document.getElementById('tm-title').textContent = 'Anamnesebogen';
+      } else {
+        var anzeige = (isNeu && terminStep > 1) ? terminStep + 1 : terminStep;
+        document.getElementById('tm-step-label').textContent = 'Schritt ' + anzeige + ' von ' + total;
+        document.getElementById('tm-title').textContent = terminTitles[terminStep - 1];
+      }
+      var back = document.getElementById('tm-back');
+      var next = document.getElementById('tm-next');
+      var footer = document.getElementById('tm-footer');
+      back.style.visibility = (terminStep > 1 || terminAnamneseActive) ? 'visible' : 'hidden';
+      if (terminStep === 4 && !terminAnamneseActive) {
+        footer.style.display = 'none';
+        buildSummary();
+      } else {
+        footer.style.display = 'flex';
+        next.textContent = (terminStep === 3 && !terminAnamneseActive) ? 'Termin anfragen ✓' : 'Weiter →';
+      }
+      if (terminStep === 2 && !terminAnamneseActive) {
+        buildSlotContainer('slots-wn', slotsData.wn);
+        buildSlotContainer('slots-ils', slotsData.ils);
+        document.getElementById('slot-btn-wn').classList.add('active');
+        document.getElementById('slot-btn-ils').classList.remove('active');
+        document.getElementById('slots-wn').style.display = '';
+        document.getElementById('slots-ils').style.display = 'none';
+        slotStandort = 'wn';
+      }
+      if (terminAnamneseActive) { initSignaturCanvas(); }
+    }
+
+        function terminNext() {
+      if (terminStep === 1 && !terminAnamneseActive) {
+        if (!getRadioVal('rc-patienttyp')) { alert('Bitte wählen Sie Bestand- oder Neupatient.'); return; }
+        if (!getRadioVal('rc-anliegen')) { alert('Bitte wählen Sie Ihr Anliegen.'); return; }
+        if (getRadioVal('rc-patienttyp') === 'neu') {
+          terminAnamneseActive = true; updateTerminStep(); return;
+        }
+      }
+      if (terminAnamneseActive) {
+        if (signaturLeer()) { alert('Bitte unterschreiben Sie den Anamnesebogen.'); return; }
+        terminAnamneseActive = false; terminStep = 2; updateTerminStep(); return;
+      }
+      if (terminStep === 2 && !selectedSlot) { alert('Bitte wählen Sie einen freien Termin.'); return; }
+      if (terminStep === 3) {
+        var vn = document.getElementById('tm-vorname').value.trim();
+        var nn = document.getElementById('tm-nachname').value.trim();
+        var tel = document.getElementById('tm-telefon').value.trim();
+        var ds = document.getElementById('tm-datenschutz').checked;
+        if (!vn || !nn) { alert('Bitte geben Sie Ihren Namen ein.'); return; }
+        if (!tel) { alert('Bitte geben Sie Ihre Telefonnummer ein.'); return; }
+        if (!ds) { alert('Bitte stimmen Sie der Datenschutzerklärung zu.'); return; }
+      }
+      if (terminStep === 3) {
+        // Fire-and-forget: E-Mail senden
+        var fd = new FormData();
+        fd.append('vorname',      document.getElementById('tm-vorname').value.trim());
+        fd.append('nachname',     document.getElementById('tm-nachname').value.trim());
+        fd.append('email',        document.getElementById('tm-email').value.trim());
+        fd.append('telefon',      document.getElementById('tm-telefon').value.trim());
+        fd.append('gebdatum',     document.getElementById('tm-gebdatum').value);
+        fd.append('versicherung', document.getElementById('tm-versicherung').value);
+        fd.append('kasse',        document.getElementById('tm-kasse').value.trim());
+        fd.append('termin_datum', selectedSlot ? selectedSlot.day : '');
+        fd.append('termin_uhrzeit', selectedSlot ? selectedSlot.time : '');
+        fd.append('standort',     selectedSlot ? selectedSlot.standort : '');
+        fd.append('anliegen',     (function(){ var m={akut:'Termin vereinbaren',vorsorge:'Vorsorge / Check-Up',ernaehrung:'Ernährungsmedizin',sonstiges:'Sonstiges'}; return m[getRadioVal('rc-anliegen')]||''; })());
+        fd.append('patienttyp',   getRadioVal('rc-patienttyp') === 'neu' ? 'Neupatient' : 'Bestandspatient');
+        // Anamnese (nur Neupatienten)
+        if (getRadioVal('rc-patienttyp') === 'neu') {
+          fd.append('allergien',    document.getElementById('an-allergien') ? document.getElementById('an-allergien').value : '');
+          fd.append('medikamente',  document.getElementById('an-medikamente') ? document.getElementById('an-medikamente').value : '');
+          fd.append('anliegen_neu', document.getElementById('an-anliegen-neu') ? document.getElementById('an-anliegen-neu').value : '');
+          fd.append('raucher',      getRadioVal('rc-raucher') || '');
+          var verk = [];
+          ['an-blut','an-diab','an-herz','an-schild','an-niere','an-keine'].forEach(function(id){
+            var el = document.getElementById(id); if (el && el.checked) verk.push(el.nextElementSibling.textContent.trim());
+          });
+          fd.append('vorerkrankungen', verk.length ? verk.join(', ') : 'Keine bekannt');
+        }
+        // Daten für EmailJS sammeln
+        var ej_vn    = document.getElementById('tm-vorname').value.trim();
+        var ej_nn    = document.getElementById('tm-nachname').value.trim();
+        var ej_em    = document.getElementById('tm-email').value.trim();
+        var ej_tel   = document.getElementById('tm-telefon').value.trim();
+        var ej_geb   = document.getElementById('tm-gebdatum').value;
+        var ej_vers  = document.getElementById('tm-versicherung').value;
+        var ej_kasse = document.getElementById('tm-kasse').value.trim();
+        var ej_anl   = (function(){ var m={akut:'Termin vereinbaren',vorsorge:'Vorsorge / Check-Up',ernaehrung:'Ernährungsmedizin',sonstiges:'Sonstiges'}; return m[getRadioVal('rc-anliegen')]||''; })();
+        var ej_ptyp  = getRadioVal('rc-patienttyp') === 'neu' ? 'Neupatient' : 'Bestandspatient';
+        var ej_datum = selectedSlot ? selectedSlot.day : '';
+        var ej_uhr   = selectedSlot ? selectedSlot.time : '';
+        var ej_ort   = selectedSlot ? selectedSlot.standort : '';
+
+        var ej_params = {
+          vorname: ej_vn, nachname: ej_nn, email: ej_em, telefon: ej_tel,
+          geburtsdatum: ej_geb, versicherung: ej_vers, krankenkasse: ej_kasse,
+          anliegen: ej_anl, patienttyp: ej_ptyp,
+          termin_datum: ej_datum, termin_uhrzeit: ej_uhr, standort: ej_ort,
+          allergien: '', medikamente: '', anliegen_neu: '', raucher: '', vorerkrankungen: ''
+        };
+
+        // Anamnese-Daten anhängen (nur Neupatienten)
+        if (ej_ptyp === 'Neupatient') {
+          ej_params.allergien    = document.getElementById('an-allergien') ? document.getElementById('an-allergien').value : '';
+          ej_params.medikamente  = document.getElementById('an-medikamente') ? document.getElementById('an-medikamente').value : '';
+          ej_params.anliegen_neu = document.getElementById('an-anliegen-neu') ? document.getElementById('an-anliegen-neu').value : '';
+          ej_params.raucher      = getRadioVal('rc-raucher') || '';
+          var verk = [];
+          ['an-blut','an-diab','an-herz','an-schild','an-niere','an-keine'].forEach(function(id){
+            var el = document.getElementById(id); if (el && el.checked) verk.push(el.nextElementSibling.textContent.trim());
+          });
+          ej_params.vorerkrankungen = verk.length ? verk.join(', ') : 'Keine bekannt';
+        }
+
+        // E-Mail an Praxis
+        emailjs.send('EMAILJS_SERVICE_ID', 'EMAILJS_TEMPLATE_PRAXIS', ej_params)
+          .then(function(){ console.log('[EmailJS] Praxis-Mail gesendet'); })
+          .catch(function(e){ console.error('[EmailJS] Fehler Praxis:', e); });
+
+        // Bestätigung an Patienten (nur wenn E-Mail angegeben)
+        if (ej_em) {
+          emailjs.send('EMAILJS_SERVICE_ID', 'EMAILJS_TEMPLATE_PATIENT', ej_params)
+            .then(function(){ console.log('[EmailJS] Patienten-Mail gesendet'); })
+            .catch(function(e){ console.error('[EmailJS] Fehler Patient:', e); });
+        }
+      }
+      if (terminStep < 4) { terminStep++; updateTerminStep(); }
+    }
+
+        function terminBack() {
+      if (terminAnamneseActive) { terminAnamneseActive = false; terminStep = 1; updateTerminStep(); return; }
+      if (terminStep === 2 && getRadioVal('rc-patienttyp') === 'neu') { terminAnamneseActive = true; updateTerminStep(); return; }
+      if (terminStep > 1) { terminStep--; updateTerminStep(); }
+    }
+
+    function initSignaturCanvas() {
+      sigCanvas = document.getElementById('anamnese-canvas');
+      if (!sigCanvas || sigCanvas._sigInit) return;
+      sigCanvas._sigInit = true;
+      var dpr = window.devicePixelRatio || 1;
+      var rect = sigCanvas.getBoundingClientRect();
+      sigCanvas.width = rect.width * dpr;
+      sigCanvas.height = rect.height * dpr;
+      sigCtx = sigCanvas.getContext('2d');
+      sigCtx.scale(dpr, dpr);
+      sigCtx.strokeStyle = '#2B3820'; sigCtx.lineWidth = 2.2; sigCtx.lineCap = 'round'; sigCtx.lineJoin = 'round';
+      function px(e) { return e.clientX - sigCanvas.getBoundingClientRect().left; }
+      function py(e) { return e.clientY - sigCanvas.getBoundingClientRect().top; }
+      sigCanvas.addEventListener('mousedown', function(e){ sigDrawing=true; sigCtx.beginPath(); sigCtx.moveTo(px(e),py(e)); });
+      sigCanvas.addEventListener('mousemove', function(e){ if(!sigDrawing) return; sigCtx.lineTo(px(e),py(e)); sigCtx.stroke(); });
+      sigCanvas.addEventListener('mouseup', function(){ sigDrawing=false; });
+      sigCanvas.addEventListener('mouseleave', function(){ sigDrawing=false; });
+      sigCanvas.addEventListener('touchstart', function(e){ e.preventDefault(); sigDrawing=true; var t=e.touches[0]; sigCtx.beginPath(); sigCtx.moveTo(px(t),py(t)); },{passive:false});
+      sigCanvas.addEventListener('touchmove', function(e){ e.preventDefault(); if(!sigDrawing) return; var t=e.touches[0]; sigCtx.lineTo(px(t),py(t)); sigCtx.stroke(); },{passive:false});
+      sigCanvas.addEventListener('touchend', function(){ sigDrawing=false; });
+    }
+    function clearSignatur() { if (sigCtx) sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height); }
+    function signaturLeer() {
+      if (!sigCanvas || !sigCtx) return true;
+      var d = sigCtx.getImageData(0,0,sigCanvas.width,sigCanvas.height).data;
+      for (var i=3; i<d.length; i+=4) { if (d[i]>0) return false; }
+      return true;
+    }
+
+    var anliegenMap = { akut:'Termin vereinbaren', vorsorge:'Vorsorge / Check-Up', ernaehrung:'Ernährungsmedizin', sonstiges:'Sonstiges' };
+    var patientMap = { bestand:'Bestandspatient', neu:'Neupatient' };
+
+    function buildSummary() {
+      var rows = [
+        ['Name', (document.getElementById('tm-vorname').value + ' ' + document.getElementById('tm-nachname').value).trim()],
+        ['Standort', selectedSlot ? selectedSlot.standort : '—'],
+        ['Termin', selectedSlot ? (selectedSlot.day + ', ' + selectedSlot.time + ' Uhr') : '—'],
+        ['Anliegen', anliegenMap[getRadioVal('rc-anliegen')] || '—'],
+        ['Patientenart', patientMap[getRadioVal('rc-patienttyp')] || '—']
+      ];
+      var html = rows.map(function(r){
+        return '<div class="summary-row-m"><span>' + r[0] + '</span><span>' + r[1] + '</span></div>';
+      }).join('');
+      document.getElementById('tm-summary').innerHTML = html;
+    }
+
+    // ====== REZEPT-FORMULAR ======
+    function switchRezStandort(type) {
+      rezStandort = type;
+      document.getElementById('rz-btn-wn').classList.toggle('active', type === 'wn');
+      document.getElementById('rz-btn-ils').classList.toggle('active', type === 'ils');
+    }
+
+    function initMedRows() {
+      medCount = 0;
+      document.getElementById('rz-med-container').innerHTML = '';
+      document.getElementById('rz-add-btn').style.display = '';
+      document.getElementById('rz-confirm').checked = false;
+      document.getElementById('rz-datenschutz').checked = false;
+      // clear fields
+      ['rz-vorname','rz-nachname','rz-gebdatum','rz-kasse','rz-telefon','rz-email'].forEach(function(id){
+        var el = document.getElementById(id); if(el) el.value = '';
+      });
+      addMedRow();
+    }
+
+    function addMedRow() {
+      if (medCount >= 3) return;
+      medCount++;
+      var c = document.getElementById('rz-med-container');
+      var id = 'med-row-' + medCount;
+      var wrap = document.createElement('div');
+      wrap.className = 'med-row-wrap-m'; wrap.id = id;
+      var removeBtn = medCount > 1
+        ? '<button class="med-remove-m" onclick="removeMedRow(\'' + id + '\')">&#10005; Entfernen</button>'
+        : '';
+      wrap.innerHTML = '<div class="med-row-head-m"><span class="med-row-lbl">Medikament ' + medCount + '</span>' + removeBtn + '</div>' +
+        '<div class="m-form-group"><label class="m-form-label">Medikamentname</label>' +
+        '<input type="text" class="m-form-input med-name" placeholder="z.B. Metformin 500 mg"></div>' +
+        '<div class="m-form-row">' +
+        '<div class="m-form-group"><label class="m-form-label">Dosierung</label>' +
+        '<input type="text" class="m-form-input med-dosis" placeholder="z.B. 1×500 mg täglich"></div>' +
+        '<div class="m-form-group"><label class="m-form-label">Packungsgröße / N-Code</label>' +
+        '<input type="text" class="m-form-input med-packung" placeholder="z.B. N3 / 100 St."></div>' +
+        '</div>';
+      c.appendChild(wrap);
+      if (medCount >= 3) document.getElementById('rz-add-btn').style.display = 'none';
+    }
+
+    function removeMedRow(id) {
+      var el = document.getElementById(id);
+      if (el) el.remove();
+      medCount--;
+      document.getElementById('rz-add-btn').style.display = '';
+      // renumber labels
+      document.querySelectorAll('.med-row-lbl').forEach(function(l, i){
+        l.textContent = 'Medikament ' + (i + 1);
+      });
+    }
+
+    function submitRezept() {
+      var vn = document.getElementById('rz-vorname').value.trim();
+      var nn = document.getElementById('rz-nachname').value.trim();
+      var geb = document.getElementById('rz-gebdatum').value;
+      var kasse = document.getElementById('rz-kasse').value.trim();
+      var tel = document.getElementById('rz-telefon').value.trim();
+      var email = document.getElementById('rz-email').value.trim();
+      var bestaetigung = document.getElementById('rz-confirm').checked;
+      var ds = document.getElementById('rz-datenschutz').checked;
+      if (!vn || !nn) { alert('Bitte geben Sie Ihren Namen ein.'); return; }
+      if (!geb) { alert('Bitte geben Sie Ihr Geburtsdatum ein.'); return; }
+      if (!tel) { alert('Bitte geben Sie Ihre Telefonnummer ein.'); return; }
+      if (!bestaetigung) { alert('Bitte bestätigen Sie, dass es sich um ein Dauermedikament handelt.'); return; }
+      if (!ds) { alert('Bitte stimmen Sie der Datenschutzerklärung zu.'); return; }
+      // Medikamente sammeln
+      var medLines = [];
+      document.querySelectorAll('.med-row-wrap-m').forEach(function(row, i){
+        var n = row.querySelector('.med-name') ? row.querySelector('.med-name').value.trim() : '';
+        var dosis = row.querySelector('.med-dosis') ? row.querySelector('.med-dosis').value.trim() : '';
+        var pack = row.querySelector('.med-packung') ? row.querySelector('.med-packung').value.trim() : '';
+        if (n) medLines.push((i+1) + '. ' + n + (dosis ? ', ' + dosis : '') + (pack ? ', ' + pack : ''));
+      });
+      if (medLines.length === 0) { alert('Bitte geben Sie mindestens ein Medikament ein.'); return; }
+      var gebFmt = geb ? new Date(geb).toLocaleDateString('de-DE') : '—';
+      var standortStr = rezStandort === 'wn' ? 'Wernigerode (Oberhof 9)' : 'Heudeber (Bahnhofstraße 18)';
+      var body = 'Folgerezept-Anforderung über die Website\n' +
+        '================================================\n\n' +
+        'PATIENTENDATEN\n' +
+        'Name:           ' + vn + ' ' + nn + '\n' +
+        'Geburtsdatum:   ' + gebFmt + '\n' +
+        'Krankenkasse:   ' + (kasse || '—') + '\n' +
+        'Telefon:        ' + tel + '\n' +
+        'E-Mail:         ' + (email || '—') + '\n\n' +
+        'MEDIKAMENTE\n' +
+        medLines.join('\n') + '\n\n' +
+        'ABHOLSTANDORT:  ' + standortStr + '\n\n' +
+        '================================================\n' +
+        'Bitte telefonisch unter 03943 / 48 13 3 melden bei Rückfragen.\n' +
+        'Anfrage automatisch über landharzpraxis.de erstellt.';
+      var subject = 'Folgerezept-Anforderung – ' + vn + ' ' + nn + ' (' + gebFmt + ')';
+      var ej_params = {
+        patient_name: vn + ' ' + nn,
+        geburtsdatum: gebFmt,
+        krankenkasse: kasse || '—',
+        telefon: tel,
+        patient_email: email || '—',
+        medikamente: medLines.join('\n'),
+        standort: standortStr,
+        subject: subject,
+        message: body
+      };
+      var btn = document.querySelector('#modal-rezept .btn-custom-dark');
+      if (btn) { btn.disabled = true; btn.textContent = 'Wird gesendet…'; }
+      emailjs.send('EMAILJS_SERVICE_ID', 'EMAILJS_TEMPLATE_REZEPT', ej_params)
+        .then(function() {
+          if (btn) { btn.disabled = false; btn.innerHTML = 'Anfrage senden &#10003;'; }
+          document.querySelector('#modal-rezept .modal-body').innerHTML = '<div style="text-align:center;padding:40px 20px;"><div style="font-size:2rem;margin-bottom:16px;">&#10003;</div><h3 style="font-family:var(--font-serif);color:var(--olive-haupt);margin-bottom:10px;">Rezept-Anforderung eingegangen</h3><p style="color:var(--text-muted);font-size:0.88rem;">Wir melden uns bei Ihnen. Rezept in der Regel am nächsten Werktag abholbereit.</p></div>';
+        })
+        .catch(function(err) {
+          console.error('EmailJS Fehler:', err);
+          if (btn) { btn.disabled = false; btn.textContent = 'Anfrage senden'; }
+          alert('Fehler beim Senden. Bitte rufen Sie uns an: 03943 / 48 13 3');
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', updatePraxisStatus);
+  
+
+
+// ── Burger-Menü ──
+function toggleMobMenu() {
+  var btn = document.getElementById('burger-btn');
+  var menu = document.getElementById('mob-menu');
+  var overlay = document.getElementById('mob-overlay');
+  var offen = menu.classList.contains('offen');
+  btn.classList.toggle('offen', !offen);
+  menu.classList.toggle('offen', !offen);
+  overlay.classList.toggle('aktiv', !offen);
+  menu.setAttribute('aria-hidden', offen ? 'true' : 'false');
+  btn.setAttribute('aria-expanded', offen ? 'false' : 'true');
+  document.body.style.overflow = offen ? '' : 'hidden';
+}
+
+// ====== SCROLL-ANIMATIONEN ======
+(function() {
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+  document.querySelectorAll('.reveal-sec').forEach(function(el) { io.observe(el); });
+})();
+
+// ====== DEMO-MODUS: Terminprozess automatisch durchspielen ======
+var demoLaeuft = false;
+
+// Hilfsfunktion: Unterschrift animiert zeichnen (sichtbarer Stift-Effekt)
+function demoZeichneUnterschrift() {
+  var canvas = document.getElementById('anamnese-canvas');
+  if (!canvas) return;
+  var attempts = 0;
+  function tryDraw() {
+    if (!sigCtx && attempts < 20) { attempts++; setTimeout(tryDraw, 150); return; }
+    if (!sigCtx) return;
+    // Canvas-Größe prüfen und ggf. neu setzen (kann 0 sein wenn bei display:none initialisiert)
+    var rect = canvas.getBoundingClientRect();
+    if (rect.width === 0) { attempts++; if (attempts < 20) { setTimeout(tryDraw, 150); return; } }
+    var dpr = window.devicePixelRatio || 1;
+    if (canvas.width < 10) {
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      sigCtx.scale(dpr, dpr);
+      sigCtx.strokeStyle = '#2B3820'; sigCtx.lineWidth = 2.2; sigCtx.lineCap = 'round'; sigCtx.lineJoin = 'round';
+    }
+    // Zum Canvas scrollen damit die Unterschrift sichtbar ist
+    canvas.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    var w = rect.width;
+    var h = rect.height;
+
+    // Bezier-Punkte per t-Interpolation berechnen
+    function bezierPunkt(t, p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y) {
+      var u = 1-t;
+      return {
+        x: u*u*u*p0x + 3*u*u*t*p1x + 3*u*t*t*p2x + t*t*t*p3x,
+        y: u*u*u*p0y + 3*u*u*t*p1y + 3*u*t*t*p2y + t*t*t*p3y
+      };
+    }
+
+    // Kurvensegmente (relative Koordinaten)
+    var seg = [
+      [0.07,0.55, 0.15,0.18, 0.27,0.88, 0.38,0.45],
+      [0.38,0.45, 0.43,0.28, 0.47,0.72, 0.53,0.50],
+      [0.53,0.50, 0.60,0.18, 0.71,0.82, 0.80,0.46],
+      [0.80,0.46, 0.86,0.30, 0.92,0.60, 0.96,0.50]
+    ];
+
+    // Alle Punkte vorberechnen
+    var punkte = [];
+    seg.forEach(function(s) {
+      for (var i = 0; i <= 22; i++) {
+        var t = i/22;
+        var p = bezierPunkt(t, s[0]*w, s[1]*h, s[2]*w, s[3]*h, s[4]*w, s[5]*h, s[6]*w, s[7]*h);
+        punkte.push(p);
+      }
+    });
+
+    // Animiert zeichnen: ein Punkt pro Frame (~14ms = 60fps)
+    var idx = 0;
+    sigCtx.beginPath();
+    sigCtx.moveTo(punkte[0].x, punkte[0].y);
+
+    function drawNext() {
+      if (idx >= punkte.length) return;
+      var p = punkte[idx];
+      // Kleines "Zittern" für natürlichen Handschrift-Effekt
+      var jitter = 0.6;
+      sigCtx.lineTo(p.x + (Math.random()-0.5)*jitter, p.y + (Math.random()-0.5)*jitter);
+      sigCtx.stroke();
+      sigCtx.beginPath();
+      sigCtx.moveTo(p.x, p.y);
+      idx++;
+      if (idx < punkte.length) requestAnimationFrame(drawNext);
+    }
+    requestAnimationFrame(drawNext);
+  }
+  setTimeout(tryDraw, 200);
+}
+
+// DEMO 1: Bestandspatient (einfacher Durchlauf)
+function startDemoBestand() {
+  if (demoLaeuft) return;
+  demoLaeuft = true;
+  openTerminModal();
+  // Step 1: Bestandspatient + Termin vereinbaren
+  setTimeout(function() {
+    var pt = document.querySelectorAll('#rc-patienttyp .radio-card-m');
+    if (pt[0]) selectRadioM(pt[0], 'rc-patienttyp'); // Bestandspatient
+  }, 700);
+  setTimeout(function() {
+    var al = document.querySelectorAll('#rc-anliegen .radio-card-m');
+    if (al[0]) selectRadioM(al[0], 'rc-anliegen'); // Termin vereinbaren
+  }, 1400);
+  // Weiter → Step 2 (Slots)
+  setTimeout(function() { terminStep = 2; updateTerminStep(); }, 2300);
+  // Slot auswählen
+  setTimeout(function() {
+    var slots = document.querySelectorAll('#slots-wn .slot-chip:not(.busy)');
+    if (slots[1]) slots[1].click();
+  }, 3200);
+  // Weiter → Step 3 (Daten)
+  setTimeout(function() { terminStep = 3; updateTerminStep(); }, 4200);
+  // Felder füllen
+  setTimeout(function() {
+    var d = { 'tm-vorname':'Erika', 'tm-nachname':'Mustermann',
+               'tm-telefon':'03943 / 12 34 56', 'tm-email':'e.mustermann@example.de',
+               'tm-kasse':'AOK Plus' };
+    Object.keys(d).forEach(function(id){ var el=document.getElementById(id); if(el) el.value=d[id]; });
+    var v=document.getElementById('tm-versicherung'); if(v) v.value='gkv';
+    var ds=document.getElementById('tm-datenschutz'); if(ds) ds.checked=true;
+  }, 5000);
+  // Weiter → Step 4 (Bestätigung)
+  setTimeout(function() { terminStep=4; updateTerminStep(); demoLaeuft=false; }, 6500);
+}
+
+// DEMO 2: Neupatient mit Anamnesebogen + Unterschrift
+function startDemoNeu() {
+  if (demoLaeuft) return;
+  demoLaeuft = true;
+  openTerminModal();
+  // Step 1: Neupatient + Vorsorge
+  setTimeout(function() {
+    var pt = document.querySelectorAll('#rc-patienttyp .radio-card-m');
+    if (pt[1]) selectRadioM(pt[1], 'rc-patienttyp'); // Neupatient
+  }, 700);
+  setTimeout(function() {
+    var al = document.querySelectorAll('#rc-anliegen .radio-card-m');
+    if (al[1]) selectRadioM(al[1], 'rc-anliegen'); // Vorsorge / Check-Up
+  }, 1400);
+  // Weiter → Anamnesebogen (terminAnamneseActive = true)
+  setTimeout(function() {
+    terminAnamneseActive = true;
+    updateTerminStep();
+  }, 2300);
+  // Anamnesebogen ausfüllen
+  setTimeout(function() {
+    var an = document.getElementById('an-allergien');
+    if (an) an.value = 'Penicillin (leichte Reaktion)';
+    var med = document.getElementById('an-medikamente');
+    if (med) med.value = 'Keine';
+    var anl = document.getElementById('an-anliegen-neu');
+    if (anl) anl.value = 'Erstvorstellung, allg. Check-Up gewünscht';
+    // Vorerkrankungen: keine bekannt ankreuzen
+    var keine = document.getElementById('an-keine');
+    if (keine) { keine.checked = true; }
+    // Raucher: Nein
+    var raucher = document.querySelectorAll('#rc-raucher .radio-card-m');
+    if (raucher[0]) selectRadioM(raucher[0], 'rc-raucher');
+  }, 3400);
+  // Unterschrift zeichnen
+  setTimeout(function() { demoZeichneUnterschrift(); }, 4500);
+  // Weiter → Step 2 (Slots) — nach 8s, damit Unterschrift komplett sichtbar ist
+  setTimeout(function() {
+    terminAnamneseActive = false;
+    terminStep = 2;
+    updateTerminStep();
+  }, 8000);
+  // Slot auswählen
+  setTimeout(function() {
+    var slots = document.querySelectorAll('#slots-wn .slot-chip:not(.busy)');
+    if (slots[0]) slots[0].click();
+  }, 8900);
+  // Weiter → Step 3 (Daten)
+  setTimeout(function() { terminStep = 3; updateTerminStep(); }, 9800);
+  // Felder füllen
+  setTimeout(function() {
+    var d = { 'tm-vorname':'Max', 'tm-nachname':'Neupatient',
+               'tm-telefon':'03943 / 98 76 54', 'tm-email':'max.neu@example.de',
+               'tm-kasse':'Techniker Krankenkasse (TK)' };
+    Object.keys(d).forEach(function(id){ var el=document.getElementById(id); if(el) el.value=d[id]; });
+    var v=document.getElementById('tm-versicherung'); if(v) v.value='gkv';
+    var ds=document.getElementById('tm-datenschutz'); if(ds) ds.checked=true;
+  }, 10600);
+  // Weiter → Step 4 (Bestätigung)
+  setTimeout(function() { terminStep=4; updateTerminStep(); demoLaeuft=false; }, 12100);
+}
+
+// Demo-Buttons (floating, unten rechts)
+document.addEventListener('DOMContentLoaded', function() {
+  var wrap = document.createElement('div');
+  wrap.id = 'demo-buttons-wrap';
+  wrap.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:8000;display:flex;flex-direction:column;gap:8px;align-items:flex-end;';
+  wrap.innerHTML = '<div style="font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.7);text-align:center;background:rgba(56,78,51,0.6);padding:3px 10px;border-radius:20px;backdrop-filter:blur(6px);">Demo-Modus</div>'
+    + '<button onclick="startDemoBestand()" style="background:var(--olive-haupt);color:#fff;border:none;border-radius:50px;padding:9px 18px;font-family:var(--font-sans);font-size:0.75rem;font-weight:700;cursor:pointer;box-shadow:0 3px 14px rgba(56,78,51,0.40);white-space:nowrap;">&#9654; Bestandspatient</button>'
+    + '<button onclick="startDemoNeu()" style="background:var(--terracotta);color:#fff;border:none;border-radius:50px;padding:9px 18px;font-family:var(--font-sans);font-size:0.75rem;font-weight:700;cursor:pointer;box-shadow:0 3px 14px rgba(163,111,90,0.40);white-space:nowrap;">&#9654; Neupatient + Anamnese</button>';
+  document.body.appendChild(wrap);
+});
+
+// Standort-Filter: Hero-Chips + Standorte-Sektion
+function filterStandort(which) {
+  // Standort merken + Header-Pill aktualisieren
+  aktuellerStandort = which;
+  updatePraxisStatus();
+
+  // Chips aktiv setzen
+  var chipWn  = document.getElementById('chip-wn');
+  var chipIls = document.getElementById('chip-ils');
+  if (chipWn)  chipWn.classList.toggle('active',  which === 'wn');
+  if (chipIls) chipIls.classList.toggle('active', which === 'ils');
+
+  // Tabs in der Sektion aktiv setzen
+  var tabWn  = document.getElementById('tab-wn');
+  var tabIls = document.getElementById('tab-ils');
+  if (tabWn)  tabWn.classList.toggle('active',  which === 'wn');
+  if (tabIls) tabIls.classList.toggle('active', which === 'ils');
+
+  // Boxen ein-/ausblenden
+  var locWn  = document.getElementById('loc-wn');
+  var locIls = document.getElementById('loc-ils');
+  if (locWn)  locWn.classList.toggle('active',  which === 'wn');
+  if (locIls) locIls.classList.toggle('active', which === 'ils');
+
+
+}
+
+
+
+
+
+// kompass aufklappen — nur beim Scrollen, nicht beim Laden
+(function() {
+  var card = document.querySelector('.compass-sec');
+  if (!card) return;
+  function pruefeKompass() {
+    var rect = document.getElementById('kompass').getBoundingClientRect();
+    if (rect.top < window.innerHeight - 60) {
+      card.classList.add('aufgeklappt');
+      window.removeEventListener('scroll', pruefeKompass);
+    }
+  }
+  window.addEventListener('scroll', pruefeKompass, { passive: true });
+})();
+// ── Desktop Float Card: erscheint nach 300px Scroll, verschwindet beim Footer ──
+  (function() {
+    var card = document.getElementById('desk-float-card');
+    if (!card) return;
+    var footer = document.querySelector('footer');
+    function updateCard() {
+      var footerVisible = footer ? footer.getBoundingClientRect().top < window.innerHeight - 20 : false;
+      if (!footerVisible) {
+        card.classList.add('dfc-visible');
+      } else {
+        card.classList.remove('dfc-visible');
+      }
+    }
+    window.addEventListener('scroll', updateCard, { passive: true });
+    // Sofort anzeigen (400ms Verzögerung für Slide-In-Effekt)
+    setTimeout(updateCard, 400);
+  })();
+  </script>
+
+<div class="modal-overlay" id="modal-termin" onclick="closeOnBackdrop(event,'modal-termin')">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <div class="modal-step-label" id="tm-step-label">Schritt 1 von 4</div>
+          <h3 class="modal-title" id="tm-title">Anliegen w&#228;hlen</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-termin')" aria-label="Schlie&#223;en">&#10005;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-steps">
+          <div class="step-dot active" id="sd-1"></div>
+          <div class="step-dot" id="sd-1b" style="display:none;"></div>
+          <div class="step-dot" id="sd-2"></div>
+          <div class="step-dot" id="sd-3"></div>
+          <div class="step-dot" id="sd-4"></div>
+        </div>
+
+        <!-- Schritt 1: Anliegen -->
+        <div id="tm-s1">
+          <p class="step-intro">Sind Sie Neu- oder Bestandspatient?</p>
+          <div class="radio-cards-grid" id="rc-patienttyp">
+            <div class="radio-card-m" onclick="selectRadioM(this,'rc-patienttyp')" data-value="bestand">
+              <div class="radio-dot-m"></div>
+              <div><div class="radio-lbl">Bestandspatient</div><div class="radio-desc-m">Ich war bereits in Behandlung bei Dr. M&#252;ller.</div></div>
+            </div>
+            <div class="radio-card-m" onclick="selectRadioM(this,'rc-patienttyp')" data-value="neu">
+              <div class="radio-dot-m"></div>
+              <div><div class="radio-lbl">Neupatient</div><div class="radio-desc-m">Ich komme zum ersten Mal in diese Praxis.</div></div>
+            </div>
+          </div>
+          <p class="step-intro" style="margin-top:18px;">Was ist Ihr Anliegen?</p>
+          <div class="radio-cards-grid radio-grid-2" id="rc-anliegen">
+            <div class="radio-card-m" onclick="selectRadioM(this,'rc-anliegen')" data-value="akut">
+              <div class="radio-dot-m"></div>
+              <div><div class="radio-lbl">Termin vereinbaren</div><div class="radio-desc-m">Infekt, Schmerzen, akute Beschwerden</div></div>
+            </div>
+            <div class="radio-card-m" onclick="selectRadioM(this,'rc-anliegen')" data-value="vorsorge">
+              <div class="radio-dot-m"></div>
+              <div><div class="radio-lbl">Vorsorge / Check-Up</div><div class="radio-desc-m">Gesundheitscheck, Labor, Ultraschall</div></div>
+            </div>
+            <div class="radio-card-m" onclick="selectRadioM(this,'rc-anliegen')" data-value="ernaehrung">
+              <div class="radio-dot-m"></div>
+              <div><div class="radio-lbl">Ern&#228;hrungsmedizin</div><div class="radio-desc-m">Erstgespr&#228;ch oder Folgetermin</div></div>
+            </div>
+            <div class="radio-card-m" onclick="selectRadioM(this,'rc-anliegen')" data-value="sonstiges">
+              <div class="radio-dot-m"></div>
+              <div><div class="radio-lbl">Sonstiges</div><div class="radio-desc-m">&#220;berweisung, Attest, Befundbesprechung</div></div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Schritt 1b: Anamnesebogen (nur Neupatienten) -->
+        <div id="tm-s1b" style="display:none;">
+          <div class="dsgvo-box">
+            <strong>Datenschutz:</strong> Ihre Angaben dienen ausschließlich Ihrer medizinischen Behandlung bei Dr. Müller und werden gemäß DSGVO sicher verarbeitet. Sie können den Bogen auch vor Ort ausfüllen.
+          </div>
+          <div style="text-align:right; margin-bottom:10px;">
+            <button onclick="terminAnamneseActive=false; terminStep=2; updateTerminStep();" type="button"
+              style="background:none; border:none; color:var(--text-muted); font-size:0.79rem; cursor:pointer; text-decoration:underline; font-family:var(--font-sans); padding:4px 8px;">
+              Bogen vor Ort ausfüllen &mdash; direkt weiter &rarr;
+            </button>
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Bekannte Allergien / Unverträglichkeiten</label>
+            <textarea class="anamnese-textarea" id="an-allergien" placeholder="z. B. Penicillin, Aspirin, Nüsse, Latex … oder: keine bekannt"></textarea>
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Bekannte Vorerkrankungen</label>
+            <div class="anamnese-check-grid">
+              <div class="anamnese-check-item"><input type="checkbox" id="an-blut"><label for="an-blut">Bluthochdruck</label></div>
+              <div class="anamnese-check-item"><input type="checkbox" id="an-diab"><label for="an-diab">Diabetes</label></div>
+              <div class="anamnese-check-item"><input type="checkbox" id="an-herz"><label for="an-herz">Herzerkrankung</label></div>
+              <div class="anamnese-check-item"><input type="checkbox" id="an-schild"><label for="an-schild">Schilddrüse</label></div>
+              <div class="anamnese-check-item"><input type="checkbox" id="an-niere"><label for="an-niere">Nierenerkrankung</label></div>
+              <div class="anamnese-check-item"><input type="checkbox" id="an-keine"><label for="an-keine">Keine bekannt</label></div>
+            </div>
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Aktuelle Dauermedikation</label>
+            <textarea class="anamnese-textarea" id="an-medikamente" placeholder="z. B. Ramipril 5 mg, Metformin 500 mg … oder: keine"></textarea>
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Raucherstatus</label>
+            <div class="radio-cards-grid" id="rc-raucher" style="grid-template-columns:repeat(3,1fr);">
+              <div class="radio-card-m" onclick="selectRadioM(this,'rc-raucher')" data-value="nein"><div class="radio-dot-m"></div><div><div class="radio-lbl">Nein</div></div></div>
+              <div class="radio-card-m" onclick="selectRadioM(this,'rc-raucher')" data-value="ja"><div class="radio-dot-m"></div><div><div class="radio-lbl">Ja</div></div></div>
+              <div class="radio-card-m" onclick="selectRadioM(this,'rc-raucher')" data-value="ex"><div class="radio-dot-m"></div><div><div class="radio-lbl">Ich habe aufgehört</div></div></div>
+            </div>
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Was bringt Sie zu uns?</label>
+            <textarea class="anamnese-textarea" id="an-anliegen-neu" placeholder="Kurze Beschreibung Ihrer Beschwerden oder Ihres Anliegens …" style="min-height:68px;"></textarea>
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Unterschrift (Richtigkeit der Angaben bestätigen)</label>
+            <div class="sig-wrap">
+              <canvas id="anamnese-canvas"></canvas>
+              <button class="sig-clear" onclick="clearSignatur()" type="button">Löschen</button>
+            </div>
+            <p class="sig-hint">Mit Finger (Touchscreen) oder Maus unterschreiben — rechtlich ausreichend für Anamnesebögen (einfache elektronische Signatur).</p>
+          </div>
+        </div>
+
+        <!-- Schritt 2: Standort & Termin -->
+        <div id="tm-s2" style="display:none;">
+          <p class="step-intro">Standort w&#228;hlen:</p>
+          <div class="standort-toggle-m">
+            <button class="standort-btn-m active" id="slot-btn-wn" onclick="switchSlotStandort('wn')">Wernigerode</button>
+            <button class="standort-btn-m" id="slot-btn-ils" onclick="switchSlotStandort('ils')">Heudeber</button>
+          </div>
+          <div class="slots-legend">
+            <span><span class="leg-dot" style="background:var(--olive-haupt);"></span>Frei</span>
+            <span><span class="leg-dot" style="background:#ccc;"></span>Besetzt</span>
+          </div>
+          <div id="slots-wn"></div>
+          <div id="slots-ils" style="display:none;"></div>
+        </div>
+
+        <!-- Schritt 3: Ihre Daten -->
+        <div id="tm-s3" style="display:none;">
+          <div class="m-form-row">
+            <div class="m-form-group">
+              <label class="m-form-label">Vorname</label>
+              <input type="text" class="m-form-input" id="tm-vorname" placeholder="Max" autocomplete="given-name">
+            </div>
+            <div class="m-form-group">
+              <label class="m-form-label">Nachname</label>
+              <input type="text" class="m-form-input" id="tm-nachname" placeholder="Mustermann" autocomplete="family-name">
+            </div>
+          </div>
+          <div class="m-form-group">
+              <label class="m-form-label">Geburtsdatum</label>
+              <input type="text" class="m-form-input" id="tm-gebdatum" placeholder="TT.MM.JJJJ" inputmode="numeric">
+            </div>
+            <div class="m-form-group">
+              <label class="m-form-label">Versicherungsart</label>
+              <select class="m-form-input" id="tm-versicherung">
+                <option value="">Bitte w&#228;hlen</option>
+                <option value="gkv">Gesetzlich (GKV)</option>
+                <option value="pkv">Privat (PKV)</option>
+                <option value="selbst">Selbstzahler</option>
+              </select>
+            </div>
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Krankenkasse</label>
+            <input type="text" class="m-form-input" id="tm-kasse" placeholder="z.B. AOK, TK, Barmer &#8230;">
+          </div>
+          <div class="m-form-row">
+            <div class="m-form-group">
+              <label class="m-form-label">Telefon</label>
+              <input type="tel" class="m-form-input" id="tm-telefon" placeholder="+49 &#8230;" autocomplete="tel">
+            </div>
+            <div class="m-form-group">
+              <label class="m-form-label">E-Mail</label>
+              <input type="email" class="m-form-input" id="tm-email" placeholder="ihre@email.de" autocomplete="email">
+            </div>
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Hinweis (optional)</label>
+            <textarea class="m-form-input" id="tm-hinweis" rows="2" placeholder="z.B. Rollstuhlzugang, Dolmetscher &#8230;" style="resize:vertical;"></textarea>
+          </div>
+          <div class="m-checkbox-row">
+            <input type="checkbox" id="tm-datenschutz">
+            <label for="tm-datenschutz">Ich habe die <a href="datenschutz.html" style="color:var(--olive-haupt);">Datenschutzerkl&#228;rung</a> gelesen und stimme der Verarbeitung meiner Daten f&#252;r die Terminanfrage zu.</label>
+          </div>
+        </div>
+
+        <!-- Schritt 4: Best&#228;tigung -->
+        <div id="tm-s4" style="display:none;">
+          <div class="success-screen-m">
+            <div class="success-icon-m">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3 style="font-family:var(--font-serif); font-size:1.75rem; color:var(--olive-haupt); margin-bottom:7px;">Termin best&#228;tigt &#10003;</h3>
+            <p style="font-size:0.84rem; color:var(--text-muted); line-height:1.65; max-width:370px; margin:0 auto;">Ihr Termin ist verbindlich gebucht. Eine Best&#228;tigungsmail geht in K&#252;rze an Ihre E-Mail-Adresse. Bitte schauen Sie auch in Ihren Spam-Ordner.</p>
+            <div class="summary-box-m" id="tm-summary"></div>
+            <button class="btn-custom btn-custom-dark" style="margin-top:6px;" onclick="closeModal('modal-termin')">Fertig &#10003;</button>
+          </div>
+        </div>
+
+        <!-- Footer-Buttons -->
+        <div class="modal-footer-btns" id="tm-footer">
+          <button class="btn-custom" id="tm-back" style="visibility:hidden;" onclick="terminBack()">&#8592; Zur&#252;ck</button>
+          <button class="btn-custom btn-custom-dark" id="tm-next" onclick="terminNext()">Weiter &#8594;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== MODAL: FOLGEREZEPT ====== -->
+  <div class="modal-overlay" id="modal-rezept" onclick="closeOnBackdrop(event,'modal-rezept')">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <div class="modal-step-label">Digitaler Empfang</div>
+          <h3 class="modal-title">Folgerezept anfordern</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-rezept')" aria-label="Schlie&#223;en">&#10005;</button>
+      </div>
+      <div class="modal-body">
+        <div class="info-box-m">
+          <strong>Nur f&#252;r Dauermedikamente.</strong> Das Folgerezept gilt ausschlie&#223;lich f&#252;r bereits von der Praxis verschriebene Medikamente. Bei neuen Beschwerden bitte einen Termin buchen. Bearbeitungszeit: 1 Werktag.
+        </div>
+        <div class="m-form-row">
+          <div class="m-form-group">
+            <label class="m-form-label">Vorname</label>
+            <input type="text" class="m-form-input" id="rz-vorname" placeholder="Max" autocomplete="given-name">
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Nachname</label>
+            <input type="text" class="m-form-input" id="rz-nachname" placeholder="Mustermann" autocomplete="family-name">
+          </div>
+        </div>
+        <div class="m-form-group">
+            <label class="m-form-label">Geburtsdatum</label>
+            <input type="text" class="m-form-input" id="rz-gebdatum" placeholder="TT.MM.JJJJ" inputmode="numeric">
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Krankenkasse</label>
+            <input type="text" class="m-form-input" id="rz-kasse" placeholder="z.B. AOK, TK &#8230;">
+          </div>
+        <div class="m-form-row">
+          <div class="m-form-group">
+            <label class="m-form-label">Telefon</label>
+            <input type="tel" class="m-form-input" id="rz-telefon" placeholder="+49 &#8230;" autocomplete="tel">
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">E-Mail (f&#252;r R&#252;ckfragen)</label>
+            <input type="email" class="m-form-input" id="rz-email" placeholder="ihre@email.de" autocomplete="email">
+          </div>
+        </div>
+
+        <p class="step-intro" style="margin-top:4px; margin-bottom:10px;">Welche Medikamente ben&#246;tigen Sie?</p>
+        <div id="rz-med-container"></div>
+        <button class="add-med-btn-m" id="rz-add-btn" onclick="addMedRow()">+ Weiteres Medikament hinzuf&#252;gen</button>
+
+        <div class="info-box-m" style="margin-top:16px;">
+          Das Rezept wird auf Ihre elektronische Gesundheitskarte (eGK) übertragen. Bitte beachten Sie, dass dies einige Stunden dauern kann.
+        </div>
+
+        <div class="m-checkbox-row">
+          <input type="checkbox" id="rz-confirm">
+          <label for="rz-confirm">Ich best&#228;tige, dass es sich ausschlie&#223;lich um bereits von der Praxis verschriebene Dauermedikamente handelt und meine letzte Kontrolluntersuchung nicht l&#228;nger als 12 Monate zur&#252;ckliegt.</label>
+        </div>
+        <div class="m-checkbox-row">
+          <input type="checkbox" id="rz-datenschutz">
+          <label for="rz-datenschutz">Ich habe die <a href="datenschutz.html" style="color:var(--olive-haupt);">Datenschutzerkl&#228;rung</a> gelesen und stimme der Verarbeitung meiner Daten zu.</label>
+        </div>
+
+        <div class="modal-footer-btns">
+          <span style="font-size:0.77rem; color:var(--text-muted);">Wird als E-Mail an die Praxis gesendet.</span>
+          <button class="btn-custom btn-custom-dark" onclick="submitRezept()">
+            Anfrage senden
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-left:4px;vertical-align:middle;" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Weitere Termine Popup -->
+<!-- ── Desktop Floating Annotation Card ── -->
+  <div class="desk-float-card" id="desk-float-card" aria-label="Termin buchen">
+    <div class="dfc-label">Termin buchen</div>
+    <div class="dfc-row" onclick="openTerminModal(null,'wernigerode')" role="button" tabindex="0" aria-label="Termin Wernigerode">
+      <span class="dfc-city">Wernige&shy;rode</span>
+      <span class="dfc-arrow">&#8594;</span>
+    </div>
+    <div class="dfc-row" onclick="openTerminModal(null,'heudeber')" role="button" tabindex="0" aria-label="Termin Heudeber">
+      <span class="dfc-city">Heude&shy;ber</span>
+      <span class="dfc-arrow">&#8594;</span>
+    </div>
+  </div>
+
+</body>
+</html>
