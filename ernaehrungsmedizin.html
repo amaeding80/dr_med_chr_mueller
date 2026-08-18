@@ -169,20 +169,22 @@
     .footer-links-inline a:hover { color: var(--olive-haupt); }
     @media (max-width: 679px) { .footer-slim-inner { flex-direction: column; text-align: center; gap: 6px; } }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 1024px) and (orientation: portrait) {
       .nav-menu, .nav-right { display: none; }
       .burger-btn { display: flex !important; }
+    }
+    @media (max-width: 1024px) {
       .schwerpunkt-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 1024px) and (orientation: portrait) {
       .inhalt-grid { grid-template-columns: 1fr; }
-      .sidebar { order: -1; }
+      .sidebar { order: 2; }
     }
     @media (max-width: 767px) {
       .inhalt-grid { grid-template-columns: 1fr; }
       .schwerpunkt-grid { grid-template-columns: 1fr; }
       .inhalt { padding: 0 0 48px; }
-      .sidebar { order: -1; }
+      .sidebar { order: 2; }
       .container { padding: 0 20px; }
       .seiten-kopf { padding: 48px 0 0; }
       .kern-satz { font-size: 1.2rem; padding: 20px 20px; }
@@ -204,6 +206,52 @@
       color:var(--olive-dark);
       border-radius:52% 48% 44% 56% / 58% 46% 54% 42%;
       text-decoration:none;
+    }
+    /* Verwandte Seiten — Mobile Karten */
+    .verwandte-seiten {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .verwandte-seiten .organisch-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1 1 220px;
+      padding: 6px 14px;
+      gap: 10px;
+    }
+    .verwandte-seiten .organisch-link::after {
+      content: '→';
+      flex-shrink: 0;
+      font-size: 1rem;
+      opacity: 0.7;
+      transition: transform 0.2s;
+    }
+    .verwandte-seiten .organisch-link:hover::after {
+      transform: translateX(3px);
+    }
+    @media (max-width: 767px) {
+      .verwandte-seiten {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      .verwandte-seiten .organisch-link {
+        flex: unset;
+        width: 100%;
+        padding: 14px 18px !important;
+        border-radius: 10px !important;
+        border: 1.5px solid rgba(56,78,51,0.20);
+        background: rgba(56,78,51,0.07) !important;
+        min-height: 52px;
+        font-size: 1rem !important;
+      }
+      .verwandte-seiten .organisch-link:hover {
+        border-radius: 10px !important;
+        background: rgba(56,78,51,0.14) !important;
+      }
     }
     
     /* ====== MODAL + TERMIN ====== */
@@ -233,6 +281,49 @@
       z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px;
     }
     .modal-overlay.active { display: flex; }
+
+    /* ── Mobile Bottom Bar (Unterseite) ── */
+    .mobile-bottom-bar { display: none; }
+    @media (max-width: 679px) and (orientation: portrait) {
+      .mobile-bottom-bar {
+        display: flex !important;
+        position: fixed !important;
+        bottom: 12px !important;
+        left: 12px !important;
+        right: 12px !important;
+        z-index: 9999 !important;
+        background: rgba(255,255,255,0.96) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        border: 1px solid rgba(110,145,98,0.25) !important;
+        border-radius: 50px !important;
+        padding: 10px !important;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.15) !important;
+        gap: 0 !important;
+        align-items: center !important;
+        transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease !important;
+      }
+      .mobile-bottom-bar .bar-loc-btn {
+        flex: 1 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        padding: 12px 10px !important;
+        background: none; border: none; border-radius: 40px; cursor: pointer; transition: background 0.18s;
+      }
+      .mobile-bottom-bar .bar-loc-btn:active { background: rgba(56,78,51,0.12); }
+      .mobile-bottom-bar .bar-divider { width: 1px; height: 28px; background: rgba(56,78,51,0.25); flex-shrink: 0; }
+      .mobile-bottom-bar .bar-loc-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+      .mobile-bottom-bar .bar-city { font-size: 1rem !important; font-weight: 700 !important; color: var(--text); white-space: nowrap; }
+      .mobile-bottom-bar .bar-hint { font-size: 0.82rem !important; color: var(--olive-haupt); white-space: nowrap; }
+      .mobile-bottom-bar.bar-hidden { transform: translateY(140%) !important; opacity: 0 !important; pointer-events: none !important; }
+      .terracotta-dot { width: 10px; height: 10px; background: var(--terracotta); border-radius: 50%; flex-shrink: 0; }
+    }
+    @media (max-width: 390px) and (orientation: portrait) {
+      .mobile-bottom-bar .bar-city { font-size: 0.88rem !important; }
+      .mobile-bottom-bar .bar-hint { font-size: 0.72rem !important; }
+    }
     .modal-overlay.active ~ .mobile-bottom-bar,
     body.modal-open .mobile-bottom-bar { display: none !important; }
     .modal-box {
@@ -391,10 +482,126 @@
       color: #384E33;
       opacity: 0.6;
     }
-    @media (min-width: 1025px) and (orientation: landscape) {
+    @media (min-width: 900px) {
       .desk-float-card { display: block; }
     }
-  </style>
+  
+    /* ── Mobile Fixes Unterseiten ── */
+    @media (max-width: 1024px) and (orientation: portrait) {
+      /* Termin- und Standorte-Kachel im Hochformat weg */
+      .sidebar-link-box { display: none !important; }
+      .sidebar-standort { display: none !important; }
+    }
+    @media (max-width: 1024px) {
+      /* Demo-Buttons nie auf Mobile/Tablet */
+      #demo-buttons-wrap { display: none !important; }
+    }
+  
+    /* ── Themen-Swipe (Mobile Ernährungsmedizin) ── */
+    .themen-desktop { display: block; }
+    .themen-mobile-wrap { display: none; }
+    @media (max-width: 767px) {
+      .themen-desktop { display: none !important; }
+      .themen-mobile-wrap {
+        display: block !important;
+        position: relative;
+        /* Hint immer sichtbar: Wrapper = Swipe + 36px für Hint */
+      }
+      .themen-swipe {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 10px;
+        padding-right: 16px;  /* letzte Karte nicht bündig am Rand */
+      }
+      .themen-swipe::-webkit-scrollbar { display: none; }
+      .themen-card {
+        flex: 0 0 86%;          /* 86%: nächste Karte schimmert rein */
+        scroll-snap-align: start;
+        background: var(--surface);
+        border: 1px solid rgba(56,78,51,0.12);
+        border-radius: 16px;
+        padding: 20px 16px;
+        min-width: 0;
+        box-sizing: border-box;
+        overflow: hidden;       /* kein Textüberlauf rechts */
+        word-break: break-word;
+        /* Karteninhalt scrollbar falls nötig, aber Karte passt in Viewport */
+        max-height: calc(100svh - 260px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .themen-card h2 {
+        font-family: var(--font-serif) !important;
+        font-size: 1.2rem !important;
+        color: var(--olive-haupt);
+        margin-bottom: 10px;
+        line-height: 1.2;
+      }
+      .themen-card h3 {
+        font-family: var(--font-serif) !important;
+        font-size: 1.05rem !important;
+        margin-top: 0 !important;
+        margin-bottom: 8px;
+        color: var(--olive-haupt);
+      }
+      .themen-card p { font-size: 0.85rem; line-height: 1.55; color: var(--text-muted); margin-bottom: 0; }
+      /* Wischen-Hint: immer sichtbar unter den Karten */
+      .themen-hint {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 10px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--olive-haupt);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        opacity: 0.75;
+      }
+    }
+    @media (orientation: landscape) and (max-height: 500px) {
+      .themen-desktop { display: none !important; }
+      .themen-mobile-wrap { display: block !important; }
+      .themen-card { flex: 0 0 70% !important; max-height: calc(100svh - 120px) !important; }
+    }
+    @media (max-width: 390px) and (orientation: portrait) {
+      .themen-card {
+        max-height: calc(100svh - 240px);
+        padding: 16px 14px;
+      }
+      .themen-card h2 { font-size: 1.05rem !important; }
+      .themen-card h3 { font-size: 0.95rem !important; }
+      .themen-card p { font-size: 0.81rem; }
+    }
+  
+    /* ====== SMARTPHONE QUERFORMAT ====== */
+    @media (orientation: landscape) and (max-height: 500px) {
+      header { padding: 8px 0 !important; }
+      .seiten-kopf { padding: 18px 0 0 !important; }
+      .kopf-inner { padding-bottom: 10px !important; }
+      .harz-welle { height: 14px !important; }
+      .seiten-kopf h1 { font-size: clamp(1.3rem, 3.2vw, 1.8rem) !important; line-height: 1.1 !important; }
+      .breadcrumb { margin-bottom: 5px !important; font-size: 0.7rem !important; }
+      .page-tag { margin-bottom: 8px !important; }
+      .lead { display: none !important; }
+      .inhalt { padding: 14px 0 32px !important; }
+      .inhalt-grid { grid-template-columns: 1fr !important; }
+      .sidebar { order: 2 !important; }
+      .mobile-bottom-bar { display: none !important; }
+      .themen-desktop { display: none !important; }
+      .themen-mobile-wrap { display: block !important; }
+      .themen-card {
+        flex: 0 0 58% !important;
+        max-height: calc(100svh - 90px) !important;
+        overflow-y: auto !important;
+      }
+    }
+    </style>
 </head>
 <body>
 
@@ -473,28 +680,55 @@
 
     <div class="inhalt-grid">
       <div class="prose">
-        <h2>Ernährungsmedizin ist Medizin.</h2>
-        <p>Ernährung beeinflusst zahlreiche Erkrankungen – gleichzeitig können Erkrankungen selbst den Ernährungszustand erheblich verändern.</p>
-        <p>Deshalb betrachten wir nicht nur, was Sie essen, sondern auch Stoffwechsel, Körperzusammensetzung, Begleiterkrankungen, Medikamente, Bewegung und persönliche Lebensumstände.</p>
-
-        <h3>Adipositas &amp; Übergewicht</h3>
-        <p>Adipositas ist eine chronische Erkrankung und nicht einfach eine Frage mangelnder Disziplin. Die Ursachen sind vielfältig. Deshalb setzen wir auf eine strukturierte und langfristig ausgerichtete Behandlung.</p>
-
-        <h3>Stoffwechselmedizin</h3>
-        <p>Übergewicht, Insulinresistenz, Prädiabetes, Diabetes mellitus, Fettstoffwechselstörungen und Fettleber treten häufig gemeinsam auf. Wir betrachten diese Veränderungen nicht isoliert, sondern im Zusammenhang.</p>
-
-        <h3>Mangelernährung &amp; ungewollter Gewichtsverlust</h3>
-        <p>Nicht jede ernährungsmedizinische Erkrankung bedeutet Übergewicht. Unbeabsichtigter Gewichtsverlust und Mangelernährung können insbesondere bei chronischen Erkrankungen und im höheren Lebensalter erhebliche Auswirkungen haben.</p>
-
-        <h3>Sarkopenie &amp; Muskelgesundheit</h3>
-        <p>Muskelmasse und Muskelkraft sind wichtige Voraussetzungen für Mobilität und Selbstständigkeit. Gerade im höheren Lebensalter oder bei Gewichtsreduktion sollte deshalb nicht allein das Körpergewicht betrachtet werden.</p>
-
-        <div style="background:rgba(56,78,51,0.06);border:1px solid rgba(56,78,51,0.14);border-radius:12px;padding:20px 24px;margin-top:28px;">
-          <strong style="color:var(--olive-haupt);font-size:0.9rem;">Hinweis zu den Kosten</strong>
-          <p style="margin:8px 0 0;font-size:0.92rem;color:var(--text-muted);">Ernährungsmedizinische Leistungen sind keine Leistungen der gesetzlichen Krankenversicherung. Über mögliche Kosten informieren wir Sie selbstverständlich vor Beginn der Behandlung.</p>
+        <!-- Desktop: normaler Fließtext -->
+        <div class="themen-desktop">
+          <h2>Ernährungsmedizin ist Medizin.</h2>
+          <p>Ernährung beeinflusst zahlreiche Erkrankungen – gleichzeitig können Erkrankungen selbst den Ernährungszustand erheblich verändern.</p>
+          <p>Deshalb betrachten wir nicht nur, was Sie essen, sondern auch Stoffwechsel, Körperzusammensetzung, Begleiterkrankungen, Medikamente, Bewegung und persönliche Lebensumstände.</p>
+          <h3>Adipositas &amp; Übergewicht</h3>
+          <p>Adipositas ist eine chronische Erkrankung und nicht einfach eine Frage mangelnder Disziplin. Die Ursachen sind vielfältig. Deshalb setzen wir auf eine strukturierte und langfristig ausgerichtete Behandlung.</p>
+          <h3>Stoffwechselmedizin</h3>
+          <p>Übergewicht, Insulinresistenz, Prädiabetes, Diabetes mellitus, Fettstoffwechselstörungen und Fettleber treten häufig gemeinsam auf. Wir betrachten diese Veränderungen nicht isoliert, sondern im Zusammenhang.</p>
+          <h3>Mangelernährung &amp; ungewollter Gewichtsverlust</h3>
+          <p>Nicht jede ernährungsmedizinische Erkrankung bedeutet Übergewicht. Unbeabsichtigter Gewichtsverlust und Mangelernährung können insbesondere bei chronischen Erkrankungen und im höheren Lebensalter erhebliche Auswirkungen haben.</p>
+          <h3>Sarkopenie &amp; Muskelgesundheit</h3>
+          <p>Muskelmasse und Muskelkraft sind wichtige Voraussetzungen für Mobilität und Selbstständigkeit. Gerade im höheren Lebensalter oder bei Gewichtsreduktion sollte deshalb nicht allein das Körpergewicht betrachtet werden.</p>
+          <div style="background:rgba(56,78,51,0.06);border:1px solid rgba(56,78,51,0.14);border-radius:12px;padding:20px 24px;margin-top:28px;">
+            <strong style="color:var(--olive-haupt);font-size:0.9rem;">Hinweis zu den Kosten</strong>
+            <p style="margin:8px 0 0;font-size:0.92rem;color:var(--text-muted);">Ernährungsmedizinische Leistungen sind keine Leistungen der gesetzlichen Krankenversicherung. Über mögliche Kosten informieren wir Sie selbstverständlich vor Beginn der Behandlung.</p>
+          </div>
+          <div class="verwandte-seiten"><a href="adipositas.html" class="organisch-link">Adipositas &amp; Gewichtsmedizin</a><a href="mangelernährung.html" class="organisch-link">Mangelernährung &amp; Sarkopenie</a></div>
         </div>
 
-        <p style="margin-top:32px;font-size:0.95rem;"><a href="adipositas.html" class="organisch-link">Adipositas &amp; Gewichtsmedizin</a> &nbsp;|&nbsp; <a href="mangelernährung.html" class="organisch-link">Mangelernährung &amp; Sarkopenie</a></p>
+        <!-- Mobile: Swipe-Cards -->
+        <div class="themen-mobile-wrap">
+          <div class="themen-swipe" id="themen-swipe">
+            <div class="themen-card">
+              <h2>Ernährungs&shy;medizin ist Medizin.</h2>
+              <p>Ernährung beeinflusst zahlreiche Erkrankungen – gleichzeitig können Erkrankungen selbst den Ernährungszustand erheblich verändern.</p>
+              <p>Deshalb betrachten wir nicht nur, was Sie essen, sondern auch Stoffwechsel, Körperzusammensetzung, Begleiterkrankungen, Medikamente, Bewegung und persönliche Lebensumstände.</p>
+            </div>
+            <div class="themen-card">
+              <h3>Adipositas &amp; Übergewicht</h3>
+              <p>Adipositas ist eine chronische Erkrankung und nicht einfach eine Frage mangelnder Disziplin. Die Ursachen sind vielfältig. Deshalb setzen wir auf eine strukturierte und langfristig ausgerichtete Behandlung.</p>
+            </div>
+            <div class="themen-card">
+              <h3>Stoffwechsel&shy;medizin</h3>
+              <p>Übergewicht, Insulinresistenz, Prädiabetes, Diabetes mellitus, Fettstoffwechselstörungen und Fettleber treten häufig gemeinsam auf. Wir betrachten diese Veränderungen nicht isoliert, sondern im Zusammenhang.</p>
+            </div>
+            <div class="themen-card">
+              <h3>Mangel&shy;ernährung &amp; Gewichtsverlust</h3>
+              <p>Nicht jede ernährungsmedizinische Erkrankung bedeutet Übergewicht. Unbeabsichtigter Gewichtsverlust kann insbesondere bei chronischen Erkrankungen und im höheren Lebensalter erhebliche Auswirkungen haben.</p>
+            </div>
+            <div class="themen-card">
+              <h3>Sarkopenie &amp; Muskelgesundheit</h3>
+              <p>Muskelmasse und Muskelkraft sind wichtige Voraussetzungen für Mobilität und Selbstständigkeit. Gerade im höheren Lebensalter oder bei Gewichtsreduktion sollte nicht allein das Körpergewicht betrachtet werden.</p>
+            </div>
+          </div>
+          <div class="themen-hint" id="themen-hint">Wischen →</div>
+        </div>
+
+        <div class="verwandte-seiten"><a href="adipositas.html" class="organisch-link">Adipositas &amp; Gewichtsmedizin</a><a href="mangelernährung.html" class="organisch-link">Mangelernährung &amp; Sarkopenie</a></div>
       </div>
 
       <div class="sidebar">
@@ -506,9 +740,9 @@
           <div class="vorteil-zeile"><div class="vorteil-dot">✓</div><span>Langfristige Begleitung auf Augenhöhe</span></div>
         </div>
 
-        <div class="sidebar-card">
+        <div class="sidebar-card sidebar-standort">
           <h4>Standorte</h4>
-          <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:8px;"><strong style="color:var(--text);">Benzingerode</strong><br>Oberhof 9 · 38855 Wernigerode<br>Tel 03943 / 48 13 3</p>
+          <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:8px;"><strong style="color:var(--text);">Wernigerode</strong><br>Oberhof 9 · 38855 Wernigerode<br>Tel 03943 / 48 13 3</p>
           <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;"><strong style="color:var(--text);">Heudeber</strong><br>Bahnhofstraße 18 · 38855 Heudeber<br>Tel 039458 / 223</p>
           <a href="index.html#standort" class="btn-smart" style="width:100%;justify-content:center;">
             <span>Anfahrt &amp; Öffnungszeiten</span><span class="btn-circle">&#8594;</span>
@@ -1189,10 +1423,6 @@ function openTerminModal(vorauswahlAnliegen, vorauswahlStandort) {
         });
     }
 
-    document.addEventListener('DOMContentLoaded', updatePraxisStatus);
-  
-
-
 // ── Burger-Menü ──
 function toggleMobMenu() {
   var btn = document.getElementById('burger-btn');
@@ -1405,7 +1635,6 @@ document.addEventListener('DOMContentLoaded', function() {
 function filterStandort(which) {
   // Standort merken + Header-Pill aktualisieren
   aktuellerStandort = which;
-  updatePraxisStatus();
 
   // Chips aktiv setzen
   var chipWn  = document.getElementById('chip-wn');
@@ -1445,23 +1674,19 @@ function filterStandort(which) {
   }
   window.addEventListener('scroll', pruefeKompass, { passive: true });
 })();
-// ── Desktop Float Card: erscheint nach 300px Scroll, verschwindet beim Footer ──
-  (function() {
+// ── Desktop Float Card ──
+  document.addEventListener('DOMContentLoaded', function() {
     var card = document.getElementById('desk-float-card');
     if (!card) return;
     var footer = document.querySelector('footer');
-    function updateCard() {
-      var footerVisible = footer ? footer.getBoundingClientRect().top < window.innerHeight - 20 : false;
-      if (!footerVisible) {
-        card.classList.add('dfc-visible');
-      } else {
-        card.classList.remove('dfc-visible');
-      }
-    }
-    window.addEventListener('scroll', updateCard, { passive: true });
-    // Sofort anzeigen (400ms Verzögerung für Slide-In-Effekt)
-    setTimeout(updateCard, 400);
-  })();
+    // Karte sofort zeigen, nur beim Footer ausblenden
+    card.classList.add('dfc-visible');
+    window.addEventListener('scroll', function() {
+      if (!footer) return;
+      var footerNah = footer.getBoundingClientRect().top < window.innerHeight - 80;
+      card.classList.toggle('dfc-visible', !footerNah);
+    }, { passive: true });
+  });
   </script>
 
 <div class="modal-overlay" id="modal-termin" onclick="closeOnBackdrop(event,'modal-termin')">
@@ -1741,5 +1966,55 @@ function filterStandort(which) {
     </div>
   </div>
 
+
+  <!-- Mobile Bottom Bar -->
+  <div class="mobile-bottom-bar">
+    <button class="bar-loc-btn" onclick="openTerminModal(null,'wernigerode')">
+      <span class="terracotta-dot"></span>
+      <div class="bar-loc-text">
+        <span class="bar-city">Wernigerode</span>
+        <span class="bar-hint">Termin buchen</span>
+      </div>
+    </button>
+    <div class="bar-divider"></div>
+    <button class="bar-loc-btn" onclick="openTerminModal(null,'heudeber')">
+      <span class="terracotta-dot"></span>
+      <div class="bar-loc-text">
+        <span class="bar-city">Heudeber</span>
+        <span class="bar-hint">Termin buchen</span>
+      </div>
+    </button>
+  </div>
+  <script>
+  // ── Bottom Bar: bei Footer ausblenden ──
+  (function() {
+    var bar = document.querySelector('.mobile-bottom-bar');
+    var footer = document.querySelector('footer');
+    if (!bar || !footer) return;
+    function checkFooter() {
+      var fr = footer.getBoundingClientRect();
+      if (fr.top < window.innerHeight - 20) {
+        bar.classList.add('bar-hidden');
+      } else {
+        bar.classList.remove('bar-hidden');
+      }
+    }
+    window.addEventListener('scroll', checkFooter, { passive: true });
+    checkFooter();
+  })();
+  </script>
+
+  <script>
+  // Themen-Swipe Hint
+  (function() {
+    var swipe = document.getElementById('themen-swipe');
+    var hint = document.getElementById('themen-hint');
+    if (!swipe || !hint) return;
+    swipe.addEventListener('scroll', function() {
+      var atEnd = swipe.scrollLeft + swipe.clientWidth >= swipe.scrollWidth - 20;
+      hint.textContent = atEnd ? '← Zurück' : 'Wischen →';
+    }, { passive: true });
+  })();
+  </script>
 </body>
 </html>

@@ -118,9 +118,9 @@
     @media (max-width: 679px) { .footer-slim-inner { flex-direction: column; text-align: center; gap: 6px; } }
     @media (max-width: 640px) { .mangel-grid { grid-template-columns: 1fr; } }
 
-    @media (max-width: 1024px) { .nav-menu, .nav-right { display: none; } .burger-btn { display: flex !important; } }
-    @media (max-width: 1024px) and (orientation: portrait) { .inhalt-grid { grid-template-columns: 1fr; } .sidebar { order: -1; } }
-    @media (max-width: 767px) { .inhalt-grid { grid-template-columns: 1fr; } .sidebar { order: -1; } .inhalt { padding: 40px 0 48px; } .container { padding: 0 20px; } .seiten-kopf { padding: 48px 0 0; } }
+    @media (max-width: 1024px) and (orientation: portrait) { .nav-menu, .nav-right { display: none; } .burger-btn { display: flex !important; } }
+    @media (max-width: 1024px) and (orientation: portrait) { .inhalt-grid { grid-template-columns: 1fr; } .sidebar { order: 2; } }
+    @media (max-width: 767px) { .inhalt-grid { grid-template-columns: 1fr; } .sidebar { order: 2; } .inhalt { padding: 40px 0 48px; } .container { padding: 0 20px; } .seiten-kopf { padding: 48px 0 0; } }
   
     /* Kiesel-Link — Pill antwortet auf Hover */
     .organisch-link{
@@ -138,6 +138,81 @@
       color:var(--olive-dark);
       border-radius:52% 48% 44% 56% / 58% 46% 54% 42%;
       text-decoration:none;
+    }
+    /* Verwandte Seiten — Mobile Karten */
+    .verwandte-seiten {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .verwandte-seiten .organisch-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1 1 220px;
+      padding: 6px 14px;
+      gap: 10px;
+    }
+    .verwandte-seiten .organisch-link::after {
+      content: '→';
+      flex-shrink: 0;
+      font-size: 1rem;
+      opacity: 0.7;
+      transition: transform 0.2s;
+    }
+    .verwandte-seiten .organisch-link:hover::after {
+      transform: translateX(3px);
+    }
+    @media (max-width: 767px) {
+      .verwandte-seiten {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      .verwandte-seiten .organisch-link {
+        flex: unset;
+        width: 100%;
+        padding: 14px 18px !important;
+        border-radius: 10px !important;
+        border: 1.5px solid rgba(56,78,51,0.20);
+        background: rgba(56,78,51,0.07) !important;
+        min-height: 52px;
+        font-size: 1rem !important;
+      }
+      .verwandte-seiten .organisch-link:hover {
+        border-radius: 10px !important;
+        background: rgba(56,78,51,0.14) !important;
+      }
+    }
+    
+    /* ── Mobile Fixes Unterseiten ── */
+    @media (max-width: 1024px) and (orientation: portrait) {
+      /* Termin- und Standorte-Kachel im Hochformat weg */
+      .sidebar-link-box { display: none !important; }
+      .sidebar-standort { display: none !important; }
+    }
+    @media (max-width: 1024px) {
+      /* Demo-Buttons nie auf Mobile/Tablet */
+      #demo-buttons-wrap { display: none !important; }
+    }
+  
+    /* ====== SMARTPHONE QUERFORMAT ====== */
+    @media (orientation: landscape) and (max-height: 500px) {
+      header { padding: 8px 0 !important; }
+      .seiten-kopf { padding: 18px 0 0 !important; }
+      .kopf-inner { padding-bottom: 10px !important; }
+      .harz-welle { height: 14px !important; }
+      .seiten-kopf h1 { font-size: clamp(1.3rem, 3.2vw, 1.8rem) !important; line-height: 1.1 !important; }
+      .breadcrumb { margin-bottom: 5px !important; font-size: 0.7rem !important; }
+      .page-tag { margin-bottom: 8px !important; }
+      .seiten-sub { display: none !important; }
+      .lead { display: none !important; }
+      .inhalt { padding: 14px 0 32px !important; }
+      .inhalt-grid { grid-template-columns: 1fr !important; }
+      .sidebar { order: 2 !important; }
+      .mobile-bottom-bar { display: none !important; }
+      .fact-leiste { grid-template-columns: repeat(3, 1fr) !important; gap: 10px !important; margin: 12px 0 16px !important; }
     }
     </style>
 </head>
@@ -237,7 +312,7 @@
           <li>Körperliche Leistungsfähigkeit</li>
         </ul>
 
-        <p style="margin-top:32px;font-size:0.95rem;"><a href="ernaehrungsmedizin.html" class="organisch-link">Mehr zur Ernährungsmedizin</a></p>
+        <div class="verwandte-seiten" style="margin-top:32px;"><a href="ernaehrungsmedizin.html" class="organisch-link">Mehr zur Ernährungsmedizin</a></div>
       </div>
 
       <div class="sidebar">
@@ -254,9 +329,9 @@
           </a>
         </div>
 
-        <div class="sidebar-card">
+        <div class="sidebar-card sidebar-standort">
           <h4>Zwei Standorte im Harz</h4>
-          <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:8px;"><strong style="color:var(--text);">Benzingerode</strong><br>Oberhof 9 · 38855 Wernigerode<br>Tel 03943 / 48 13 3</p>
+          <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:8px;"><strong style="color:var(--text);">Wernigerode</strong><br>Oberhof 9 · 38855 Wernigerode<br>Tel 03943 / 48 13 3</p>
           <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;"><strong style="color:var(--text);">Heudeber</strong><br>Bahnhofstraße 18 · 38855 Heudeber<br>Tel 039458 / 223<br><span style="color:var(--olive-haupt);font-size:0.82rem;">Dr. Heldt · FA Allgemeinmedizin</span></p>
           <a href="index.html#standort" class="btn-smart" style="width:100%;justify-content:center;">
             <span>Anfahrt &amp; Öffnungszeiten</span><span class="btn-circle">&#8594;</span>
@@ -332,5 +407,42 @@ function toggleMobMenu() {
 
 document.getElementById('jahr').textContent=new Date().getFullYear();
 </script>
+
+  <!-- Mobile Bottom Bar -->
+  <div class="mobile-bottom-bar">
+    <button class="bar-loc-btn" onclick="openTerminModal(null,'wernigerode')">
+      <span class="terracotta-dot"></span>
+      <div class="bar-loc-text">
+        <span class="bar-city">Wernigerode</span>
+        <span class="bar-hint">Termin buchen</span>
+      </div>
+    </button>
+    <div class="bar-divider"></div>
+    <button class="bar-loc-btn" onclick="openTerminModal(null,'heudeber')">
+      <span class="terracotta-dot"></span>
+      <div class="bar-loc-text">
+        <span class="bar-city">Heudeber</span>
+        <span class="bar-hint">Termin buchen</span>
+      </div>
+    </button>
+  </div>
+  <script>
+  // ── Bottom Bar: bei Footer ausblenden ──
+  (function() {
+    var bar = document.querySelector('.mobile-bottom-bar');
+    var footer = document.querySelector('footer');
+    if (!bar || !footer) return;
+    function checkFooter() {
+      var fr = footer.getBoundingClientRect();
+      if (fr.top < window.innerHeight - 20) {
+        bar.classList.add('bar-hidden');
+      } else {
+        bar.classList.remove('bar-hidden');
+      }
+    }
+    window.addEventListener('scroll', checkFooter, { passive: true });
+    checkFooter();
+  })();
+  </script>
 </body>
 </html>

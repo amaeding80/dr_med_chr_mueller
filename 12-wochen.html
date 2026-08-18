@@ -77,9 +77,9 @@ footer{background:#ECE8E0;border-top:1px solid rgba(56,78,51,0.10);padding:16px 
 .footer-links-inline a{color:var(--text-muted);text-decoration:none;transition:color 0.2s;}
 .footer-links-inline a:hover{color:var(--olive-haupt);}
 @media(max-width:679px){.footer-slim-inner{flex-direction:column;text-align:center;gap:6px;}}
-@media(max-width:1024px){.nav-menu,.nav-right{display:none;}.burger-btn{display:flex!important;}}
-@media(max-width:1024px) and (orientation:portrait){.inhalt-grid{grid-template-columns:1fr;}.sidebar{order:-1;}}
-@media(max-width:767px){.inhalt-grid{grid-template-columns:1fr;}.sidebar{order:-1;}.inhalt{padding:40px 0 48px;}.container{padding:0 20px;}.seiten-kopf{padding:48px 0 0;}}
+@media(max-width:1024px) and (orientation:portrait){.nav-menu,.nav-right{display:none;}.burger-btn{display:flex!important;}}
+@media(max-width:1024px) and (orientation:portrait){.inhalt-grid{grid-template-columns:1fr;}.sidebar{order:2;}}
+@media(max-width:767px){.inhalt-grid{grid-template-columns:1fr;}.sidebar{order:2;}.inhalt{padding:20px 0 48px;}.container{padding:0 20px;}.seiten-kopf{padding:40px 0 0;}.kopf-inner{padding-bottom:20px;}.harz-welle{height:28px;}.seiten-sub{display:none;}}
     .seiten-kopf{background:linear-gradient(160deg, #FFFFFF 0%, #F7F8F5 55%, #F0F2EC 100%);padding:64px 0 0;position:relative;overflow:hidden;}
     .seiten-kopf::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 30% 30%,rgba(56,78,51,0.12) 0%,transparent 60%);pointer-events:none;}
     .page-tag{display:inline-block;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--terracotta);background:var(--terracotta-soft);border:1px solid rgba(163,111,90,0.22);padding:5px 14px;border-radius:20px;margin-bottom:16px;}
@@ -126,6 +126,49 @@ footer{background:#ECE8E0;border-top:1px solid rgba(56,78,51,0.10);padding:16px 
       z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px;
     }
     .modal-overlay.active { display: flex; }
+
+    /* ── Mobile Bottom Bar (Unterseite) ── */
+    .mobile-bottom-bar { display: none; }
+    @media (max-width: 679px) and (orientation: portrait) {
+      .mobile-bottom-bar {
+        display: flex !important;
+        position: fixed !important;
+        bottom: 12px !important;
+        left: 12px !important;
+        right: 12px !important;
+        z-index: 9999 !important;
+        background: rgba(255,255,255,0.96) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        border: 1px solid rgba(110,145,98,0.25) !important;
+        border-radius: 50px !important;
+        padding: 10px !important;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.15) !important;
+        gap: 0 !important;
+        align-items: center !important;
+        transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease !important;
+      }
+      .mobile-bottom-bar .bar-loc-btn {
+        flex: 1 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        padding: 12px 10px !important;
+        background: none; border: none; border-radius: 40px; cursor: pointer; transition: background 0.18s;
+      }
+      .mobile-bottom-bar .bar-loc-btn:active { background: rgba(56,78,51,0.12); }
+      .mobile-bottom-bar .bar-divider { width: 1px; height: 28px; background: rgba(56,78,51,0.25); flex-shrink: 0; }
+      .mobile-bottom-bar .bar-loc-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+      .mobile-bottom-bar .bar-city { font-size: 1rem !important; font-weight: 700 !important; color: var(--text); white-space: nowrap; }
+      .mobile-bottom-bar .bar-hint { font-size: 0.82rem !important; color: var(--olive-haupt); white-space: nowrap; }
+      .mobile-bottom-bar.bar-hidden { transform: translateY(140%) !important; opacity: 0 !important; pointer-events: none !important; }
+      .terracotta-dot { width: 10px; height: 10px; background: var(--terracotta); border-radius: 50%; flex-shrink: 0; }
+    }
+    @media (max-width: 390px) and (orientation: portrait) {
+      .mobile-bottom-bar .bar-city { font-size: 0.88rem !important; }
+      .mobile-bottom-bar .bar-hint { font-size: 0.72rem !important; }
+    }
     .modal-overlay.active ~ .mobile-bottom-bar,
     body.modal-open .mobile-bottom-bar { display: none !important; }
     .modal-box {
@@ -284,10 +327,134 @@ footer{background:#ECE8E0;border-top:1px solid rgba(56,78,51,0.10);padding:16px 
       color: #384E33;
       opacity: 0.6;
     }
-    @media (min-width: 1025px) and (orientation: landscape) {
+    @media (min-width: 900px) {
       .desk-float-card { display: block; }
     }
-  </style>
+  
+    /* ── Mobile Fixes Unterseiten ── */
+    @media (max-width: 1024px) and (orientation: portrait) {
+      /* Termin- und Standorte-Kachel im Hochformat weg */
+      .sidebar-link-box { display: none !important; }
+      .sidebar-standort { display: none !important; }
+    }
+    @media (max-width: 1024px) {
+      /* Demo-Buttons nie auf Mobile/Tablet */
+      #demo-buttons-wrap { display: none !important; }
+    }
+  
+    /* Swipe-Gruppen: 2 Kacheln pro Slide, Mobile-only */
+    .wochen-desktop, .schritte-desktop { display: block; }
+    .wochen-mobile-wrap, .schritte-mobile-wrap { display: none; }
+    @media (max-width: 767px) {
+      .wochen-desktop, .schritte-desktop { display: none !important; }
+      .wochen-mobile-wrap, .schritte-mobile-wrap {
+        display: block;
+        margin-top: 20px;
+      }
+      .wochen-swipe, .schritte-swipe {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        gap: 12px;
+        padding-bottom: 4px;
+      }
+      .wochen-swipe::-webkit-scrollbar,
+      .schritte-swipe::-webkit-scrollbar { display: none; }
+      .wochen-slide, .schritte-slide {
+        flex: 0 0 calc(100% - 0px);
+        min-width: 0;
+        max-width: 100%;
+        scroll-snap-align: start;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        overflow: hidden;
+      }
+      .wochen-kachel {
+        background: var(--surface);
+        border: 1px solid rgba(56,78,51,0.12);
+        border-radius: 12px;
+        padding: 16px 18px;
+        overflow: hidden;
+      }
+      .wochen-kachel-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--terracotta);
+        margin-bottom: 5px;
+      }
+      .wochen-kachel-text {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        line-height: 1.5;
+        word-break: break-word;
+        overflow-wrap: break-word;
+      }
+      .schritt-slide-item {
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        background: var(--surface);
+        border: 1px solid rgba(56,78,51,0.12);
+        border-radius: 12px;
+        padding: 14px 16px;
+      }
+      .schritt-slide-num {
+        min-width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--olive-haupt);
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.82rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .schritt-slide-body strong { color: var(--text); font-size: 0.95rem; }
+      .schritt-slide-body p { margin: 3px 0 0; color: var(--text-muted); font-size: 0.83rem; line-height: 1.5; word-break: break-word; overflow-wrap: break-word; }
+      .swipe-hint {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        opacity: 0.7;
+      }
+    }
+    
+    /* ====== SMARTPHONE QUERFORMAT ====== */
+    @media (orientation: landscape) and (max-height: 500px) {
+      header { padding: 8px 0 !important; }
+      .seiten-kopf { padding: 18px 0 0 !important; }
+      .kopf-inner { padding-bottom: 10px !important; }
+      .harz-welle { height: 14px !important; }
+      .seiten-kopf h1 { font-size: clamp(1.3rem, 3.2vw, 1.8rem) !important; line-height: 1.1 !important; }
+      .breadcrumb { margin-bottom: 5px !important; font-size: 0.7rem !important; }
+      .page-tag { margin-bottom: 8px !important; }
+      .seiten-sub { display: none !important; }
+      .lead { display: none !important; }
+      .inhalt { padding: 14px 0 32px !important; }
+      .inhalt-grid { grid-template-columns: 1fr !important; }
+      .sidebar { order: 2 !important; }
+      .mobile-bottom-bar { display: none !important; }
+      .fact-leiste { grid-template-columns: repeat(3, 1fr) !important; gap: 10px !important; margin: 12px 0 16px !important; }
+      .wochen-desktop, .schritte-desktop { display: none !important; }
+      .wochen-mobile-wrap, .schritte-mobile-wrap { display: block !important; }
+      .wochen-slide, .schritte-slide {
+        max-height: calc(100svh - 90px);
+        overflow-y: auto;
+      }
+    }
+    </style>
 </head>
 <body>
 <header>
@@ -346,7 +513,7 @@ footer{background:#ECE8E0;border-top:1px solid rgba(56,78,51,0.10);padding:16px 
       <div class="prose">
         <h2>Das strukturierte Adipositasprogramm der Land-Harz-Praxis</h2>
 
-        <div style="display:flex;flex-direction:column;gap:16px;margin-top:24px;">
+        <div class="wochen-desktop" style="display:flex;flex-direction:column;gap:16px;margin-top:24px;">
           <div style="background:var(--surface);border:1px solid rgba(56,78,51,0.12);border-radius:12px;padding:20px 24px;">
             <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--terracotta);margin-bottom:6px;">Woche 1–2</div>
             <p style="margin:0;color:var(--text-muted);">Bestandsaufnahme · Diagnostik · BIA · Zieldefinition</p>
@@ -372,6 +539,23 @@ footer{background:#ECE8E0;border-top:1px solid rgba(56,78,51,0.10);padding:16px 
             <p style="margin:0;color:var(--text-muted);">Erfolgskontrolle · erneute Körperanalyse · langfristiger Plan</p>
           </div>
         </div>
+        <div class="wochen-mobile-wrap">
+          <div class="wochen-swipe" id="wochen-swipe">
+            <div class="wochen-slide">
+              <div class="wochen-kachel"><div class="wochen-kachel-label">Woche 1–2</div><p class="wochen-kachel-text">Bestandsaufnahme · Diagnostik · BIA · Zieldefinition</p></div>
+              <div class="wochen-kachel"><div class="wochen-kachel-label">Woche 3–4</div><p class="wochen-kachel-text">Ernährungsstrategie · Energiedichte · Protein · Mahlzeitenstruktur</p></div>
+            </div>
+            <div class="wochen-slide">
+              <div class="wochen-kachel"><div class="wochen-kachel-label">Woche 5–6</div><p class="wochen-kachel-text">Bewegung · Muskelmasse · Alltagsaktivität</p></div>
+              <div class="wochen-kachel"><div class="wochen-kachel-label">Woche 7–8</div><p class="wochen-kachel-text">Essverhalten · Hunger und Sättigung · Alltagssituationen</p></div>
+            </div>
+            <div class="wochen-slide">
+              <div class="wochen-kachel"><div class="wochen-kachel-label">Woche 9–10</div><p class="wochen-kachel-text">Stoffwechsel · Schlaf · Stress · Rückfallstrategien</p></div>
+              <div class="wochen-kachel"><div class="wochen-kachel-label">Woche 11–12</div><p class="wochen-kachel-text">Erfolgskontrolle · erneute Körperanalyse · langfristiger Plan</p></div>
+            </div>
+          </div>
+          <div class="swipe-hint" id="wochen-hint">Wischen →</div>
+        </div>
 
         <p style="margin-top:28px;color:var(--text-muted);">Bei entsprechender Indikation läuft eine medikamentöse Therapie parallel und wird ärztlich überwacht.</p>
 
@@ -395,9 +579,9 @@ footer{background:#ECE8E0;border-top:1px solid rgba(56,78,51,0.10);padding:16px 
             <li>Abschlussgespräch &amp; Weiterplanung</li>
           </ul>
         </div>
-        <div class="sidebar-card">
+        <div class="sidebar-card sidebar-standort">
           <h4>Standorte</h4>
-          <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:8px;"><strong style="color:var(--text);">Benzingerode</strong><br>Oberhof 9 · 38855 Wernigerode<br>Tel 03943 / 48 13 3</p>
+          <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:8px;"><strong style="color:var(--text);">Wernigerode</strong><br>Oberhof 9 · 38855 Wernigerode<br>Tel 03943 / 48 13 3</p>
           <p style="font-size:0.88rem;color:var(--text-muted);"><strong style="color:var(--text);">Heudeber</strong><br>Bahnhofstraße 18 · 38855 Heudeber<br>Tel 039458 / 223</p>
         </div>
       </div>
@@ -1037,10 +1221,6 @@ function openTerminModal(vorauswahlAnliegen, vorauswahlStandort) {
         });
     }
 
-    document.addEventListener('DOMContentLoaded', updatePraxisStatus);
-  
-
-
 // ── Burger-Menü ──
 function toggleMobMenu() {
   var btn = document.getElementById('burger-btn');
@@ -1253,7 +1433,6 @@ document.addEventListener('DOMContentLoaded', function() {
 function filterStandort(which) {
   // Standort merken + Header-Pill aktualisieren
   aktuellerStandort = which;
-  updatePraxisStatus();
 
   // Chips aktiv setzen
   var chipWn  = document.getElementById('chip-wn');
@@ -1293,23 +1472,19 @@ function filterStandort(which) {
   }
   window.addEventListener('scroll', pruefeKompass, { passive: true });
 })();
-// ── Desktop Float Card: erscheint nach 300px Scroll, verschwindet beim Footer ──
-  (function() {
+// ── Desktop Float Card ──
+  document.addEventListener('DOMContentLoaded', function() {
     var card = document.getElementById('desk-float-card');
     if (!card) return;
     var footer = document.querySelector('footer');
-    function updateCard() {
-      var footerVisible = footer ? footer.getBoundingClientRect().top < window.innerHeight - 20 : false;
-      if (!footerVisible) {
-        card.classList.add('dfc-visible');
-      } else {
-        card.classList.remove('dfc-visible');
-      }
-    }
-    window.addEventListener('scroll', updateCard, { passive: true });
-    // Sofort anzeigen (400ms Verzögerung für Slide-In-Effekt)
-    setTimeout(updateCard, 400);
-  })();
+    // Karte sofort zeigen, nur beim Footer ausblenden
+    card.classList.add('dfc-visible');
+    window.addEventListener('scroll', function() {
+      if (!footer) return;
+      var footerNah = footer.getBoundingClientRect().top < window.innerHeight - 80;
+      card.classList.toggle('dfc-visible', !footerNah);
+    }, { passive: true });
+  });
   </script>
 
 <div class="modal-overlay" id="modal-termin" onclick="closeOnBackdrop(event,'modal-termin')">
@@ -1589,5 +1764,53 @@ function filterStandort(which) {
     </div>
   </div>
 
+
+  <!-- Mobile Bottom Bar -->
+  <div class="mobile-bottom-bar">
+    <button class="bar-loc-btn" onclick="openTerminModal(null,'wernigerode')">
+      <span class="terracotta-dot"></span>
+      <div class="bar-loc-text">
+        <span class="bar-city">Wernigerode</span>
+        <span class="bar-hint">Termin buchen</span>
+      </div>
+    </button>
+    <div class="bar-divider"></div>
+    <button class="bar-loc-btn" onclick="openTerminModal(null,'heudeber')">
+      <span class="terracotta-dot"></span>
+      <div class="bar-loc-text">
+        <span class="bar-city">Heudeber</span>
+        <span class="bar-hint">Termin buchen</span>
+      </div>
+    </button>
+  </div>
+  <script>
+  // ── Bottom Bar: bei Footer ausblenden ──
+  (function() {
+    var bar = document.querySelector('.mobile-bottom-bar');
+    var footer = document.querySelector('footer');
+    if (!bar || !footer) return;
+    function checkFooter() {
+      var fr = footer.getBoundingClientRect();
+      if (fr.top < window.innerHeight - 20) {
+        bar.classList.add('bar-hidden');
+      } else {
+        bar.classList.remove('bar-hidden');
+      }
+    }
+    window.addEventListener('scroll', checkFooter, { passive: true });
+    checkFooter();
+  })();
+  
+  // Wochen-Swipe Hint
+  (function(){
+    var sw = document.getElementById('wochen-swipe');
+    var ht = document.getElementById('wochen-hint');
+    if (!sw || !ht) return;
+    sw.addEventListener('scroll', function(){
+      var atEnd = sw.scrollLeft + sw.clientWidth >= sw.scrollWidth - 20;
+      ht.textContent = atEnd ? '← Zurück' : 'Wischen →';
+    }, {passive:true});
+  })();
+  </script>
 </body>
 </html>

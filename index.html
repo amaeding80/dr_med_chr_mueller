@@ -712,6 +712,7 @@
       .burger-btn { display: flex !important; }
       .nav-menu { display: none !important; }
       .nav-right { display: flex !important; margin-left: auto; margin-right: 10px; }
+      #demo-buttons-wrap { display: none !important; }
       .live-status-pill { font-size: 0.72rem !important; padding: 4px 10px !important; gap: 6px !important; }
       #live-status-text { max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
       .tablet-float-cta { display: flex !important; }
@@ -747,6 +748,7 @@
        2. TABLET QUERFORMAT (Landscape: 768–1024px, min-height 600px, kein Phone)
        ========================================================================== */
     @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) and (min-height: 600px) {
+      #demo-buttons-wrap { display: none !important; }
       .hero { padding: 28px 0 36px; }
       .hero-title-main { font-size: clamp(1.9rem, 2.8vw, 2.4rem); }
       .hero-lead-text { font-size: 0.88rem; }
@@ -968,14 +970,16 @@
       #demo-buttons-wrap { display: none !important; }
       .service-item-title { font-size: 1.05rem !important; }
       .compass-btn-desc { display: none !important; }
+      /* Kompass: 3 Buttons nebeneinander — kein Swipe nötig */
       .compass-options {
-        display: flex !important;
-        flex-direction: column !important;
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
         overflow-x: visible !important;
         scroll-snap-type: none !important;
         gap: 8px !important;
         padding-bottom: 0 !important;
-        grid-template-columns: unset !important;
+        flex-wrap: unset !important;
+        flex-direction: unset !important;
       }
       #swipe-hint-kompass { display: none !important; }
       .compass-btn {
@@ -984,19 +988,21 @@
         background: transparent !important;
         border: 1px solid rgba(56,78,51,0.22) !important;
         border-radius: 9px !important;
-        padding: 11px 14px !important;
-        text-align: left !important;
+        padding: 12px 10px !important;
+        text-align: center !important;
         display: flex !important;
+        flex-direction: column !important;
         align-items: center !important;
-        justify-content: space-between !important;
+        justify-content: center !important;
         box-shadow: none !important;
         transform: none !important;
         scroll-snap-align: none !important;
         min-width: 0 !important;
+        min-height: 60px !important;
       }
       .compass-btn:active { background: var(--olive-soft) !important; border-color: var(--olive-haupt) !important; }
-      .compass-btn::after { content: "›"; color: var(--olive-haupt); font-size: 1.1rem; font-weight: 400; flex-shrink: 0; margin-left: 8px; }
-      .compass-btn-title { font-size: 0.92rem !important; font-weight: 600 !important; color: var(--text) !important; }
+      .compass-btn::after { display: none !important; }
+      .compass-btn-title { font-size: 0.72rem !important; font-weight: 600 !important; color: var(--olive-haupt) !important; line-height: 1.2 !important; text-align: center !important; word-break: break-word !important; hyphens: auto !important; overflow-wrap: break-word !important; }
       .compass-btn-desc { display: none !important; }
 
       /* ── 4. LEISTUNGS-CHIPS (Swipe-Container, andere Bereiche) ── */
@@ -1017,28 +1023,8 @@
         padding: 12px 14px !important;
       }
 
-      /* ── Horizontal-Scroll: Praxis-Kompass ── */
-      .compass-options {
-        display: flex !important;
-        flex-wrap: nowrap !important;
-        overflow-x: auto !important;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        gap: 12px !important;
-        padding-bottom: 8px;
-        grid-template-columns: unset;
-      }
+      /* ── Praxis-Kompass: kein Swipe mehr, schon als 3er-Grid definiert oben ── */
       .compass-options::-webkit-scrollbar { display: none; }
-      .compass-btn {
-        flex: 0 0 92% !important;
-        scroll-snap-align: start;
-        min-width: 0;
-        padding: 18px 16px;
-        text-align: left;
-      }
-      .compass-btn-title { font-size: 1.1rem; }
-      .compass-btn-desc { font-size: 0.78rem; }
 
       /* ── Horizontal-Scroll: Digitaler Empfang ── */
       .journal-grid {
@@ -1101,10 +1087,16 @@
       .services-sec { padding: 28px 0 44px; }
       .services-editorial { grid-template-columns: 1fr; gap: 0; }
       .services-sidebar { display: none; }
-      .service-item { padding: 16px 0; }
-      .service-item-title { font-size: 1.02rem; }
-      .service-num { font-size: 0.87rem; }
-      .service-desc { font-size: 0.82rem; }
+      .service-item { padding: 14px 0; }
+      .service-item-title { font-size: 0.98rem; }
+      .service-num { font-size: 0.82rem; }
+      .service-desc { font-size: 0.79rem; line-height: 1.5; margin-bottom: 10px; }
+      /* Schwerpunkt-Tags: 2er-Grid auf Mobile */
+      .service-tags { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 5px !important; margin-top: 10px !important; }
+      .service-tag-pill { font-size: 0.7rem !important; padding: 4px 8px !important; text-align: center !important; }
+      /* Service-Body weniger Einrückung auf Mobile */
+      .service-body { padding-left: 0 !important; }
+      .service-item.active .service-body { max-height: 400px; padding-top: 10px; padding-bottom: 6px; }
 
       /* ── Team ── */
       .team-sec { padding: 24px 0; }
@@ -1297,7 +1289,7 @@
       .hero-title-main { font-size: 1.5rem; }
       .hero-stat-zahl { font-size: 1.1rem; }
       .compass-btn { flex: 0 0 86% !important; }
-      .journal-card { flex: 0 0 90% !important; }
+      .journal-card { scroll-snap-align: start !important; }
       .download-paper-card { flex: 0 0 86% !important; }
       .chips-row > a { flex: 0 0 88% !important; }
     }
@@ -2074,6 +2066,7 @@
     function closeCompassPopup() {
       document.getElementById('compass-popup').style.display = 'none';
       document.getElementById('compass-popup-overlay').style.display = 'none';
+      document.body.classList.remove('modal-open');
     }
 
     function showCompassResult(type) {
@@ -2109,6 +2102,7 @@
         popBtn.onclick = btnAction;
         document.getElementById('compass-popup').style.display = 'block';
         document.getElementById('compass-popup-overlay').style.display = 'block';
+        document.body.classList.add('modal-open');
       } else {
         // Desktop: inline
         var resBox = document.getElementById('compass-result');
@@ -2301,6 +2295,24 @@ function openTerminModal(vorauswahlAnliegen, vorauswahlStandort) {
       document.body.style.top = '';
       window.scrollTo(0, _sy);
     }
+
+// stub-modals — bottom bar verstecken bis modal geschlossen wird
+function openAuModal() {
+  document.body.classList.add('modal-open');
+  // TODO: AU-Modal noch einbauen
+}
+function openUeberweisungModal() {
+  document.body.classList.add('modal-open');
+  // TODO: Überweisungs-Modal noch einbauen
+}
+function openBefundModal() {
+  document.body.classList.add('modal-open');
+  // TODO: Befund-Modal noch einbauen
+}
+function toggleErnaehrungsFlow(el) {
+  document.body.classList.add('modal-open');
+  // TODO: Ernährungs-Flow noch einbauen
+}
     function closeOnBackdrop(e, id) {
       if (e.target === document.getElementById(id)) closeModal(id);
     }
@@ -2744,6 +2756,7 @@ function toggleMobMenu() {
   var btn = document.getElementById('burger-btn');
   var menu = document.getElementById('mob-menu');
   var overlay = document.getElementById('mob-overlay');
+  var bar = document.querySelector('.mobile-bottom-bar');
   var offen = menu.classList.contains('offen');
   btn.classList.toggle('offen', !offen);
   menu.classList.toggle('offen', !offen);
@@ -2751,6 +2764,8 @@ function toggleMobMenu() {
   menu.setAttribute('aria-hidden', offen ? 'true' : 'false');
   btn.setAttribute('aria-expanded', offen ? 'false' : 'true');
   document.body.style.overflow = offen ? '' : 'hidden';
+  // Bottom Bar: ausblenden wenn Menü auf, einblenden wenn Menü zu
+  if (bar) bar.classList.toggle('bar-hidden', !offen);
 }
 
 // ====== SCROLL-ANIMATIONEN ======
