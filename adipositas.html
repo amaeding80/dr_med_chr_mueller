@@ -569,6 +569,12 @@
         overflow: hidden;
         box-sizing: border-box;
       }
+      /* Einzelne Kacheln direkt wischbar */
+      .schritte-swipe > .schritt-slide-item {
+        flex: 0 0 82%;
+        min-width: 0;
+        scroll-snap-align: start;
+      }
       .wochen-kachel {
         background: var(--surface);
         border: 1px solid rgba(56,78,51,0.12);
@@ -670,7 +676,8 @@
       #slots-ils::before { content: "Heudeber";    display: block; font-weight: 700; font-size: 0.82rem; color: var(--olive-haupt); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid rgba(56,78,51,0.18); letter-spacing: 0.02em; }
       .slots-legend { margin-bottom: 4px; }
     }
-    </style>
+      html, body { overflow-x: hidden !important; max-width: 100%; }
+  </style>
 </head>
 <body>
 
@@ -786,20 +793,14 @@
         </div>
         <div class="schritte-mobile-wrap">
           <div class="schritte-swipe" id="schritte-swipe">
-            <div class="schritte-slide">
               <div class="schritt-slide-item"><div class="schritt-slide-num">01</div><div class="schritt-slide-body"><strong>Medizinische Bestandsaufnahme</strong><p>Anamnese, Gewichtsentwicklung, bisherige Therapieversuche, Begleiterkrankungen, Medikamente und relevante Laborparameter.</p></div></div>
               <div class="schritt-slide-item"><div class="schritt-slide-num">02</div><div class="schritt-slide-body"><strong>Körperzusammensetzung</strong><p>Nicht nur Kilogramm zählen. Wo sinnvoll, erfassen wir mittels BIA Fett- und Muskelmasse.</p></div></div>
-            </div>
-            <div class="schritte-slide">
               <div class="schritt-slide-item"><div class="schritt-slide-num">03</div><div class="schritt-slide-body"><strong>Individuelle Ernährungsstrategie</strong><p>Keine starre „Diät", sondern eine Ernährungsweise, die medizinisch sinnvoll und langfristig umsetzbar ist.</p></div></div>
               <div class="schritt-slide-item"><div class="schritt-slide-num">04</div><div class="schritt-slide-body"><strong>Bewegung &amp; Muskelerhalt</strong><p>Fettmasse reduzieren, Muskelmasse erhalten — beides gehört zur erfolgreichen Therapie.</p></div></div>
-            </div>
-            <div class="schritte-slide">
               <div class="schritt-slide-item"><div class="schritt-slide-num">05</div><div class="schritt-slide-body"><strong>Medikamentöse Therapie</strong><p>Wenn medizinisch indiziert, als Teil eines Gesamtkonzepts — kein Ersatz für Ernährung und Bewegung.</p></div></div>
               <div class="schritt-slide-item"><div class="schritt-slide-num">06</div><div class="schritt-slide-body"><strong>Langfristige Stabilisierung</strong><p>Nach der Gewichtsabnahme beginnt die entscheidende Phase: das Ergebnis langfristig halten.</p></div></div>
-            </div>
           </div>
-          <div class="swipe-hint" id="schritte-hint">Wischen →</div>
+          <div class="swipe-hint">← Wischen →</div>
         </div>
 
         <div class="verwandte-seiten"><a href="12-wochen.html" class="organisch-link">12-Wochen-Programm</a><a href="glp1-therapie.html" class="organisch-link">GLP-1/GIP-Therapie</a></div>
