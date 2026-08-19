@@ -70,7 +70,7 @@
     .mob-sort { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; flex: 1; }
     .mob-szeit { font-size: 0.78rem; color: var(--olive-haupt); font-weight: 600; }
     @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) { .mob-status-row { display: none !important; } }
-    .mob-status-row { padding: 10px 22px 8px; border-bottom: 1px solid rgba(56,78,51,0.08); display: flex; align-items: center; gap: 9px; }
+    .mob-status-row { padding: 10px 22px 8px; border-bottom: 1px solid rgba(56,78,51,0.08); display: flex; flex-direction: column; gap: 4px; }
 
     /* SEITEN-KOPF mit Harz-Charakter */
     .seiten-kopf {
@@ -399,13 +399,37 @@
     .m-checkbox-row label { font-size: 0.78rem; color: var(--text-muted); line-height: 1.55; cursor: pointer; }
     .info-box-m { background: var(--harz-sand-soft); border: 1px solid var(--harz-sand); border-radius: 10px; padding: 11px 14px; font-size: 0.79rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 10px; }
     .info-box-m strong { color: var(--olive-haupt); }
-    @media (max-width: 600px) {
-      .modal-overlay { align-items: flex-end; padding: 0; }
-      .modal-box { border-radius: 20px 20px 0 0; max-height: 94vh; }
-      .modal-body { padding: 18px 18px 24px; }
-      .modal-header { padding: 18px 18px 14px; }
-      .m-form-row { grid-template-columns: 1fr; }
-      .radio-grid-2 { grid-template-columns: 1fr; }
+    @media (max-width: 767px) {
+      .modal-overlay { align-items: flex-end !important; padding: 0 !important; }
+      .modal-box {
+        border-radius: 20px 20px 0 0 !important;
+        max-height: 85vh !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
+      }
+      .modal-header { padding: 18px 18px 14px; flex-shrink: 0; }
+      .modal-body {
+        padding: 18px 18px 24px !important;
+        flex: 1 !important;
+        overflow-y: scroll !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        overscroll-behavior: contain !important;
+        touch-action: pan-y !important;
+      }
+      .modal-footer-btns {
+        padding: 12px 18px max(20px, env(safe-area-inset-bottom)) !important;
+        flex-shrink: 0 !important;
+        background: #ffffff !important;
+        border-top: 1px solid rgba(56,78,51,0.1) !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+      }
+      .m-form-row { grid-template-columns: 1fr !important; }
+      .radio-grid-2 { grid-template-columns: 1fr !important; }
     }
     /* ====== ANAMNESEBOGEN ====== */
     .anamnese-check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
