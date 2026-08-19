@@ -187,6 +187,8 @@
       .sidebar{order:2;}
       .container{padding:0 20px;}
       .seiten-kopf{padding:48px 0 0;}
+      .prose{overflow-x:hidden;min-width:0;}
+      .inhalt-grid{overflow-x:hidden;}
     }
   
     /* Kiesel-Link — Pill antwortet auf Hover */
@@ -543,6 +545,7 @@
         margin-top: 20px;
         width: 100%;
         overflow: hidden;
+        position: relative;
       }
       .wochen-swipe, .schritte-swipe {
         display: flex;
@@ -572,8 +575,11 @@
       /* Einzelne Kacheln direkt wischbar */
       .schritte-swipe > .schritt-slide-item {
         flex: 0 0 82%;
+        max-width: 82%;
         min-width: 0;
         scroll-snap-align: start;
+        overflow: hidden;
+        box-sizing: border-box;
       }
       .wochen-kachel {
         background: var(--surface);
