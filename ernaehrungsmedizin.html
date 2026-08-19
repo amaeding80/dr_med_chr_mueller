@@ -607,6 +607,18 @@
         overflow-y: auto !important;
       }
     }
+
+    /* ── DESKTOP / TABLET (≥601px): beide Standorte nebeneinander im Modal ── */
+    @media (min-width: 601px) {
+      #tm-s2 > .step-intro { display: none; }
+      .standort-toggle-m { display: none !important; }
+      .standort-duo-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+      #slots-wn  { display: block !important; }
+      #slots-ils { display: block !important; }
+      #slots-wn::before  { content: "Wernigerode"; display: block; font-weight: 700; font-size: 0.82rem; color: var(--olive-haupt); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid rgba(56,78,51,0.18); letter-spacing: 0.02em; }
+      #slots-ils::before { content: "Heudeber";    display: block; font-weight: 700; font-size: 0.82rem; color: var(--olive-haupt); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid rgba(56,78,51,0.18); letter-spacing: 0.02em; }
+      .slots-legend { margin-bottom: 4px; }
+    }
     </style>
 </head>
 <body>
@@ -1073,7 +1085,10 @@ function openTerminModal(vorauswahlAnliegen, vorauswahlStandort) {
     function selectSlotChip(el, time, dayStr) {
       document.querySelectorAll('.slot-chip.selected').forEach(function(c){ c.classList.remove('selected'); });
       el.classList.add('selected');
-      selectedSlot = { time: time, day: dayStr, standort: slotStandort === 'wn' ? 'Wernigerode' : 'Heudeber' };
+            var wn = document.getElementById('slots-wn');
+      var detectedStandort = (wn && wn.contains(el)) ? 'wn' : 'ils';
+      slotStandort = detectedStandort;
+      selectedSlot = { time: time, day: dayStr, standort: detectedStandort === 'wn' ? 'Wernigerode' : 'Heudeber' };
     }
 
     function switchSlotStandort(type) {
@@ -1816,8 +1831,10 @@ function filterStandort(which) {
             <span><span class="leg-dot" style="background:var(--olive-haupt);"></span>Frei</span>
             <span><span class="leg-dot" style="background:#ccc;"></span>Besetzt</span>
           </div>
-          <div id="slots-wn"></div>
-          <div id="slots-ils" style="display:none;"></div>
+          <div class="standort-duo-wrap">
+            <div id="slots-wn"></div>
+            <div id="slots-ils" style="display:none;"></div>
+          </div>
         </div>
 
         <!-- Schritt 3: Ihre Daten -->
