@@ -216,6 +216,67 @@
       .mobile-bottom-bar { display: none !important; }
       .fact-leiste { grid-template-columns: repeat(3, 1fr) !important; gap: 10px !important; margin: 12px 0 16px !important; }
     }
+
+    .desk-float-card {
+      display: none;
+      position: fixed;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%) translateX(-100%);
+      z-index: 900;
+      background: #ffffff;
+      border-left: 3px solid #384E33;
+      border-radius: 0 10px 10px 0;
+      box-shadow: 4px 6px 24px rgba(56,78,51,0.13);
+      padding: 14px 16px 14px 14px;
+      min-width: 152px;
+      transition: transform 0.42s cubic-bezier(0.22,1,0.36,1), opacity 0.42s;
+      opacity: 0;
+      cursor: default;
+    }
+    .desk-float-card.dfc-visible {
+      transform: translateY(-50%) translateX(0);
+      opacity: 1;
+    }
+    .dfc-label {
+      font-size: 0.58rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #384E33;
+      margin-bottom: 10px;
+      opacity: 0.7;
+    }
+    .dfc-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 0;
+      border-top: 1px solid rgba(56,78,51,0.1);
+      cursor: pointer;
+      transition: background 0.18s;
+      border-radius: 4px;
+      margin: 0 -4px;
+      padding-left: 4px;
+      padding-right: 4px;
+    }
+    .dfc-row:hover { background: rgba(56,78,51,0.05); }
+    .dfc-row:first-of-type { border-top: none; padding-top: 0; margin-top: 2px; }
+    .dfc-city {
+      font-size: 0.79rem;
+      font-weight: 600;
+      color: #2A3A26;
+      line-height: 1.2;
+    }
+    .dfc-arrow {
+      font-size: 0.85rem;
+      color: #384E33;
+      opacity: 0.6;
+    }
+    @media (min-width: 768px) {
+      .desk-float-card { display: block; }
+    }
     </style>
 </head>
 <body>
@@ -477,6 +538,32 @@ document.getElementById('jahr').textContent=new Date().getFullYear();
   set('mob-dot-wn','mob-zeit-wn',chkSlots(sWN));
   set('mob-dot-hd','mob-zeit-hd',chkSlots(sHD));
 })();
+
+  // ── Desktop Float Card ──
+  document.addEventListener('DOMContentLoaded', function() {
+    var card = document.getElementById('desk-float-card');
+    if (!card) return;
+    var footer = document.querySelector('footer');
+    card.classList.add('dfc-visible');
+    window.addEventListener('scroll', function() {
+      if (!footer) return;
+      var footerNah = footer.getBoundingClientRect().top < window.innerHeight - 80;
+      card.classList.toggle('dfc-visible', !footerNah);
+    }, { passive: true });
+  });
 </script>
+
+  <!-- Desktop Floating Card -->
+  <div class="desk-float-card" id="desk-float-card" aria-label="Termin buchen">
+    <div class="dfc-label">Termin buchen</div>
+    <div class="dfc-row" onclick="openTerminModal(null,'wernigerode')" role="button" tabindex="0" aria-label="Termin Wernigerode">
+      <span class="dfc-city">Wernige&shy;rode</span>
+      <span class="dfc-arrow">&#8594;</span>
+    </div>
+    <div class="dfc-row" onclick="openTerminModal(null,'heudeber')" role="button" tabindex="0" aria-label="Termin Heudeber">
+      <span class="dfc-city">Heude&shy;ber</span>
+      <span class="dfc-arrow">&#8594;</span>
+    </div>
+  </div>
 </body>
 </html>
