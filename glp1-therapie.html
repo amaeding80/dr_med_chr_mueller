@@ -600,5 +600,1242 @@ document.getElementById('jahr').textContent=new Date().getFullYear();
       <span class="dfc-arrow">&#8594;</span>
     </div>
   </div>
+
+<script>
+    var terminStep = 1;
+    var terminAnamneseActive = false;
+    var sigCanvas, sigCtx, sigDrawing = false;
+    var selectedSlot = null;
+    var slotStandort = 'wn';
+    var rezStandort = 'wn';
+    var medCount = 0;
+
+    // Slot-Karte: simulierte nächste freie Termine pro Standort
+var tageKurz = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+var monateKurz = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+
+// Gibt das nächste Datum für einen bestimmten Wochentag zurück (0=So, 1=Mo...)
+function naechsterTag(wochentag, offsetWochen) {
+  var heute = new Date();
+  var diff = (wochentag - heute.getDay() + 7) % 7 || 7;
+  diff += (offsetWochen || 0) * 7;
+  var d = new Date(heute);
+  d.setDate(heute.getDate() + diff);
+  return d;
+}
+
+function formatDatum(d) {
+  return tageKurz[d.getDay()] + ', ' + d.getDate() + '. ' + monateKurz[d.getMonth()];
+}
+
+function tagLabel(d) {
+  var heute = new Date();
+  var morgen = new Date(heute); morgen.setDate(heute.getDate() + 1);
+  if (d.toDateString() === morgen.toDateString()) return 'Morgen';
+  if (d.toDateString() === heute.toDateString()) return 'Heute';
+  return formatDatum(d);
+}
+
+var slotDaten = {
+  wn: [
+    { wochentag: 1, zeit: '10:30', offset: 0 },
+    { wochentag: 3, zeit: '14:00', offset: 0 },
+    { wochentag: 4, zeit: '09:15', offset: 0 },
+    { wochentag: 1, zeit: '11:00', offset: 1 }
+  ],
+  ils: [
+    { wochentag: 2, zeit: '09:00', offset: 0 },
+    { wochentag: 4, zeit: '15:30', offset: 0 },
+    { wochentag: 2, zeit: '10:30', offset: 1 },
+    { wochentag: 3, zeit: '08:30', offset: 1 }
+  ]
+};
+
+function slotKarteInit() {
+  ['wn', 'ils'].forEach(function(standort) {
+    var s = slotDaten[standort][0];
+    var d = naechsterTag(s.wochentag, s.offset);
+    var el = document.getElementById('slot-' + standort);
+    if (el) el.textContent = formatDatum(d) + ' · ' + s.zeit;
+  });
+}
+
+document.addEventListener('DOMContentLoaded', slotKarteInit);
+
+// Weitere-Termine-Popup
+var wtDaten = {
+  wn: [
+    { wochentag: 1, offset: 0, zeit: '10:30' },
+    { wochentag: 3, offset: 0, zeit: '14:00' },
+    { wochentag: 4, offset: 0, zeit: '09:15' },
+    { wochentag: 5, offset: 0, zeit: '11:30' },
+    { wochentag: 1, offset: 1, zeit: '10:00' }
+  ],
+  ils: [
+    { wochentag: 2, offset: 0, zeit: '09:00' },
+    { wochentag: 4, offset: 0, zeit: '15:30' },
+    { wochentag: 2, offset: 1, zeit: '10:30' },
+    { wochentag: 3, offset: 1, zeit: '08:30' },
+    { wochentag: 5, offset: 1, zeit: '13:00' }
+  ]
+};
+
+function weitereTermineOeffnen() {
+  var inhalt = document.getElementById('wt-inhalt');
+  inhalt.innerHTML = '';
+  ['wn', 'ils'].forEach(function(standort) {
+    var label = standort === 'wn' ? 'Wernigerode' : 'Heudeber';
+    var lDiv = document.createElement('div');
+    lDiv.className = 'wt-ort-label';
+    lDiv.textContent = label;
+    inhalt.appendChild(lDiv);
+    wtDaten[standort].forEach(function(s) {
+      var d = naechsterTag(s.wochentag, s.offset);
+      var row = document.createElement('div');
+      row.className = 'wt-slot';
+      row.innerHTML = '<span class="wt-slot-datum">' + formatDatum(d) + '</span>' +
+                      '<span class="wt-slot-uhr">' + s.zeit + ' Uhr</span>' +
+                      '<button class="wt-slot-btn">Buchen</button>';
+      row.onclick = function() { weitereTermineSchliessen(); openTerminModal(); };
+      inhalt.appendChild(row);
+    });
+  });
+  document.getElementById('wt-overlay').classList.add('aktiv');
+  document.body.style.overflow = 'hidden';
+}
+
+function weitereTermineSchliessen() {
+  document.getElementById('wt-overlay').classList.remove('aktiv');
+  document.body.style.overflow = '';
+}
+
+function openTerminModal(vorauswahlAnliegen, vorauswahlStandort) {
+      terminStep = 1;
+      terminAnamneseActive = false;
+      selectedSlot = null;
+      // Standort-Vorauswahl (z.B. aus Bottom Bar)
+      if (vorauswahlStandort === 'wernigerode') { slotStandort = 'wn'; }
+      else if (vorauswahlStandort === 'heudeber') { slotStandort = 'ils'; }
+      else { slotStandort = 'wn'; }
+      // alle Radio-Cards zurücksetzen
+      document.querySelectorAll('.radio-card-m').forEach(function(c){ c.classList.remove('selected'); });
+      // Vorauswahl aus Praxis-Kompass übernehmen
+      if (vorauswahlAnliegen) {
+        var karte = document.querySelector('#rc-anliegen .radio-card-m[data-value="' + vorauswahlAnliegen + '"]');
+        if (karte) selectRadioM(karte, 'rc-anliegen');
+      }
+      // Textfelder leeren
+      ['tm-vorname','tm-nachname','tm-telefon','tm-email','tm-kasse',
+       'an-allergien','an-medikamente','an-anliegen-neu'].forEach(function(id){
+        var el = document.getElementById(id); if (el) el.value = '';
+      });
+      // Selects zurück
+      var versel = document.getElementById('tm-versicherung'); if (versel) versel.selectedIndex = 0;
+      var gebel = document.getElementById('tm-gebdatum'); if (gebel) gebel.value = '';
+      // Checkboxen Anamnese
+      ['an-blut','an-diab','an-herz','an-schild','an-niere','an-keine'].forEach(function(id){
+        var el = document.getElementById(id); if (el) el.checked = false;
+      });
+      // Datenschutz
+      var ds = document.getElementById('tm-datenschutz'); if (ds) ds.checked = false;
+      // Canvas löschen
+      if (sigCtx) { sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height); }
+      sigCanvas = null; sigCtx = null; sigDrawing = false;
+      // Canvas-Init-Flag zurücksetzen damit nächste Öffnung neu initialisiert
+      var cv = document.getElementById('anamnese-canvas');
+      if (cv) cv._sigInit = false;
+      document.getElementById('modal-termin').classList.add('active');
+      // iOS-sicheres Scroll-Sperren: Position merken, body fixieren
+      var _sy = window.scrollY || window.pageYOffset;
+      document.body.style.top = '-' + _sy + 'px';
+      document.body.classList.add('modal-open');
+      updateTerminStep();
+      setTimeout(function() {
+        var el = document.querySelector('#modal-termin .radio-card-m');
+        if (el) el.focus();
+      }, 120);
+    }
+    function openRezeptModal() {
+      document.getElementById('modal-rezept').classList.add('active');
+      var _sy = window.scrollY || window.pageYOffset;
+      document.body.style.top = '-' + _sy + 'px';
+      document.body.classList.add('modal-open');
+      initMedRows();
+      setTimeout(function() {
+        var el = document.getElementById('rz-vorname');
+        if (el) el.focus();
+      }, 120);
+      // reset standort
+      rezStandort = 'wn';
+      document.getElementById('rz-btn-wn').classList.add('active');
+      document.getElementById('rz-btn-ils').classList.remove('active');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+      // Scroll-Position nach body-Fixierung wiederherstellen
+      var _sy = Math.abs(parseInt(document.body.style.top || '0'));
+      document.body.classList.remove('modal-open');
+      document.body.style.top = '';
+      window.scrollTo(0, _sy);
+    }
+    function closeOnBackdrop(e, id) {
+      if (e.target === document.getElementById(id)) closeModal(id);
+    }
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') {
+        closeModal('modal-termin');
+        closeModal('modal-rezept');
+      }
+    });
+
+    // ====== TERMIN-WIZARD ======
+    var slotsData = {
+      wn: [
+        { key:'mo', slots:['08:00','08:30*','09:30','10:30*','11:00'] },
+        { key:'di', slots:['13:00*','13:30','14:00*','15:00','16:00'] },
+        { key:'mi', slots:['08:00','08:30*','09:30','10:30','11:30'] },
+        { key:'do', slots:['08:00','08:30','09:00*','12:00','12:30'] },
+        { key:'fr', slots:['09:00','09:30*','10:00','11:00'] }
+      ],
+      ils: [
+        { key:'mo', slots:['08:00','09:00*','10:00','11:30*'] },
+        { key:'mi', slots:['08:30','09:00*','10:30','11:00'] },
+        { key:'fr', slots:['08:00','09:30','10:00*','11:00'] }
+      ]
+    };
+
+    var dayNames = { mo:'Montag', di:'Dienstag', mi:'Mittwoch', do:'Donnerstag', fr:'Freitag' };
+    var dayOffsets = { mo:0, di:1, mi:2, do:3, fr:4 };
+
+    function getNextMonday() {
+      var d = new Date();
+      d.setDate(d.getDate() + 1); // start tomorrow
+      var dow = d.getDay();
+      // advance to next Monday
+      var toMon = (dow === 0) ? 1 : (dow === 6) ? 2 : (8 - dow) % 7;
+      if (toMon === 7) toMon = 0; // already Monday? push one week
+      d.setDate(d.getDate() + toMon);
+      return d;
+    }
+
+    function fmtDate(d) {
+      return d.toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit' });
+    }
+
+    function buildSlotContainer(containerId, data) {
+      var c = document.getElementById(containerId);
+      c.innerHTML = '';
+      var monday = getNextMonday();
+      data.forEach(function(dayData) {
+        var offset = dayOffsets[dayData.key] || 0;
+        var d = new Date(monday); d.setDate(monday.getDate() + offset);
+        var dayDiv = document.createElement('div'); dayDiv.className = 'slot-day-wrap';
+        var lbl = document.createElement('div'); lbl.className = 'slot-day-lbl';
+        lbl.textContent = dayNames[dayData.key] + ', ' + fmtDate(d);
+        dayDiv.appendChild(lbl);
+        var chips = document.createElement('div'); chips.className = 'slot-chips-wrap';
+        dayData.slots.forEach(function(s){
+          var busy = s.indexOf('*') > -1;
+          var time = s.replace('*','');
+          var chip = document.createElement('div'); chip.className = 'slot-chip' + (busy ? ' busy' : '');
+          chip.textContent = time;
+          if (!busy) {
+            var dayLabel = dayNames[dayData.key] + ', ' + fmtDate(d);
+            chip.onclick = function(){ selectSlotChip(this, time, dayLabel); };
+          }
+          chips.appendChild(chip);
+        });
+        dayDiv.appendChild(chips);
+        c.appendChild(dayDiv);
+      });
+    }
+
+    function selectSlotChip(el, time, dayStr) {
+      document.querySelectorAll('.slot-chip.selected').forEach(function(c){ c.classList.remove('selected'); });
+      el.classList.add('selected');
+            var wn = document.getElementById('slots-wn');
+      var detectedStandort = (wn && wn.contains(el)) ? 'wn' : 'ils';
+      slotStandort = detectedStandort;
+      selectedSlot = { time: time, day: dayStr, standort: detectedStandort === 'wn' ? 'Wernigerode' : 'Heudeber' };
+    }
+
+    function switchSlotStandort(type) {
+      slotStandort = type;
+      selectedSlot = null;
+      document.getElementById('slot-btn-wn').classList.toggle('active', type === 'wn');
+      document.getElementById('slot-btn-ils').classList.toggle('active', type === 'ils');
+      document.getElementById('slots-wn').style.display = type === 'wn' ? '' : 'none';
+      document.getElementById('slots-ils').style.display = type === 'ils' ? '' : 'none';
+    }
+
+    function selectRadioM(el, groupId) {
+      var grp = document.getElementById(groupId);
+      if (grp) grp.querySelectorAll('.radio-card-m').forEach(function(c){ c.classList.remove('selected'); });
+      el.classList.add('selected');
+    }
+
+    function getRadioVal(groupId) {
+      var grp = document.getElementById(groupId);
+      if (!grp) return null;
+      var sel = grp.querySelector('.radio-card-m.selected');
+      return sel ? sel.dataset.value : null;
+    }
+
+    var terminTitles = ['Anliegen wählen','Termin wählen','Ihre Daten','Bestätigung'];
+
+    function updateTerminStep() {
+      var isNeu = getRadioVal('rc-patienttyp') === 'neu';
+      var total = isNeu ? 5 : 4;
+      var dot1b = document.getElementById('sd-1b');
+      if (dot1b) dot1b.style.display = isNeu ? '' : 'none';
+      for (var i = 1; i <= 4; i++) {
+        var dot = document.getElementById('sd-' + i);
+        if (!dot) continue;
+        dot.classList.remove('active','done');
+        if (terminAnamneseActive) {
+          if (i === 1) dot.classList.add('done');
+        } else {
+          if (i === terminStep) dot.classList.add('active');
+          else if (i < terminStep) dot.classList.add('done');
+        }
+      }
+      if (dot1b) {
+        dot1b.classList.remove('active','done');
+        if (terminAnamneseActive) dot1b.classList.add('active');
+        else if (isNeu && terminStep > 1) dot1b.classList.add('done');
+      }
+      [1,'1b',2,3,4].forEach(function(s){
+        var el = document.getElementById('tm-s' + s);
+        if (el) el.style.display = 'none';
+      });
+      if (terminAnamneseActive) {
+        document.getElementById('tm-s1b').style.display = '';
+      } else {
+        var el = document.getElementById('tm-s' + terminStep);
+        if (el) el.style.display = '';
+      }
+      if (terminAnamneseActive) {
+        document.getElementById('tm-step-label').textContent = 'Schritt 2 von ' + total;
+        document.getElementById('tm-title').textContent = 'Anamnesebogen';
+      } else {
+        var anzeige = (isNeu && terminStep > 1) ? terminStep + 1 : terminStep;
+        document.getElementById('tm-step-label').textContent = 'Schritt ' + anzeige + ' von ' + total;
+        document.getElementById('tm-title').textContent = terminTitles[terminStep - 1];
+      }
+      var back = document.getElementById('tm-back');
+      var next = document.getElementById('tm-next');
+      var footer = document.getElementById('tm-footer');
+      back.style.visibility = (terminStep > 1 || terminAnamneseActive) ? 'visible' : 'hidden';
+      if (terminStep === 4 && !terminAnamneseActive) {
+        footer.style.display = 'none';
+        buildSummary();
+      } else {
+        footer.style.display = 'flex';
+        next.textContent = (terminStep === 3 && !terminAnamneseActive) ? 'Termin anfragen ✓' : 'Weiter →';
+      }
+      if (terminStep === 2 && !terminAnamneseActive) {
+        buildSlotContainer('slots-wn', slotsData.wn);
+        buildSlotContainer('slots-ils', slotsData.ils);
+        document.getElementById('slot-btn-wn').classList.add('active');
+        document.getElementById('slot-btn-ils').classList.remove('active');
+        document.getElementById('slots-wn').style.display = '';
+        document.getElementById('slots-ils').style.display = 'none';
+        slotStandort = 'wn';
+      }
+      if (terminAnamneseActive) { initSignaturCanvas(); }
+    }
+
+        function terminNext() {
+      if (terminStep === 1 && !terminAnamneseActive) {
+        if (!getRadioVal('rc-patienttyp')) { alert('Bitte wählen Sie Bestand- oder Neupatient.'); return; }
+        if (!getRadioVal('rc-anliegen')) { alert('Bitte wählen Sie Ihr Anliegen.'); return; }
+        if (getRadioVal('rc-patienttyp') === 'neu') {
+          terminAnamneseActive = true; updateTerminStep(); return;
+        }
+      }
+      if (terminAnamneseActive) {
+        if (signaturLeer()) { alert('Bitte unterschreiben Sie den Anamnesebogen.'); return; }
+        terminAnamneseActive = false; terminStep = 2; updateTerminStep(); return;
+      }
+      if (terminStep === 2 && !selectedSlot) { alert('Bitte wählen Sie einen freien Termin.'); return; }
+      if (terminStep === 3) {
+        var vn = document.getElementById('tm-vorname').value.trim();
+        var nn = document.getElementById('tm-nachname').value.trim();
+        var tel = document.getElementById('tm-telefon').value.trim();
+        var ds = document.getElementById('tm-datenschutz').checked;
+        if (!vn || !nn) { alert('Bitte geben Sie Ihren Namen ein.'); return; }
+        if (!tel) { alert('Bitte geben Sie Ihre Telefonnummer ein.'); return; }
+        if (!ds) { alert('Bitte stimmen Sie der Datenschutzerklärung zu.'); return; }
+      }
+      if (terminStep === 3) {
+        // Fire-and-forget: E-Mail senden
+        var fd = new FormData();
+        fd.append('vorname',      document.getElementById('tm-vorname').value.trim());
+        fd.append('nachname',     document.getElementById('tm-nachname').value.trim());
+        fd.append('email',        document.getElementById('tm-email').value.trim());
+        fd.append('telefon',      document.getElementById('tm-telefon').value.trim());
+        fd.append('gebdatum',     document.getElementById('tm-gebdatum').value);
+        fd.append('versicherung', document.getElementById('tm-versicherung').value);
+        fd.append('kasse',        document.getElementById('tm-kasse').value.trim());
+        fd.append('termin_datum', selectedSlot ? selectedSlot.day : '');
+        fd.append('termin_uhrzeit', selectedSlot ? selectedSlot.time : '');
+        fd.append('standort',     selectedSlot ? selectedSlot.standort : '');
+        fd.append('anliegen',     (function(){ var m={akut:'Termin vereinbaren',vorsorge:'Vorsorge / Check-Up',ernaehrung:'Ernährungsmedizin',sonstiges:'Sonstiges'}; return m[getRadioVal('rc-anliegen')]||''; })());
+        fd.append('patienttyp',   getRadioVal('rc-patienttyp') === 'neu' ? 'Neupatient' : 'Bestandspatient');
+        // Anamnese (nur Neupatienten)
+        if (getRadioVal('rc-patienttyp') === 'neu') {
+          fd.append('allergien',    document.getElementById('an-allergien') ? document.getElementById('an-allergien').value : '');
+          fd.append('medikamente',  document.getElementById('an-medikamente') ? document.getElementById('an-medikamente').value : '');
+          fd.append('anliegen_neu', document.getElementById('an-anliegen-neu') ? document.getElementById('an-anliegen-neu').value : '');
+          fd.append('raucher',      getRadioVal('rc-raucher') || '');
+          var verk = [];
+          ['an-blut','an-diab','an-herz','an-schild','an-niere','an-keine'].forEach(function(id){
+            var el = document.getElementById(id); if (el && el.checked) verk.push(el.nextElementSibling.textContent.trim());
+          });
+          fd.append('vorerkrankungen', verk.length ? verk.join(', ') : 'Keine bekannt');
+        }
+        // Daten für EmailJS sammeln
+        var ej_vn    = document.getElementById('tm-vorname').value.trim();
+        var ej_nn    = document.getElementById('tm-nachname').value.trim();
+        var ej_em    = document.getElementById('tm-email').value.trim();
+        var ej_tel   = document.getElementById('tm-telefon').value.trim();
+        var ej_geb   = document.getElementById('tm-gebdatum').value;
+        var ej_vers  = document.getElementById('tm-versicherung').value;
+        var ej_kasse = document.getElementById('tm-kasse').value.trim();
+        var ej_anl   = (function(){ var m={akut:'Termin vereinbaren',vorsorge:'Vorsorge / Check-Up',ernaehrung:'Ernährungsmedizin',sonstiges:'Sonstiges'}; return m[getRadioVal('rc-anliegen')]||''; })();
+        var ej_ptyp  = getRadioVal('rc-patienttyp') === 'neu' ? 'Neupatient' : 'Bestandspatient';
+        var ej_datum = selectedSlot ? selectedSlot.day : '';
+        var ej_uhr   = selectedSlot ? selectedSlot.time : '';
+        var ej_ort   = selectedSlot ? selectedSlot.standort : '';
+
+        var ej_params = {
+          vorname: ej_vn, nachname: ej_nn, email: ej_em, telefon: ej_tel,
+          geburtsdatum: ej_geb, versicherung: ej_vers, krankenkasse: ej_kasse,
+          anliegen: ej_anl, patienttyp: ej_ptyp,
+          termin_datum: ej_datum, termin_uhrzeit: ej_uhr, standort: ej_ort,
+          allergien: '', medikamente: '', anliegen_neu: '', raucher: '', vorerkrankungen: ''
+        };
+
+        // Anamnese-Daten anhängen (nur Neupatienten)
+        if (ej_ptyp === 'Neupatient') {
+          ej_params.allergien    = document.getElementById('an-allergien') ? document.getElementById('an-allergien').value : '';
+          ej_params.medikamente  = document.getElementById('an-medikamente') ? document.getElementById('an-medikamente').value : '';
+          ej_params.anliegen_neu = document.getElementById('an-anliegen-neu') ? document.getElementById('an-anliegen-neu').value : '';
+          ej_params.raucher      = getRadioVal('rc-raucher') || '';
+          var verk = [];
+          ['an-blut','an-diab','an-herz','an-schild','an-niere','an-keine'].forEach(function(id){
+            var el = document.getElementById(id); if (el && el.checked) verk.push(el.nextElementSibling.textContent.trim());
+          });
+          ej_params.vorerkrankungen = verk.length ? verk.join(', ') : 'Keine bekannt';
+        }
+
+        // E-Mail an Praxis
+        emailjs.send('EMAILJS_SERVICE_ID', 'EMAILJS_TEMPLATE_PRAXIS', ej_params)
+          .then(function(){ console.log('[EmailJS] Praxis-Mail gesendet'); })
+          .catch(function(e){ console.error('[EmailJS] Fehler Praxis:', e); });
+
+        // Bestätigung an Patienten (nur wenn E-Mail angegeben)
+        if (ej_em) {
+          emailjs.send('EMAILJS_SERVICE_ID', 'EMAILJS_TEMPLATE_PATIENT', ej_params)
+            .then(function(){ console.log('[EmailJS] Patienten-Mail gesendet'); })
+            .catch(function(e){ console.error('[EmailJS] Fehler Patient:', e); });
+        }
+      }
+      if (terminStep < 4) { terminStep++; updateTerminStep(); }
+    }
+
+        function terminBack() {
+      if (terminAnamneseActive) { terminAnamneseActive = false; terminStep = 1; updateTerminStep(); return; }
+      if (terminStep === 2 && getRadioVal('rc-patienttyp') === 'neu') { terminAnamneseActive = true; updateTerminStep(); return; }
+      if (terminStep > 1) { terminStep--; updateTerminStep(); }
+    }
+
+    function initSignaturCanvas() {
+      sigCanvas = document.getElementById('anamnese-canvas');
+      if (!sigCanvas || sigCanvas._sigInit) return;
+      sigCanvas._sigInit = true;
+      var dpr = window.devicePixelRatio || 1;
+      var rect = sigCanvas.getBoundingClientRect();
+      sigCanvas.width = rect.width * dpr;
+      sigCanvas.height = rect.height * dpr;
+      sigCtx = sigCanvas.getContext('2d');
+      sigCtx.scale(dpr, dpr);
+      sigCtx.strokeStyle = '#2B3820'; sigCtx.lineWidth = 2.2; sigCtx.lineCap = 'round'; sigCtx.lineJoin = 'round';
+      function px(e) { return e.clientX - sigCanvas.getBoundingClientRect().left; }
+      function py(e) { return e.clientY - sigCanvas.getBoundingClientRect().top; }
+      sigCanvas.addEventListener('mousedown', function(e){ sigDrawing=true; sigCtx.beginPath(); sigCtx.moveTo(px(e),py(e)); });
+      sigCanvas.addEventListener('mousemove', function(e){ if(!sigDrawing) return; sigCtx.lineTo(px(e),py(e)); sigCtx.stroke(); });
+      sigCanvas.addEventListener('mouseup', function(){ sigDrawing=false; });
+      sigCanvas.addEventListener('mouseleave', function(){ sigDrawing=false; });
+      sigCanvas.addEventListener('touchstart', function(e){ e.preventDefault(); sigDrawing=true; var t=e.touches[0]; sigCtx.beginPath(); sigCtx.moveTo(px(t),py(t)); },{passive:false});
+      sigCanvas.addEventListener('touchmove', function(e){ e.preventDefault(); if(!sigDrawing) return; var t=e.touches[0]; sigCtx.lineTo(px(t),py(t)); sigCtx.stroke(); },{passive:false});
+      sigCanvas.addEventListener('touchend', function(){ sigDrawing=false; });
+    }
+    function clearSignatur() { if (sigCtx) sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height); }
+    function signaturLeer() {
+      if (!sigCanvas || !sigCtx) return true;
+      var d = sigCtx.getImageData(0,0,sigCanvas.width,sigCanvas.height).data;
+      for (var i=3; i<d.length; i+=4) { if (d[i]>0) return false; }
+      return true;
+    }
+
+    var anliegenMap = { akut:'Termin vereinbaren', vorsorge:'Vorsorge / Check-Up', ernaehrung:'Ernährungsmedizin', sonstiges:'Sonstiges' };
+    var patientMap = { bestand:'Bestandspatient', neu:'Neupatient' };
+
+    function buildSummary() {
+      var rows = [
+        ['Name', (document.getElementById('tm-vorname').value + ' ' + document.getElementById('tm-nachname').value).trim()],
+        ['Standort', selectedSlot ? selectedSlot.standort : '—'],
+        ['Termin', selectedSlot ? (selectedSlot.day + ', ' + selectedSlot.time + ' Uhr') : '—'],
+        ['Anliegen', anliegenMap[getRadioVal('rc-anliegen')] || '—'],
+        ['Patientenart', patientMap[getRadioVal('rc-patienttyp')] || '—']
+      ];
+      var html = rows.map(function(r){
+        return '<div class="summary-row-m"><span>' + r[0] + '</span><span>' + r[1] + '</span></div>';
+      }).join('');
+      document.getElementById('tm-summary').innerHTML = html;
+    }
+
+    // ====== REZEPT-FORMULAR ======
+    function switchRezStandort(type) {
+      rezStandort = type;
+      document.getElementById('rz-btn-wn').classList.toggle('active', type === 'wn');
+      document.getElementById('rz-btn-ils').classList.toggle('active', type === 'ils');
+    }
+
+    function initMedRows() {
+      medCount = 0;
+      document.getElementById('rz-med-container').innerHTML = '';
+      document.getElementById('rz-add-btn').style.display = '';
+      document.getElementById('rz-confirm').checked = false;
+      document.getElementById('rz-datenschutz').checked = false;
+      // clear fields
+      ['rz-vorname','rz-nachname','rz-gebdatum','rz-kasse','rz-telefon','rz-email'].forEach(function(id){
+        var el = document.getElementById(id); if(el) el.value = '';
+      });
+      addMedRow();
+    }
+
+    function addMedRow() {
+      if (medCount >= 3) return;
+      medCount++;
+      var c = document.getElementById('rz-med-container');
+      var id = 'med-row-' + medCount;
+      var wrap = document.createElement('div');
+      wrap.className = 'med-row-wrap-m'; wrap.id = id;
+      var removeBtn = medCount > 1
+        ? '<button class="med-remove-m" onclick="removeMedRow(\'' + id + '\')">&#10005; Entfernen</button>'
+        : '';
+      wrap.innerHTML = '<div class="med-row-head-m"><span class="med-row-lbl">Medikament ' + medCount + '</span>' + removeBtn + '</div>' +
+        '<div class="m-form-group"><label class="m-form-label">Medikamentname</label>' +
+        '<input type="text" class="m-form-input med-name" placeholder="z.B. Metformin 500 mg"></div>' +
+        '<div class="m-form-row">' +
+        '<div class="m-form-group"><label class="m-form-label">Dosierung</label>' +
+        '<input type="text" class="m-form-input med-dosis" placeholder="z.B. 1×500 mg täglich"></div>' +
+        '<div class="m-form-group"><label class="m-form-label">Packungsgröße / N-Code</label>' +
+        '<input type="text" class="m-form-input med-packung" placeholder="z.B. N3 / 100 St."></div>' +
+        '</div>';
+      c.appendChild(wrap);
+      if (medCount >= 3) document.getElementById('rz-add-btn').style.display = 'none';
+    }
+
+    function removeMedRow(id) {
+      var el = document.getElementById(id);
+      if (el) el.remove();
+      medCount--;
+      document.getElementById('rz-add-btn').style.display = '';
+      // renumber labels
+      document.querySelectorAll('.med-row-lbl').forEach(function(l, i){
+        l.textContent = 'Medikament ' + (i + 1);
+      });
+    }
+
+    function submitRezept() {
+      var vn = document.getElementById('rz-vorname').value.trim();
+      var nn = document.getElementById('rz-nachname').value.trim();
+      var geb = document.getElementById('rz-gebdatum').value;
+      var kasse = document.getElementById('rz-kasse').value.trim();
+      var tel = document.getElementById('rz-telefon').value.trim();
+      var email = document.getElementById('rz-email').value.trim();
+      var bestaetigung = document.getElementById('rz-confirm').checked;
+      var ds = document.getElementById('rz-datenschutz').checked;
+      if (!vn || !nn) { alert('Bitte geben Sie Ihren Namen ein.'); return; }
+      if (!geb) { alert('Bitte geben Sie Ihr Geburtsdatum ein.'); return; }
+      if (!tel) { alert('Bitte geben Sie Ihre Telefonnummer ein.'); return; }
+      if (!bestaetigung) { alert('Bitte bestätigen Sie, dass es sich um ein Dauermedikament handelt.'); return; }
+      if (!ds) { alert('Bitte stimmen Sie der Datenschutzerklärung zu.'); return; }
+      // Medikamente sammeln
+      var medLines = [];
+      document.querySelectorAll('.med-row-wrap-m').forEach(function(row, i){
+        var n = row.querySelector('.med-name') ? row.querySelector('.med-name').value.trim() : '';
+        var dosis = row.querySelector('.med-dosis') ? row.querySelector('.med-dosis').value.trim() : '';
+        var pack = row.querySelector('.med-packung') ? row.querySelector('.med-packung').value.trim() : '';
+        if (n) medLines.push((i+1) + '. ' + n + (dosis ? ', ' + dosis : '') + (pack ? ', ' + pack : ''));
+      });
+      if (medLines.length === 0) { alert('Bitte geben Sie mindestens ein Medikament ein.'); return; }
+      var gebFmt = geb ? new Date(geb).toLocaleDateString('de-DE') : '—';
+      var standortStr = rezStandort === 'wn' ? 'Wernigerode (Oberhof 9)' : 'Heudeber (Bahnhofstraße 18)';
+      var body = 'Folgerezept-Anforderung über die Website\n' +
+        '================================================\n\n' +
+        'PATIENTENDATEN\n' +
+        'Name:           ' + vn + ' ' + nn + '\n' +
+        'Geburtsdatum:   ' + gebFmt + '\n' +
+        'Krankenkasse:   ' + (kasse || '—') + '\n' +
+        'Telefon:        ' + tel + '\n' +
+        'E-Mail:         ' + (email || '—') + '\n\n' +
+        'MEDIKAMENTE\n' +
+        medLines.join('\n') + '\n\n' +
+        'ABHOLSTANDORT:  ' + standortStr + '\n\n' +
+        '================================================\n' +
+        'Bitte telefonisch unter 03943 / 48 13 3 melden bei Rückfragen.\n' +
+        'Anfrage automatisch über landharzpraxis.de erstellt.';
+      var subject = 'Folgerezept-Anforderung – ' + vn + ' ' + nn + ' (' + gebFmt + ')';
+      var ej_params = {
+        patient_name: vn + ' ' + nn,
+        geburtsdatum: gebFmt,
+        krankenkasse: kasse || '—',
+        telefon: tel,
+        patient_email: email || '—',
+        medikamente: medLines.join('\n'),
+        standort: standortStr,
+        subject: subject,
+        message: body
+      };
+      var btn = document.querySelector('#modal-rezept .btn-custom-dark');
+      if (btn) { btn.disabled = true; btn.textContent = 'Wird gesendet…'; }
+      emailjs.send('EMAILJS_SERVICE_ID', 'EMAILJS_TEMPLATE_REZEPT', ej_params)
+        .then(function() {
+          if (btn) { btn.disabled = false; btn.innerHTML = 'Anfrage senden &#10003;'; }
+          document.querySelector('#modal-rezept .modal-body').innerHTML = '<div style="text-align:center;padding:40px 20px;"><div style="font-size:2rem;margin-bottom:16px;">&#10003;</div><h3 style="font-family:var(--font-serif);color:var(--olive-haupt);margin-bottom:10px;">Rezept-Anforderung eingegangen</h3><p style="color:var(--text-muted);font-size:0.88rem;">Wir melden uns bei Ihnen. Rezept in der Regel am nächsten Werktag abholbereit.</p></div>';
+        })
+        .catch(function(err) {
+          console.error('EmailJS Fehler:', err);
+          if (btn) { btn.disabled = false; btn.textContent = 'Anfrage senden'; }
+          alert('Fehler beim Senden. Bitte rufen Sie uns an: 03943 / 48 13 3');
+        });
+    }
+
+// ── Burger-Menü ──
+function toggleMobMenu() {
+  var btn = document.getElementById('burger-btn');
+  var menu = document.getElementById('mob-menu');
+  var overlay = document.getElementById('mob-overlay');
+  var offen = menu.classList.contains('offen');
+  btn.classList.toggle('offen', !offen);
+  menu.classList.toggle('offen', !offen);
+  overlay.classList.toggle('aktiv', !offen);
+  menu.setAttribute('aria-hidden', offen ? 'true' : 'false');
+  btn.setAttribute('aria-expanded', offen ? 'false' : 'true');
+  document.body.style.overflow = offen ? '' : 'hidden';
+  var bar = document.querySelector('.mobile-bottom-bar');
+  if (bar) bar.classList.toggle('bar-hidden', !offen);
+}
+
+// ====== SCROLL-ANIMATIONEN ======
+(function() {
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+  document.querySelectorAll('.reveal-sec').forEach(function(el) { io.observe(el); });
+})();
+
+// ====== DEMO-MODUS: Terminprozess automatisch durchspielen ======
+var demoLaeuft = false;
+
+// Hilfsfunktion: Unterschrift animiert zeichnen (sichtbarer Stift-Effekt)
+function demoZeichneUnterschrift() {
+  var canvas = document.getElementById('anamnese-canvas');
+  if (!canvas) return;
+  var attempts = 0;
+  function tryDraw() {
+    if (!sigCtx && attempts < 20) { attempts++; setTimeout(tryDraw, 150); return; }
+    if (!sigCtx) return;
+    // Canvas-Größe prüfen und ggf. neu setzen (kann 0 sein wenn bei display:none initialisiert)
+    var rect = canvas.getBoundingClientRect();
+    if (rect.width === 0) { attempts++; if (attempts < 20) { setTimeout(tryDraw, 150); return; } }
+    var dpr = window.devicePixelRatio || 1;
+    if (canvas.width < 10) {
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      sigCtx.scale(dpr, dpr);
+      sigCtx.strokeStyle = '#2B3820'; sigCtx.lineWidth = 2.2; sigCtx.lineCap = 'round'; sigCtx.lineJoin = 'round';
+    }
+    // Zum Canvas scrollen damit die Unterschrift sichtbar ist
+    canvas.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    var w = rect.width;
+    var h = rect.height;
+
+    // Bezier-Punkte per t-Interpolation berechnen
+    function bezierPunkt(t, p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y) {
+      var u = 1-t;
+      return {
+        x: u*u*u*p0x + 3*u*u*t*p1x + 3*u*t*t*p2x + t*t*t*p3x,
+        y: u*u*u*p0y + 3*u*u*t*p1y + 3*u*t*t*p2y + t*t*t*p3y
+      };
+    }
+
+    // Kurvensegmente (relative Koordinaten)
+    var seg = [
+      [0.07,0.55, 0.15,0.18, 0.27,0.88, 0.38,0.45],
+      [0.38,0.45, 0.43,0.28, 0.47,0.72, 0.53,0.50],
+      [0.53,0.50, 0.60,0.18, 0.71,0.82, 0.80,0.46],
+      [0.80,0.46, 0.86,0.30, 0.92,0.60, 0.96,0.50]
+    ];
+
+    // Alle Punkte vorberechnen
+    var punkte = [];
+    seg.forEach(function(s) {
+      for (var i = 0; i <= 22; i++) {
+        var t = i/22;
+        var p = bezierPunkt(t, s[0]*w, s[1]*h, s[2]*w, s[3]*h, s[4]*w, s[5]*h, s[6]*w, s[7]*h);
+        punkte.push(p);
+      }
+    });
+
+    // Animiert zeichnen: ein Punkt pro Frame (~14ms = 60fps)
+    var idx = 0;
+    sigCtx.beginPath();
+    sigCtx.moveTo(punkte[0].x, punkte[0].y);
+
+    function drawNext() {
+      if (idx >= punkte.length) return;
+      var p = punkte[idx];
+      // Kleines "Zittern" für natürlichen Handschrift-Effekt
+      var jitter = 0.6;
+      sigCtx.lineTo(p.x + (Math.random()-0.5)*jitter, p.y + (Math.random()-0.5)*jitter);
+      sigCtx.stroke();
+      sigCtx.beginPath();
+      sigCtx.moveTo(p.x, p.y);
+      idx++;
+      if (idx < punkte.length) requestAnimationFrame(drawNext);
+    }
+    requestAnimationFrame(drawNext);
+  }
+  setTimeout(tryDraw, 200);
+}
+
+// DEMO 1: Bestandspatient (einfacher Durchlauf)
+function startDemoBestand() {
+  if (demoLaeuft) return;
+  demoLaeuft = true;
+  openTerminModal();
+  // Step 1: Bestandspatient + Termin vereinbaren
+  setTimeout(function() {
+    var pt = document.querySelectorAll('#rc-patienttyp .radio-card-m');
+    if (pt[0]) selectRadioM(pt[0], 'rc-patienttyp'); // Bestandspatient
+  }, 700);
+  setTimeout(function() {
+    var al = document.querySelectorAll('#rc-anliegen .radio-card-m');
+    if (al[0]) selectRadioM(al[0], 'rc-anliegen'); // Termin vereinbaren
+  }, 1400);
+  // Weiter → Step 2 (Slots)
+  setTimeout(function() { terminStep = 2; updateTerminStep(); }, 2300);
+  // Slot auswählen
+  setTimeout(function() {
+    var slots = document.querySelectorAll('#slots-wn .slot-chip:not(.busy)');
+    if (slots[1]) slots[1].click();
+  }, 3200);
+  // Weiter → Step 3 (Daten)
+  setTimeout(function() { terminStep = 3; updateTerminStep(); }, 4200);
+  // Felder füllen
+  setTimeout(function() {
+    var d = { 'tm-vorname':'Erika', 'tm-nachname':'Mustermann',
+               'tm-telefon':'03943 / 12 34 56', 'tm-email':'e.mustermann@example.de',
+               'tm-kasse':'AOK Plus' };
+    Object.keys(d).forEach(function(id){ var el=document.getElementById(id); if(el) el.value=d[id]; });
+    var v=document.getElementById('tm-versicherung'); if(v) v.value='gkv';
+    var ds=document.getElementById('tm-datenschutz'); if(ds) ds.checked=true;
+  }, 5000);
+  // Weiter → Step 4 (Bestätigung)
+  setTimeout(function() { terminStep=4; updateTerminStep(); demoLaeuft=false; }, 6500);
+}
+
+// DEMO 2: Neupatient mit Anamnesebogen + Unterschrift
+function startDemoNeu() {
+  if (demoLaeuft) return;
+  demoLaeuft = true;
+  openTerminModal();
+  // Step 1: Neupatient + Vorsorge
+  setTimeout(function() {
+    var pt = document.querySelectorAll('#rc-patienttyp .radio-card-m');
+    if (pt[1]) selectRadioM(pt[1], 'rc-patienttyp'); // Neupatient
+  }, 700);
+  setTimeout(function() {
+    var al = document.querySelectorAll('#rc-anliegen .radio-card-m');
+    if (al[1]) selectRadioM(al[1], 'rc-anliegen'); // Vorsorge / Check-Up
+  }, 1400);
+  // Weiter → Anamnesebogen (terminAnamneseActive = true)
+  setTimeout(function() {
+    terminAnamneseActive = true;
+    updateTerminStep();
+  }, 2300);
+  // Anamnesebogen ausfüllen
+  setTimeout(function() {
+    var an = document.getElementById('an-allergien');
+    if (an) an.value = 'Penicillin (leichte Reaktion)';
+    var med = document.getElementById('an-medikamente');
+    if (med) med.value = 'Keine';
+    var anl = document.getElementById('an-anliegen-neu');
+    if (anl) anl.value = 'Erstvorstellung, allg. Check-Up gewünscht';
+    // Vorerkrankungen: keine bekannt ankreuzen
+    var keine = document.getElementById('an-keine');
+    if (keine) { keine.checked = true; }
+    // Raucher: Nein
+    var raucher = document.querySelectorAll('#rc-raucher .radio-card-m');
+    if (raucher[0]) selectRadioM(raucher[0], 'rc-raucher');
+  }, 3400);
+  // Unterschrift zeichnen
+  setTimeout(function() { demoZeichneUnterschrift(); }, 4500);
+  // Weiter → Step 2 (Slots) — nach 8s, damit Unterschrift komplett sichtbar ist
+  setTimeout(function() {
+    terminAnamneseActive = false;
+    terminStep = 2;
+    updateTerminStep();
+  }, 8000);
+  // Slot auswählen
+  setTimeout(function() {
+    var slots = document.querySelectorAll('#slots-wn .slot-chip:not(.busy)');
+    if (slots[0]) slots[0].click();
+  }, 8900);
+  // Weiter → Step 3 (Daten)
+  setTimeout(function() { terminStep = 3; updateTerminStep(); }, 9800);
+  // Felder füllen
+  setTimeout(function() {
+    var d = { 'tm-vorname':'Max', 'tm-nachname':'Neupatient',
+               'tm-telefon':'03943 / 98 76 54', 'tm-email':'max.neu@example.de',
+               'tm-kasse':'Techniker Krankenkasse (TK)' };
+    Object.keys(d).forEach(function(id){ var el=document.getElementById(id); if(el) el.value=d[id]; });
+    var v=document.getElementById('tm-versicherung'); if(v) v.value='gkv';
+    var ds=document.getElementById('tm-datenschutz'); if(ds) ds.checked=true;
+  }, 10600);
+  // Weiter → Step 4 (Bestätigung)
+  setTimeout(function() { terminStep=4; updateTerminStep(); demoLaeuft=false; }, 12100);
+}
+
+// Demo-Buttons (floating, unten rechts)
+document.addEventListener('DOMContentLoaded', function() {
+  var wrap = document.createElement('div');
+  wrap.id = 'demo-buttons-wrap';
+  wrap.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:8000;display:flex;flex-direction:column;gap:8px;align-items:flex-end;';
+  wrap.innerHTML = '<div style="font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.7);text-align:center;background:rgba(56,78,51,0.6);padding:3px 10px;border-radius:20px;backdrop-filter:blur(6px);">Demo-Modus</div>'
+    + '<button onclick="startDemoBestand()" style="background:var(--olive-haupt);color:#fff;border:none;border-radius:50px;padding:9px 18px;font-family:var(--font-sans);font-size:0.75rem;font-weight:700;cursor:pointer;box-shadow:0 3px 14px rgba(56,78,51,0.40);white-space:nowrap;">&#9654; Bestandspatient</button>'
+    + '<button onclick="startDemoNeu()" style="background:var(--terracotta);color:#fff;border:none;border-radius:50px;padding:9px 18px;font-family:var(--font-sans);font-size:0.75rem;font-weight:700;cursor:pointer;box-shadow:0 3px 14px rgba(163,111,90,0.40);white-space:nowrap;">&#9654; Neupatient + Anamnese</button>';
+  document.body.appendChild(wrap);
+});
+
+// Standort-Filter: Hero-Chips + Standorte-Sektion
+function filterStandort(which) {
+  // Standort merken + Header-Pill aktualisieren
+  aktuellerStandort = which;
+
+  // Chips aktiv setzen
+  var chipWn  = document.getElementById('chip-wn');
+  var chipIls = document.getElementById('chip-ils');
+  if (chipWn)  chipWn.classList.toggle('active',  which === 'wn');
+  if (chipIls) chipIls.classList.toggle('active', which === 'ils');
+
+  // Tabs in der Sektion aktiv setzen
+  var tabWn  = document.getElementById('tab-wn');
+  var tabIls = document.getElementById('tab-ils');
+  if (tabWn)  tabWn.classList.toggle('active',  which === 'wn');
+  if (tabIls) tabIls.classList.toggle('active', which === 'ils');
+
+  // Boxen ein-/ausblenden
+  var locWn  = document.getElementById('loc-wn');
+  var locIls = document.getElementById('loc-ils');
+  if (locWn)  locWn.classList.toggle('active',  which === 'wn');
+  if (locIls) locIls.classList.toggle('active', which === 'ils');
+
+
+}
+
+
+
+
+
+// kompass aufklappen — nur beim Scrollen, nicht beim Laden
+(function() {
+  var card = document.querySelector('.compass-sec');
+  if (!card) return;
+  function pruefeKompass() {
+    var rect = document.getElementById('kompass').getBoundingClientRect();
+    if (rect.top < window.innerHeight - 60) {
+      card.classList.add('aufgeklappt');
+      window.removeEventListener('scroll', pruefeKompass);
+    }
+  }
+  window.addEventListener('scroll', pruefeKompass, { passive: true });
+})();
+// ── Desktop Float Card ──
+  document.addEventListener('DOMContentLoaded', function() {
+    var card = document.getElementById('desk-float-card');
+    if (!card) return;
+    var footer = document.querySelector('footer');
+    // Karte sofort zeigen, nur beim Footer ausblenden
+    card.classList.add('dfc-visible');
+    window.addEventListener('scroll', function() {
+      if (!footer) return;
+      var footerNah = footer.getBoundingClientRect().top < window.innerHeight - 80;
+      card.classList.toggle('dfc-visible', !footerNah);
+    }, { passive: true });
+  });
+  </script>
+
+<div class="modal-overlay" id="modal-termin" onclick="closeOnBackdrop(event,'modal-termin')">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <div class="modal-step-label" id="tm-step-label">Schritt 1 von 4</div>
+          <h3 class="modal-title" id="tm-title">Anliegen w&#228;hlen</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-termin')" aria-label="Schlie&#223;en">&#10005;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-steps">
+          <div class="step-dot active" id="sd-1"></div>
+          <div class="step-dot" id="sd-1b" style="display:none;"></div>
+          <div class="step-dot" id="sd-2"></div>
+          <div class="step-dot" id="sd-3"></div>
+          <div class="step-dot" id="sd-4"></div>
+        </div>
+
+        <!-- Schritt 1: Anliegen -->
+        <div id="tm-s1">
+          <p class="step-intro">Sind Sie Neu- oder Bestandspatient?</p>
+          <div class="radio-cards-grid" id="rc-patienttyp">
+            <div class="radio-card-m" onclick="selectRadioM(this,'rc-patienttyp')" data-value="bestand">
+              <div class="radio-dot-m"></div>
+              <div><div class="radio-lbl">Bestandspatient</div><div class="radio-desc-m">Ich war bereits in Behandlung bei Dr. M&#252;ller.</div></div>
+            </div>
+            <div class="radio-card-m" onclick="selectRadioM(this,'rc-patienttyp')" data-value="neu">
+              <div class="radio-dot-m"></div>
+              <div><div class="radio-lbl">Neupatient</div><div class="radio-desc-m">Ich komme zum ersten Mal in diese Praxis.</div></div>
+            </div>
+          </div>
+          <p class="step-intro" style="margin-top:18px;">Was ist Ihr Anliegen?</p>
+          <div class="radio-cards-grid radio-grid-2" id="rc-anliegen">
+            <div class="radio-card-m" onclick="selectRadioM(this,'rc-anliegen')" data-value="akut">
+              <div class="radio-dot-m"></div>
+              <div><div class="radio-lbl">Termin vereinbaren</div><div class="radio-desc-m">Infekt, Schmerzen, akute Beschwerden</div></div>
+            </div>
+            <div class="radio-card-m" onclick="selectRadioM(this,'rc-anliegen')" data-value="vorsorge">
+              <div class="radio-dot-m"></div>
+              <div><div class="radio-lbl">Vorsorge / Check-Up</div><div class="radio-desc-m">Gesundheitscheck, Labor, Ultraschall</div></div>
+            </div>
+            <div class="radio-card-m" onclick="selectRadioM(this,'rc-anliegen')" data-value="ernaehrung">
+              <div class="radio-dot-m"></div>
+              <div><div class="radio-lbl">Ern&#228;hrungsmedizin</div><div class="radio-desc-m">Erstgespr&#228;ch oder Folgetermin</div></div>
+            </div>
+            <div class="radio-card-m" onclick="selectRadioM(this,'rc-anliegen')" data-value="sonstiges">
+              <div class="radio-dot-m"></div>
+              <div><div class="radio-lbl">Sonstiges</div><div class="radio-desc-m">&#220;berweisung, Attest, Befundbesprechung</div></div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Schritt 1b: Anamnesebogen (nur Neupatienten) -->
+        <div id="tm-s1b" style="display:none;">
+          <div class="dsgvo-box">
+            <strong>Datenschutz:</strong> Ihre Angaben dienen ausschließlich Ihrer medizinischen Behandlung bei Dr. Müller und werden gemäß DSGVO sicher verarbeitet. Sie können den Bogen auch vor Ort ausfüllen.
+          </div>
+          <div style="text-align:right; margin-bottom:10px;">
+            <button onclick="terminAnamneseActive=false; terminStep=2; updateTerminStep();" type="button"
+              style="background:none; border:none; color:var(--text-muted); font-size:0.79rem; cursor:pointer; text-decoration:underline; font-family:var(--font-sans); padding:4px 8px;">
+              Bogen vor Ort ausfüllen &mdash; direkt weiter &rarr;
+            </button>
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Bekannte Allergien / Unverträglichkeiten</label>
+            <textarea class="anamnese-textarea" id="an-allergien" placeholder="z. B. Penicillin, Aspirin, Nüsse, Latex … oder: keine bekannt"></textarea>
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Bekannte Vorerkrankungen</label>
+            <div class="anamnese-check-grid">
+              <div class="anamnese-check-item"><input type="checkbox" id="an-blut"><label for="an-blut">Bluthochdruck</label></div>
+              <div class="anamnese-check-item"><input type="checkbox" id="an-diab"><label for="an-diab">Diabetes</label></div>
+              <div class="anamnese-check-item"><input type="checkbox" id="an-herz"><label for="an-herz">Herzerkrankung</label></div>
+              <div class="anamnese-check-item"><input type="checkbox" id="an-schild"><label for="an-schild">Schilddrüse</label></div>
+              <div class="anamnese-check-item"><input type="checkbox" id="an-niere"><label for="an-niere">Nierenerkrankung</label></div>
+              <div class="anamnese-check-item"><input type="checkbox" id="an-keine"><label for="an-keine">Keine bekannt</label></div>
+            </div>
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Aktuelle Dauermedikation</label>
+            <textarea class="anamnese-textarea" id="an-medikamente" placeholder="z. B. Ramipril 5 mg, Metformin 500 mg … oder: keine"></textarea>
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Raucherstatus</label>
+            <div class="radio-cards-grid" id="rc-raucher" style="grid-template-columns:repeat(3,1fr);">
+              <div class="radio-card-m" onclick="selectRadioM(this,'rc-raucher')" data-value="nein"><div class="radio-dot-m"></div><div><div class="radio-lbl">Nein</div></div></div>
+              <div class="radio-card-m" onclick="selectRadioM(this,'rc-raucher')" data-value="ja"><div class="radio-dot-m"></div><div><div class="radio-lbl">Ja</div></div></div>
+              <div class="radio-card-m" onclick="selectRadioM(this,'rc-raucher')" data-value="ex"><div class="radio-dot-m"></div><div><div class="radio-lbl">Ich habe aufgehört</div></div></div>
+            </div>
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Was bringt Sie zu uns?</label>
+            <textarea class="anamnese-textarea" id="an-anliegen-neu" placeholder="Kurze Beschreibung Ihrer Beschwerden oder Ihres Anliegens …" style="min-height:68px;"></textarea>
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Unterschrift (Richtigkeit der Angaben bestätigen)</label>
+            <div class="sig-wrap">
+              <canvas id="anamnese-canvas"></canvas>
+              <button class="sig-clear" onclick="clearSignatur()" type="button">Löschen</button>
+            </div>
+            <p class="sig-hint">Mit Finger (Touchscreen) oder Maus unterschreiben — rechtlich ausreichend für Anamnesebögen (einfache elektronische Signatur).</p>
+          </div>
+        </div>
+
+        <!-- Schritt 2: Standort & Termin -->
+        <div id="tm-s2" style="display:none;">
+          <p class="step-intro">Standort w&#228;hlen:</p>
+          <div class="standort-toggle-m">
+            <button class="standort-btn-m active" id="slot-btn-wn" onclick="switchSlotStandort('wn')">Wernigerode</button>
+            <button class="standort-btn-m" id="slot-btn-ils" onclick="switchSlotStandort('ils')">Heudeber</button>
+          </div>
+          <div class="slots-legend">
+            <span><span class="leg-dot" style="background:var(--olive-haupt);"></span>Frei</span>
+            <span><span class="leg-dot" style="background:#ccc;"></span>Besetzt</span>
+          </div>
+          <div class="standort-duo-wrap">
+            <div id="slots-wn"></div>
+            <div id="slots-ils" style="display:none;"></div>
+          </div>
+        </div>
+
+        <!-- Schritt 3: Ihre Daten -->
+        <div id="tm-s3" style="display:none;">
+          <div class="m-form-row">
+            <div class="m-form-group">
+              <label class="m-form-label">Vorname</label>
+              <input type="text" class="m-form-input" id="tm-vorname" placeholder="Max" autocomplete="given-name">
+            </div>
+            <div class="m-form-group">
+              <label class="m-form-label">Nachname</label>
+              <input type="text" class="m-form-input" id="tm-nachname" placeholder="Mustermann" autocomplete="family-name">
+            </div>
+          </div>
+          <div class="m-form-group">
+              <label class="m-form-label">Geburtsdatum</label>
+              <input type="text" class="m-form-input" id="tm-gebdatum" placeholder="TT.MM.JJJJ" inputmode="numeric">
+            </div>
+            <div class="m-form-group">
+              <label class="m-form-label">Versicherungsart</label>
+              <select class="m-form-input" id="tm-versicherung">
+                <option value="">Bitte w&#228;hlen</option>
+                <option value="gkv">Gesetzlich (GKV)</option>
+                <option value="pkv">Privat (PKV)</option>
+                <option value="selbst">Selbstzahler</option>
+              </select>
+            </div>
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Krankenkasse</label>
+            <input type="text" class="m-form-input" id="tm-kasse" placeholder="z.B. AOK, TK, Barmer &#8230;">
+          </div>
+          <div class="m-form-row">
+            <div class="m-form-group">
+              <label class="m-form-label">Telefon</label>
+              <input type="tel" class="m-form-input" id="tm-telefon" placeholder="+49 &#8230;" autocomplete="tel">
+            </div>
+            <div class="m-form-group">
+              <label class="m-form-label">E-Mail</label>
+              <input type="email" class="m-form-input" id="tm-email" placeholder="ihre@email.de" autocomplete="email">
+            </div>
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Hinweis (optional)</label>
+            <textarea class="m-form-input" id="tm-hinweis" rows="2" placeholder="z.B. Rollstuhlzugang, Dolmetscher &#8230;" style="resize:vertical;"></textarea>
+          </div>
+          <div class="m-checkbox-row">
+            <input type="checkbox" id="tm-datenschutz">
+            <label for="tm-datenschutz">Ich habe die <a href="datenschutz.html" style="color:var(--olive-haupt);">Datenschutzerkl&#228;rung</a> gelesen und stimme der Verarbeitung meiner Daten f&#252;r die Terminanfrage zu.</label>
+          </div>
+        </div>
+
+        <!-- Schritt 4: Best&#228;tigung -->
+        <div id="tm-s4" style="display:none;">
+          <div class="success-screen-m">
+            <div class="success-icon-m">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3 style="font-family:var(--font-serif); font-size:1.75rem; color:var(--olive-haupt); margin-bottom:7px;">Termin best&#228;tigt &#10003;</h3>
+            <p style="font-size:0.84rem; color:var(--text-muted); line-height:1.65; max-width:370px; margin:0 auto;">Ihr Termin ist verbindlich gebucht. Eine Best&#228;tigungsmail geht in K&#252;rze an Ihre E-Mail-Adresse. Bitte schauen Sie auch in Ihren Spam-Ordner.</p>
+            <div class="summary-box-m" id="tm-summary"></div>
+            <button class="btn-custom btn-custom-dark" style="margin-top:6px;" onclick="closeModal('modal-termin')">Fertig &#10003;</button>
+          </div>
+        </div>
+
+        <!-- Footer-Buttons -->
+        <div class="modal-footer-btns" id="tm-footer">
+          <button class="btn-custom" id="tm-back" style="visibility:hidden;" onclick="terminBack()">&#8592; Zur&#252;ck</button>
+          <button class="btn-custom btn-custom-dark" id="tm-next" onclick="terminNext()">Weiter &#8594;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== MODAL: FOLGEREZEPT ====== -->
+  <div class="modal-overlay" id="modal-rezept" onclick="closeOnBackdrop(event,'modal-rezept')">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <div class="modal-step-label">Digitaler Empfang</div>
+          <h3 class="modal-title">Folgerezept anfordern</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-rezept')" aria-label="Schlie&#223;en">&#10005;</button>
+      </div>
+      <div class="modal-body">
+        <div class="info-box-m">
+          <strong>Nur f&#252;r Dauermedikamente.</strong> Das Folgerezept gilt ausschlie&#223;lich f&#252;r bereits von der Praxis verschriebene Medikamente. Bei neuen Beschwerden bitte einen Termin buchen. Bearbeitungszeit: 1 Werktag.
+        </div>
+        <div class="m-form-row">
+          <div class="m-form-group">
+            <label class="m-form-label">Vorname</label>
+            <input type="text" class="m-form-input" id="rz-vorname" placeholder="Max" autocomplete="given-name">
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Nachname</label>
+            <input type="text" class="m-form-input" id="rz-nachname" placeholder="Mustermann" autocomplete="family-name">
+          </div>
+        </div>
+        <div class="m-form-group">
+            <label class="m-form-label">Geburtsdatum</label>
+            <input type="text" class="m-form-input" id="rz-gebdatum" placeholder="TT.MM.JJJJ" inputmode="numeric">
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">Krankenkasse</label>
+            <input type="text" class="m-form-input" id="rz-kasse" placeholder="z.B. AOK, TK &#8230;">
+          </div>
+        <div class="m-form-row">
+          <div class="m-form-group">
+            <label class="m-form-label">Telefon</label>
+            <input type="tel" class="m-form-input" id="rz-telefon" placeholder="+49 &#8230;" autocomplete="tel">
+          </div>
+          <div class="m-form-group">
+            <label class="m-form-label">E-Mail (f&#252;r R&#252;ckfragen)</label>
+            <input type="email" class="m-form-input" id="rz-email" placeholder="ihre@email.de" autocomplete="email">
+          </div>
+        </div>
+
+        <p class="step-intro" style="margin-top:4px; margin-bottom:10px;">Welche Medikamente ben&#246;tigen Sie?</p>
+        <div id="rz-med-container"></div>
+        <button class="add-med-btn-m" id="rz-add-btn" onclick="addMedRow()">+ Weiteres Medikament hinzuf&#252;gen</button>
+
+        <div class="info-box-m" style="margin-top:16px;">
+          Das Rezept wird auf Ihre elektronische Gesundheitskarte (eGK) übertragen. Bitte beachten Sie, dass dies einige Stunden dauern kann.
+        </div>
+
+        <div class="m-checkbox-row">
+          <input type="checkbox" id="rz-confirm">
+          <label for="rz-confirm">Ich best&#228;tige, dass es sich ausschlie&#223;lich um bereits von der Praxis verschriebene Dauermedikamente handelt und meine letzte Kontrolluntersuchung nicht l&#228;nger als 12 Monate zur&#252;ckliegt.</label>
+        </div>
+        <div class="m-checkbox-row">
+          <input type="checkbox" id="rz-datenschutz">
+          <label for="rz-datenschutz">Ich habe die <a href="datenschutz.html" style="color:var(--olive-haupt);">Datenschutzerkl&#228;rung</a> gelesen und stimme der Verarbeitung meiner Daten zu.</label>
+        </div>
+
+        <div class="modal-footer-btns">
+          <span style="font-size:0.77rem; color:var(--text-muted);">Wird als E-Mail an die Praxis gesendet.</span>
+          <button class="btn-custom btn-custom-dark" onclick="submitRezept()">
+            Anfrage senden
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-left:4px;vertical-align:middle;" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Weitere Termine Popup -->
+<!-- ── Desktop Floating Annotation Card ── -->
+  <div class="desk-float-card" id="desk-float-card" aria-label="Termin buchen">
+    <div class="dfc-label">Termin buchen</div>
+    <div class="dfc-row" onclick="openTerminModal(null,'wernigerode')" role="button" tabindex="0" aria-label="Termin Wernigerode">
+      <span class="dfc-city">Wernige&shy;rode</span>
+      <span class="dfc-arrow">&#8594;</span>
+    </div>
+    <div class="dfc-row" onclick="openTerminModal(null,'heudeber')" role="button" tabindex="0" aria-label="Termin Heudeber">
+      <span class="dfc-city">Heude&shy;ber</span>
+      <span class="dfc-arrow">&#8594;</span>
+    </div>
+  </div>
+
+
+  <!-- Mobile Bottom Bar -->
+  <div class="mobile-bottom-bar">
+    <button class="bar-loc-btn" onclick="openTerminModal(null,'wernigerode')">
+      <span class="terracotta-dot"></span>
+      <div class="bar-loc-text">
+        <span class="bar-city">Wernigerode</span>
+        <span class="bar-hint">Termin buchen</span>
+      </div>
+    </button>
+    <div class="bar-divider"></div>
+    <button class="bar-loc-btn" onclick="openTerminModal(null,'heudeber')">
+      <span class="terracotta-dot"></span>
+      <div class="bar-loc-text">
+        <span class="bar-city">Heudeber</span>
+        <span class="bar-hint">Termin buchen</span>
+      </div>
+    </button>
+  </div>
+  <script>
+  // ── Bottom Bar: bei Footer ausblenden ──
+  (function() {
+    var bar = document.querySelector('.mobile-bottom-bar');
+    var footer = document.querySelector('footer');
+    if (!bar || !footer) return;
+    function checkFooter() {
+      var fr = footer.getBoundingClientRect();
+      if (fr.top < window.innerHeight - 20) {
+        bar.classList.add('bar-hidden');
+      } else {
+        bar.classList.remove('bar-hidden');
+      }
+    }
+    window.addEventListener('scroll', checkFooter, { passive: true });
+    checkFooter();
+  })();
+  
+  // Schritte-Swipe Hint
+  (function(){
+    var sw = document.getElementById('schritte-swipe');
+    var ht = document.getElementById('schritte-hint');
+    if (!sw || !ht) return;
+    sw.addEventListener('scroll', function(){
+      var atEnd = sw.scrollLeft + sw.clientWidth >= sw.scrollWidth - 20;
+      ht.textContent = atEnd ? '← Zurück' : 'Wischen →';
+    }, {passive:true});
+  })();
+  </script>
+<script>
+// ── Burger: Zwei-Standort-Status ──
+(function() {
+  var sWN={1:[[480,720],[960,1080]],2:[[780,1020]],3:[[480,720]],4:[[480,780]],5:[[540,720]]};
+  var sHD={1:[[480,720]],3:[[480,720]],5:[[480,720]]};
+  var ft=[[1,1],[1,6],[5,1],[8,15],[10,3],[11,1],[12,24],[12,25],[12,26],[12,31]];
+  function ost(j){var a=j%19,b=Math.floor(j/100),c=j%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),n=Math.floor((h+l-7*m+114)/31),p=(h+l-7*m+114)%31+1;return[n,p];}
+  function isFT(d){var j=d.getFullYear(),m=d.getMonth()+1,t=d.getDate();for(var i=0;i<ft.length;i++){if(ft[i][0]===m&&ft[i][1]===t)return true;}var o=ost(j),om=o[0],ot=o[1];var mv=[[om,ot-2],[om,ot+1],[om,ot+39],[om,ot+50],[om,ot+60]];for(var i=0;i<mv.length;i++){var md=new Date(j,mv[i][0]-1,mv[i][1]);if(md.getMonth()+1===m&&md.getDate()===t)return true;}return false;}
+  function chkSlots(slots){
+    var now=new Date();
+    if(isFT(now))return{offen:false,text:'Feiertag'};
+    var wd=now.getDay();if(wd===0||wd===6)return{offen:false,text:'Geschlossen'};
+    var t=now.getHours()*60+now.getMinutes();
+    var s=slots[wd];if(!s)return{offen:false,text:'Geschlossen'};
+    for(var i=0;i<s.length;i++){if(t>=s[i][0]&&t<s[i][1]){var h=Math.floor(s[i][1]/60),m=s[i][1]%60;return{offen:true,text:'bis '+h+':'+(m<10?'0':'')+m+' Uhr'};}}
+    return{offen:false,text:'Geschlossen'};
+  }
+  function set(dotId,zeitId,s){
+    var d=document.getElementById(dotId),z=document.getElementById(zeitId);
+    if(d)d.style.backgroundColor=s.offen?'#4CAF50':'#A86553';
+    if(z)z.textContent=s.text;
+  }
+  set('mob-dot-wn','mob-zeit-wn',chkSlots(sWN));
+  set('mob-dot-hd','mob-zeit-hd',chkSlots(sHD));
+})();
+</script>
+
 </body>
 </html>
