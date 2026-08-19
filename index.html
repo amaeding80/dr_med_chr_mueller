@@ -663,7 +663,8 @@
     .mob-sdot { width: 8px; height: 8px; border-radius: 50%; background: #ccc; flex-shrink: 0; display: inline-block; }
     .mob-sort { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; flex: 1; }
     .mob-szeit { font-size: 0.78rem; color: var(--olive-haupt); font-weight: 600; }
-    @media (max-width: 1024px) and (orientation: portrait) { .mob-status-row { display: none !important; } }
+    .mob-status-row{padding:10px 22px 8px;border-bottom:1px solid rgba(56,78,51,0.08);display:flex;flex-direction:column;gap:4px;}
+    @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) { .mob-status-row { display: none !important; } }
 
     /* ═══════════════════════════════════════════════════════
        SWIPE-MUSTER
@@ -3353,17 +3354,17 @@ function filterStandort(which) {
       <button class="mob-close" onclick="toggleMobMenu()" aria-label="Menü schließen">&#10005;</button>
     </div>
   <div class="mob-status-row">
-    <div class="mob-standort-zeile">
-      <span class="mob-sdot" id="mob-dot-wn"></span>
-      <span class="mob-sort">Wernigerode</span>
-      <span class="mob-szeit" id="mob-zeit-wn">—</span>
+      <div class="mob-standort-zeile">
+        <span class="mob-sdot" id="mob-dot-wn"></span>
+        <span class="mob-sort">Wernigerode</span>
+        <span class="mob-szeit" id="mob-zeit-wn">—</span>
+      </div>
+      <div class="mob-standort-zeile">
+        <span class="mob-sdot" id="mob-dot-hd"></span>
+        <span class="mob-sort">Heudeber</span>
+        <span class="mob-szeit" id="mob-zeit-hd">—</span>
+      </div>
     </div>
-    <div class="mob-standort-zeile">
-      <span class="mob-sdot" id="mob-dot-hd"></span>
-      <span class="mob-sort">Heudeber</span>
-      <span class="mob-szeit" id="mob-zeit-hd">—</span>
-    </div>
-  </div>
     <ul class="mob-links">
       <li><a href="hausarztmedizin.html" onclick="toggleMobMenu()">Hausarztmedizin</a></li>
       <li><a href="ernaehrungsmedizin.html" onclick="toggleMobMenu()">Ernährungsmedizin</a></li>
