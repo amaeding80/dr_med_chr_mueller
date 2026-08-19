@@ -1486,62 +1486,66 @@
     @media (orientation: landscape) and (min-height: 501px) and (max-height: 700px) { .modal-box { max-height: 90vh; } #anamnese-canvas { height: 82px; } }
     @media (min-width: 601px) and (max-width: 1024px) and (orientation: portrait) { .anamnese-check-grid { grid-template-columns: 1fr 1fr; } #anamnese-canvas { height: 100px; } }
   
-    /* ── Tablet Float CTA: global hidden — Pill-Design ── */
+    /* ── Tablet Float CTA: Desk-Float-Card Design ── */
     .tablet-float-cta {
       display: none;
       position: fixed;
-      left: 14px;
-      bottom: 32px;
-      top: auto;
-      right: auto;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 8px;
-      z-index: 600;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%) translateX(-100%);
+      z-index: 900;
+      background: #ffffff;
+      border-left: 3px solid #384E33;
+      border-radius: 0 10px 10px 0;
+      box-shadow: 4px 6px 24px rgba(56,78,51,0.13);
+      padding: 14px 16px 14px 14px;
+      min-width: 152px;
+      transition: transform 0.42s cubic-bezier(0.22,1,0.36,1), opacity 0.42s;
       opacity: 0;
-      transform: translateX(-120%);
-      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease;
       pointer-events: none;
+      cursor: default;
     }
     .tablet-float-cta.tfc-visible {
+      transform: translateY(-50%) translateX(0);
       opacity: 1;
-      transform: translateX(0);
       pointer-events: auto;
     }
-    .tfc-btn {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 12px;
-      padding: 16px 24px 16px 18px;
-      background: rgba(255,255,255,0.97);
-      border: 1px solid rgba(56,78,51,0.25);
-      border-radius: 50px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.13);
-      cursor: pointer;
-      white-space: nowrap;
-      width: 100%;
-      min-width: 210px;
-      transition: background 0.2s, box-shadow 0.2s;
-    }
-    .tfc-btn:hover { background: var(--olive-soft); box-shadow: 0 6px 22px rgba(0,0,0,0.18); }
-    .tfc-city {
-      font-family: var(--font-serif);
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--olive-haupt);
-      line-height: 1;
-      writing-mode: horizontal-tb;
-    }
-    .tfc-label {
-      font-size: 0.78rem;
+    .dfc-label {
+      font-size: 0.58rem;
       font-weight: 700;
-      letter-spacing: 0.07em;
       text-transform: uppercase;
-      color: var(--terracotta);
-      writing-mode: horizontal-tb;
+      letter-spacing: 0.12em;
+      color: #384E33;
+      margin-bottom: 10px;
+      opacity: 0.7;
     }
-    .tfc-divider { display: none; }
+    .dfc-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 0;
+      border-top: 1px solid rgba(56,78,51,0.1);
+      cursor: pointer;
+      transition: background 0.18s;
+      border-radius: 4px;
+      margin: 0 -4px;
+      padding-left: 4px;
+      padding-right: 4px;
+    }
+    .dfc-row:hover { background: rgba(56,78,51,0.05); }
+    .dfc-row:first-of-type { border-top: none; padding-top: 0; margin-top: 2px; }
+    .dfc-city {
+      font-size: 0.79rem;
+      font-weight: 600;
+      color: #2A3A26;
+      line-height: 1.2;
+    }
+    .dfc-arrow {
+      font-size: 0.85rem;
+      color: #384E33;
+      opacity: 0.6;
+    }
 </style>
 </head>
 <body>
@@ -2021,18 +2025,16 @@
   </div>
 </footer>
     <!-- TABLET FLOATING CTA (Q2+Q3 only, JS-controlled) -->
-  <div class="tablet-float-cta" id="tablet-float-cta" aria-hidden="true">
-    <button class="tfc-btn" onclick="openTerminModal(null,'wernigerode')" aria-label="Termin Wernigerode buchen">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      <span class="tfc-city">Wernige­rode</span>
-      <span class="tfc-label">Termin</span>
-    </button>
-    <div class="tfc-divider"></div>
-    <button class="tfc-btn" onclick="openTerminModal(null,'heudeber')" aria-label="Termin Heudeber buchen">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      <span class="tfc-city">Heude­ber</span>
-      <span class="tfc-label">Termin</span>
-    </button>
+  <div class="tablet-float-cta" id="tablet-float-cta" aria-label="Termin buchen">
+    <div class="dfc-label">Termin buchen</div>
+    <div class="dfc-row" onclick="openTerminModal(null,'wernigerode')" role="button" tabindex="0" aria-label="Termin Wernigerode">
+      <span class="dfc-city">Wernige&shy;rode</span>
+      <span class="dfc-arrow">&#8594;</span>
+    </div>
+    <div class="dfc-row" onclick="openTerminModal(null,'heudeber')" role="button" tabindex="0" aria-label="Termin Heudeber">
+      <span class="dfc-city">Heude&shy;ber</span>
+      <span class="dfc-arrow">&#8594;</span>
+    </div>
   </div>
 </main>
 
