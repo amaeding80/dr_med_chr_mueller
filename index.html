@@ -1595,6 +1595,13 @@
     .dfc-city { font-size: 0.79rem; font-weight: 600; color: #2A3A26; line-height: 1.2; }
     .dfc-arrow { font-size: 0.85rem; color: #384E33; opacity: 0.6; }
     @media (min-width: 900px) { .desk-float-card { display: block; } }
+    /* ── Standort-Tabs: ab Tablet immer beide Kacheln, keine Buttons ── */
+    @media (min-width: 680px) {
+      .standort-tabs { display: none !important; }
+      .loc-box { display: block !important; }
+      .loc-beide-grid { display: grid !important; }
+    }
+
 </style>
 </head>
 <body>
