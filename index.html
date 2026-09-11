@@ -777,7 +777,9 @@
       .services-sidebar { position: static; }
       .team-cards-eq { grid-template-columns: repeat(2, 1fr); gap: 16px; }
       .team-intro h2 { font-size: 1.8rem !important; }
-      .loc-beide-grid { grid-template-columns: 1fr; gap: 20px; }
+      .loc-beide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+      .standort-tabs { display: none; }
+      .loc-box { display: block; }
     }
 
     /* ==========================================================================
@@ -834,7 +836,9 @@
       .team-cards-eq { grid-template-columns: repeat(2, 1fr); gap: 14px; }
 
       /* ── Standort: 2-spaltig ── */
-      .loc-beide-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .loc-beide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      .standort-tabs { display: none; }
+      .loc-box { display: block; }
 
       /* ── Leistungen: 1-spaltig (sidebar entfernen) ── */
       .services-editorial { grid-template-columns: 1fr; gap: 24px; }
