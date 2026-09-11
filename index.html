@@ -2,6 +2,9 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <link rel="icon" type="image/webp" href="logo-icon.webp">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hausarzt Wernigerode | Dr. med. Christian Müller – Innere Medizin, Ernährungsmedizin</title>
@@ -3583,5 +3586,23 @@ function filterStandort(which) {
     </button>
   </div>
 
+
+  <script>
+  // Standort-Tabs auf Tablet/Desktop ausblenden
+  (function() {
+    if (window.innerWidth < 680) return;
+    var tabs = document.querySelector('.standort-tabs');
+    if (tabs) tabs.style.setProperty('display', 'none', 'important');
+    document.querySelectorAll('.loc-box').forEach(function(b) {
+      b.style.setProperty('display', 'block', 'important');
+    });
+    var grid = document.querySelector('.loc-beide-grid');
+    if (grid) {
+      grid.style.setProperty('display', 'grid', 'important');
+      grid.style.gridTemplateColumns = '1fr 1fr';
+      grid.style.gap = '20px';
+    }
+  })();
+  </script>
 </body>
 </html>
