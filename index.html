@@ -551,8 +551,8 @@
     .member-avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--olive-haupt), rgba(56,78,51,0.7)); color: #fff; font-family: var(--font-serif); font-size: 1.7rem; font-weight: 400; display: flex; align-items: center; justify-content: center; letter-spacing: 0.03em; box-shadow: 0 4px 16px rgba(56,78,51,0.25); }
     .member-info { flex: 1; min-width: 0; }
     .locations-sec { padding: 48px 0; background: var(--olive-soft); }
-    .loc-beide-grid { display: block; margin-top: 36px; }
-    .loc-box { display: none; }
+    .loc-beide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 36px; }
+    .loc-box { display: block; }
     .loc-box.active { display: block; }
     /* Standort-Tabs in der Sektion */
     .standort-tabs { display: flex; gap: 10px; margin-top: 14px; margin-bottom: 28px; }
@@ -2025,10 +2025,7 @@
         <span class="sec-tag">Kontakt &amp; Anfahrt</span>
         <h2 class="sec-title" style="margin-bottom:0;">So finden Sie uns</h2>
       </div>
-      <div class="standort-tabs">
-        <button class="standort-tab active" id="tab-wn" onclick="filterStandort('wn')">Wernigerode</button>
-        <button class="standort-tab" id="tab-ils" onclick="filterStandort('ils')">Heudeber</button>
-      </div>
+
       <div class="loc-beide-grid">
         <div class="loc-box active" id="loc-wn" data-standort="wn">
           <span class="badge-wernigerode" style="padding:3px 10px; border-radius:4px; font-size:0.68rem; font-weight:700; text-transform:uppercase; display:inline-block; margin-bottom:12px;">Hauptstandort</span>
