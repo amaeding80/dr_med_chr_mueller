@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" type="image/webp" href="logo-icon.webp">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hausarztmedizin | Land-Harz-Praxis Dr. med. Christian Müller</title>
   <meta name="description" content="Hausarztmedizin mit internistischer und allgemeinmedizinischer Kompetenz in Wernigerode und Heudeber. Persönliche Betreuung, moderne Diagnostik, kurze Wege.">
@@ -56,7 +57,7 @@
     .burger-btn.offen .burger-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     .mob-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; }
     .mob-overlay.offen { display: block; }
-    .mob-menu { position: fixed; top: 0; right: 0; width: min(320px, 85vw); height: 100vh; background: #fff; z-index: 300; transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); overflow-y: auto; }
+    .mob-menu { position: fixed; top: 0; right: 0; width: min(320px, 85vw); height: 100vh; height: 100dvh; background: #fff; z-index: 300; transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); overflow-y: auto; }
     .mob-menu.offen { transform: translateX(0); }
     .mob-menu-head { display: flex; justify-content: space-between; align-items: center; padding: 20px 22px; border-bottom: 1px solid rgba(56,78,51,0.1); }
     .mob-close { background: none; border: none; cursor: pointer; font-size: 1.1rem; color: var(--text-muted); padding: 4px; }
@@ -64,7 +65,12 @@
     .mob-links li a { display: block; padding: 13px 22px; color: var(--text); text-decoration: none; font-size: 1rem; font-weight: 500; border-bottom: 1px solid rgba(56,78,51,0.06); transition: color 0.2s, background 0.2s; }
     .mob-links li a:hover, .mob-links li a.aktiv { color: var(--olive-haupt); background: var(--olive-soft); }
     .mob-menu-cta { padding: 16px 22px 14px; border-bottom: 1px solid rgba(56,78,51,0.1); }
-    .mob-status-row { padding: 10px 22px 8px; border-bottom: 1px solid rgba(56,78,51,0.08); display: flex; align-items: center; gap: 9px; }
+    .mob-standort-zeile { display: flex; align-items: center; gap: 9px; padding: 5px 0; }
+    .mob-sdot { width: 8px; height: 8px; border-radius: 50%; background: #ccc; flex-shrink: 0; display: inline-block; }
+    .mob-sort { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; flex: 1; }
+    .mob-szeit { font-size: 0.78rem; color: var(--olive-haupt); font-weight: 600; }
+    @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) { .mob-status-row { display: none !important; } }
+    .mob-status-row { padding: 10px 22px 8px; border-bottom: 1px solid rgba(56,78,51,0.08); display: flex; flex-direction: column; gap: 4px; }
 
     .seiten-kopf { background: linear-gradient(160deg, #FFFFFF 0%, #F7F8F5 55%, #F0F2EC 100%); padding: 56px 0 48px; border-bottom: 1px solid rgba(56,78,51,0.1); }
     .breadcrumb { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
@@ -107,19 +113,19 @@
     .footer-links-inline a:hover { color: var(--olive-haupt); }
     @media (max-width: 679px) { .footer-slim-inner { flex-direction: column; text-align: center; gap: 6px; } }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 1024px) and (orientation: portrait) {
       .nav-menu, .nav-right { display: none; }
       .burger-btn { display: flex !important; }
     }
     @media (max-width: 1024px) and (orientation: portrait) {
       .inhalt-grid { grid-template-columns: 1fr; }
-      .sidebar { order: -1; }
+      .sidebar { order: 2; }
     }
     @media (max-width: 767px) {
       .inhalt-grid { grid-template-columns: 1fr; }
       .seiten-kopf { padding: 40px 0 32px; }
       .inhalt { padding: 48px 0; }
-      .sidebar { order: -1; }
+      .sidebar { order: 2; }
       .container { padding: 0 20px; }
     }
   
@@ -139,6 +145,52 @@
       color:var(--olive-dark);
       border-radius:52% 48% 44% 56% / 58% 46% 54% 42%;
       text-decoration:none;
+    }
+    /* Verwandte Seiten — Mobile Karten */
+    .verwandte-seiten {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .verwandte-seiten .organisch-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1 1 220px;
+      padding: 6px 14px;
+      gap: 10px;
+    }
+    .verwandte-seiten .organisch-link::after {
+      content: '→';
+      flex-shrink: 0;
+      font-size: 1rem;
+      opacity: 0.7;
+      transition: transform 0.2s;
+    }
+    .verwandte-seiten .organisch-link:hover::after {
+      transform: translateX(3px);
+    }
+    @media (max-width: 767px) {
+      .verwandte-seiten {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      .verwandte-seiten .organisch-link {
+        flex: unset;
+        width: 100%;
+        padding: 14px 18px !important;
+        border-radius: 10px !important;
+        border: 1.5px solid rgba(56,78,51,0.20);
+        background: rgba(56,78,51,0.07) !important;
+        min-height: 52px;
+        font-size: 1rem !important;
+      }
+      .verwandte-seiten .organisch-link:hover {
+        border-radius: 10px !important;
+        background: rgba(56,78,51,0.14) !important;
+      }
     }
     
     /* ====== MODAL + TERMIN ====== */
@@ -168,6 +220,49 @@
       z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px;
     }
     .modal-overlay.active { display: flex; }
+
+    /* ── Mobile Bottom Bar (Unterseite) ── */
+    .mobile-bottom-bar { display: none; }
+    @media (max-width: 679px) and (orientation: portrait) {
+      .mobile-bottom-bar {
+        display: flex !important;
+        position: fixed !important;
+        bottom: 12px !important;
+        left: 12px !important;
+        right: 12px !important;
+        z-index: 9999 !important;
+        background: rgba(255,255,255,0.96) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        border: 1px solid rgba(110,145,98,0.25) !important;
+        border-radius: 50px !important;
+        padding: 10px !important;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.15) !important;
+        gap: 0 !important;
+        align-items: center !important;
+        transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease !important;
+      }
+      .mobile-bottom-bar .bar-loc-btn {
+        flex: 1 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        padding: 12px 10px !important;
+        background: none; border: none; border-radius: 40px; cursor: pointer; transition: background 0.18s;
+      }
+      .mobile-bottom-bar .bar-loc-btn:active { background: rgba(56,78,51,0.12); }
+      .mobile-bottom-bar .bar-divider { width: 1px; height: 28px; background: rgba(56,78,51,0.25); flex-shrink: 0; }
+      .mobile-bottom-bar .bar-loc-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+      .mobile-bottom-bar .bar-city { font-size: 1rem !important; font-weight: 700 !important; color: var(--text); white-space: nowrap; }
+      .mobile-bottom-bar .bar-hint { font-size: 0.82rem !important; color: var(--olive-haupt); white-space: nowrap; }
+      .mobile-bottom-bar.bar-hidden { transform: translateY(140%) !important; opacity: 0 !important; pointer-events: none !important; }
+      .terracotta-dot { width: 10px; height: 10px; background: var(--terracotta); border-radius: 50%; flex-shrink: 0; }
+    }
+    @media (max-width: 390px) and (orientation: portrait) {
+      .mobile-bottom-bar .bar-city { font-size: 0.88rem !important; }
+      .mobile-bottom-bar .bar-hint { font-size: 0.72rem !important; }
+    }
     .modal-overlay.active ~ .mobile-bottom-bar,
     body.modal-open .mobile-bottom-bar { display: none !important; }
     .modal-box {
@@ -237,13 +332,50 @@
     .m-checkbox-row label { font-size: 0.78rem; color: var(--text-muted); line-height: 1.55; cursor: pointer; }
     .info-box-m { background: var(--harz-sand-soft); border: 1px solid var(--harz-sand); border-radius: 10px; padding: 11px 14px; font-size: 0.79rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 10px; }
     .info-box-m strong { color: var(--olive-haupt); }
-    @media (max-width: 600px) {
-      .modal-overlay { align-items: flex-end; padding: 0; }
-      .modal-box { border-radius: 20px 20px 0 0; max-height: 94vh; }
-      .modal-body { padding: 18px 18px 24px; }
-      .modal-header { padding: 18px 18px 14px; }
-      .m-form-row { grid-template-columns: 1fr; }
-      .radio-grid-2 { grid-template-columns: 1fr; }
+    @media (max-width: 767px) {
+      .modal-overlay { align-items: flex-end !important; padding: 0 !important; }
+      .modal-box {
+        border-radius: 20px 20px 0 0 !important;
+        max-height: 85vh !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
+      }
+      .modal-header { padding: 18px 18px 14px; flex-shrink: 0; }
+      .modal-body {
+        padding: 18px 18px 24px !important;
+        flex: 1 !important;
+        overflow-y: scroll !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        overscroll-behavior: contain !important;
+        touch-action: pan-y !important;
+      }
+      .modal-footer-btns {
+        padding: 12px 18px max(20px, env(safe-area-inset-bottom)) !important;
+        flex-shrink: 0 !important;
+        background: #ffffff !important;
+        border-top: 1px solid rgba(56,78,51,0.1) !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+      }
+      .m-form-row { grid-template-columns: 1fr !important; }
+      .radio-grid-2 { grid-template-columns: 1fr !important; }
+      .modal-footer-btns > span { display: none !important; }
+      .modal-footer-btns .btn-custom.btn-custom-dark {
+        background: transparent !important;
+        color: var(--olive-haupt) !important;
+        border: 1px solid rgba(56,78,51,0.35) !important;
+        box-shadow: none !important;
+        font-size: 0.85rem !important;
+        padding: 10px 18px !important;
+        border-radius: 9px !important;
+        font-weight: 600 !important;
+        width: 100% !important;
+        justify-content: center !important;
+      }
     }
     /* ====== ANAMNESEBOGEN ====== */
     .anamnese-check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
@@ -329,7 +461,48 @@
     @media (min-width: 900px) {
       .desk-float-card { display: block; }
     }
-  </style>
+  
+    /* ── Mobile Fixes Unterseiten ── */
+    @media (max-width: 1024px) and (orientation: portrait) {
+      /* Termin- und Standorte-Kachel im Hochformat weg */
+      .sidebar-link-box { display: none !important; }
+      .sidebar-standort { display: none !important; }
+    }
+    @media (max-width: 1024px) {
+      /* Demo-Buttons nie auf Mobile/Tablet */
+      #demo-buttons-wrap { display: none !important; }
+    }
+  
+    /* ====== SMARTPHONE QUERFORMAT ====== */
+    @media (orientation: landscape) and (max-height: 500px) {
+      header { padding: 8px 0 !important; }
+      .seiten-kopf { padding: 18px 0 0 !important; }
+      .kopf-inner { padding-bottom: 10px !important; }
+      .harz-welle { height: 14px !important; }
+      .seiten-kopf h1 { font-size: clamp(1.3rem, 3.2vw, 1.8rem) !important; line-height: 1.1 !important; }
+      .breadcrumb { margin-bottom: 5px !important; font-size: 0.7rem !important; }
+      .page-tag { margin-bottom: 8px !important; }
+      .seiten-sub { display: none !important; }
+      .lead { display: none !important; }
+      .inhalt { padding: 14px 0 32px !important; }
+      .inhalt-grid { grid-template-columns: 1fr !important; }
+      .sidebar { order: 2 !important; }
+      .mobile-bottom-bar { display: none !important; }
+      .fact-leiste { grid-template-columns: repeat(3, 1fr) !important; gap: 10px !important; margin: 12px 0 16px !important; }
+    }
+
+    /* ── DESKTOP / TABLET (≥601px): beide Standorte nebeneinander im Modal ── */
+    @media (min-width: 601px) {
+      #tm-s2 > .step-intro { display: none; }
+      .standort-toggle-m { display: none !important; }
+      .standort-duo-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+      #slots-wn  { display: block !important; }
+      #slots-ils { display: block !important; }
+      #slots-wn::before  { content: "Wernigerode"; display: block; font-weight: 700; font-size: 0.82rem; color: var(--olive-haupt); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid rgba(56,78,51,0.18); letter-spacing: 0.02em; }
+      #slots-ils::before { content: "Heudeber";    display: block; font-weight: 700; font-size: 0.82rem; color: var(--olive-haupt); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid rgba(56,78,51,0.18); letter-spacing: 0.02em; }
+      .slots-legend { margin-bottom: 4px; }
+    }
+    </style>
 </head>
 <body>
 
@@ -369,14 +542,17 @@
     <span style="font-family:var(--font-serif);font-size:1.1rem;color:var(--olive-haupt);">Land-Harz-Praxis</span>
     <button class="mob-close" onclick="toggleMobMenu()">&#10005;</button>
   </div>
-  <div class="mob-menu-cta">
-    <a href="javascript:void(0)" onclick="openTerminModal(); toggleMobMenu();" class="btn-smart dark" style="width:100%;justify-content:center;">
-      <span>Termin buchen</span><span class="btn-circle">&#8594;</span>
-    </a>
-  </div>
   <div class="mob-status-row">
-    <span id="mob-dot" style="width:8px;height:8px;border-radius:50%;background:#ccc;display:inline-block;flex-shrink:0;"></span>
-    <span id="mob-txt" style="font-size:0.82rem;color:var(--olive-haupt);font-weight:500;">Status wird geprüft...</span>
+    <div class="mob-standort-zeile">
+      <span class="mob-sdot" id="mob-dot-wn"></span>
+      <span class="mob-sort">Wernigerode</span>
+      <span class="mob-szeit" id="mob-zeit-wn">—</span>
+    </div>
+    <div class="mob-standort-zeile">
+      <span class="mob-sdot" id="mob-dot-hd"></span>
+      <span class="mob-sort">Heudeber</span>
+      <span class="mob-szeit" id="mob-zeit-hd">—</span>
+    </div>
   </div>
   <ul class="mob-links">
     <li><a href="index.html" onclick="toggleMobMenu()">Startseite</a></li>
@@ -427,7 +603,8 @@
 
         <div class="schlusssatz">So viel Diagnostik wie nötig – so wenig Umwege wie möglich.</div>
 
-        <p style="margin-top:32px;font-size:0.95rem;">Unser Schwerpunkt Ernährungsmedizin ergänzt die hausärztliche Versorgung dort, wo Stoffwechsel, Gewicht und Ernährung eine Rolle spielen. <a href="ernaehrungsmedizin.html" class="organisch-link">Mehr zu unserem Schwerpunkt Ernährungsmedizin</a></p>
+        <p style="margin-top:32px;font-size:0.95rem;">Unser Schwerpunkt Ernährungsmedizin ergänzt die hausärztliche Versorgung dort, wo Stoffwechsel, Gewicht und Ernährung eine Rolle spielen. </p>
+        <div class="verwandte-seiten" style="margin-top:12px;"><a href="ernaehrungsmedizin.html" class="organisch-link">Mehr zu unserem Schwerpunkt Ernährungsmedizin</a></div>
       </div>
 
       <div class="sidebar">
@@ -443,7 +620,7 @@
             </ul>
           </div>
           <div class="diagnostik-box">
-            <div class="diagnostik-ort">Benzingerode (Hauptstandort)</div>
+            <div class="diagnostik-ort">Wernigerode (Hauptstandort)</div>
             <ul class="diagnostik-liste">
               <li>Langzeit-EKG</li>
               <li>Sonografie (Ultraschall)</li>
@@ -451,9 +628,9 @@
           </div>
         </div>
 
-        <div class="sidebar-card">
+        <div class="sidebar-card sidebar-standort">
           <h4>Zwei Standorte im Harz</h4>
-          <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:8px;"><strong style="color:var(--text);">Benzingerode</strong><br>Oberhof 9 · 38855 Wernigerode<br>Tel 03943 / 48 13 3</p>
+          <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:8px;"><strong style="color:var(--text);">Wernigerode</strong><br>Oberhof 9 · 38855 Wernigerode<br>Tel 03943 / 48 13 3</p>
           <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;"><strong style="color:var(--text);">Heudeber</strong><br>Bahnhofstraße 18 · 38855 Heudeber<br>Tel 039458 / 223<br><span style="color:var(--olive-haupt);font-size:0.82rem;">Dr. Heldt · FA Allgemeinmedizin</span></p>
           <a href="index.html#standort" class="btn-smart" style="width:100%;justify-content:center;">
             <span>Anfahrt &amp; Öffnungszeiten</span><span class="btn-circle">&#8594;</span>
@@ -479,8 +656,8 @@
         <strong>Land-Harz-Praxis</strong> · Dr. med. Christian Müller
       </div>
       <div class="footer-links-inline">
-        <span style="color:var(--text-muted);opacity:0.55;" title="Seite folgt">Impressum <small>(folgt)</small></span>
-        <span style="color:var(--text-muted);opacity:0.55;" title="Seite folgt">Datenschutz <small>(folgt)</small></span>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
         <span>© <span id="jahr"></span></span>
       </div>
     </div>
@@ -790,7 +967,10 @@ function openTerminModal(vorauswahlAnliegen, vorauswahlStandort) {
     function selectSlotChip(el, time, dayStr) {
       document.querySelectorAll('.slot-chip.selected').forEach(function(c){ c.classList.remove('selected'); });
       el.classList.add('selected');
-      selectedSlot = { time: time, day: dayStr, standort: slotStandort === 'wn' ? 'Wernigerode' : 'Heudeber' };
+            var wn = document.getElementById('slots-wn');
+      var detectedStandort = (wn && wn.contains(el)) ? 'wn' : 'ils';
+      slotStandort = detectedStandort;
+      selectedSlot = { time: time, day: dayStr, standort: detectedStandort === 'wn' ? 'Wernigerode' : 'Heudeber' };
     }
 
     function switchSlotStandort(type) {
@@ -1161,6 +1341,8 @@ function toggleMobMenu() {
   menu.setAttribute('aria-hidden', offen ? 'true' : 'false');
   btn.setAttribute('aria-expanded', offen ? 'false' : 'true');
   document.body.style.overflow = offen ? '' : 'hidden';
+  var bar = document.querySelector('.mobile-bottom-bar');
+  if (bar) bar.classList.toggle('bar-hidden', !offen);
 }
 
 // ====== SCROLL-ANIMATIONEN ======
@@ -1401,7 +1583,7 @@ function filterStandort(which) {
   window.addEventListener('scroll', pruefeKompass, { passive: true });
 })();
 // ── Desktop Float Card ──
-  (function() {
+  document.addEventListener('DOMContentLoaded', function() {
     var card = document.getElementById('desk-float-card');
     if (!card) return;
     var footer = document.querySelector('footer');
@@ -1412,7 +1594,7 @@ function filterStandort(which) {
       var footerNah = footer.getBoundingClientRect().top < window.innerHeight - 80;
       card.classList.toggle('dfc-visible', !footerNah);
     }, { passive: true });
-  })();
+  });
   </script>
 
 <div class="modal-overlay" id="modal-termin" onclick="closeOnBackdrop(event,'modal-termin')">
@@ -1531,8 +1713,10 @@ function filterStandort(which) {
             <span><span class="leg-dot" style="background:var(--olive-haupt);"></span>Frei</span>
             <span><span class="leg-dot" style="background:#ccc;"></span>Besetzt</span>
           </div>
-          <div id="slots-wn"></div>
-          <div id="slots-ils" style="display:none;"></div>
+          <div class="standort-duo-wrap">
+            <div id="slots-wn"></div>
+            <div id="slots-ils" style="display:none;"></div>
+          </div>
         </div>
 
         <!-- Schritt 3: Ihre Daten -->
@@ -1692,5 +1876,68 @@ function filterStandort(which) {
     </div>
   </div>
 
+
+  <!-- Mobile Bottom Bar -->
+  <div class="mobile-bottom-bar">
+    <button class="bar-loc-btn" onclick="openTerminModal(null,'wernigerode')">
+      <span class="terracotta-dot"></span>
+      <div class="bar-loc-text">
+        <span class="bar-city">Wernigerode</span>
+        <span class="bar-hint">Termin buchen</span>
+      </div>
+    </button>
+    <div class="bar-divider"></div>
+    <button class="bar-loc-btn" onclick="openTerminModal(null,'heudeber')">
+      <span class="terracotta-dot"></span>
+      <div class="bar-loc-text">
+        <span class="bar-city">Heudeber</span>
+        <span class="bar-hint">Termin buchen</span>
+      </div>
+    </button>
+  </div>
+  <script>
+  // ── Bottom Bar: bei Footer ausblenden ──
+  (function() {
+    var bar = document.querySelector('.mobile-bottom-bar');
+    var footer = document.querySelector('footer');
+    if (!bar || !footer) return;
+    function checkFooter() {
+      var fr = footer.getBoundingClientRect();
+      if (fr.top < window.innerHeight - 20) {
+        bar.classList.add('bar-hidden');
+      } else {
+        bar.classList.remove('bar-hidden');
+      }
+    }
+    window.addEventListener('scroll', checkFooter, { passive: true });
+    checkFooter();
+  })();
+  </script>
+<script>
+// ── Burger: Zwei-Standort-Status ──
+(function() {
+  var sWN={1:[[480,720],[960,1080]],2:[[780,1020]],3:[[480,720]],4:[[480,780]],5:[[540,720]]};
+  var sHD={1:[[480,720]],3:[[480,720]],5:[[480,720]]};
+  var ft=[[1,1],[1,6],[5,1],[8,15],[10,3],[11,1],[12,24],[12,25],[12,26],[12,31]];
+  function ost(j){var a=j%19,b=Math.floor(j/100),c=j%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),n=Math.floor((h+l-7*m+114)/31),p=(h+l-7*m+114)%31+1;return[n,p];}
+  function isFT(d){var j=d.getFullYear(),m=d.getMonth()+1,t=d.getDate();for(var i=0;i<ft.length;i++){if(ft[i][0]===m&&ft[i][1]===t)return true;}var o=ost(j),om=o[0],ot=o[1];var mv=[[om,ot-2],[om,ot+1],[om,ot+39],[om,ot+50],[om,ot+60]];for(var i=0;i<mv.length;i++){var md=new Date(j,mv[i][0]-1,mv[i][1]);if(md.getMonth()+1===m&&md.getDate()===t)return true;}return false;}
+  function chkSlots(slots){
+    var now=new Date();
+    if(isFT(now))return{offen:false,text:'Feiertag'};
+    var wd=now.getDay();if(wd===0||wd===6)return{offen:false,text:'Geschlossen'};
+    var t=now.getHours()*60+now.getMinutes();
+    var s=slots[wd];if(!s)return{offen:false,text:'Geschlossen'};
+    for(var i=0;i<s.length;i++){if(t>=s[i][0]&&t<s[i][1]){var h=Math.floor(s[i][1]/60),m=s[i][1]%60;return{offen:true,text:'bis '+h+':'+(m<10?'0':'')+m+' Uhr'};}}
+    return{offen:false,text:'Geschlossen'};
+  }
+  function set(dotId,zeitId,s){
+    var d=document.getElementById(dotId),z=document.getElementById(zeitId);
+    if(d)d.style.backgroundColor=s.offen?'#4CAF50':'#A86553';
+    if(z)z.textContent=s.text;
+  }
+  set('mob-dot-wn','mob-zeit-wn',chkSlots(sWN));
+  set('mob-dot-hd','mob-zeit-hd',chkSlots(sHD));
+})();
+</script>
 </body>
-</html>
+
