@@ -89,7 +89,7 @@
     .kopf-inner{position:relative;z-index:1;padding-bottom:52px;}
     .breadcrumb{font-size:0.75rem;color:var(--text-muted);margin-bottom:18px;display:flex;align-items:center;gap:6px;}
     .breadcrumb a{color:var(--olive-haupt);text-decoration:none;}
-    .breadcrumb a:hover{color:var(--olive-dark);text-decoration:underline;}
+    .breadcrumb a:hover{color:#fff;}
     .breadcrumb-sep{color:rgba(56,78,51,0.3);}
     .page-tag{display:inline-block;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--terracotta);background:var(--terracotta-soft);border:1px solid rgba(163,111,90,0.22);padding:5px 14px;border-radius:20px;margin-bottom:16px;}
     .seiten-kopf h1{font-family:var(--font-serif);font-size:clamp(2.2rem,4.5vw,3.6rem);font-weight:400;color:var(--olive-haupt);line-height:1.15;margin-bottom:16px;}
@@ -189,10 +189,6 @@
       .seiten-kopf{padding:48px 0 0;}
       .prose{overflow-x:hidden;min-width:0;}
       .inhalt-grid{overflow-x:hidden;}
-      /* Mobile: Abstände zwischen Header und Fact-Leiste reduzieren */
-      .kopf-inner{padding-bottom:16px;}
-      .harz-welle{height:16px;}
-      .fact-leiste{margin:12px 0 24px;}
     }
   
     /* Kiesel-Link — Pill antwortet auf Hover */
@@ -220,10 +216,10 @@
       margin-top: 28px;
     }
     .verwandte-seiten .organisch-link {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: space-between;
-      flex: 0 0 auto;
+      flex: 1 1 220px;
       padding: 6px 14px;
       gap: 10px;
     }
@@ -524,7 +520,7 @@
       color: #384E33;
       opacity: 0.6;
     }
-    @media (min-width: 768px) {
+    @media (min-width: 900px) {
       .desk-float-card { display: block; }
     }
   
@@ -857,8 +853,8 @@
         <strong>Land-Harz-Praxis</strong> · Dr. med. Christian Müller
       </div>
       <div class="footer-links-inline">
-        <a href="impressum.html">Impressum</a>
-        <a href="datenschutz.html">Datenschutz</a>
+        <span style="color:var(--text-muted);opacity:0.55;" title="Seite folgt">Impressum <small>(folgt)</small></span>
+        <span style="color:var(--text-muted);opacity:0.55;" title="Seite folgt">Datenschutz <small>(folgt)</small></span>
         <span>© <span id="jahr"></span></span>
       </div>
     </div>

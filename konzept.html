@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konzept — Land-Harz-Praxis Dr. Müller</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    img, svg { max-width: 100%; display: block; }
+    :root {
+      --bg:              #F7F6F2;
+      --surface:         #FFFFFF;
+      --olive-haupt:     #4A5843;
+      --olive-dark:      #364131;
+      --olive-light:     #6E7F65;
+      --olive-soft:      #EEEEE9;
+      --harz-sand:       #E2DDD3;
+      --harz-sand-soft:  #F5F3EF;
+      --terracotta:      #C08A7A;
+      --text:            #282C29;
+      --text-muted:      #636B65;
+      --font-serif:      'Lora', Georgia, serif;
+      --font-sans:       'Inter', system-ui, sans-serif;
+      --radius-sm:       6px;
+      --radius-md:       14px;
+      --radius-lg:       26px;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+
+    /* Demo-Banner */
+    .demo-bar { background: var(--olive-dark); color: rgba(255,255,255,0.7); text-align: center; font-size: 0.7rem; letter-spacing: 0.1em; padding: 7px 20px; }
+    .demo-bar strong { color: #fff; }
+
+    /* Nav */
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(247,246,242,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--harz-sand); }
+    .nav-inner { max-width: 1160px; margin: 0 auto; padding: 0 32px; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nav-logo { font-family: var(--font-serif); font-size: 1.05rem; font-weight: 500; color: var(--olive-dark); text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+    .nav-logo span { font-size: 0.68rem; font-family: var(--font-sans); font-weight: 400; color: var(--text-muted); display: block; letter-spacing: 0.04em; margin-top: -1px; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { font-size: 0.83rem; font-weight: 500; color: var(--text-muted); text-decoration: none; letter-spacing: 0.01em; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--olive-haupt); }
+    .nav-phone { display: flex; align-items: center; gap: 7px; font-size: 0.82rem; color: var(--olive-haupt); font-weight: 500; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+
+    /* Hero */
+    .hero { max-width: 1160px; margin: 0 auto; padding: 84px 32px 100px; display: grid; grid-template-columns: 1fr 360px; gap: 88px; align-items: center; }
+    .hero-eyebrow { display: inline-block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: var(--olive-haupt); opacity: 0.6; margin-bottom: 22px; }
+    .hero-title { font-family: var(--font-serif); font-size: clamp(2.4rem, 4vw, 3.5rem); font-weight: 500; line-height: 1.12; color: var(--olive-dark); margin-bottom: 20px; letter-spacing: -0.01em; }
+    .hero-title em { font-style: italic; font-weight: 400; color: var(--terracotta); }
+    .hero-sub { font-family: var(--font-serif); font-size: clamp(1.1rem, 1.8vw, 1.3rem); font-style: italic; color: var(--olive-light); line-height: 1.5; margin-bottom: 26px; }
+    .hero-desc { font-size: 0.94rem; color: var(--text-muted); line-height: 1.85; max-width: 460px; margin-bottom: 40px; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 12px; background: var(--olive-haupt); color: #fff; font-size: 0.87rem; font-weight: 500; padding: 14px 18px 14px 28px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s; letter-spacing: 0.01em; }
+    .btn-primary:hover { background: var(--olive-dark); }
+    .btn-circle { width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+
+    /* Portrait */
+    .portrait-wrap { position: relative; }
+    .portrait-img { width: 100%; aspect-ratio: 3/4; background: linear-gradient(160deg, #D6D3C8 0%, #C4BFB0 40%, #B5B0A0 100%); border-radius: var(--radius-lg); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 28px; position: relative; overflow: hidden; }
+    .portrait-img::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 55%, rgba(54,65,49,0.28) 100%); }
+    .portrait-img-label { font-family: var(--font-serif); font-size: 0.78rem; font-style: italic; color: rgba(255,255,255,0.65); position: relative; z-index: 1; }
+    .portrait-badge { position: absolute; bottom: -14px; left: 20px; background: var(--surface); border: 1px solid var(--harz-sand); border-radius: var(--radius-md); padding: 10px 16px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+    .badge-dot { width: 8px; height: 8px; border-radius: 50%; background: #5CA05B; flex-shrink: 0; box-shadow: 0 0 0 3px rgba(92,160,91,0.18); }
+    .badge-txt { font-size: 0.74rem; color: var(--text-muted); font-weight: 500; }
+    .badge-txt strong { display: block; font-size: 0.78rem; color: var(--text); font-weight: 600; }
+
+    /* Divider */
+    .sec-divider { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+    .sec-divider hr { border: none; border-top: 1px solid var(--harz-sand); }
+
+    /* Quote */
+    .quote-sec { background: var(--olive-soft); padding: 88px 32px; }
+    .quote-inner { max-width: 740px; margin: 0 auto; text-align: center; }
+    .quote-mark { font-family: var(--font-serif); font-size: 5rem; line-height: 0.5; color: var(--terracotta); opacity: 0.3; margin-bottom: 10px; }
+    .quote-text { font-family: var(--font-serif); font-size: clamp(1.2rem, 2.2vw, 1.65rem); font-style: italic; color: var(--olive-dark); line-height: 1.55; margin-bottom: 22px; }
+    .quote-author { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+
+    /* Standorte */
+    .standorte-sec { max-width: 1160px; margin: 0 auto; padding: 100px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 88px; align-items: center; }
+    .sec-eyebrow { display: block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: var(--terracotta); opacity: 0.85; margin-bottom: 16px; }
+    .sec-title { font-family: var(--font-serif); font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 500; color: var(--olive-dark); line-height: 1.22; margin-bottom: 18px; }
+    .sec-desc { font-size: 0.94rem; color: var(--text-muted); line-height: 1.85; margin-bottom: 36px; max-width: 420px; }
+    .standort-list { display: flex; flex-direction: column; gap: 18px; }
+    .standort-item { display: flex; align-items: flex-start; gap: 16px; }
+    .standort-icon { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .icon-w { background: rgba(74,88,67,0.1); }
+    .icon-i { background: rgba(192,138,122,0.1); }
+    .standort-info strong { display: block; font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .standort-info span { font-size: 0.8rem; color: var(--text-muted); }
+    /* Map placeholder */
+    .map-box { width: 100%; aspect-ratio: 4/3; background: linear-gradient(135deg, #E8E5DC 0%, #D5D1C5 100%); border-radius: var(--radius-lg); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .map-box::after { content: 'Karte · Nordharz'; font-family: var(--font-serif); font-style: italic; font-size: 0.82rem; color: var(--text-muted); opacity: 0.45; }
+    .map-pin { position: absolute; display: flex; flex-direction: column; align-items: center; }
+    .map-pin-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+    .map-pin-lbl { margin-top: 5px; font-size: 0.66rem; font-weight: 600; color: var(--olive-dark); background: rgba(255,255,255,0.9); padding: 2px 8px; border-radius: 100px; white-space: nowrap; }
+    .pin-w { top: 36%; left: 52%; }
+    .pin-w .map-pin-dot { background: var(--olive-haupt); }
+    .pin-i { top: 52%; left: 30%; }
+    .pin-i .map-pin-dot { background: var(--terracotta); }
+
+    /* Leistungen */
+    .leistungen-sec { background: var(--harz-sand-soft); padding: 100px 32px; }
+    .leistungen-inner { max-width: 1160px; margin: 0 auto; }
+    .leistungen-hd { margin-bottom: 64px; }
+    .leistungen-hd .sec-eyebrow { color: var(--olive-haupt); }
+    .leistung-block { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; padding: 52px 0; border-top: 1px solid var(--harz-sand); }
+    .leistung-block:last-child { border-bottom: 1px solid var(--harz-sand); }
+    .leistung-block.flip .leis-text { order: 2; }
+    .leistung-block.flip .leis-vis  { order: 1; }
+    .leis-nr { display: block; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; color: var(--terracotta); margin-bottom: 14px; }
+    .leis-text h3 { font-family: var(--font-serif); font-size: 1.55rem; font-weight: 500; color: var(--olive-dark); margin-bottom: 14px; line-height: 1.25; }
+    .leis-text p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.85; margin-bottom: 22px; }
+    .leis-link { font-size: 0.82rem; font-weight: 600; color: var(--olive-haupt); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+    .leis-link:hover { color: var(--olive-dark); }
+    .leis-vis-box { border-radius: var(--radius-lg); aspect-ratio: 4/3; display: flex; align-items: flex-end; justify-content: flex-start; padding: 24px; position: relative; overflow: hidden; }
+    .lv-a { background: linear-gradient(135deg, #5F7053 0%, #4A5843 100%); }
+    .lv-b { background: linear-gradient(135deg, #7A9470 0%, #5F7053 100%); }
+    .lv-c { background: linear-gradient(135deg, #C4A882 0%, #A88C6A 100%); }
+    .leis-vis-label { font-family: var(--font-serif); font-style: italic; font-size: 1.1rem; color: rgba(255,255,255,0.5); }
+
+    /* Footer CTA */
+    .footer-cta { background: var(--olive-dark); color: #fff; padding: 80px 32px; text-align: center; }
+    .footer-cta h2 { font-family: var(--font-serif); font-size: clamp(1.5rem, 2.8vw, 2.2rem); font-style: italic; font-weight: 400; margin-bottom: 12px; }
+    .footer-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.55); margin-bottom: 36px; }
+    .btn-ghost { display: inline-flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 0.87rem; font-weight: 500; padding: 14px 18px 14px 28px; border-radius: 100px; text-decoration: none; transition: background 0.2s; }
+    .btn-ghost:hover { background: rgba(255,255,255,0.18); }
+  </style>
+</head>
+<body>
+
+<div class="demo-bar"><strong>Konzept-Vorschau</strong> · Land-Harz-Praxis Dr. Müller · praxisecht.de</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      Dr. med. Christian Müller
+      <span>Facharzt für Innere Medizin</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Leistungen</a></li>
+      <li><a href="#">Standorte</a></li>
+      <li><a href="#">Über mich</a></li>
+      <li><a href="#">Kontakt</a></li>
+    </ul>
+    <a href="tel:+493943200000" class="nav-phone">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.97 1.18 2 2 0 012.93 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+      03943 / XXX XXX
+    </a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div>
+    <span class="hero-eyebrow">Facharzt · Nordharz · Akademische Lehrpraxis</span>
+    <h1 class="hero-title">
+      Gesundheit braucht Zeit.<br>
+      <em>Und Menschen, die sie sich nehmen.</em>
+    </h1>
+    <p class="hero-sub">Zwei Standorte im Harz.<br>Weil gute Medizin in der Region bleiben soll.</p>
+    <p class="hero-desc">Dr. med. Christian Müller – Facharzt für Innere Medizin, Ernährungsmedizin und Notfallmedizin. Persönliche Betreuung in Wernigerode und Ilsenburg – Termine online, ohne Warteschleife.</p>
+    <a href="#" class="btn-primary" onclick="return false;">
+      <span>Termin online buchen</span>
+      <span class="btn-circle">→</span>
+    </a>
+  </div>
+  <div class="portrait-wrap">
+    <div class="portrait-img">
+      <span class="portrait-img-label">Foto: Dr. Müller · folgt</span>
+    </div>
+    <div class="portrait-badge">
+      <div class="badge-dot"></div>
+      <div class="badge-txt">
+        <strong>Termine verfügbar</strong>
+        Wernigerode · Ilsenburg
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sec-divider"><hr></div>
+
+<!-- Zitat -->
+<section class="quote-sec">
+  <div class="quote-inner">
+    <div class="quote-mark">"</div>
+    <p class="quote-text">Gute Medizin beginnt damit, zuzuhören. Nicht dem Symptom — sondern dem Menschen, der damit zu mir kommt.</p>
+    <span class="quote-author">Dr. med. Christian Müller · Facharzt für Innere Medizin</span>
+  </div>
+</section>
+
+<!-- Standorte -->
+<div class="standorte-sec">
+  <div>
+    <span class="sec-eyebrow">Unsere Standorte</span>
+    <h2 class="sec-title">Nah an Ihnen.<br>An zwei Orten im Nordharz.</h2>
+    <p class="sec-desc">Ob Wernigerode oder Ilsenburg — Sie erreichen uns ohne lange Anfahrt. Termine buchen Sie bequem online, rund um die Uhr.</p>
+    <div class="standort-list">
+      <div class="standort-item">
+        <div class="standort-icon icon-w">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A5843" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="standort-info">
+          <strong>Wernigerode · Hauptstandort</strong>
+          <span>Oberhof 9 · 38855 Wernigerode</span>
+        </div>
+      </div>
+      <div class="standort-item">
+        <div class="standort-icon icon-i">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C08A7A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="standort-info">
+          <strong>Ilsenburg · Zweigpraxis</strong>
+          <span>Am Tiergarten 11 · 38871 Ilsenburg</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="map-box">
+      <div class="map-pin pin-w"><div class="map-pin-dot"></div><span class="map-pin-lbl">Wernigerode</span></div>
+      <div class="map-pin pin-i"><div class="map-pin-dot"></div><span class="map-pin-lbl">Ilsenburg</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Leistungen -->
+<section class="leistungen-sec">
+  <div class="leistungen-inner">
+    <div class="leistungen-hd">
+      <span class="sec-eyebrow">Leistungen</span>
+      <h2 class="sec-title">Was wir für Sie tun können —<br>und wie wir dabei vorgehen.</h2>
+    </div>
+
+    <div class="leistung-block">
+      <div class="leis-text">
+        <span class="leis-nr">01</span>
+        <h3>Innere Medizin</h3>
+        <p>Internistische Diagnostik und Behandlung von Herz-Kreislauf-Erkrankungen, Diabetes, Schilddrüse, Lunge und weiteren inneren Organen. Individuell, gründlich — mit Zeit für Ihre Fragen.</p>
+        <a href="#" class="leis-link" onclick="return false;">Mehr erfahren <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+      <div class="leis-vis">
+        <div class="leis-vis-box lv-a"><span class="leis-vis-label">Innere Medizin</span></div>
+      </div>
+    </div>
+
+    <div class="leistung-block flip">
+      <div class="leis-text">
+        <span class="leis-nr">02</span>
+        <h3>Ernährungsmedizin</h3>
+        <p>Ernährung als Teil der Therapie — nicht als Zusatz. Wir entwickeln gemeinsam ein Konzept, das zu Ihrem Alltag passt. Praxisnah, nachhaltig, ohne Verbote.</p>
+        <a href="#" class="leis-link" onclick="return false;">Mehr erfahren <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+      <div class="leis-vis">
+        <div class="leis-vis-box lv-b"><span class="leis-vis-label">Ernährungsmedizin</span></div>
+      </div>
+    </div>
+
+    <div class="leistung-block">
+      <div class="leis-text">
+        <span class="leis-nr">03</span>
+        <h3>Notfall &amp; Akutversorgung</h3>
+        <p>Als Facharzt für Notfallmedizin sind wir auf akute Situationen vorbereitet. Schnelle Einschätzung, klare Kommunikation — damit Sie wissen, was als nächstes zu tun ist.</p>
+        <a href="#" class="leis-link" onclick="return false;">Mehr erfahren <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+      <div class="leis-vis">
+        <div class="leis-vis-box lv-c"><span class="leis-vis-label">Notfall &amp; Akut</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Footer CTA -->
+<footer class="footer-cta">
+  <h2>Bereit für einen Termin?</h2>
+  <p>Kein Telefonmarathon. Wählen Sie online Ihren Wunschtermin — in Wernigerode oder Ilsenburg.</p>
+  <a href="#" class="btn-ghost" onclick="return false;">
+    <span>Jetzt Termin buchen</span>
+    <span class="btn-circle" style="background:rgba(255,255,255,0.15);">→</span>
+  </a>
+</footer>
+
+</body>
+</html>
