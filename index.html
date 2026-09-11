@@ -136,6 +136,19 @@
       }
     ]
   }
+// ── Desktop Float Card ──
+  document.addEventListener('DOMContentLoaded', function() {
+    var card = document.getElementById('desk-float-card');
+    if (!card) return;
+    var footer = document.querySelector('footer');
+    function dfcUpdate() {
+      if (!footer) { card.classList.add('dfc-visible'); return; }
+      var footerNah = footer.getBoundingClientRect().top < window.innerHeight - 80;
+      card.classList.toggle('dfc-visible', !footerNah);
+    }
+    dfcUpdate();
+    window.addEventListener('scroll', dfcUpdate, { passive: true });
+  });
   </script>
   <!-- EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -3378,6 +3391,18 @@ function filterStandort(which) {
   </nav>
 
   <!-- FLOATING BOTTOM BAR — nur Smartphones (via CSS gesteuert) -->
+  <div class="desk-float-card" id="desk-float-card" aria-label="Termin buchen">
+    <div class="dfc-label">Termin buchen</div>
+    <div class="dfc-row" onclick="openTerminModal(null,'wernigerode')" role="button" tabindex="0" aria-label="Termin Wernigerode">
+      <span class="dfc-city">Wernige&shy;rode</span>
+      <span class="dfc-arrow">&#8594;</span>
+    </div>
+    <div class="dfc-row" onclick="openTerminModal(null,'heudeber')" role="button" tabindex="0" aria-label="Termin Heudeber">
+      <span class="dfc-city">Heude&shy;ber</span>
+      <span class="dfc-arrow">&#8594;</span>
+    </div>
+  </div>
+
   <div class="mobile-bottom-bar">
     <button class="bar-loc-btn" onclick="openTerminModal(null,'wernigerode')">
       <span class="terracotta-dot"></span>
