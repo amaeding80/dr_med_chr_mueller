@@ -180,6 +180,38 @@
         min-width: 44px;
       }
     }
+  
+    /* ── PC-Desktop Termin-Kachel (links, immer sichtbar) ── */
+    .pc-termin-card {
+      display: none;
+      position: fixed;
+      left: 28px;
+      z-index: 590;
+      background: rgba(255,255,255,0.97);
+      border: 1px solid rgba(56,78,51,0.14);
+      border-left: 4px solid var(--olive-haupt);
+      border-radius: 12px;
+      padding: 18px 24px 18px 20px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.10);
+      min-width: 200px;
+    }
+    .ptc-label { font-family: var(--font-sans); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; display: block; }
+    .ptc-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 9px 0; font-family: var(--font-sans); font-size: 1rem; font-weight: 600; color: var(--olive-haupt); text-decoration: none; cursor: pointer; background: none; border: none; width: 100%; transition: color 0.2s; }
+    .ptc-row:hover { color: var(--terracotta); }
+    .ptc-arrow { font-size: 0.95rem; opacity: 0.55; transition: opacity 0.2s, transform 0.2s; }
+    .ptc-row:hover .ptc-arrow { opacity: 1; transform: translateX(2px); }
+    .ptc-divider { height: 1px; background: rgba(56,78,51,0.14); }
+    body.modal-open .pc-termin-card { display: none !important; }
+    @media (min-width: 1025px) {
+      .pc-termin-card {
+        display: block;
+        top: 50%;
+        bottom: auto;
+        transform: translateY(-50%);
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
   </style>
 </head>
 <body>
@@ -320,6 +352,19 @@
     </div>
   </div>
 </footer>
+
+<!-- PC-DESKTOP TERMIN-KACHEL (links, immer sichtbar) -->
+<div class="pc-termin-card" id="pc-termin-card">
+  <span class="ptc-label">Termin buchen</span>
+  <a href="index.html#empfang" class="ptc-row" aria-label="Termin Wernigerode buchen">
+    <span>Wernigerode</span><span class="ptc-arrow">→</span>
+  </a>
+  <div class="ptc-divider"></div>
+  <a href="index.html#empfang" class="ptc-row" aria-label="Termin Heudeber buchen">
+    <span>Heudeber</span><span class="ptc-arrow">→</span>
+  </a>
+</div>
+
 
 <script>
 (function() {

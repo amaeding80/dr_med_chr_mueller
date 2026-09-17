@@ -411,6 +411,38 @@ footer {background:#ECE8E0;border-top:1px solid rgba(56,78,51,0.10);padding:16px
         min-width: 44px;
       }
     }
+  
+    /* ── PC-Desktop Termin-Kachel (links, immer sichtbar) ── */
+    .pc-termin-card {
+      display: none;
+      position: fixed;
+      left: 28px;
+      z-index: 590;
+      background: rgba(255,255,255,0.97);
+      border: 1px solid rgba(56,78,51,0.14);
+      border-left: 4px solid var(--olive-haupt);
+      border-radius: 12px;
+      padding: 18px 24px 18px 20px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.10);
+      min-width: 200px;
+    }
+    .ptc-label { font-family: var(--font-sans); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; display: block; }
+    .ptc-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 9px 0; font-family: var(--font-sans); font-size: 1rem; font-weight: 600; color: var(--olive-haupt); text-decoration: none; cursor: pointer; background: none; border: none; width: 100%; transition: color 0.2s; }
+    .ptc-row:hover { color: var(--terracotta); }
+    .ptc-arrow { font-size: 0.95rem; opacity: 0.55; transition: opacity 0.2s, transform 0.2s; }
+    .ptc-row:hover .ptc-arrow { opacity: 1; transform: translateX(2px); }
+    .ptc-divider { height: 1px; background: rgba(56,78,51,0.14); }
+    body.modal-open .pc-termin-card { display: none !important; }
+    @media (min-width: 1025px) {
+      .pc-termin-card {
+        display: block;
+        top: 50%;
+        bottom: auto;
+        transform: translateY(-50%);
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
   </style>
 </head>
 <body>
@@ -563,6 +595,19 @@ footer {background:#ECE8E0;border-top:1px solid rgba(56,78,51,0.10);padding:16px
     </div>
   </div>
 </footer>
+
+<!-- PC-DESKTOP TERMIN-KACHEL (links, immer sichtbar) -->
+<div class="pc-termin-card" id="pc-termin-card">
+  <span class="ptc-label">Termin buchen</span>
+  <button class="ptc-row" onclick="openTerminModal(null,'wernigerode')" aria-label="Termin Wernigerode buchen">
+    <span>Wernigerode</span><span class="ptc-arrow">→</span>
+  </button>
+  <div class="ptc-divider"></div>
+  <button class="ptc-row" onclick="openTerminModal(null,'heudeber')" aria-label="Termin Heudeber buchen">
+    <span>Heudeber</span><span class="ptc-arrow">→</span>
+  </button>
+</div>
+
 <script>(function(){var feiertage=[[1,1],[1,6],[5,1],[8,15],[10,3],[11,1],[12,24],[12,25],[12,26],[12,31]];function osterSonntag(j){var a=j%19,b=Math.floor(j/100),c=j%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),n=Math.floor((h+l-7*m+114)/31),p=(h+l-7*m+114)%31+1;return[n,p];}function istFeiertag(d){var j=d.getFullYear(),m=d.getMonth()+1,t=d.getDate();for(var i=0;i<feiertage.length;i++){if(feiertage[i][0]===m&&feiertage[i][1]===t)return true;}var o=osterSonntag(j),om=o[0],ot=o[1];var mov=[[om,ot-2],[om,ot+1],[om,ot+39],[om,ot+50],[om,ot+60]];for(var i=0;i<mov.length;i++){var md=new Date(j,mov[i][0]-1,mov[i][1]);if(md.getMonth()+1===m&&md.getDate()===t)return true;}return false;}
 var oz=[[1,[8,12],[16,18]],[2,[13,17]],[3,[8,12]],[4,[8,13]],[5,[9,12]]];
 function pruefeStatus(){var now=new Date();if(istFeiertag(now))return{offen:false,text:'Heute geschlossen (Feiertag)'};var wd=now.getDay();if(wd===0||wd===6)return{offen:false,text:'Wochenende – geschlossen'};var h=now.getHours(),t=h*60+now.getMinutes();var e=oz[wd-1];if(!e)return{offen:false,text:'Heute keine Sprechstunde'};for(var i=0;i<e[1].length;i++){var b=e[1][i];if(t>=b[0]*60&&t<b[1]*60)return{offen:true,text:'Praxis geöffnet'};}return{offen:false,text:'Aktuell geschlossen'};}
