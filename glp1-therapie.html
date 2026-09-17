@@ -17,7 +17,7 @@
       --bg: #F7F5F0; --surface: #FFFFFF;
       --olive-haupt: #384E33; --olive-dark: #2A3A26; --olive-light: #5E7A58; --olive-soft: #EDF2EA;
       --harz-sand: #D5CBBF; --harz-sand-soft: #F2ECE4;
-      --terracotta: #A36F5A; --terracotta-soft: #F8F1EE;
+      --terracotta: #A36F5A;--terracotta-caps:#8B5E4D; --terracotta-soft: #F8F1EE;
       --text: #212522; --text-muted: #535B54;
       --radius-sm: 8px; --radius-md: 14px; --radius-lg: 24px;
       --font-serif: 'Cormorant Garamond', Georgia, serif;
@@ -40,7 +40,7 @@
     header { padding: 18px 0; position: sticky; top: 0; background: rgba(248,247,243,0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 100; border-bottom: 1px solid rgba(56,78,51,0.1); }
     .nav-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
     .brand-mark { font-family: var(--font-serif); font-size: 1.45rem; font-weight: 700; color: var(--olive-haupt); text-decoration: none; line-height: 1.1; white-space: nowrap; display: inline-flex; align-items: center; gap: 11px; }
-    .brand-mark span { display: block; font-family: var(--font-sans); font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; color: var(--terracotta); margin-top: 2px; }
+    .brand-mark span { display: block; font-family: var(--font-sans); font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; color: var(--terracotta-caps); margin-top: 2px; }
     .nav-menu { display: flex; gap: 24px; list-style: none; align-items: center; margin: 0; padding: 0; }
     .nav-menu a { text-decoration: none; color: var(--text); font-size: 0.92rem; font-weight: 500; white-space: nowrap; transition: color .2s; }
     .nav-menu a:hover, .nav-menu a.aktiv { color: var(--olive-haupt); }
@@ -98,7 +98,7 @@
     .leistungs-liste li::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--olive-haupt); flex-shrink: 0; margin-top: 10px; }
     .schlusssatz { font-family: var(--font-serif); font-size: 1.35rem; font-style: italic; color: var(--olive-haupt); margin-top: 32px; padding: 20px 24px; border-left: 3px solid var(--olive-haupt); background: var(--olive-soft); border-radius: 0 var(--radius-md) var(--radius-md) 0; line-height: 1.4; }
     .hinweis-box { background: var(--harz-sand-soft); border: 1px solid var(--harz-sand); border-radius: var(--radius-md); padding: 20px 24px; margin: 28px 0; }
-    .hinweis-box strong { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.12em; color: var(--terracotta); margin-bottom: 8px; }
+    .hinweis-box strong { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.12em; color: var(--terracotta-caps); margin-bottom: 8px; }
     .hinweis-box p { color: var(--text-muted); font-size: 0.95rem; margin: 0; line-height: 1.7; }
 
     .sidebar { display: flex; flex-direction: column; gap: 20px; }
@@ -110,7 +110,7 @@
     .sidebar-nav-link:last-child { border-bottom: none; padding-bottom: 0; }
     .sidebar-nav-link:hover { color: var(--olive-dark); }
     .sidebar-nav-link::before { content: '→'; font-size: 0.85rem; }
-    .diagnostik-ort { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.12em; color: var(--terracotta); margin-bottom: 6px; }
+    .diagnostik-ort { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.12em; color: var(--terracotta-caps); margin-bottom: 6px; }
 
     footer { background:#ECE8E0; border-top:1px solid rgba(56,78,51,0.10); padding: 16px 0; font-size: 0.8rem; color:var(--text-muted); }
     .footer-slim-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }

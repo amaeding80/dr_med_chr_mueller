@@ -153,7 +153,7 @@
       --bg: #F7F5F0; --surface: #FFFFFF;
       --olive-haupt: #384E33; --olive-dark: #2A3A26; --olive-light: #5E7A58; --olive-soft: #EDF2EA;
       --harz-sand: #D5CBBF; --harz-sand-soft: #F2ECE4;
-      --terracotta: #A36F5A; --terracotta-soft: #F8F1EE;
+      --terracotta: #A36F5A;--terracotta-caps:#8B5E4D; --terracotta-soft: #F8F1EE;
       --text: #212522; --text-muted: #535B54;
       --radius-sm: 8px; --radius-md: 14px; --radius-lg: 24px;
       --font-serif: 'Cormorant Garamond', Georgia, serif;
@@ -183,7 +183,7 @@
     header { padding: 18px 0; position: sticky; top: 0; background: rgba(248,247,243,0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 100; border-bottom: 1px solid rgba(56,78,51,0.1); }
     .nav-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
     .brand-mark { font-family: var(--font-serif); font-size: 1.45rem; font-weight: 700; color: var(--olive-haupt); text-decoration: none; line-height: 1.1; white-space: nowrap; }
-    .brand-mark span { display: block; font-family: var(--font-sans); font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; color: var(--terracotta); margin-top: 2px; }
+    .brand-mark span { display: block; font-family: var(--font-sans); font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; color: var(--terracotta-caps); margin-top: 2px; }
     .nav-menu { display: flex; gap: 28px; list-style: none; align-items: center; margin: 0; padding: 0; }
     .nav-menu a { text-decoration: none; color: var(--text); font-size: 0.92rem; font-weight: 500; white-space: nowrap; transition: color .2s; }
     .nav-menu a:hover { color: var(--olive-haupt); }
@@ -240,7 +240,7 @@
       background: rgba(56,78,51,0.3); flex-shrink: 0;
       display: none;
     }
-    .hero-eyebrow { display: inline-block; font-family: var(--font-sans); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--terracotta); opacity: 0.85; margin-bottom: 12px; }
+    .hero-eyebrow { display: inline-block; font-family: var(--font-sans); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--terracotta-caps); opacity: 0.85; margin-bottom: 12px; }
     .hero-location { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 16px; }
     .hero-sub { font-family: var(--font-serif); font-size: clamp(1.15rem, 1.8vw, 1.4rem); font-style: italic; color: var(--olive-dark); opacity: 0.9; line-height: 1.4; margin-bottom: 12px; font-weight: 400; }
     .hero-text-col { display: flex; flex-direction: column; align-items: flex-start; max-width: 620px; }
@@ -1407,7 +1407,7 @@
       display: flex; justify-content: space-between; align-items: flex-start;
       position: sticky; top: 0; background: #fff; z-index: 2; border-radius: 24px 24px 0 0;
     }
-    .modal-step-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.12em; color: var(--terracotta); margin-bottom: 3px; }
+    .modal-step-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.12em; color: var(--terracotta-caps); margin-bottom: 3px; }
     .modal-title { font-family: var(--font-serif); font-size: 1.65rem; color: var(--olive-haupt); margin: 0; }
     .modal-close { background: none; border: none; cursor: pointer; color: var(--text-muted); width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; flex-shrink: 0; font-size: 1.3rem; line-height: 1; }
     .modal-close:hover { background: var(--olive-soft); color: var(--text); }
@@ -1545,59 +1545,10 @@
       font-weight: 700;
       letter-spacing: 0.07em;
       text-transform: uppercase;
-      color: var(--terracotta);
+      color: var(--terracotta-caps);
       writing-mode: horizontal-tb;
     }
     .tfc-divider { display: none; }
-    .desk-float-card {
-      display: none;
-      position: fixed;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%) translateX(-100%);
-      z-index: 900;
-      background: #ffffff;
-      border-left: 3px solid #384E33;
-      border-radius: 0 10px 10px 0;
-      box-shadow: 4px 6px 24px rgba(56,78,51,0.13);
-      padding: 14px 16px 14px 14px;
-      min-width: 152px;
-      transition: transform 0.42s cubic-bezier(0.22,1,0.36,1), opacity 0.42s;
-      opacity: 0;
-      cursor: default;
-    }
-    .desk-float-card.dfc-visible {
-      transform: translateY(-50%) translateX(0);
-      opacity: 1;
-    }
-    .dfc-label {
-      font-size: 0.58rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #384E33;
-      margin-bottom: 10px;
-      opacity: 0.7;
-    }
-    .dfc-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 8px 0;
-      border-top: 1px solid rgba(56,78,51,0.1);
-      cursor: pointer;
-      transition: background 0.18s;
-      border-radius: 4px;
-      margin: 0 -4px;
-      padding-left: 4px;
-      padding-right: 4px;
-    }
-    .dfc-row:hover { background: rgba(56,78,51,0.05); }
-    .dfc-row:first-of-type { border-top: none; padding-top: 0; margin-top: 2px; }
-    .dfc-city { font-size: 0.79rem; font-weight: 600; color: #2A3A26; line-height: 1.2; }
-    .dfc-arrow { font-size: 0.85rem; color: #384E33; opacity: 0.6; }
-    @media (min-width: 900px) { .desk-float-card { display: block; } }
     /* ── Standort-Tabs: ab Tablet immer beide Kacheln, keine Buttons ── */
     @media (min-width: 680px) {
       .standort-tabs { display: none !important; }
@@ -1605,7 +1556,16 @@
       .loc-beide-grid { display: grid !important; }
     }
 
-</style>
+    /* Demo-Buttons: gedaempft, damit sie Inhalt nicht dauerhaft verdecken */
+    .demo-buttons-wrap { position: fixed; bottom: 20px; right: 20px; z-index: 8000; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; opacity: 0.55; transition: opacity 0.25s; }
+    .demo-buttons-wrap:hover, .demo-buttons-wrap:focus-within { opacity: 1; }
+    .demo-label { font-size: 0.63rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.7); text-align: center; background: rgba(56,78,51,0.6); padding: 3px 10px; border-radius: 20px; backdrop-filter: blur(6px); }
+    .demo-btn-row { display: flex; gap: 8px; }
+    .demo-btn { border: none; border-radius: 50px; padding: 9px 16px; font-family: var(--font-sans); font-size: 0.72rem; font-weight: 700; color: #fff; cursor: pointer; white-space: nowrap; }
+    .demo-btn-bestand { background: var(--olive-haupt); box-shadow: 0 3px 14px rgba(56,78,51,0.40); }
+    .demo-btn-neu { background: var(--terracotta); box-shadow: 0 3px 14px rgba(163,111,90,0.40); }
+    @media (max-width: 640px) { .demo-btn-row { flex-direction: column; align-items: flex-end; } }
+  </style>
 </head>
 <body>
   <!-- HEADER -->
@@ -1655,22 +1615,6 @@
           <p class="hero-location">Hausarztmedizin &middot; Innere Medizin &middot; Ern&auml;hrungsmedizin</p>
           <p class="hero-lead-text">Moderne hausärztliche Versorgung und spezialisierte Ernährungs- und Stoffwechselmedizin an zwei Standorten im Harz.</p>
 
-          <div class="hero-stats">
-            <div class="hero-stat">
-              <span class="hero-stat-zahl">2</span>
-              <span class="hero-stat-label">Fachgebiete</span>
-            </div>
-            <div class="hero-stat-sep"></div>
-            <div class="hero-stat">
-              <span class="hero-stat-zahl">2</span>
-              <span class="hero-stat-label">Standorte im Harz</span>
-            </div>
-            <div class="hero-stat-sep"></div>
-            <div class="hero-stat">
-              <span class="hero-stat-zahl">1</span>
-              <span class="hero-stat-label">Anlaufstelle für alles</span>
-            </div>
-          </div>
           <div class="hero-chips">
             <button class="hero-chip" id="chip-wn" onclick="filterStandort('wn')" aria-label="Standort Wernigerode anzeigen">
               <span class="hero-chip-dot"></span>Wernigerode · Oberhof 9
@@ -3081,10 +3025,12 @@ function startDemoNeu() {
 document.addEventListener('DOMContentLoaded', function() {
   var wrap = document.createElement('div');
   wrap.id = 'demo-buttons-wrap';
-  wrap.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:8000;display:flex;flex-direction:column;gap:8px;align-items:flex-end;';
-  wrap.innerHTML = '<div style="font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.7);text-align:center;background:rgba(56,78,51,0.6);padding:3px 10px;border-radius:20px;backdrop-filter:blur(6px);">Demo-Modus</div>'
-    + '<button onclick="startDemoBestand()" style="background:var(--olive-haupt);color:#fff;border:none;border-radius:50px;padding:9px 18px;font-family:var(--font-sans);font-size:0.75rem;font-weight:700;cursor:pointer;box-shadow:0 3px 14px rgba(56,78,51,0.40);white-space:nowrap;">&#9654; Bestandspatient</button>'
-    + '<button onclick="startDemoNeu()" style="background:var(--terracotta);color:#fff;border:none;border-radius:50px;padding:9px 18px;font-family:var(--font-sans);font-size:0.75rem;font-weight:700;cursor:pointer;box-shadow:0 3px 14px rgba(163,111,90,0.40);white-space:nowrap;">&#9654; Neupatient + Anamnese</button>';
+  wrap.className = 'demo-buttons-wrap';
+  wrap.innerHTML = '<div class="demo-label">Demo-Modus</div>'
+    + '<div class="demo-btn-row">'
+    + '<button class="demo-btn demo-btn-bestand" onclick="startDemoBestand()">&#9654; Bestandspatient</button>'
+    + '<button class="demo-btn demo-btn-neu" onclick="startDemoNeu()">&#9654; Neupatient + Anamnese</button>'
+    + '</div>';
   document.body.appendChild(wrap);
 });
 
@@ -3438,17 +3384,6 @@ function filterStandort(which) {
   </nav>
 
   <!-- FLOATING BOTTOM BAR — nur Smartphones (via CSS gesteuert) -->
-  <div class="desk-float-card" id="desk-float-card" aria-label="Termin buchen">
-    <div class="dfc-label">Termin buchen</div>
-    <div class="dfc-row" onclick="openTerminModal(null,'wernigerode')" role="button" tabindex="0" aria-label="Termin Wernigerode">
-      <span class="dfc-city">Wernige&shy;rode</span>
-      <span class="dfc-arrow">&#8594;</span>
-    </div>
-    <div class="dfc-row" onclick="openTerminModal(null,'heudeber')" role="button" tabindex="0" aria-label="Termin Heudeber">
-      <span class="dfc-city">Heude&shy;ber</span>
-      <span class="dfc-arrow">&#8594;</span>
-    </div>
-  </div>
 
   <div class="mobile-bottom-bar">
     <button class="bar-loc-btn" onclick="openTerminModal(null,'wernigerode')">
@@ -3551,20 +3486,6 @@ function filterStandort(which) {
       window.addEventListener('scroll', updateFloatCta, { passive: true });
       updateFloatCta();
     })();
-// ── Desktop Float Card ──
-  document.addEventListener('DOMContentLoaded', function() {
-    var card = document.getElementById('desk-float-card');
-    if (!card) return;
-    var footer = document.querySelector('footer');
-    var empfang = document.getElementById('empfang');
-    function dfcUpdate() {
-      var footerNah = footer && footer.getBoundingClientRect().top < window.innerHeight - 80;
-      var empfangErreicht = empfang && empfang.getBoundingClientRect().top < window.innerHeight * 0.75;
-      card.classList.toggle('dfc-visible', empfangErreicht && !footerNah);
-    }
-    dfcUpdate();
-    window.addEventListener('scroll', dfcUpdate, { passive: true });
-  });
 </script>
 
   <!-- KOMPASS POPUP (mobile) -->
