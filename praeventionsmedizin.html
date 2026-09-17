@@ -46,7 +46,7 @@
     body { background-color: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 1.05rem; line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
     .container { width: 100%; max-width: 1220px; margin: 0 auto; padding: 0 28px; }
 
-    .btn-smart { display: inline-flex; align-items: center; gap: 16px; background: var(--surface); border: 1px solid rgba(56,78,51,0.2); padding: 10px 12px 10px 22px; border-radius: 50px; text-decoration: none; color: var(--text); font-family: var(--font-sans); font-size: 0.84rem; font-weight: 600; cursor: pointer; transition: all 0.35s cubic-bezier(0.16,1,0.3,1); white-space: nowrap; }
+    .btn-smart { display: inline-flex; align-items: center; gap: 16px; background: var(--surface); border: 1px solid rgba(56,78,51,0.2); padding: 10px 12px 10px 22px; border-radius: 11px; text-decoration: none; color: var(--text); font-family: var(--font-sans); font-size: 0.84rem; font-weight: 600; cursor: pointer; transition: all 0.35s cubic-bezier(0.16,1,0.3,1); white-space: nowrap; }
     .btn-smart .btn-circle { width: 32px; height: 32px; border-radius: 50%; background: var(--olive-soft); color: var(--olive-haupt); display: flex; align-items: center; justify-content: center; transition: all 0.35s cubic-bezier(0.16,1,0.3,1); }
     .btn-smart:hover { border-color: var(--olive-haupt); background: #fff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(56,78,51,0.12); }
     .btn-smart:hover .btn-circle { background: var(--olive-haupt); color: #fff; transform: translateX(3px); }
@@ -64,7 +64,7 @@
     .nav-right { display: flex; align-items: center; gap: 14px; }
     .nav-termin-btn { font-size: 0.88rem; font-weight: 600; color: var(--olive-haupt); text-decoration: none; white-space: nowrap; transition: opacity 0.2s; }
     .nav-termin-btn:hover { opacity: 0.7; }
-    .live-status-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid rgba(56,78,51,0.15); padding: 6px 14px; border-radius: 50px; font-size: 0.82rem; font-weight: 600; color: var(--olive-haupt); white-space: nowrap; }
+    .live-status-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid rgba(56,78,51,0.15); padding: 6px 14px; border-radius: 11px; font-size: 0.82rem; font-weight: 600; color: var(--olive-haupt); white-space: nowrap; }
     .pulse-dot { width: 8px; height: 8px; background-color:#4E8752; border-radius: 50%; flex-shrink: 0; }
 
     .burger-btn { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; border-radius: 8px; transition: background 0.2s; }
@@ -98,7 +98,7 @@
     .breadcrumb a { color: var(--olive-haupt); text-decoration: none; }
     .breadcrumb a:hover { color: #fff; }
     .breadcrumb-sep { color: rgba(56,78,51,0.3); }
-    .page-tag { display: inline-block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.06em; padding: 5px 14px; border-radius: 20px; margin-bottom: 16px; color: #3A6B85; background: rgba(168,196,216,0.18); border: 1px solid rgba(168,196,216,0.4); }
+    .page-tag { display: inline-block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.03em; padding: 5px 14px; border-radius: 20px; margin-bottom: 16px; color: #3A6B85; background: rgba(168,196,216,0.18); border: 1px solid rgba(168,196,216,0.4); }
     .seiten-kopf h1 { font-family: var(--font-serif); font-size: clamp(2.2rem, 4.5vw, 3.6rem); font-weight: 400; color: var(--olive-haupt); line-height:1.15; margin-bottom: 16px; }
     .seiten-kopf h1 em { font-style: normal; color: #3A6B85; }
     .seiten-kopf .lead { font-size: 1.05rem; color: var(--text-muted); max-width: 620px; line-height: 1.75; }
@@ -115,7 +115,7 @@
     .leistungs-liste li::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--olive-haupt); flex-shrink: 0; margin-top: 10px; }
     .schlusssatz { font-family: var(--font-sans); font-size: 1.35rem; font-style: italic; color: var(--olive-haupt); margin-top: 32px; padding: 20px 24px; border-left: 3px solid var(--olive-haupt); background: var(--olive-soft); border-radius: 0 var(--radius-md) var(--radius-md) 0; line-height: 1.4; }
     .hinweis-box { background: var(--harz-sand-soft); border: 1px solid var(--harz-sand); border-radius: var(--radius-md); padding: 20px 24px; margin: 28px 0; }
-    .hinweis-box strong { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.06em; color: var(--terracotta-caps); margin-bottom: 8px; }
+    .hinweis-box strong { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.03em; color: var(--terracotta-caps); margin-bottom: 8px; }
     .hinweis-box p { color: var(--text-muted); font-size: 0.95rem; margin: 0; line-height: 1.7; }
 
     .sidebar { display: flex; flex-direction: column; gap: 20px; }
@@ -178,6 +178,38 @@
       }
       .burger-btn, .mob-close, .wt-schliessen, .slot-zeile-btn {
         min-width: 44px;
+      }
+    }
+  
+    /* ── PC-Desktop Termin-Kachel (links, immer sichtbar) ── */
+    .pc-termin-card {
+      display: none;
+      position: fixed;
+      left: 28px;
+      z-index: 590;
+      background: rgba(255,255,255,0.97);
+      border: 1px solid rgba(56,78,51,0.14);
+      border-left: 4px solid var(--olive-haupt);
+      border-radius: 12px;
+      padding: 18px 24px 18px 20px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.10);
+      min-width: 200px;
+    }
+    .ptc-label { font-family: var(--font-sans); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; display: block; }
+    .ptc-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 9px 0; font-family: var(--font-sans); font-size: 1rem; font-weight: 600; color: var(--olive-haupt); text-decoration: none; cursor: pointer; background: none; border: none; width: 100%; transition: color 0.2s; }
+    .ptc-row:hover { color: var(--terracotta); }
+    .ptc-arrow { font-size: 0.95rem; opacity: 0.55; transition: opacity 0.2s, transform 0.2s; }
+    .ptc-row:hover .ptc-arrow { opacity: 1; transform: translateX(2px); }
+    .ptc-divider { height: 1px; background: rgba(56,78,51,0.14); }
+    body.modal-open .pc-termin-card { display: none !important; }
+    @media (min-width: 1025px) {
+      .pc-termin-card {
+        display: block;
+        top: 50%;
+        bottom: auto;
+        transform: translateY(-50%);
+        opacity: 1;
+        pointer-events: auto;
       }
     }
   </style>
@@ -320,6 +352,19 @@
     </div>
   </div>
 </footer>
+
+<!-- PC-DESKTOP TERMIN-KACHEL (links, immer sichtbar) -->
+<div class="pc-termin-card" id="pc-termin-card">
+  <span class="ptc-label">Termin buchen</span>
+  <a href="index.html#empfang" class="ptc-row" aria-label="Termin Wernigerode buchen">
+    <span>Wernigerode</span><span class="ptc-arrow">→</span>
+  </a>
+  <div class="ptc-divider"></div>
+  <a href="index.html#empfang" class="ptc-row" aria-label="Termin Heudeber buchen">
+    <span>Heudeber</span><span class="ptc-arrow">→</span>
+  </a>
+</div>
+
 
 <script>
 (function() {
