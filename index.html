@@ -178,14 +178,14 @@
     }
     html { scroll-behavior: smooth; overflow-x: hidden; }
 
-    h1,h2,.hero-title-main,.sec-title{font-family: var(--font-serif);font-weight:400;letter-spacing:-0.01em;}.journal-title,.compass-btn-title,.d-title,.service-item-title,.modal-title,.wt-titel{font-family:var(--font-sans) !important;font-weight:600 !important;letter-spacing:-0.01em;}    body { background-color: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 1.05rem; line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    h1,h2,.hero-title-main,.sec-title{font-family: var(--font-serif) !important;font-weight:400;letter-spacing:-0.01em;}.journal-title,.compass-btn-title,.d-title,.service-item-title,.modal-title,.wt-titel{font-family:var(--font-sans) !important;font-weight:600 !important;letter-spacing:-0.01em;}    body { background-color: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 1.05rem; line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
     .container { width: 100%; max-width: 1220px; margin: 0 auto; padding: 0 28px; }
     /* NEWS BANNER */
     .news-banner { background: var(--olive-soft); border-bottom: 1px solid rgba(56,78,51,0.12); padding: 8px 0; font-size: 0.85rem; color: var(--olive-haupt); }
     .news-flex { display: flex; align-items: center; gap: 12px; }
-    .news-tag { background: var(--olive-haupt); color: #FFF; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.06em; }
+    .news-tag { background: var(--olive-haupt); color: #FFF; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.03em; }
     /* SMART BUTTON */
-    .btn-smart { display: inline-flex; align-items: center; gap: 16px; background: var(--surface); border: 1px solid rgba(56,78,51,0.2); padding: 10px 12px 10px 22px; border-radius: 50px; text-decoration: none; color: var(--text); font-family: var(--font-sans); font-size: 0.84rem; font-weight: 600; letter-spacing: 0.02em; cursor: pointer; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1); white-space: nowrap; }
+    .btn-smart { display: inline-flex; align-items: center; gap: 16px; background: var(--surface); border: 1px solid rgba(56,78,51,0.2); padding: 10px 12px 10px 22px; border-radius: 11px; text-decoration: none; color: var(--text); font-family: var(--font-sans); font-size: 0.84rem; font-weight: 600; letter-spacing: 0.02em; cursor: pointer; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1); white-space: nowrap; }
     .btn-smart .btn-circle { width: 32px; height: 32px; border-radius: 50%; background: var(--olive-soft); color: var(--olive-haupt); display: flex; align-items: center; justify-content: center; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
     .btn-smart:hover { border-color: var(--olive-haupt); background: #FFFFFF; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(56,78,51,0.12); }
     .btn-smart:hover .btn-circle { background: var(--olive-haupt); color: #FFFFFF; transform: translateX(3px); }
@@ -205,7 +205,7 @@
     .nav-menu a { text-decoration: none; color: var(--text); font-size: 0.92rem; font-weight: 500; white-space: nowrap; transition: color .2s; }
     .nav-menu a:hover { color: var(--olive-haupt); }
     .nav-right { display: flex; align-items: center; gap: 14px; }
-    .live-status-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid rgba(56,78,51,0.15); padding: 6px 14px; border-radius: 50px; font-size: 0.82rem; font-weight: 600; color: var(--olive-haupt); white-space: nowrap; }
+    .live-status-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid rgba(56,78,51,0.15); padding: 6px 14px; border-radius: 11px; font-size: 0.82rem; font-weight: 600; color: var(--olive-haupt); white-space: nowrap; }
     .pulse-dot { width: 8px; height: 8px; background-color: #A86553; border-radius: 50%; flex-shrink: 0; }
     /* HERO */
     .hero { padding: 20px 0 28px; position: relative; overflow: hidden; background: #F7F5F0;background-image:  radial-gradient(ellipse 70% 60% at 15% 20%, rgba(56,78,51,0.055) 0%, transparent 60%),  radial-gradient(ellipse 50% 40% at 85% 80%, rgba(163,111,90,0.045) 0%, transparent 55%); }
@@ -229,7 +229,7 @@
     }
     .hero-stat-label {
       font-size: 0.78rem; font-weight: 600;
-      text-transform: uppercase; letter-spacing:0.06em;
+      text-transform: uppercase; letter-spacing:0.03em;
       color: var(--text-muted);
     }
     .hero-stat-sep {
@@ -244,11 +244,11 @@
     }
     .trust-bar-item {
       font-size: 0.75rem; font-weight: 600;
-      letter-spacing:0.06em; text-transform: uppercase;
+      letter-spacing:0.03em; text-transform: uppercase;
       color: var(--olive-dark);
       white-space: nowrap;
       border: 1px solid rgba(56,78,51,0.35);
-      border-radius: 50px;
+      border-radius: 11px;
       padding: 6px 14px;
       background: rgba(242,236,228,0.7);
     }
@@ -257,12 +257,12 @@
       background: rgba(56,78,51,0.3); flex-shrink: 0;
       display: none;
     }
-    .hero-eyebrow { display: inline-block; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--terracotta-caps); opacity: 0.85; margin-bottom: 12px; }
-    .hero-location { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 16px; }
-    .hero-sub { font-family: var(--font-sans); font-size: clamp(1.15rem, 1.8vw, 1.4rem); font-style: italic; color: var(--olive-dark); opacity: 0.9; line-height: 1.4; margin-bottom: 12px; font-weight: 400; }
+    .hero-eyebrow { display: inline-block; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; color: var(--terracotta-caps); opacity: 0.85; margin-bottom: 12px; }
+    .hero-location { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.03em; text-transform: uppercase; margin-bottom: 16px; }
+    .hero-sub { font-family: var(--font-sans); font-size: clamp(1.15rem, 1.8vw, 1.4rem); font-style: normal; color: var(--olive-dark); opacity: 0.9; line-height: 1.4; margin-bottom: 12px; font-weight: 400; }
     .hero-text-col { display: flex; flex-direction: column; align-items: flex-start; max-width: 620px; }
     .hero-layout { display: block; }
-    .hero-title-main { font-family: var(--font-sans); font-size: clamp(1.75rem, 3vw, 2.6rem); font-weight: 600; line-height: 1.12; color: var(--olive-haupt); margin-bottom: 14px; letter-spacing: -0.015em; }
+    .hero-title-main { font-family: var(--font-serif); font-size: clamp(1.75rem, 3vw, 2.6rem); font-weight: 600; line-height: 1.12; color: var(--olive-haupt); margin-bottom: 14px; letter-spacing: -0.015em; }
     .hero-title-main em { font-style: normal; font-weight: 400; color: var(--terracotta); }
     .hero-lead-text { font-size: 0.97rem; color: var(--text-muted); line-height: 1.7; max-width: 520px; margin-bottom: 14px; }
     .hero-portrait-col { display: none; }
@@ -292,7 +292,7 @@
       font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing:0.06em;
+      letter-spacing:0.03em;
       color: var(--text-muted);
       padding: 11px 14px 9px;
     }
@@ -416,7 +416,7 @@
       font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing:0.06em;
+      letter-spacing:0.03em;
       color: var(--olive-haupt);
       padding: 12px 20px 6px;
     }
@@ -447,14 +447,14 @@
       background: var(--olive-soft);
       border: none;
       padding: 4px 10px;
-      border-radius: 20px;
+      border-radius: 10px;
       cursor: pointer;
       transition: background 0.15s;
     }
     .wt-slot:hover .wt-slot-btn { background: var(--olive-haupt); color: #fff; }
 
     .hero-chips { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
-    .hero-chip { display: inline-flex; align-items: center; gap: 7px; background: var(--surface); border: 1px solid rgba(56,78,51,0.18); border-radius: 50px; padding: 8px 18px; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.25s; text-decoration: none; }
+    .hero-chip { display: inline-flex; align-items: center; gap: 7px; background: var(--surface); border: 1px solid rgba(56,78,51,0.18); border-radius: 11px; padding: 8px 18px; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.25s; text-decoration: none; }
     .hero-chip:hover { background: var(--olive-soft); border-color: var(--olive-haupt); color: var(--olive-haupt); }
     .hero-chip.active { background: var(--olive-haupt); border-color: var(--olive-haupt); color: #fff; }
     .hero-chip-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--olive-haupt); flex-shrink: 0; transition: background 0.25s; }
@@ -467,7 +467,7 @@
     /* IOS SWITCH */
     .ios-switch-container { display: inline-flex; align-items: center; background: #E8E6DF; padding: 4px; border-radius: 50px; border: 1px solid rgba(56,78,51,0.15); position: relative; user-select: none; margin-bottom: 24px; cursor: pointer; }
     .ios-switch-slider { position: absolute; top: 4px; left: 4px; width: calc(50% - 4px); height: calc(100% - 8px); background: var(--surface); border-radius: 50px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 1; }
-    .ios-tab { position: relative; z-index: 2; padding: 6px 18px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.06em; color: var(--text-muted); transition: color 0.3s ease; display: flex; align-items: center; gap: 6px; }
+    .ios-tab { position: relative; z-index: 2; padding: 6px 18px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.03em; color: var(--text-muted); transition: color 0.3s ease; display: flex; align-items: center; gap: 6px; }
     .ios-tab.active { color: var(--olive-haupt); }
     .ios-switch-container.is-ilsenburg .ios-switch-slider { transform: translateX(100%); }
     .mittelzone {
@@ -515,10 +515,11 @@
     .digital-journal { padding: 56px 40px; background: var(--bg); background-image: radial-gradient(ellipse 80% 50% at 10% 10%, rgba(56,78,51,0.04) 0%, transparent 60%), radial-gradient(ellipse 60% 40% at 90% 90%, rgba(163,111,90,0.035) 0%, transparent 55%); border-radius: var(--radius-lg); margin: 0 0 80px; border: 1px solid rgba(56,78,51,0.14); box-shadow: 0 2px 18px rgba(56,78,51,0.05); }
     .journal-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 36px; border-bottom: 1px solid rgba(56,78,51,0.12); padding-bottom: 20px; }
     .journal-title { font-family: var(--font-sans) !important; font-size: 2.3rem; font-weight: 600 !important; color: var(--olive-haupt); line-height: 1.15; letter-spacing: -0.01em; }
-    .journal-sub { color: var(--text-muted); font-size: 0.96rem; max-width: 380px; }
+    .journal-sub { color: var(--text-muted); font-size: 1.05rem; line-height: 1.5; max-width: 380px; }
     .journal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 36px; }
     .journal-card { background: rgba(255,255,255,0.85); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid rgba(56,78,51,0.10); border-radius: var(--radius-md); padding: 32px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: all .25s; }
     .journal-card:hover { border-color: var(--olive-haupt); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(56,78,51,0.05); }
+    .journal-card.journal-card-primary { background: var(--olive-soft); border-color: rgba(56,78,51,0.22); }
     /* DOWNLOAD */
     .download-center-v2 { background: var(--surface); border-radius: var(--radius-md); padding: 32px; border: 1px solid rgba(56,78,51,0.12); }
     .download-v2-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--olive-soft); padding-bottom: 14px; }
@@ -526,7 +527,7 @@
     .download-v2-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .download-paper-card { background: var(--bg); border: 1px solid rgba(56,78,51,0.1); border-radius: var(--radius-sm); padding: 18px; display: flex; flex-direction: column; justify-content: space-between; text-decoration: none; color: var(--text); transition: all 0.25s ease; min-height: 110px; }
     .download-paper-card:hover { background: #FFFFFF; border-color: var(--terracotta); transform: translateY(-2px); }
-    .d-tag { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom: 6px; display: block; }
+    .d-tag { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.03em; color:var(--text-muted); margin-bottom: 6px; display: block; }
     .d-title { font-family: var(--font-sans); font-size: 1.15rem; color: var(--olive-haupt); font-weight: 600; line-height: 1.25; }
     .d-footer { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--text-muted); margin-top: 14px; }
     /* LEISTUNGEN ACCORDION */
@@ -551,15 +552,15 @@
     .service-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 14px; }
     .service-tags { display: flex; flex-wrap: wrap; gap: 8px; }
     .service-tag-pill { background: var(--olive-soft); color: var(--olive-haupt); font-size: 0.75rem; font-weight: 600; padding: 3px 10px; border-radius: 4px; }
-    .sec-tag { font-family: var(--font-sans); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.06em; color:var(--olive-haupt); margin-bottom: 6px; display: block; }
-    .sec-title { font-family: var(--font-sans); font-size: clamp(2.0rem, 4vw, 2.8rem); color: var(--olive-haupt); font-weight: 600; line-height: 1.15; }
+    .sec-tag { font-family: var(--font-sans); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.03em; color:var(--olive-haupt); margin-bottom: 6px; display: block; }
+    .sec-title { font-family: var(--font-serif); font-size: clamp(2.0rem, 4vw, 2.8rem); color: var(--olive-haupt); font-weight: 600; line-height: 1.15; }
     /* TEAM & STANDORTE */
     .team-sec { padding: 70px 0; background: var(--surface); border-top: 1px solid rgba(56,78,51,0.08); border-bottom: 1px solid rgba(56,78,51,0.08); }
     .team-intro { text-align: center; max-width: 560px; margin: 0 auto 44px; }
     .team-cards-eq { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
     .team-card-eq { background: var(--surface); border: 1px solid rgba(56,78,51,0.1); border-radius: var(--radius-md); padding: 30px 20px 26px; text-align: center; }
     .team-card-avatar-eq { width: 70px; height: 70px; border-radius: 50%; background: var(--olive-haupt); color: #fff; font-family: var(--font-sans); font-size: 1.35rem; font-weight: 400; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
-    .team-card-role-eq { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color:var(--text-muted); letter-spacing:0.06em; margin-bottom: 7px; display: block; }
+    .team-card-role-eq { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color:var(--text-muted); letter-spacing:0.03em; margin-bottom: 7px; display: block; }
     .team-card-name-eq { font-family: var(--font-sans); font-size: 0.95rem; color: var(--olive-haupt); font-weight: 400; line-height: 1.35; }
     .team-card-eq--empty { border: 1.5px dashed rgba(56,78,51,0.22); background: transparent; }
     .team-card-eq--empty .team-card-avatar-eq { background: rgba(56,78,51,0.07); color: rgba(56,78,51,0.28); font-size: 1.6rem; font-family: sans-serif; }
@@ -573,7 +574,7 @@
     .loc-box.active { display: block; }
     /* Standort-Tabs in der Sektion */
     .standort-tabs { display: flex; gap: 10px; margin-top: 14px; margin-bottom: 28px; }
-    .standort-tab { padding: 9px 24px; border-radius: 50px; font-size: 0.83rem; font-weight: 600; border: 1px solid rgba(56,78,51,0.2); background: var(--surface); color: var(--text-muted); cursor: pointer; transition: all 0.25s; }
+    .standort-tab { padding: 9px 24px; border-radius: 11px; font-size: 0.83rem; font-weight: 600; border: 1px solid rgba(56,78,51,0.2); background: var(--surface); color: var(--text-muted); cursor: pointer; transition: all 0.25s; }
     .standort-tab:hover { border-color: var(--olive-haupt); color: var(--olive-haupt); }
     .standort-tab.active { background: var(--olive-haupt); border-color: var(--olive-haupt); color: #fff; }
     .loc-box { background: var(--surface); border-radius: var(--radius-lg); padding: 36px; border: 1px solid rgba(56,78,51,0.12); }
@@ -713,7 +714,7 @@
     .leistungs-chips-mob { display: none; }
     .leistungs-label-mob {
       display: none;
-      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.03em;
       text-transform: uppercase; color: var(--olive-haupt); margin-bottom: 10px;
     }
 
@@ -947,7 +948,7 @@
         font-weight: 700 !important;
       }
       .hero-title-main em {
-        font-style: italic !important;
+        font-style: normal !important;
         color: var(--olive-haupt) !important;
       }
       /* Einzeiler — Standort + Fachrichtung */
@@ -977,7 +978,7 @@
         backdrop-filter: blur(16px) !important;
         -webkit-backdrop-filter: blur(16px) !important;
         border: 1px solid rgba(110, 145, 98, 0.25) !important;
-        border-radius: 50px !important;
+        border-radius: 11px !important;
         padding: 10px !important;
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15) !important;
         gap: 0 !important;
@@ -993,7 +994,7 @@
         padding: 12px 10px !important;
         background: none;
         border: none;
-        border-radius: 40px;
+        border-radius: 11px;
         cursor: pointer;
         transition: background 0.18s;
         text-align: left;
@@ -1298,7 +1299,7 @@
         backdrop-filter: blur(16px) !important;
         -webkit-backdrop-filter: blur(16px) !important;
         border: 1px solid rgba(56,78,51,0.25) !important;
-        border-radius: 50px !important;
+        border-radius: 11px !important;
         padding: 3px !important;
         box-shadow: 0 4px 16px rgba(0,0,0,0.18) !important;
         gap: 0 !important;
@@ -1395,7 +1396,7 @@
         /* ====== MODAL-BUTTONS ====== */
     .btn-custom {
       display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px;
-      border-radius: 50px; font-family: var(--font-sans); font-size: 0.83rem; font-weight: 700;
+      border-radius: 11px; font-family: var(--font-sans); font-size: 0.83rem; font-weight: 700;
       cursor: pointer; border: 1.5px solid var(--olive-haupt); color: var(--olive-haupt);
       background: transparent; transition: all 0.3s ease; text-decoration: none;
       position: relative; overflow: hidden;
@@ -1424,7 +1425,7 @@
       display: flex; justify-content: space-between; align-items: flex-start;
       position: sticky; top: 0; background: #fff; z-index: 2; border-radius: 24px 24px 0 0;
     }
-    .modal-step-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.06em; color: var(--terracotta-caps); margin-bottom: 3px; }
+    .modal-step-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.03em; color: var(--terracotta-caps); margin-bottom: 3px; }
     .modal-title { font-family: var(--font-sans); font-size: 1.65rem; color: var(--olive-haupt); margin: 0; }
     .modal-close { background: none; border: none; cursor: pointer; color: var(--text-muted); width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; flex-shrink: 0; font-size: 1.3rem; line-height: 1; }
     .modal-close:hover { background: var(--olive-soft); color: var(--text); }
@@ -1435,7 +1436,7 @@
     .step-dot.done { background: var(--olive-light); }
     .step-intro { font-size: 0.87rem; font-weight: 600; color: var(--text); margin-bottom: 11px; }
     .m-form-group { margin-bottom: 15px; }
-    .m-form-label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.07em; }
+    .m-form-label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.03em; }
     .m-form-input { width: 100%; max-width: 100%; padding: 10px 13px; border: 1px solid rgba(56,78,51,0.25); border-radius: 10px; font-family: var(--font-sans); font-size: 0.87rem; color: var(--text); background: var(--bg); transition: border-color 0.2s, box-shadow 0.2s; outline: none; box-sizing: border-box; }
     .m-form-input:focus { border-color: var(--olive-haupt); box-shadow: 0 0 0 3px rgba(56,78,51,0.12); background: #fff; }
     .m-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
@@ -1449,13 +1450,13 @@
     .radio-card-m.selected .radio-dot-m::after { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #fff; display: block; }
     .radio-lbl { font-size: 0.85rem; font-weight: 600; color: var(--text); line-height: 1.3; }
     .radio-desc-m { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
-    .standort-toggle-m { display: flex; border: 1px solid rgba(56,78,51,0.2); border-radius: 50px; overflow: hidden; margin-bottom: 10px; }
+    .standort-toggle-m { display: flex; border: 1px solid rgba(56,78,51,0.2); border-radius: 11px; overflow: hidden; margin-bottom: 10px; }
     .standort-btn-m { flex: 1; padding: 9px 14px; font-size: 0.79rem; font-weight: 700; border: none; background: transparent; cursor: pointer; color: var(--text-muted); transition: all 0.2s; font-family: var(--font-sans); }
     .standort-btn-m.active { background: var(--olive-haupt); color: #fff; }
     .slot-day-wrap { margin-bottom: 15px; }
-    .slot-day-lbl { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 7px; text-transform: uppercase; letter-spacing:0.06em; }
+    .slot-day-lbl { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 7px; text-transform: uppercase; letter-spacing:0.03em; }
     .slot-chips-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
-    .slot-chip { padding: 7px 13px; border: 1px solid rgba(56,78,51,0.22); border-radius: 50px; font-size: 0.79rem; font-weight: 600; cursor: pointer; transition: all 0.2s; background: #fff; color: var(--text); font-family: var(--font-sans); }
+    .slot-chip { padding: 7px 13px; border: 1px solid rgba(56,78,51,0.22); border-radius: 11px; font-size: 0.79rem; font-weight: 600; cursor: pointer; transition: all 0.2s; background: #fff; color: var(--text); font-family: var(--font-sans); }
     .slot-chip:hover:not(.busy) { border-color: var(--olive-haupt); background: var(--olive-soft); }
     .slot-chip.selected { background: var(--olive-haupt); color: #fff; border-color: var(--olive-haupt); }
     .slot-chip.busy { background: var(--bg); color: #ccc; border-color: #eee; cursor: not-allowed; text-decoration: line-through; font-weight: 400; }
@@ -1471,7 +1472,7 @@
     .summary-row-m span:last-child { font-weight: 600; color: var(--text); max-width: 60%; text-align: right; }
     .med-row-wrap-m { margin-bottom: 9px; background: var(--bg); border-radius: 10px; padding: 11px; border: 1px solid rgba(56,78,51,0.1); }
     .med-row-head-m { display: flex; justify-content: space-between; align-items: center; margin-bottom: 9px; }
-    .med-row-lbl { font-size: 0.75rem; font-weight: 700; color: var(--olive-haupt); text-transform: uppercase; letter-spacing:0.06em; }
+    .med-row-lbl { font-size: 0.75rem; font-weight: 700; color: var(--olive-haupt); text-transform: uppercase; letter-spacing:0.03em; }
     .med-remove-m { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.79rem; padding: 2px 6px; border-radius: 4px; transition: color 0.2s; }
     .med-remove-m:hover { color: var(--terracotta); }
     .add-med-btn-m { background: none; border: 1px dashed rgba(56,78,51,0.3); border-radius: 10px; width: 100%; padding: 9px; font-family: var(--font-sans); font-size: 0.81rem; color: var(--olive-haupt); cursor: pointer; transition: all 0.2s; margin-top: 3px; }
@@ -1540,7 +1541,7 @@
       padding: 16px 24px 16px 18px;
       background: rgba(255,255,255,0.97);
       border: 1px solid rgba(56,78,51,0.25);
-      border-radius: 50px;
+      border-radius: 11px;
       box-shadow: 0 4px 18px rgba(0,0,0,0.13);
       cursor: pointer;
       white-space: nowrap;
@@ -1560,7 +1561,7 @@
     .tfc-label {
       font-size: 0.78rem;
       font-weight: 700;
-      letter-spacing: 0.07em;
+      letter-spacing: 0.03em;
       text-transform: uppercase;
       color: var(--terracotta-caps);
       writing-mode: horizontal-tb;
@@ -1574,13 +1575,13 @@
     }
 
     /* Demo-Buttons: gedaempft, damit sie Inhalt nicht dauerhaft verdecken */
-    .demo-buttons-wrap { position: fixed; bottom: 20px; right: 20px; z-index: 8000; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; opacity: 0.55; transition: opacity 0.25s; }
+    .demo-buttons-wrap { position: fixed; bottom: 20px; right: 20px; z-index: 8000; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; opacity: 0.55; transition: opacity 0.25s; }
     .demo-buttons-wrap:hover, .demo-buttons-wrap:focus-within { opacity: 1; }
-    .demo-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.7); text-align: center; background: rgba(56,78,51,0.6); padding: 3px 10px; border-radius: 20px; backdrop-filter: blur(6px); }
-    .demo-btn-row { display: flex; gap: 8px; }
-    .demo-btn { border: none; border-radius: 50px; padding: 9px 16px; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 700; color: #fff; cursor: pointer; white-space: nowrap; }
-    .demo-btn-bestand { background: var(--olive-haupt); box-shadow: 0 3px 14px rgba(56,78,51,0.40); }
-    .demo-btn-neu { background: var(--terracotta); box-shadow: 0 3px 14px rgba(163,111,90,0.40); }
+    .demo-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: rgba(255,255,255,0.7); text-align: center; background: rgba(56,78,51,0.6); padding: 3px 10px; border-radius: 20px; backdrop-filter: blur(6px); }
+    .demo-btn-row { display: flex; gap: 10px; }
+    .demo-btn { border: none; border-radius: 11px; padding: 9px 16px; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 700; color: #fff; cursor: pointer; white-space: nowrap; }
+    .demo-btn-bestand { background: var(--olive-haupt); box-shadow: 0 2px 8px rgba(56,78,51,0.22); }
+    .demo-btn-neu { background: var(--terracotta); box-shadow: 0 2px 8px rgba(163,111,90,0.22); }
     @media (max-width: 640px) { .demo-btn-row { flex-direction: column; align-items: flex-end; } }
   
     /* a11y: Touch-Ziele Mobile mind. 44x44px */
@@ -1686,7 +1687,7 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--olive-haupt)" stroke-width="1.8" style="flex-shrink:0;margin-top:2px;align-self:flex-start;" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           <div style="display:flex;flex-direction:column;flex:1;">
             <div style="font-family: var(--font-sans);font-size:1.0rem;color:var(--olive-haupt);font-weight:600;margin-bottom:3px;">Hausärztliche Versorgung</div>
-            <div style="font-size:0.76rem;color:var(--text-muted);line-height:1.5;">Persönliche hausärztliche Betreuung vom akuten Infekt bis zur langfristigen Begleitung chronischer Erkrankungen. Mit internistischer und allgemeinmedizinischer Kompetenz, moderner Diagnostik und kurzen Wegen.</div>
+            <div style="font-size:1rem;color:var(--text-muted);line-height:1.5;">Persönliche hausärztliche Betreuung vom akuten Infekt bis zur langfristigen Begleitung chronischer Erkrankungen. Mit internistischer und allgemeinmedizinischer Kompetenz, moderner Diagnostik und kurzen Wegen.</div>
             <div class="chip-arrow" style="display:flex;align-items:center;gap:5px;margin-top:auto;padding-top:10px;font-size:0.75rem;color:var(--olive-haupt);font-weight:500;opacity:0.55;transition:opacity .2s,gap .2s;">
               <span>Mehr erfahren</span>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg>
@@ -1702,7 +1703,7 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--olive-haupt)" stroke-width="1.8" style="flex-shrink:0;margin-top:2px;align-self:flex-start;" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M12 8v4l3 3"/></svg>
           <div style="display:flex;flex-direction:column;flex:1;">
             <div style="font-family: var(--font-sans);font-size:1.0rem;color:var(--olive-haupt);font-weight:600;margin-bottom:3px;">Ernährungsmedizin</div>
-            <div style="font-size:0.76rem;color:var(--text-muted);line-height:1.5;">Adipositas, Stoffwechselstörungen, Fettleber, Mangelernährung und Sarkopenie: Wir betrachten Ernährung als Teil der medizinischen Therapie – individuell, wissenschaftlich fundiert und ärztlich begleitet.</div>
+            <div style="font-size:1rem;color:var(--text-muted);line-height:1.5;">Adipositas, Stoffwechselstörungen, Fettleber, Mangelernährung und Sarkopenie: Wir betrachten Ernährung als Teil der medizinischen Therapie – individuell, wissenschaftlich fundiert und ärztlich begleitet.</div>
             <div class="chip-arrow" style="display:flex;align-items:center;gap:5px;margin-top:auto;padding-top:10px;font-size:0.75rem;color:var(--olive-haupt);font-weight:500;opacity:0.55;transition:opacity .2s,gap .2s;">
               <span>Mehr erfahren</span>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg>
@@ -1718,7 +1719,7 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--olive-haupt)" stroke-width="1.8" style="flex-shrink:0;margin-top:2px;align-self:flex-start;" aria-hidden="true"><path d="M9 12l2 2 4-4"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
           <div style="display:flex;flex-direction:column;flex:1;">
             <div style="font-family: var(--font-sans);font-size:1.0rem;color:var(--olive-haupt);font-weight:600;margin-bottom:3px;">Prävention &amp; Check-Up</div>
-            <div style="font-size:0.76rem;color:var(--text-muted);line-height:1.5;">Gesundheitsvorsorge bedeutet mehr als einen Laborzettel. Wir betrachten persönliche Risiken, Stoffwechsel, Lebensstil und – wo sinnvoll – die Körperzusammensetzung nach wissenschaftlich gesicherten Methoden. Das, was medizinisch sinnvoll und notwendig ist.</div>
+            <div style="font-size:1rem;color:var(--text-muted);line-height:1.5;">Gesundheitsvorsorge bedeutet mehr als einen Laborzettel. Wir betrachten persönliche Risiken, Stoffwechsel, Lebensstil und – wo sinnvoll – die Körperzusammensetzung nach wissenschaftlich gesicherten Methoden. Das, was medizinisch sinnvoll und notwendig ist.</div>
             <div class="chip-arrow" style="display:flex;align-items:center;gap:5px;margin-top:auto;padding-top:10px;font-size:0.75rem;color:var(--olive-haupt);font-weight:500;opacity:0.55;transition:opacity .2s,gap .2s;">
               <span>Mehr erfahren</span>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg>
@@ -1789,51 +1790,51 @@
         <p class="journal-sub">Erledigen Sie Organisatorisches vorab digital – damit in der Praxis mehr Zeit für Ihr Gespräch bleibt.</p>
       </div>
       <div class="journal-grid">
-        <div class="journal-card" onclick="openTerminModal()">
+        <div class="journal-card journal-card-primary" onclick="openTerminModal()">
           <div>
-            <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.08em; color:var(--olive-light); display:block; margin-bottom:12px;">01 / ONLINE TERMIN</span>
+            <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:12px;">01 / ONLINE TERMIN</span>
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Termin vereinbaren</h3>
-            <p style="font-size:0.84rem; color:var(--text-muted); line-height:1.6;">24/7 Wunschtermin im Praxissystem auswählen – ohne Telefon-Warteschleife.</p>
+            <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">24/7 Wunschtermin im Praxissystem auswählen – ohne Telefon-Warteschleife.</p>
           </div>
           <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Freie Zeiten wählen →</span>
         </div>
         <div class="journal-card" onclick="openRezeptModal()">
           <div>
-            <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.08em; color:var(--olive-light); display:block; margin-bottom:12px;">02 / REZEPT-SERVICE</span>
+            <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:12px;">02 / REZEPT-SERVICE</span>
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Folgerezept online bestellen</h3>
-            <p style="font-size:0.84rem; color:var(--text-muted); line-height:1.6;">Dauermedikamente digital anfordern und am Folgetag direkt in der Apotheke abholen.</p>
+            <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Dauermedikamente digital anfordern und am Folgetag direkt in der Apotheke abholen.</p>
           </div>
           <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Rezept anfordern →</span>
         </div>
         <div class="journal-card" onclick="openAuModal()">
           <div>
-            <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.08em; color:var(--olive-light); display:block; margin-bottom:12px;">03 / AU-BESCHEINIGUNG</span>
+            <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:12px;">03 / AU-BESCHEINIGUNG</span>
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Krankmeldung anfordern</h3>
-            <p style="font-size:0.84rem; color:var(--text-muted); line-height:1.6;">Arbeitgeber-Attest oder Folge-AU digital anfragen — wenn keine Vorstellung nötig ist.</p>
+            <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Arbeitgeber-Attest oder Folge-AU digital anfragen — wenn keine Vorstellung nötig ist.</p>
           </div>
           <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">AU beantragen →</span>
         </div>
         <div class="journal-card" onclick="openUeberweisungModal()">
           <div>
-            <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.08em; color:var(--olive-light); display:block; margin-bottom:12px;">04 / ÜBERWEISUNG</span>
+            <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:12px;">04 / ÜBERWEISUNG</span>
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Überweisung anfordern</h3>
-            <p style="font-size:0.84rem; color:var(--text-muted); line-height:1.6;">Überweisung zum Facharzt oder zur Untersuchung vorab digital beantragen.</p>
+            <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Überweisung zum Facharzt oder zur Untersuchung vorab digital beantragen.</p>
           </div>
           <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Überweisung anfragen →</span>
         </div>
         <div class="journal-card" onclick="openBefundModal()">
           <div>
-            <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.08em; color:var(--olive-light); display:block; margin-bottom:12px;">05 / LABORBEFUNDE</span>
+            <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:12px;">05 / LABORBEFUNDE</span>
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Befunde anfordern</h3>
-            <p style="font-size:0.84rem; color:var(--text-muted); line-height:1.6;">Laborergebnisse oder Befundkopien digital anfordern — für Sie oder weiterbehandelnde Ärzte.</p>
+            <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Laborergebnisse oder Befundkopien digital anfordern — für Sie oder weiterbehandelnde Ärzte.</p>
           </div>
           <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Befund anfragen →</span>
         </div>
         <div class="journal-card journal-card-ernaehrung" onclick="toggleErnaehrungsFlow(this)">
           <div>
-            <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.08em; color:var(--olive-light); display:block; margin-bottom:12px;">06 / ERNÄHRUNGSMEDIZIN</span>
+            <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:12px;">06 / ERNÄHRUNGSMEDIZIN</span>
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Ernährungsberatung anfragen</h3>
-            <p style="font-size:0.84rem; color:var(--text-muted); line-height:1.6;" id="ernaehrung-sub">Wählen Sie Ihr Anliegen — Dr. Müller bereitet sich gezielt vor.</p>
+            <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;" id="ernaehrung-sub">Wählen Sie Ihr Anliegen — Dr. Müller bereitet sich gezielt vor.</p>
           </div>
           <div id="ernaehrung-flow" style="display:none; margin-top:20px; border-top:1px solid rgba(56,78,51,0.12); padding-top:16px;">
             <div style="display:flex; flex-direction:column; gap:8px;">
@@ -1847,17 +1848,17 @@
         </div>
         <div class="journal-card" onclick="openImpfModal()">
           <div>
-            <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.08em; color:var(--olive-light); display:block; margin-bottom:12px;">07 / IMPFUNG</span>
+            <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:12px;">07 / IMPFUNG</span>
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Impftermin anfragen</h3>
-            <p style="font-size:0.84rem; color:var(--text-muted); line-height:1.6;">Impfberatung, Auffrischung oder Reiseimpfung — Termin online voranmelden.</p>
+            <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Impfberatung, Auffrischung oder Reiseimpfung — Termin online voranmelden.</p>
           </div>
           <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Impftermin anfragen →</span>
         </div>
         <div class="journal-card" onclick="openIgelModal()">
           <div>
-            <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.08em; color:var(--olive-light); display:block; margin-bottom:12px;">08 / IGEL / PRIVAT</span>
+            <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:12px;">08 / IGEL / PRIVAT</span>
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Privatleistung anfragen</h3>
-            <p style="font-size:0.84rem; color:var(--text-muted); line-height:1.6;">BIA-Messung, Gesundheitszeugnis, Tauglichkeit, Sporttauglichkeit oder andere individuelle Leistungen.</p>
+            <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">BIA-Messung, Gesundheitszeugnis, Tauglichkeit, Sporttauglichkeit oder andere individuelle Leistungen.</p>
           </div>
           <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Anfrage stellen →</span>
         </div>
@@ -1871,7 +1872,7 @@
         <div class="download-v2-grid">
           <div class="download-paper-card" style="opacity:0.45; pointer-events:none; cursor:default;">
             <div>
-              <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.08em; color:var(--olive-light); display:block; margin-bottom:10px;">ERSTBESUCH</span>
+              <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:10px;">ERSTBESUCH</span>
               <p style="font-size:0.92rem; font-weight:600; color:var(--text); margin-bottom:6px;">Fragebogen Neupatient</p>
               <p style="font-size:0.79rem; color:var(--text-muted); line-height:1.5;">Zum ersten Termin mitbringen — damit das Gespräch sofort beim Wesentlichen beginnt.</p>
             </div>
@@ -1879,7 +1880,7 @@
           </div>
           <div class="download-paper-card" style="opacity:0.45; pointer-events:none; cursor:default;">
             <div>
-              <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.08em; color:var(--olive-light); display:block; margin-bottom:10px;">ERNÄHRUNGSMEDIZIN</span>
+              <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:10px;">ERNÄHRUNGSMEDIZIN</span>
               <p style="font-size:0.92rem; font-weight:600; color:var(--text); margin-bottom:6px;">Ernährungsanamnese</p>
               <p style="font-size:0.79rem; color:var(--text-muted); line-height:1.5;">Wenn Sie wegen Ernährung, Gewicht oder Stoffwechsel kommen — vorab ausfüllen.</p>
             </div>
@@ -1887,7 +1888,7 @@
           </div>
           <div class="download-paper-card" style="opacity:0.45; pointer-events:none; cursor:default;">
             <div>
-              <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.08em; color:var(--olive-light); display:block; margin-bottom:10px;">ALLGEMEIN</span>
+              <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:10px;">ALLGEMEIN</span>
               <p style="font-size:0.92rem; font-weight:600; color:var(--text); margin-bottom:6px;">Schweigepflichtentbindung</p>
               <p style="font-size:0.79rem; color:var(--text-muted); line-height:1.5;">Wenn Sie möchten, dass Dr. Müller mit anderen Ärzten oder Angehörigen sprechen darf.</p>
             </div>
