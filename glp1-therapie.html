@@ -10,7 +10,7 @@
   <link rel="canonical" href="https://www.landharzpraxis.de/glp1-therapie">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     /* a11y: sichtbarer Tastatur-Fokus */
@@ -37,11 +37,11 @@
       --terracotta: #A36F5A;--terracotta-caps:#8B5E4D; --terracotta-soft: #F8F1EE;
       --text: #212522; --text-muted: #535B54;
       --radius-sm: 8px; --radius-md: 14px; --radius-lg: 24px;
-      --font-serif: 'Cormorant Garamond', Georgia, serif;
-      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-serif: 'Source Serif 4', Georgia, serif;
+      --font-sans: 'Source Sans 3', sans-serif;
     }
     html { scroll-behavior: smooth; overflow-x: hidden; }
-    h1,h2,.hero-title-main,.sec-title{font-family:var(--font-serif) !important;font-weight:600 !important;letter-spacing:-0.01em;}
+    h1,h2,.hero-title-main,.sec-title{font-family: var(--font-serif) !important;font-weight:600 !important;letter-spacing:-0.01em;}
     .journal-title,.compass-btn-title,.d-title,.service-item-title,.modal-title,.wt-titel{font-family:var(--font-sans) !important;font-weight:600 !important;letter-spacing:-0.01em;}
     body { background-color: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 1.05rem; line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
     .container { width: 100%; max-width: 1220px; margin: 0 auto; padding: 0 28px; }
@@ -56,7 +56,7 @@
 
     header { padding: 18px 0; position: sticky; top: 0; background: rgba(248,247,243,0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 100; border-bottom: 1px solid rgba(56,78,51,0.1); }
     .nav-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
-    .brand-mark { font-family: var(--font-serif); font-size: 1.45rem; font-weight: 700; color: var(--olive-haupt); text-decoration: none; line-height: 1.1; white-space: nowrap; display: inline-flex; align-items: center; gap: 11px; }
+    .brand-mark { font-family: var(--font-sans); font-size: 1.45rem; font-weight: 700; color: var(--olive-haupt); text-decoration: none; line-height: 1.1; white-space: nowrap; display: inline-flex; align-items: center; gap: 11px; }
     .brand-mark span { display: block; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; color: var(--terracotta-caps); margin-top: 2px; }
     .nav-menu { display: flex; gap: 24px; list-style: none; align-items: center; margin: 0; padding: 0; }
     .nav-menu a { text-decoration: none; color: var(--text); font-size: 0.92rem; font-weight: 500; white-space: nowrap; transition: color .2s; }
@@ -98,36 +98,36 @@
     .breadcrumb a { color: var(--olive-haupt); text-decoration: none; }
     .breadcrumb a:hover { color: #fff; }
     .breadcrumb-sep { color: rgba(56,78,51,0.3); }
-    .page-tag { display: inline-block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.12em; padding: 5px 14px; border-radius: 20px; margin-bottom: 16px; color: #3A6B85; background: rgba(168,196,216,0.18); border: 1px solid rgba(168,196,216,0.4); }
+    .page-tag { display: inline-block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.06em; padding: 5px 14px; border-radius: 20px; margin-bottom: 16px; color: #3A6B85; background: rgba(168,196,216,0.18); border: 1px solid rgba(168,196,216,0.4); }
     .seiten-kopf h1 { font-family: var(--font-serif); font-size: clamp(2.2rem, 4.5vw, 3.6rem); font-weight: 400; color: var(--olive-haupt); line-height:1.15; margin-bottom: 16px; }
-    .seiten-kopf h1 em { font-style: italic; color: #3A6B85; }
+    .seiten-kopf h1 em { font-style: normal; color: #3A6B85; }
     .seiten-kopf .lead { font-size: 1.05rem; color: var(--text-muted); max-width: 620px; line-height: 1.75; }
 
     .inhalt { padding: 52px 0 72px; }
     .inhalt-grid { display: grid; grid-template-columns: 1fr 340px; gap: 64px; align-items: start; }
     .prose h2 { font-family: var(--font-serif); font-size: clamp(1.6rem, 2.5vw, 2.2rem); color: var(--olive-haupt); margin-bottom: 16px; font-weight: 400; line-height: 1.2; }
-    .prose h3 { font-family: var(--font-serif); font-size: 1.35rem; color: var(--text); margin-bottom: 10px; font-weight: 600; margin-top: 36px; }
+    .prose h3 { font-family: var(--font-sans); font-size: 1.35rem; color: var(--text); margin-bottom: 10px; font-weight: 600; margin-top: 36px; }
     .prose p { color: var(--text-muted); margin-bottom: 20px; line-height: 1.8; }
     .prose p:last-child { margin-bottom: 0; }
     .leistungs-liste { list-style: none; margin: 20px 0 28px; }
     .leistungs-liste li { padding: 10px 0; border-bottom: 1px solid rgba(56,78,51,0.1); color: var(--text-muted); font-size: 1rem; display: flex; align-items: flex-start; gap: 12px; }
     .leistungs-liste li:last-child { border-bottom: none; }
     .leistungs-liste li::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--olive-haupt); flex-shrink: 0; margin-top: 10px; }
-    .schlusssatz { font-family: var(--font-serif); font-size: 1.35rem; font-style: italic; color: var(--olive-haupt); margin-top: 32px; padding: 20px 24px; border-left: 3px solid var(--olive-haupt); background: var(--olive-soft); border-radius: 0 var(--radius-md) var(--radius-md) 0; line-height: 1.4; }
+    .schlusssatz { font-family: var(--font-sans); font-size: 1.35rem; font-style: italic; color: var(--olive-haupt); margin-top: 32px; padding: 20px 24px; border-left: 3px solid var(--olive-haupt); background: var(--olive-soft); border-radius: 0 var(--radius-md) var(--radius-md) 0; line-height: 1.4; }
     .hinweis-box { background: var(--harz-sand-soft); border: 1px solid var(--harz-sand); border-radius: var(--radius-md); padding: 20px 24px; margin: 28px 0; }
-    .hinweis-box strong { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.12em; color: var(--terracotta-caps); margin-bottom: 8px; }
+    .hinweis-box strong { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.06em; color: var(--terracotta-caps); margin-bottom: 8px; }
     .hinweis-box p { color: var(--text-muted); font-size: 0.95rem; margin: 0; line-height: 1.7; }
 
     .sidebar { display: flex; flex-direction: column; gap: 20px; }
     .sidebar-card { background: var(--surface); border: 1px solid rgba(56,78,51,0.12); border-radius: var(--radius-md); padding: 24px; }
-    .sidebar-card h4 { font-family: var(--font-serif); font-size: 1.15rem; color: var(--olive-haupt); margin-bottom: 14px; }
+    .sidebar-card h4 { font-family: var(--font-sans); font-size: 1.15rem; color: var(--olive-haupt); margin-bottom: 14px; }
     .sidebar-link-box { background: var(--olive-soft); border: 1px solid rgba(56,78,51,0.15); }
     .sidebar-link-box p { font-size: 0.9rem; color: var(--olive-dark); margin-bottom: 14px; line-height: 1.6; }
     .sidebar-nav-link { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--olive-haupt); font-size: 0.92rem; font-weight: 600; padding: 10px 0; border-bottom: 1px solid rgba(56,78,51,0.1); transition: color 0.2s; }
     .sidebar-nav-link:last-child { border-bottom: none; padding-bottom: 0; }
     .sidebar-nav-link:hover { color: var(--olive-dark); }
     .sidebar-nav-link::before { content: '→'; font-size: 0.85rem; }
-    .diagnostik-ort { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.12em; color: var(--terracotta-caps); margin-bottom: 6px; }
+    .diagnostik-ort { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing:0.06em; color: var(--terracotta-caps); margin-bottom: 6px; }
 
     footer { background:#ECE8E0; border-top:1px solid rgba(56,78,51,0.10); padding: 16px 0; font-size: 0.8rem; color:var(--text-muted); }
     .footer-slim-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
