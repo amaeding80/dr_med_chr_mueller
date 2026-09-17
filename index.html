@@ -1568,39 +1568,6 @@
     }
     .tfc-divider { display: none; }
 
-    /* ── PC-Desktop Termin-Kachel (links), erscheint nach dem Scrollen über den Hero ── */
-    .pc-termin-card {
-      display: none;
-      position: fixed;
-      left: 28px;
-      z-index: 590;
-      background: rgba(255,255,255,0.97);
-      border: 1px solid rgba(56,78,51,0.14);
-      border-left: 4px solid var(--olive-haupt);
-      border-radius: 12px;
-      padding: 18px 24px 18px 20px;
-      box-shadow: 0 8px 28px rgba(0,0,0,0.10);
-      min-width: 200px;
-    }
-    .ptc-label { font-family: var(--font-sans); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; display: block; }
-    .ptc-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 9px 0; font-family: var(--font-sans); font-size: 1rem; font-weight: 600; color: var(--olive-haupt); text-decoration: none; cursor: pointer; background: none; border: none; width: 100%; transition: color 0.2s; }
-    .ptc-row:hover { color: var(--terracotta); }
-    .ptc-arrow { font-size: 0.95rem; opacity: 0.55; transition: opacity 0.2s, transform 0.2s; }
-    .ptc-row:hover .ptc-arrow { opacity: 1; transform: translateX(2px); }
-    .ptc-divider { height: 1px; background: rgba(56,78,51,0.14); }
-    body.modal-open .pc-termin-card { display: none !important; }
-    @media (min-width: 1025px) {
-      .pc-termin-card {
-        display: block;
-        bottom: 32px;
-        top: auto;
-        opacity: 0;
-        transform: translateX(-30px);
-        pointer-events: none;
-        transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.4,0,0.2,1);
-      }
-      .pc-termin-card.ptc-visible { opacity: 1; transform: translateX(0); pointer-events: auto; }
-    }
 
     /* ── Standort-Tabs: ab Tablet immer beide Kacheln, keine Buttons ── */
     @media (min-width: 680px) {
@@ -2104,17 +2071,6 @@
     </button>
   </div>
 
-  <!-- PC-DESKTOP TERMIN-KACHEL (links, erscheint nach dem Hero) -->
-  <div class="pc-termin-card" id="pc-termin-card" aria-hidden="true">
-    <span class="ptc-label">Termin buchen</span>
-    <button class="ptc-row" onclick="openTerminModal(null,'wernigerode')" aria-label="Termin Wernigerode buchen">
-      <span>Wernigerode</span><span class="ptc-arrow">→</span>
-    </button>
-    <div class="ptc-divider"></div>
-    <button class="ptc-row" onclick="openTerminModal(null,'heudeber')" aria-label="Termin Heudeber buchen">
-      <span>Heudeber</span><span class="ptc-arrow">→</span>
-    </button>
-  </div>
 </main>
 
   <script>
@@ -3536,8 +3492,7 @@ function filterStandort(which) {
     // ── Tablet Float CTA: erscheint nach Leistungs-Chips, verschwindet beim Footer ──
     (function() {
       var floatCta = document.getElementById('tablet-float-cta');
-      var pcCard = document.getElementById('pc-termin-card');
-      if (!floatCta && !pcCard) return;
+      if (!floatCta) return;
 
       var chipsSection = document.querySelector('.leistungs-chips-desktop');
       var footer = document.querySelector('footer');
@@ -3561,11 +3516,6 @@ function filterStandort(which) {
         if (floatCta) {
           floatCta.classList.toggle('tfc-visible', sichtbar);
           floatCta.setAttribute('aria-hidden', sichtbar ? 'false' : 'true');
-        }
-        // Desktop-Termin-Kachel (links): gleiche Logik, eigene Klasse
-        if (pcCard) {
-          pcCard.classList.toggle('ptc-visible', sichtbar);
-          pcCard.setAttribute('aria-hidden', sichtbar ? 'false' : 'true');
         }
       }
 
