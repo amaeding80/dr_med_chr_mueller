@@ -214,6 +214,50 @@
       .fact-leiste { grid-template-columns: repeat(3, 1fr) !important; gap: 10px !important; margin: 12px 0 16px !important; }
     }
 
+    /* ── Mobile Bottom Bar (nur Smartphone Hochformat) ── */
+    .mobile-bottom-bar { display: none; }
+    @media (max-width: 679px) and (orientation: portrait) {
+      .mobile-bottom-bar {
+        display: flex !important;
+        position: fixed !important;
+        bottom: 12px !important;
+        left: 12px !important;
+        right: 12px !important;
+        z-index: 9999 !important;
+        background: rgba(255,255,255,0.96) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        border: 1px solid rgba(110,145,98,0.25) !important;
+        border-radius: 11px !important;
+        padding: 10px !important;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.15) !important;
+        gap: 0 !important;
+        align-items: center !important;
+        transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease !important;
+      }
+      .mobile-bottom-bar .bar-loc-btn {
+        flex: 1 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        padding: 12px 10px !important;
+        background: none; border: none; border-radius: 11px; cursor: pointer; transition: background 0.18s; text-decoration: none;
+      }
+      .mobile-bottom-bar .bar-loc-btn:active { background: rgba(56,78,51,0.12); }
+      .mobile-bottom-bar .bar-divider { width: 1px; height: 28px; background: rgba(56,78,51,0.25); flex-shrink: 0; }
+      .mobile-bottom-bar .bar-loc-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+      .mobile-bottom-bar .bar-city { font-size: 1rem !important; font-weight: 700 !important; color: var(--text); white-space: nowrap; }
+      .mobile-bottom-bar .bar-hint { font-size: 0.82rem !important; color: var(--olive-haupt); white-space: nowrap; }
+      .mobile-bottom-bar.bar-hidden { transform: translateY(140%) !important; opacity: 0 !important; pointer-events: none !important; }
+      .terracotta-dot { width: 10px; height: 10px; background: var(--terracotta); border-radius: 50%; flex-shrink: 0; }
+    }
+    @media (max-width: 390px) and (orientation: portrait) {
+      .mobile-bottom-bar .bar-city { font-size: 0.88rem !important; }
+      .mobile-bottom-bar .bar-hint { font-size: 0.75rem !important; }
+    }
+    body.modal-open .mobile-bottom-bar { display: none !important; }
+
     /* ── PC-Desktop Termin-Kachel (links, immer sichtbar) ── */
     .pc-termin-card {
       display: none;
@@ -403,6 +447,43 @@
   </a>
 </div>
 
+<!-- Mobile Bottom Bar -->
+<div class="mobile-bottom-bar">
+  <a class="bar-loc-btn" href="index.html#empfang">
+    <span class="terracotta-dot"></span>
+    <div class="bar-loc-text">
+      <span class="bar-city">Wernigerode</span>
+      <span class="bar-hint">Termin buchen</span>
+    </div>
+  </a>
+  <div class="bar-divider"></div>
+  <a class="bar-loc-btn" href="index.html#empfang">
+    <span class="terracotta-dot"></span>
+    <div class="bar-loc-text">
+      <span class="bar-city">Heudeber</span>
+      <span class="bar-hint">Termin buchen</span>
+    </div>
+  </a>
+</div>
+<script>
+  // ── Bottom Bar: bei Footer ausblenden ──
+  (function() {
+    var bar = document.querySelector('.mobile-bottom-bar');
+    var footer = document.querySelector('footer');
+    if (!bar || !footer) return;
+    function checkFooter() {
+      var fr = footer.getBoundingClientRect();
+      if (fr.top < window.innerHeight - 20) {
+        bar.classList.add('bar-hidden');
+      } else {
+        bar.classList.remove('bar-hidden');
+      }
+    }
+    window.addEventListener('scroll', checkFooter, { passive: true });
+    checkFooter();
+  })();
+</script>
+
 <script>
 (function() {
   var feiertage = [[1,1],[1,6],[5,1],[8,15],[10,3],[11,1],[12,24],[12,25],[12,26],[12,31]];
@@ -450,6 +531,8 @@ function toggleMobMenu() {
   burgerBtn.setAttribute('aria-expanded',offen);
   mobMenu.setAttribute('aria-hidden',!offen);
   document.body.style.overflow = offen ? '' : 'hidden';
+  var bar = document.querySelector('.mobile-bottom-bar');
+  if (bar) bar.classList.toggle('bar-hidden', !offen);
 }
 
 document.getElementById('jahr').textContent=new Date().getFullYear();
