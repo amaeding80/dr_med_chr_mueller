@@ -1,0 +1,69 @@
+/* Land-Harz-Praxis – Ergaenzungen Okt. 2026 (nach dem Inline-CSS geladen) */
+
+/* Buttons sollen die Schrift erben */
+button, input, select, textarea { font-family: inherit; }
+
+/* Hero: zweite Zeile immer Terracotta */
+.hero-title-main em { color: var(--terracotta) !important; font-style: normal !important; }
+
+/* ---------- Hero-Foto (Desktop/Tablet) ---------- */
+.hero-portrait-col.foto-spalte { display: none; }
+.foto-rahmen {
+    background: var(--harz-sand-soft);
+    padding: 10px;
+    border-radius: 22px;
+}
+.foto-rahmen img {
+    display: block; width: 100%; height: auto;
+    aspect-ratio: 427 / 560; object-fit: cover; object-position: 50% 0;
+    border-radius: 14px;
+}
+.slot-card { border-top: 2px solid var(--terracotta) !important; }
+
+@media (min-width: 744px) and (min-height: 501px) {
+  .hero-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
+    gap: 48px;
+    align-items: start;
+  }
+  .hero-portrait-col.foto-spalte { display: block; justify-self: end; width: 100%; }
+}
+/* Tablet hoch: Foto schmaler, Kachel bleibt wie bisher unter dem Text */
+@media (min-width: 744px) and (max-width: 1024px) and (orientation: portrait) {
+  .hero-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 260px); gap: 32px; }
+}
+/* quer + Desktop: Kachel ueberlappt die Unterkante vom Foto */
+@media (min-width: 768px) and (min-height: 501px) and (orientation: landscape) {
+  .hero { padding-top: 40px !important; padding-bottom: 28px !important; }
+  .hero-portrait-col.foto-spalte { padding-bottom: 112px; max-width: 360px; }
+}
+@media (min-width: 768px) and (max-width: 1100px) and (min-height: 501px) and (orientation: landscape) {
+  .hero-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 300px); gap: 32px; }
+  .hero-portrait-col.foto-spalte { max-width: 300px; }
+}
+/* Nest Hub & Co.: wenig Hoehe */
+@media (min-width: 768px) and (min-height: 501px) and (max-height: 700px) and (orientation: landscape) {
+  .hero { padding-top: 20px !important; }
+  .foto-rahmen img { aspect-ratio: 427 / 470; object-position: 50% 8%; }
+  .hero-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 260px); }
+  .hero-portrait-col.foto-spalte { max-width: 260px; padding-bottom: 104px; }
+}
+@media (min-width: 1400px) {
+  .hero-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 380px); gap: 72px; }
+  .hero-portrait-col.foto-spalte { max-width: 380px; }
+}
+
+/* Tablet hoch: Kachel klebte am linken Rand – an den Container angleichen */
+@media (min-width: 680px) and (max-width: 1024px) and (orientation: portrait) {
+  .hero .slot-card { margin-left: 28px !important; width: calc(100% - 56px) !important; }
+}
+
+/* Handy hoch: etwas mehr Luft ueber der H1 (Header ist fixed, 52px) */
+@media (max-width: 679px) and (orientation: portrait) {
+  .hero { padding-top: 76px !important; }
+}
+/* 680–767 hoch: Header ist dort fixed (95px) und lag ueber der H1 – Bugfix */
+@media (min-width: 680px) and (max-width: 767px) and (orientation: portrait) {
+  .hero { padding-top: 119px !important; }
+}

@@ -1595,6 +1595,9 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="css/land-harz.css">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="js/land-harz.js" defer></script>
 </head>
 <body>
   <!-- HEADER -->
@@ -1616,7 +1619,7 @@
         <div class="nav-right">
           <div class="live-status-pill">
             <span id="live-status-dot" class="pulse-dot"></span>
-            <span id="live-status-text">Status wird geprüft...</span>
+            <span id="live-status-text">Sprechzeiten siehe unten</span>
           </div>
         </div>
         <button class="burger-btn" id="burger-btn" onclick="toggleMobMenu()" aria-label="Menü öffnen" aria-expanded="false">
@@ -1651,6 +1654,14 @@
             <button class="hero-chip" id="chip-ils" onclick="filterStandort('ils')" aria-label="Standort Heudeber anzeigen">
               <span class="hero-chip-dot"></span>Heudeber · Bahnhofstraße 18
             </button>
+          </div>
+        </div>
+        <div class="hero-portrait-col foto-spalte" id="hero-foto">
+          <div class="foto-rahmen">
+            <picture>
+              <source srcset="img/dr-mueller-empfang.webp" type="image/webp">
+              <img src="img/dr-mueller-empfang.jpg" alt="Dr. med. Christian Müller am Empfang der Praxis" width="427" height="640" fetchpriority="high">
+            </picture>
           </div>
         </div>
       </div>
