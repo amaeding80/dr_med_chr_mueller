@@ -152,30 +152,35 @@ html:not(.js) .akk-zeichen { display: none; }
 .insta-kopf { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 28px; flex-wrap: wrap; }
 .insta-kopf .sec-title { margin: 0 0 8px; }
 .insta-sub { color: var(--text-muted); margin: 0; }
-.insta-profil {
-    display: inline-flex; align-items: center; gap: 10px; min-height: 44px;
-    color: var(--olive-haupt); font-weight: 600; text-decoration: none;
+.insta-profil { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.insta-avatar { width: 44px; height: 44px; border-radius: 50%; background: #F2ECE4; color: var(--olive-haupt); display: inline-flex; align-items: center; justify-content: center; }
+.insta-handle { font-weight: 600; color: var(--text); }
+.insta-folgen {
+    display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px;
+    background: var(--olive-haupt); color: #fff; border-radius: 8px;
+    font-weight: 600; text-decoration: none; transition: background .2s;
 }
-.insta-profil:hover span { text-decoration: underline; }
-.insta-reihe { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.insta-kachel {
-  aspect-ratio: 1 / 1;
-  background: var(--harz-sand-soft);
-  border: 1px dashed var(--harz-sand);
-  border-radius: 12px;
-  display: flex; align-items: flex-end; padding: 14px;
+.insta-folgen .ig-icon { width: 18px; height: 18px; }
+.insta-folgen:hover { background: var(--olive-dark); }
+.insta-folgen:focus-visible, .insta-kachel:focus-visible { outline: 2px solid var(--olive-haupt); outline-offset: 3px; }
+.insta-folgen[aria-disabled="true"], .insta-kachel[aria-disabled="true"] { cursor: default; }
+/* Kacheln bewusst nicht zu gross: Quellbilder sind teils nur ~90px breit */
+.insta-raster { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; max-width: 660px; }
+.insta-kachel { display: block; aspect-ratio: 1 / 1; background: #F2ECE4; padding: 6px; border-radius: 14px; overflow: hidden; }
+.insta-kachel img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 9px; transition: opacity .2s; }
+.insta-kachel:not([aria-disabled="true"]):hover img { opacity: .88; }
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+@media (max-width: 1024px) { .insta-raster { max-width: 560px; } }
+/* Desktop: Kopf links, Raster rechts – keine leere Flaeche neben dem Raster */
+@media (min-width: 1025px) {
+  .insta-sec .container { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,620px); gap: 56px; align-items: center; }
+  .insta-kopf { flex-direction: column; align-items: flex-start; margin-bottom: 0; }
+  .insta-raster { max-width: none; }
 }
-.insta-kachel span { font-size: 0.875rem; color: var(--text-muted); }
-.pfeil-link {
-    display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin-top: 16px;
-    color: var(--olive-haupt); font-weight: 600; text-decoration: none;
-}
-.pfeil-link:hover { text-decoration: underline; }
-.insta-profil:focus-visible, .pfeil-link:focus-visible { outline: 2px solid var(--olive-haupt); outline-offset: 3px; border-radius: 4px; }
 @media (max-width: 599px) {
   .insta-sec { padding: 52px 0; }
-  .insta-reihe { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  .insta-kachel-3 { display: none; }
+  .insta-raster { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; max-width: 380px; }
+  .insta-kachel { padding: 5px; border-radius: 12px; }
 }
 
 /* ---------- Termin-Leiste & Hilfe-Button (Korrekturen EasyPeecy) ---------- */

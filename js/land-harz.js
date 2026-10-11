@@ -45,9 +45,21 @@ function toggleService(el) {
 document.addEventListener('DOMContentLoaded', initAkk);
 // TODO: Akkordeon auch auf den Unterseiten nutzen, wenn Dr. Müller die Texte freigibt
 
-// Instagram: Profil-Link fehlt noch
-// TODO: href bei a[data-todo="instagram"] eintragen, sobald der Profilname feststeht
+// Instagram – nur HIER Name eintragen und freischalten
+var instaName = 'praxis-harz'; // TODO: echten Instagram-Namen eintragen
+var instaAktiv = false; // TODO: auf true setzen, sobald das Profil online ist
+
 document.addEventListener('DOMContentLoaded', () => {
-    var links = document.querySelectorAll('a[data-todo="instagram"]');
-    links.forEach(a => a.addEventListener('click', e => { if (a.getAttribute('href') === '#') e.preventDefault(); }));
+    document.querySelectorAll('[data-insta="name"]').forEach(el => { el.textContent = '@' + instaName; });
+    document.querySelectorAll('a[data-insta="link"]').forEach(a => {
+        if (instaAktiv) {
+            a.href = 'https://www.instagram.com/' + instaName + '/';
+            a.target = '_blank'; a.rel = 'noopener';
+            a.removeAttribute('aria-disabled');
+            a.removeAttribute('tabindex');
+            var hint = a.querySelector('.sr-only'); if (hint) hint.textContent = ' (Instagram, neues Fenster)';
+        } else {
+            a.addEventListener('click', e => e.preventDefault()); // noch nicht aktiv
+        }
+    });
 });
