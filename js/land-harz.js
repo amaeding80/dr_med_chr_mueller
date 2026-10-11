@@ -44,3 +44,10 @@ function toggleService(el) {
 
 document.addEventListener('DOMContentLoaded', initAkk);
 // TODO: Akkordeon auch auf den Unterseiten nutzen, wenn Dr. Müller die Texte freigibt
+
+// Instagram: Profil-Link fehlt noch
+// TODO: href bei a[data-todo="instagram"] eintragen, sobald der Profilname feststeht
+document.addEventListener('DOMContentLoaded', () => {
+    var links = document.querySelectorAll('a[data-todo="instagram"]');
+    links.forEach(a => a.addEventListener('click', e => { if (a.getAttribute('href') === '#') e.preventDefault(); }));
+});
