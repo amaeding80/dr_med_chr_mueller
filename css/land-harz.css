@@ -260,3 +260,27 @@ html:not(.js) .akk-zeichen { display: none; }
         font-size: 0.8125rem !important; line-height: 1.35 !important; font-weight: 600;
     }
 }
+
+/* Handy hoch: Hilfe-Button rechts ueber der Termin-Leiste statt darauf */
+@media (max-width: 679px) and (orientation: portrait) {
+  .pxa-btn {
+    left: auto !important; right: 12px !important;
+    bottom: calc(113px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+/* Handy quer: Orts-Buttons in der Leiste wie die Buttons im Entwurf */
+@media (orientation: landscape) and (max-height: 500px) {
+    .mobile-bottom-bar .bar-loc-btn {
+        background: var(--olive-soft) !important;
+        border: 1px solid rgba(56,78,51,0.18) !important;
+        border-radius: 8px !important;
+        min-height: 40px; margin-left: 4px;
+        color: var(--olive-haupt);
+        font-family: var(--font-sans);
+        transition: background .2s, border-color .2s;
+    }
+    .mobile-bottom-bar .bar-loc-btn:hover { background: #E2EADD !important; border-color: var(--olive-haupt) !important; }
+    .mobile-bottom-bar .bar-loc-btn:focus-visible { outline: 2px solid var(--olive-haupt); outline-offset: 2px; }
+    .mobile-bottom-bar .bar-city { color: var(--olive-haupt) !important; }
+    .mobile-bottom-bar .bar-divider { display: none !important; }
+}
