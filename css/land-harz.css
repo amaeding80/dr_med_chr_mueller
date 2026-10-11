@@ -336,3 +336,8 @@ html:not(.js) .akk-zeichen { display: none; }
     padding-left: max(28px, calc(256px - max(0px, (100vw - 1220px) / 2)));
   }
 }
+
+/* Handy hoch, niedrig (z.B. 375x667): Hilfe-Button etwas hoeher, damit er die Hero-Zeile nicht verdeckt */
+@media (max-width: 679px) and (orientation: portrait) and (max-height: 700px) {
+  .pxa-btn { bottom: calc(143px + env(safe-area-inset-bottom, 0px)) !important; }
+}
