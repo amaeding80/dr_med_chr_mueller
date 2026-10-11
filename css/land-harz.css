@@ -177,3 +177,45 @@ html:not(.js) .akk-zeichen { display: none; }
   .insta-reihe { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .insta-kachel-3 { display: none; }
 }
+
+/* ---------- Termin-Leiste & Hilfe-Button (Korrekturen EasyPeecy) ---------- */
+/* Handy hoch: Seitenende nicht von der Leiste verdecken */
+@media (max-width: 679px) and (orientation: portrait) {
+  body { padding-bottom: 104px; }
+  .mobile-bottom-bar .bar-hint { font-size: 0.875rem !important; }
+}
+/* Handy quer: Leiste einzeilig + Hilfe-Button rechts daneben */
+@media (orientation: landscape) and (max-height: 500px) {
+    body { padding-bottom: 60px; }
+    .mobile-bottom-bar { bottom: 8px !important; right: 64px !important; padding: 3px 3px 3px 12px !important; }
+    .mobile-bottom-bar::before {
+        content: "Termin buchen";
+        font-size: 0.875rem; font-weight: 600; color: var(--olive-haupt);
+        white-space: nowrap; padding-right: 8px;
+    }
+    .mobile-bottom-bar .bar-loc-btn { padding: 0 12px !important; min-height: 38px; }
+    .mobile-bottom-bar .bar-city { font-size: 0.875rem !important; }
+    .mobile-bottom-bar .bar-hint {
+        position: absolute !important; width: 1px; height: 1px; overflow: hidden;
+        clip: rect(0 0 0 0); white-space: nowrap;
+    }
+    .mobile-bottom-bar .terracotta-dot { width: 8px; height: 8px; }
+    .pxa-btn { left: auto !important; right: 12px !important; bottom: 8px !important; width: 44px !important; height: 44px !important; }
+    .pxa-btn svg { width: 21px !important; height: 21px !important; }
+}
+/* Nest Hub & Co. (quer, wenig Hoehe): Hero kuerzer, Hilfe-Button nach rechts */
+@media (min-width: 768px) and (min-height: 501px) and (max-height: 700px) and (orientation: landscape) {
+  .hero { padding-top: 12px !important; padding-bottom: 20px !important; }
+  .foto-rahmen img { aspect-ratio: 427 / 420; }
+  .hero-portrait-col.foto-spalte { padding-bottom: 96px; }
+  .pxa-btn { left: auto !important; right: 14px !important; bottom: 14px !important; width: 44px !important; height: 44px !important; }
+}
+
+/* Handy: Fachrichtungs-Zeile lesbar statt Versalien */
+@media (max-width: 767px), (orientation: landscape) and (max-height: 500px) {
+  .hero-location { font-size: 0.875rem !important; text-transform: none !important; letter-spacing: normal !important; }
+}
+
+/* Hinweis unter den Platzhaltern (wie lang der Text sein soll) */
+.platzh-mini { font-size: 0.875rem; color: var(--text-muted); margin: 6px 0 0; }
+.mess-kachel { display: flex; flex-direction: column; }
