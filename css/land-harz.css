@@ -230,3 +230,33 @@ html:not(.js) .akk-zeichen { display: none; }
   html body .loc-box span.badge-wernigerode, html body .loc-box span.badge-ilsenburg,
   html body .leistungs-kachel span, html body .mob-standort-zeile span, html body .hero .hero-chip, html body .chip-arrow span { font-size: 0.8125rem !important; }
 }
+
+/* ---------- Mobil-Hero: Foto gross oben mit Namenszeile (Variante C) ---------- */
+.foto-rahmen { position: relative; }
+.foto-name { display: none; }
+@media (max-width: 679px) and (orientation: portrait) {
+  .hero-layout { display: flex; flex-direction: column; }
+  .hero-portrait-col.foto-spalte { display: block !important; order: -1; margin: 0 0 20px; }
+  .foto-rahmen { padding: 6px; border-radius: 18px; }
+  .foto-rahmen img {
+      border-radius: 14px;
+      aspect-ratio: 4 / 3; max-height: 38vh; max-height: 38svh;
+      object-position: 50% 16%;
+  }
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  .hero > .container { padding-right: 16px !important; }
+  .hero-layout { display: grid !important; grid-template-columns: minmax(0, 38%) minmax(0, 1fr); gap: 20px; align-items: center; }
+  .hero-portrait-col.foto-spalte { display: block !important; grid-row: 1; grid-column: 1; }
+  .hero-text-col { grid-row: 1; grid-column: 2; }
+  .foto-rahmen { padding: 6px; border-radius: 16px; }
+  .foto-rahmen img { border-radius: 12px; aspect-ratio: auto; height: 50vh; object-position: 50% 14%; }
+}
+@media (max-width: 679px) and (orientation: portrait), (orientation: landscape) and (max-height: 500px) {
+    .foto-name {
+        display: block;
+        margin: 0; padding: 7px 6px 2px;
+        color: var(--text);
+        font-size: 0.8125rem !important; line-height: 1.35 !important; font-weight: 600;
+    }
+}
