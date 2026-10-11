@@ -311,7 +311,7 @@ html:not(.js) .akk-zeichen { display: none; }
 }
 @media (orientation: landscape) and (max-height: 500px) {
   .journal-kopf-re { align-items: center; gap: 18px; }
-  .digi-bild { flex-basis: 220px; width: 220px; }
+  .digi-bild { flex: none; width: 220px; }
 }
 
 /* Team: Foto statt Initialen */
