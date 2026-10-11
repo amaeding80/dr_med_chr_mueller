@@ -353,3 +353,9 @@ html:not(.js) .akk-zeichen { display: none; }
 .recht-hinweis { margin-top: 40px; background: var(--olive-soft); border: 1px solid rgba(56,78,51,.18); border-radius: 14px; padding: 22px 26px; }
 .recht-hinweis h2 { margin-top: 0; }
 .recht-hinweis li { margin-bottom: 6px; }
+
+/* Unterseiten: lange Textbloecke zuklappbar (gleiches Akkordeon wie Startseite) */
+.akk-kopf .akk-btn { display: flex; align-items: center; justify-content: space-between; gap: 16px; font: inherit; letter-spacing: inherit; }
+.akk-kopf .akk-btn > span:first-child { min-width: 0; }
+.akk-panel[hidden] { display: none !important; }
+.akk-panel > :first-child { margin-top: 0; }
