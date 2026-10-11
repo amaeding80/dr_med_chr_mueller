@@ -329,3 +329,10 @@ html:not(.js) .akk-zeichen { display: none; }
   .pxa-btn { width: 40px !important; height: 40px !important; }
   .pxa-btn svg { width: 19px !important; height: 19px !important; }
 }
+
+/* Unterseiten Desktop: Inhalt rechts neben der festen Termin-Karte */
+@media (min-width: 1025px) {
+  body:has(#pc-termin-card) .container:not(header .container) {
+    padding-left: max(28px, calc(256px - max(0px, (100vw - 1220px) / 2)));
+  }
+}
