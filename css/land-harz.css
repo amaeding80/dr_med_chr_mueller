@@ -294,21 +294,21 @@ html:not(.js) .akk-zeichen { display: none; }
 .bild-rahmen { background: #F2ECE4; padding: 6px; border-radius: 14px; line-height: 0; }
 .bild-rahmen img { display: block; width: 100%; height: auto; border-radius: 9px; }
 
-/* Leistungen: kleines Bild neben dem Text im offenen Feld */
+/* Leistungen: Bild neben dem Text im offenen Feld (Quellen 640px breit, Anzeige max. 220px) */
 .service-body:not([hidden]) { display: grid; grid-template-columns: minmax(0,1fr) auto; column-gap: 28px; align-items: start; }
 .leist-text { min-width: 0; }
-.leist-bild { order: 2; width: 150px; margin-top: 4px; }
-.leist-bild.leist-bild-hoch { width: 118px; }
+.leist-bild { order: 2; width: 220px; margin-top: 4px; }
+@media (max-width: 1024px) { .leist-bild { width: 180px; } }
 @media (max-width: 767px), (orientation: landscape) and (max-height: 500px) {
   .service-body:not([hidden]) { grid-template-columns: minmax(0,1fr); }
-  .leist-bild { order: -1; width: 132px; margin: 0 0 12px; }
-  .leist-bild.leist-bild-hoch { width: 104px; }
+  .leist-bild { order: -1; width: 100%; max-width: 280px; margin: 0 0 12px; }
 }
 
-/* Digitaler Empfang: Bild rechts neben dem Einleitungssatz */
+/* Digitaler Empfang: Bild rechts neben dem Einleitungssatz (Hochformat, als 4:3 zugeschnitten) */
 .journal-kopf-re { display: flex; align-items: flex-end; gap: 28px; }
 @media (min-width: 768px) { .journal-header { gap: 40px; } .journal-title { flex: 0 0 auto; } }
 .digi-bild { flex: 0 0 300px; width: 300px; }
+.digi-bild img { aspect-ratio: 4 / 3; object-fit: cover; object-position: 50% 4%; }
 @media (max-width: 1024px) { .digi-bild { flex-basis: 250px; width: 250px; } }
 @media (max-width: 767px) {
   .journal-kopf-re { flex-direction: column; align-items: flex-start; gap: 12px; width: 100%; }
@@ -319,15 +319,15 @@ html:not(.js) .akk-zeichen { display: none; }
   .digi-bild { flex: none; width: 220px; }
 }
 
-/* Team: Foto statt Initialen */
+/* Team: rundes Foto, Ausschnitt auf das Gesicht (Quelle empfang-gespraech) */
 .team-card-avatar-eq.team-foto { display: block !important; background: #F2ECE4; overflow: hidden; box-shadow: 0 0 0 3px #F2ECE4; }
-.team-foto img { width: 128%; max-width: none; height: auto; margin: -2% 0 0 -6%; display: block; }
-.team-karte-foto-cm { background: #F2ECE4 !important; align-items: flex-end !important; }
-.team-karte-bild { height: 168px; width: auto; display: block; border-radius: 10px 10px 0 0; }
+.team-foto img { width: 427%; max-width: none; height: auto; margin: -17% 0 0 -143%; display: block; }
+.team-karte-foto-cm { background: #F2ECE4 !important; padding: 0 !important; overflow: hidden; }
+.team-karte-bild { width: 100%; height: 100%; object-fit: cover; object-position: 35% 30%; display: block; }
 
-/* Unterseiten: kleines Bild oben in der Seitenleiste */
-.seiten-bild { width: 170px; align-self: flex-start; }
-.seiten-bild.seiten-bild-hoch { width: 140px; }
+/* Unterseiten: Bild oben in der Seitenleiste */
+.seiten-bild { width: 100%; max-width: 360px; }
+.panel-bild { width: 100%; max-width: 320px; margin: 0 0 18px; }
 
 /* Hilfe-Button auf kleinen Handys 40px */
 @media (max-width: 380px), (max-width: 767px) and (max-height: 700px), (orientation: landscape) and (max-height: 500px) {
