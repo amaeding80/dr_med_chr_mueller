@@ -219,3 +219,14 @@ html:not(.js) .akk-zeichen { display: none; }
 /* Hinweis unter den Platzhaltern (wie lang der Text sein soll) */
 .platzh-mini { font-size: 0.875rem; color: var(--text-muted); margin: 6px 0 0; }
 .mess-kachel { display: flex; flex-direction: column; }
+
+/* Handy: nichts unter 13px (ausser Footer-Kleingedrucktes) */
+@media (max-width: 767px), (orientation: landscape) and (max-height: 500px) {
+  .brand-mark span, .leistungs-label-mob, .swipe-hint, .service-tag-pill,
+  .sec-tag, .badge-wernigerode, .badge-ilsenburg { font-size: 0.8125rem !important; }
+  .compass-btn-title, .team-card-role-eq, .locations-sec td { font-size: 0.875rem !important; }
+}
+@media (max-width: 767px), (orientation: landscape) and (max-height: 500px) {
+  html body .loc-box span.badge-wernigerode, html body .loc-box span.badge-ilsenburg,
+  html body .leistungs-kachel span, html body .mob-standort-zeile span, html body .hero .hero-chip, html body .chip-arrow span { font-size: 0.8125rem !important; }
+}
