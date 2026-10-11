@@ -1875,10 +1875,11 @@
       </div>
       <p class="swipe-hint" id="swipe-hint-journal" aria-hidden="true">Wischen →</p>
       <div class="download-center-v2" style="margin-top:28px;">
-        <div class="download-v2-head">
-          <h3>Ihre Unterlagen</h3>
+        <div class="download-v2-head akk-item">
+          <h3><button type="button" class="akk-btn unterl-btn" id="unterl-btn" aria-expanded="false" aria-controls="unterl-box"><span>Ihre Unterlagen</span><span class="akk-zeichen" aria-hidden="true"></span></button></h3>
           <span style="font-size:0.78rem; color:var(--text-muted); font-family:var(--font-sans);">In Ruhe zu Hause ausfüllen — für einen guten Termin ohne Warterei</span>
         </div>
+        <div id="unterl-box" role="region" aria-labelledby="unterl-btn">
         <div class="download-v2-grid">
           <div class="download-paper-card" style="opacity:0.45; pointer-events:none; cursor:default;">
             <div>
@@ -1906,6 +1907,7 @@
           </div>
         </div>
         <p class="swipe-hint" id="swipe-hint-download" aria-hidden="true">Wischen →</p>
+        </div>
       </div>
     </div>
   </section>
@@ -1924,43 +1926,49 @@
           </a>
         </div>
         <div class="services-list">
-          <div class="service-item active">
-            <div class="service-header" onclick="toggleService(this)">
-              <div class="service-title-wrap"><span class="service-num">01</span><h3 class="service-item-title">Hausärztliche Versorgung &amp; Internistik</h3></div>
-              <div class="service-toggle-icon">
+          <div class="service-item akk-item active">
+            <h3 class="service-h">
+              <button type="button" class="service-header akk-btn" id="leist-btn-1" aria-expanded="true" aria-controls="leist-1" data-gruppe="leistungen">
+                <span class="service-title-wrap"><span class="service-num">01</span><span class="service-item-title">Hausärztliche Versorgung &amp; Internistik</span></span>
+                <span class="service-toggle-icon">
               <svg class="si-plus" width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="6.5" y1="1" x2="6.5" y2="12"/><line x1="1" y1="6.5" x2="12" y2="6.5"/></svg>
               <svg class="si-x" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="1.5" y1="1.5" x2="10.5" y2="10.5"/><line x1="10.5" y1="1.5" x2="1.5" y2="10.5"/></svg>
-            </div>
-            </div>
-            <div class="service-body">
+                </span>
+              </button>
+            </h3>
+            <div class="service-body" id="leist-1" role="region" aria-labelledby="leist-btn-1">
               <p class="service-desc">Wir möchten für unsere Patientinnen und Patienten langfristiger medizinischer Ansprechpartner sein – bei akuten Beschwerden ebenso wie bei chronischen Erkrankungen und Fragen zur Vorsorge. Unser Spektrum umfasst Akutmedizin, Behandlung chronischer Erkrankungen, Impfberatung sowie die Koordination fachärztlicher Behandlungen. Diagnostik in der Praxis: Labor, EKG, Langzeitblutdruck, Lungenfunktion und Sonografie.</p>
               <div class="service-tags"><span class="service-tag-pill">Akutmedizin</span><span class="service-tag-pill">Chronische Erkrankungen</span><span class="service-tag-pill">Labor · EKG · Sonografie</span><span class="service-tag-pill">DMP-Programme</span></div>
               <a href="hausarztmedizin.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:0.82rem;font-weight:600;color:var(--olive-haupt);text-decoration:none;">Mehr zur Hausarztmedizin <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg></a>
             </div>
           </div>
-          <div class="service-item">
-            <div class="service-header" onclick="toggleService(this)">
-              <div class="service-title-wrap"><span class="service-num">02</span><h3 class="service-item-title">Ernährungsmedizin</h3></div>
-              <div class="service-toggle-icon">
+          <div class="service-item akk-item">
+            <h3 class="service-h">
+              <button type="button" class="service-header akk-btn" id="leist-btn-2" aria-expanded="false" aria-controls="leist-2" data-gruppe="leistungen">
+                <span class="service-title-wrap"><span class="service-num">02</span><span class="service-item-title">Ernährungsmedizin</span></span>
+                <span class="service-toggle-icon">
               <svg class="si-plus" width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="6.5" y1="1" x2="6.5" y2="12"/><line x1="1" y1="6.5" x2="12" y2="6.5"/></svg>
               <svg class="si-x" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="1.5" y1="1.5" x2="10.5" y2="10.5"/><line x1="10.5" y1="1.5" x2="1.5" y2="10.5"/></svg>
-            </div>
-            </div>
-            <div class="service-body">
+                </span>
+              </button>
+            </h3>
+            <div class="service-body" id="leist-2" role="region" aria-labelledby="leist-btn-2">
               <p class="service-desc">Adipositas, Stoffwechselstörungen, Fettleber, Mangelernährung und Sarkopenie: Wir betrachten Ernährung als Teil der medizinischen Therapie – individuell, wissenschaftlich fundiert und ärztlich begleitet. Ernährung beeinflusst zahlreiche Erkrankungen – gleichzeitig können Erkrankungen selbst den Ernährungszustand erheblich verändern.</p>
               <div class="service-tags"><span class="service-tag-pill">Adipositas &amp; Stoffwechsel</span><span class="service-tag-pill">Mangelernährung</span><span class="service-tag-pill">GLP-1/GIP-Therapie</span><span class="service-tag-pill">12-Wochen-Programm</span></div>
               <a href="ernaehrungsmedizin.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:0.82rem;font-weight:600;color:var(--olive-haupt);text-decoration:none;">Mehr zur Ernährungsmedizin <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg></a>
             </div>
           </div>
-          <div class="service-item">
-            <div class="service-header" onclick="toggleService(this)">
-              <div class="service-title-wrap"><span class="service-num">03</span><h3 class="service-item-title">Prävention &amp; Check-Up</h3></div>
-              <div class="service-toggle-icon">
+          <div class="service-item akk-item">
+            <h3 class="service-h">
+              <button type="button" class="service-header akk-btn" id="leist-btn-3" aria-expanded="false" aria-controls="leist-3" data-gruppe="leistungen">
+                <span class="service-title-wrap"><span class="service-num">03</span><span class="service-item-title">Prävention &amp; Check-Up</span></span>
+                <span class="service-toggle-icon">
               <svg class="si-plus" width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="6.5" y1="1" x2="6.5" y2="12"/><line x1="1" y1="6.5" x2="12" y2="6.5"/></svg>
               <svg class="si-x" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="1.5" y1="1.5" x2="10.5" y2="10.5"/><line x1="10.5" y1="1.5" x2="1.5" y2="10.5"/></svg>
-            </div>
-            </div>
-            <div class="service-body">
+                </span>
+              </button>
+            </h3>
+            <div class="service-body" id="leist-3" role="region" aria-labelledby="leist-btn-3">
               <p class="service-desc">Gesundheitsvorsorge bedeutet mehr als einen Laborzettel. Wir betrachten persönliche Risiken, Stoffwechsel, Lebensstil und – wo sinnvoll – die Körperzusammensetzung nach wissenschaftlich gesicherten Methoden. Das, was medizinisch sinnvoll und notwendig ist.</p>
               <div class="service-tags"><span class="service-tag-pill">Gesundheitsuntersuchungen</span><span class="service-tag-pill">Hautkrebsscreening</span><span class="service-tag-pill">Impfberatung</span><span class="service-tag-pill">Land-Harz GesundheitsCheck</span></div>
               <a href="praeventionsmedizin.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:0.82rem;font-weight:600;color:var(--olive-haupt);text-decoration:none;">Mehr zur Prävention <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg></a>

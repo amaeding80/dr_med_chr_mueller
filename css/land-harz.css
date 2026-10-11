@@ -67,3 +67,39 @@ button, input, select, textarea { font-family: inherit; }
 @media (min-width: 680px) and (max-width: 767px) and (orientation: portrait) {
   .hero { padding-top: 119px !important; }
 }
+
+/* ---------- Akkordeon (Leistungen + allgemein) ---------- */
+.service-h { margin: 0; font: inherit; }
+.akk-btn {
+    width: 100%; background: none; border: 0; padding: 0;
+    text-align: left; color: inherit; cursor: pointer;
+    min-height: 44px;
+}
+.akk-btn:focus-visible { outline: 2px solid var(--olive-haupt); outline-offset: 4px; border-radius: 6px; }
+.service-item-title { display: block; }
+.service-body, .service-item.active .service-body { max-height: none !important; overflow: visible; padding-top: 16px; padding-bottom: 8px; }
+.service-body[hidden] { display: none !important; }
+html:not(.js) .service-item .service-toggle-icon { display: none; }
+
+/* Unterlagen: zuklappbar */
+.unterl-btn { display: flex; align-items: center; gap: 12px; font-size: inherit; font-weight: inherit; color: inherit; }
+.akk-zeichen {
+  width: 28px; height: 28px; flex-shrink: 0;
+  border: 1px solid rgba(56,78,51,0.25); border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.akk-zeichen::before { content: "+"; font-size: 18px; line-height: 1; color: var(--olive-haupt); }
+.akk-btn[aria-expanded="true"] .akk-zeichen::before { content: "–"; }
+html:not(.js) .akk-zeichen { display: none; }
+#unterl-box[hidden] { display: none; }
+.download-v2-head.akk-item:not(.offen) { margin-bottom: 0; border-bottom: 0; padding-bottom: 0; }
+
+/* ---------- Handy: Fliesstext mind. 17px ---------- */
+@media (max-width: 767px), (orientation: landscape) and (max-height: 500px) {
+    body { font-size: 1.0625rem; }
+    main p:not(.hero-location):not(.swipe-hint):not(.leistungs-label-mob):not(.platzh-mini),
+    main li, .service-desc, .hero-lead-text, .journal-sub {
+        font-size: 1.0625rem !important;
+        line-height: 1.6 !important;
+    }
+}
