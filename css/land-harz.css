@@ -617,3 +617,44 @@ html:not(.js) .akk-zeichen { display: none; }
   body:has(#demo-buttons-wrap) ~ .pxa-panel { bottom: calc(165px + env(safe-area-inset-bottom, 0px)); max-height: min(680px, calc(100vh - 185px)); }
 }
 
+/* Handy quer: Kopf „Digitaler Empfang“ wie hochkant gestapelt (sonst 4 Zeilen in schmaler Spalte bei 667px);
+   Hero-Standort-Knoepfe passen wieder in eine Zeile (bei 667px fehlten 5px -> Umbruch unter die Termin-Leiste) */
+@media (orientation: landscape) and (max-height: 500px) {
+  #empfang .journal-header { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 18px; }
+  #empfang .journal-title { font-size: 1.6rem; }
+  #empfang .journal-sub { max-width: 100%; }
+  .hero .hero-chip { padding-left: 7px; padding-right: 7px; }
+}
+
+/* Handy hochkant schmal: Praxis-Kompass-Karte mit 18px statt 44px Rand – die 3 Anliegen-Knoepfe bekommen Platz
+   (vorher „Sym-ptom“, „Ernäh-rungs-medizin“ in drei Zeilen) */
+@media (max-width: 479px) and (orientation: portrait) {
+  #kompass.compass-sec, #kompass .compass-sec { padding-left: 18px !important; padding-right: 18px !important; }
+  #kompass .compass-btn { padding: 10px 6px !important; }
+}
+
+/* Tablet hochkant (bis 900px): Kopf „Digitaler Empfang“ gestapelt statt 3–4 Zeilen in schmaler Spalte;
+   „Ihre Unterlagen“ nicht mehr zweizeilig neben dem Plus */
+@media (min-width: 680px) and (max-width: 900px) and (min-height: 501px) {
+  #empfang .journal-header { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 24px; }
+  #empfang .journal-title { font-size: 2rem; }
+  #empfang .journal-sub { max-width: 100%; }
+  .download-v2-head h3 { white-space: nowrap; }
+}
+/* Tablet (680–1024px): Instagram-Raster nutzt die volle Breite statt 560px mit leerer rechter Haelfte */
+@media (min-width: 680px) and (max-width: 1024px) and (min-height: 501px) {
+  .insta-raster { max-width: none; }
+}
+@media (min-width: 900px) and (max-width: 1024px) and (min-height: 501px) {
+  .insta-raster { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+  .insta-post { padding: 12px; }
+  .insta-post-titel { font-size: 1rem; }
+}
+/* Handy quer ab 760px: Instagram wie am Desktop – Kopf links, Raster rechts (statt Raster links und leerer rechter Haelfte) */
+@media (orientation: landscape) and (max-height: 500px) and (min-width: 760px) {
+  .insta-sec .container { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 480px); gap: 28px; align-items: center; }
+  .insta-kopf { flex-direction: column; align-items: flex-start; margin-bottom: 0; }
+  .insta-raster { max-width: none; gap: 10px; }
+  .insta-post { padding: 10px; }
+  .insta-post-titel { font-size: 0.95rem; }
+}
