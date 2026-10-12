@@ -315,24 +315,25 @@ html:not(.js) .akk-zeichen { display: none; }
   .leist-bild { order: -1; width: 100%; max-width: 280px; margin: 0 0 12px; }
 }
 
-/* Digitaler Empfang: Bild rechts neben dem Einleitungssatz (Hochformat, als 4:3 zugeschnitten) */
-.journal-kopf-re { display: flex; align-items: flex-end; gap: 28px; }
-@media (min-width: 768px) { .journal-header { gap: 40px; } .journal-title { flex: 0 0 auto; } }
-.digi-bild { flex: 0 0 300px; width: 300px; }
-.digi-bild img { aspect-ratio: 4 / 3; object-fit: cover; object-position: 50% 4%; }
-@media (max-width: 1024px) { .digi-bild { flex-basis: 250px; width: 250px; } }
+/* Digitaler Empfang: Banner nach Vorlage "Digital ankommen" – Bild links, Text-Panel rechts */
+.digi-banner { display: grid; grid-template-columns: 55fr 45fr; margin-top: 28px; border-radius: 14px; overflow: hidden; background: var(--olive-haupt); }
+.digi-banner-bild { min-height: 300px; }
+.digi-banner-bild img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block; }
+.digi-banner-text { padding: 36px 36px 32px; color: #fff; display: flex; flex-direction: column; justify-content: center; }
+.digi-banner-eyebrow { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #DCE5D6; margin: 0 0 12px; }
+.digi-banner-titel { font-family: var(--font-serif); font-size: 1.75rem; line-height: 1.2; font-weight: 600; color: #fff; margin: 0 0 14px; }
+.digi-banner-text p:last-child { font-size: 1rem; line-height: 1.6; color: #fff; margin: 0; }
 @media (max-width: 767px) {
-  .journal-kopf-re { flex-direction: column; align-items: flex-start; gap: 12px; width: 100%; }
-  .digi-bild { flex: none; width: 100%; max-width: 300px; }
+  .digi-banner { grid-template-columns: 1fr; }
+  .digi-banner-bild { min-height: 0; }
+  .digi-banner-bild img { aspect-ratio: 4 / 3; height: auto; }
+  .digi-banner-text { padding: 24px 20px; }
+  .digi-banner-titel { font-size: 1.4rem; }
 }
 @media (orientation: landscape) and (max-height: 500px) {
-  .journal-kopf-re { align-items: center; gap: 18px; }
-  .digi-bild { flex: none; width: 220px; }
+  .digi-banner-bild { min-height: 240px; }
 }
 
-/* Team: rundes Foto, Ausschnitt auf das Gesicht (Quelle empfang-gespraech) */
-.team-card-avatar-eq.team-foto { display: block !important; background: #F2ECE4; overflow: hidden; box-shadow: 0 0 0 3px #F2ECE4; }
-.team-foto img { width: 427%; max-width: none; height: auto; margin: -17% 0 0 -143%; display: block; }
 .team-karte-foto-cm { background: #F2ECE4 !important; padding: 0 !important; overflow: hidden; }
 .team-karte-bild { width: 100%; height: 100%; object-fit: cover; object-position: 35% 30%; display: block; }
 
