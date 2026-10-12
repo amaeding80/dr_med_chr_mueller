@@ -427,17 +427,49 @@ html:not(.js) .akk-zeichen { display: none; }
   .digital-journal .journal-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
   .digital-journal .journal-card { padding: 24px; }
 }
-/* Tablet/Handy: kein Wisch-Karussell mehr – Raster */
-@media (max-width: 1024px) {
+/* Tablet (ab 680px, nicht Handy quer): Raster statt Wisch-Karussell */
+@media (min-width: 680px) and (max-width: 1024px) and (min-height: 501px) {
   .digital-journal .journal-grid {
     display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     overflow: visible !important; scroll-snap-type: none !important; padding-bottom: 0 !important; gap: 12px !important;
   }
   .digital-journal .journal-card { flex: none !important; min-width: 0; }
 }
-@media (max-width: 599px) and (orientation: portrait) {
-  .digital-journal .journal-grid { grid-template-columns: 1fr !important; }
+/* Handy: „Weitere Anliegen“ bleibt ein Raster (1 Spalte hoch, 2 quer) */
+@media (max-width: 679px) and (orientation: portrait), (orientation: landscape) and (max-height: 500px) {
+  .digital-journal .journal-grid-mehr {
+    display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    overflow: visible !important; scroll-snap-type: none !important; padding-bottom: 0 !important; gap: 12px !important;
+  }
+  .digital-journal .journal-grid-mehr .journal-card { flex: none !important; min-width: 0; }
 }
+@media (max-width: 599px) and (orientation: portrait) {
+  .digital-journal .journal-grid-mehr { grid-template-columns: 1fr !important; }
+}
+/* Wisch-Reihe (wiederverwendbar: Digital ankommen, Standorte) – nur Handy hoch bis 679px und Handy quer.
+   Karten nebeneinander, naechste schaut heraus, alle so hoch wie die hoechste. */
+@media (max-width: 679px) and (orientation: portrait), (orientation: landscape) and (max-height: 500px) {
+  .wisch-reihe {
+    display: flex !important; flex-wrap: nowrap !important; align-items: stretch !important;
+    overflow-x: auto !important; scroll-snap-type: x mandatory !important; scrollbar-width: none;
+    gap: 12px !important; padding-bottom: 6px !important; margin-bottom: 4px;
+  }
+  .wisch-reihe::-webkit-scrollbar { display: none; }
+  .wisch-reihe > * { flex: 0 0 84% !important; scroll-snap-align: start; min-width: 0; }
+  .wisch-knopf.wisch-knopf { display: block; }
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  .wisch-reihe > * { flex-basis: 46% !important; }
+}
+/* Hinweis-Knopf unter der Wisch-Reihe */
+.wisch-knopf {
+  display: none; margin: 2px auto 14px; padding: 8px 14px; min-height: 36px;
+  background: none; border: 0; border-radius: 8px; cursor: pointer;
+  font-family: var(--font-sans); font-size: 0.8125rem; letter-spacing: 0.04em; color: var(--text-muted);
+}
+.wisch-knopf:hover { color: var(--olive-haupt); }
+.wisch-knopf[hidden] { display: none !important; }
+.wisch-knopf:focus-visible { outline: 2px solid var(--olive-haupt); outline-offset: 2px; }
 
 /* ---------- Hero quer (Desktop, Tablet quer, Nest Hub) nach Vorlage: vollflaechig ----------
    Foto rechts in voller Hero-Hoehe, nie groesser als nativ (427x640). Links Raumton + dunkles

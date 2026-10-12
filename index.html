@@ -1800,7 +1800,7 @@
         <h2 class="journal-title">Digitaler Empfang.<br>Organisiert für Ihre Zeit.</h2>
         <p class="journal-sub">Erledigen Sie Organisatorisches vorab digital – damit in der Praxis mehr Zeit für Ihr Gespräch bleibt.</p>
       </div>
-      <div class="journal-grid">
+      <div class="journal-grid wisch-reihe" id="journal-reihe">
         <div class="journal-card journal-card-primary" onclick="openTerminModal()">
           <div>
             <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:12px;">01 / ONLINE TERMIN</span>
@@ -1834,6 +1834,7 @@
           <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Überweisung anfragen →</span>
         </div>
       </div>
+      <button type="button" class="wisch-knopf" data-wisch-knopf aria-controls="journal-reihe" aria-label="Weiter zur nächsten Karte">Wischen →</button>
       <div class="weitere-anliegen akk-item">
         <h3 class="weitere-kopf"><button type="button" class="akk-btn weitere-btn" id="weitere-btn" aria-expanded="false" aria-controls="weitere-box"><span>Weitere Anliegen</span><span class="akk-zeichen" aria-hidden="true"></span></button></h3>
       </div>
@@ -2108,7 +2109,7 @@
         <h2 class="sec-title" style="margin-bottom:0;">So finden Sie uns</h2>
       </div>
 
-      <div class="loc-beide-grid">
+      <div class="loc-beide-grid wisch-reihe" id="standort-reihe">
         <div class="loc-box active" id="loc-wn" data-standort="wn">
           <span class="badge-wernigerode" style="padding:3px 10px; border-radius:4px; font-size:0.75rem; font-weight:700; text-transform:uppercase; display:inline-block; margin-bottom:12px;">Hauptstandort</span>
           <h3 style="font-family: var(--font-sans); font-size:1.7rem; color:var(--olive-haupt); margin-bottom:14px;">Praxis Wernigerode</h3>
@@ -2145,6 +2146,7 @@
           </a>
         </div>
       </div>
+      <button type="button" class="wisch-knopf" data-wisch-knopf aria-controls="standort-reihe" aria-label="Weiter zur nächsten Karte">Wischen →</button>
     </div>
   </section>
   <!-- FOOTER -->
