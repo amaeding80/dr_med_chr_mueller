@@ -298,20 +298,22 @@ html:not(.js) .akk-zeichen { display: none; }
   .leist-bild { order: -1; width: 100%; max-width: 280px; margin: 0 0 12px; }
 }
 
-/* Digitaler Empfang: Banner nach Vorlage "Digital ankommen" – Bild links, Text-Panel rechts */
-.digi-banner { display: grid; grid-template-columns: 55fr 45fr; margin-top: 28px; border-radius: 14px; overflow: hidden; background: var(--olive-haupt); }
-.digi-banner-bild { min-height: 300px; }
-.digi-banner-bild img { width: 100%; height: 100%; object-fit: cover; object-position: 92% 30%; display: block; }
-.digi-banner-text { padding: 36px 36px 32px; color: #fff; display: flex; flex-direction: column; justify-content: center; }
+/* Digitaler Empfang: Banner „Digital ankommen“ – Bild links, Text-Panel rechts.
+   Self-Check-in-Foto ist nur 360x640: Bildspalte hoechstens 360px (und 40 %), damit es nie hochskaliert wird */
+.digi-banner { display: grid; grid-template-columns: minmax(0, min(40%, 360px)) minmax(0, 1fr); margin-top: 28px; border-radius: 14px; overflow: hidden; background: var(--olive-haupt); }
+.digi-banner-bild { min-height: 300px; position: relative; }
+.digi-banner-bild img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 5%; display: block; }
+.digi-banner-text > * { max-width: 560px; }
+.digi-banner-text { padding: 36px 40px 32px; color: #fff; display: flex; flex-direction: column; justify-content: center; }
 .digi-banner-eyebrow { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #DCE5D6; margin: 0 0 12px; }
 .digi-banner-titel { font-family: var(--font-serif); font-size: 1.75rem; line-height: 1.2; font-weight: 600; color: #fff; margin: 0 0 14px; }
 .digi-banner-text p:last-child { font-size: 1rem; line-height: 1.6; color: #fff; margin: 0; }
 /* Mobil/schmales Tablet (bis 767px): nebeneinander – Bild links ~40 % in voller Bannerhoehe, gruenes Feld rechts.
    Ausschnitt rechtslastig, damit Dr. Mueller UND die Patientin im Bild bleiben. */
 @media (max-width: 767px), (orientation: landscape) and (max-height: 500px) {
-  .digi-banner { grid-template-columns: 40fr 60fr; }
+  .digi-banner { grid-template-columns: minmax(0, min(40%, 360px)) minmax(0, 1fr); }
   .digi-banner-bild { min-height: 0; position: relative; }
-  .digi-banner-bild img { position: absolute; inset: 0; object-position: 92% 8%; }
+  .digi-banner-bild img { position: absolute; inset: 0; object-position: 50% 5%; }
   .digi-banner-text { padding: 22px 22px 20px; }
   .digi-banner-titel { font-size: 1.3rem; margin-bottom: 10px; }
   /* gegen die globale Handy-Regel „main p … 1.0625rem !important“: Bannertext 15px */
@@ -325,7 +327,7 @@ html:not(.js) .akk-zeichen { display: none; }
     grid-template-rows: auto 1fr auto; column-gap: 14px; padding: 18px 18px 20px; }
   .digi-banner-text { display: contents; }
   .digi-banner-bild { grid-area: bild; align-self: start; aspect-ratio: 1 / 1; border-radius: 10px; overflow: hidden; }
-  .digi-banner-bild img { object-position: 95% 30%; }
+  .digi-banner-bild img { object-position: 50% 5%; }
   .digi-banner-eyebrow { grid-area: kicker; margin: 0 0 6px; align-self: end; }
   .digi-banner-titel { grid-area: titel; font-size: 1.15rem; line-height: 1.22; margin: 0; align-self: start; }
   .digi-banner-text p:last-child { grid-area: text; margin-top: 14px; }
@@ -657,4 +659,8 @@ html:not(.js) .akk-zeichen { display: none; }
   .insta-raster { max-width: none; gap: 10px; }
   .insta-post { padding: 10px; }
   .insta-post-titel { font-size: 0.95rem; }
+}
+/* Handy quer: Banner mind. 220px hoch, damit Kopf der Frau UND Terminal-Display im Self-Check-in-Bild bleiben */
+@media (orientation: landscape) and (max-height: 500px) {
+  .digi-banner { min-height: 220px; }
 }
