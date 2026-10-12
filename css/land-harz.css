@@ -557,6 +557,21 @@ html:not(.js) .akk-zeichen { display: none; }
   .leist-bild { float: right; width: 40%; max-width: 160px; margin: 4px 0 8px 14px; padding: 4px; border-radius: 12px; }
   .leist-bild img { border-radius: 8px; }
 }
+/* „Ganzheitlich versorgt“ bis 599px hochkant: Bild als flacher Streifen UEBER dem Text (16:7, Sandrahmen),
+   Text darunter volle Breite – kein schmaler Textkanal neben einem kleinen Bild */
+@media (max-width: 599px) and (orientation: portrait) {
+  .leist-bild { float: none; width: 100%; max-width: 640px; margin: 2px 0 12px; }
+  .leist-bild img { width: 100%; height: auto; aspect-ratio: 16 / 7; object-fit: cover; object-position: 50% 0%; }
+  .leist-bild img[src*="ernaehrungsberatung"] { object-position: 50% 8%; }
+  .leist-bild img[src*="impfung"] { object-position: 50% 55%; }
+  /* alle Chips der 3 Akkordeons gleich hoch (Platz fuer zwei Zeilen, z. B. „Land-Harz GesundheitsCheck“) */
+  #leistungen .service-tag-pill { min-height: calc(2.6em + 12px); }
+}
+/* Stichwort-Chips: alle gleich hoch, Text mittig, normaler Zeilenabstand beim Umbruch */
+@media (max-width: 767px), (orientation: landscape) and (max-height: 500px) {
+  #leistungen .service-tags { grid-auto-rows: 1fr; align-items: stretch; }
+  #leistungen .service-tag-pill { display: flex; align-items: center; justify-content: center; line-height: 1.3 !important; padding: 6px 10px !important; min-height: 36px; }
+}
 /* Hausarzt-Karten, Handy hoch: Vorschaubild links, Titel daneben, Liste darunter */
 @media (max-width: 599px) and (orientation: portrait) {
   .haus-karte { display: grid; grid-template-columns: 112px minmax(0, 1fr); grid-template-areas: "bild titel" "liste liste"; column-gap: 14px; padding: 10px 10px 4px; }
