@@ -320,18 +320,21 @@ html:not(.js) .akk-zeichen { display: none; }
   #empfang .digi-banner-text p:last-child { font-size: 0.9375rem !important; line-height: 1.55; }
   #empfang .digi-banner-eyebrow { font-size: 0.75rem !important; }
 }
-/* Handy hochkant (unter 600px): nebeneinander waere zu eng (Bildspalte ~120px bei ~330px Hoehe = nur ein Gesicht).
-   Daher: Bild als runde Kachel oben links neben Kicker + Ueberschrift, Text darunter ueber die volle Breite. */
+/* Handy hochkant (unter 600px): Bild als Hochformat-Kachel (3:4, 34 %) links, Kicker + Ueberschrift daneben
+   vertikal zur Bildmitte zentriert, Text darunter ueber die volle Breite.
+   Ueberschrift-Groesse folgt der Bannerbreite (cqi), damit sie immer sauber in 2 Zeilen passt. */
 @media (max-width: 599px) and (orientation: portrait) {
-  .digi-banner { grid-template-columns: minmax(0, 40%) minmax(0, 1fr); grid-template-areas: "bild kicker" "bild titel" "text text";
-    grid-template-rows: auto 1fr auto; column-gap: 14px; padding: 18px 18px 20px; }
+  .digi-banner { container-type: inline-size; grid-template-columns: minmax(0, 34%) minmax(0, 1fr);
+    grid-template-areas: "bild ." "bild kicker" "bild titel" "bild ." "text text";
+    grid-template-rows: 1fr auto auto 1fr auto; column-gap: 12px; padding: 14px 12px 18px; }
   .digi-banner-text { display: contents; }
-  .digi-banner-bild { grid-area: bild; align-self: start; aspect-ratio: 1 / 1; border-radius: 10px; overflow: hidden; }
-  .digi-banner-bild img { object-position: 50% 5%; }
-  .digi-banner-eyebrow { grid-area: kicker; margin: 0 0 6px; align-self: end; }
-  .digi-banner-titel { grid-area: titel; font-size: 1.15rem; line-height: 1.22; margin: 0; align-self: start; }
+  .digi-banner-bild { grid-area: bild; align-self: start; aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; }
+  .digi-banner-bild img { object-position: 50% 0%; }
+  #empfang .digi-banner-eyebrow { grid-area: kicker; margin: 0 0 6px; font-size: 0.6875rem !important; letter-spacing: 0.04em; white-space: nowrap; }
+  .digi-banner-titel { grid-area: titel; font-size: clamp(15px, calc(6.7cqi - 1.2px), 22px); line-height: 1.22; margin: 0; text-wrap: balance; }
   .digi-banner-text p:last-child { grid-area: text; margin-top: 14px; }
-  #empfang .digi-banner-text p:last-child { font-size: 1rem !important; }
+  #empfang .digi-banner-text p:last-child { font-size: 1rem !important; line-height: 1.55 !important; }
+}
 }
 
 .team-karte-foto-cm { background: #F2ECE4 !important; padding: 0 !important; overflow: hidden; }
