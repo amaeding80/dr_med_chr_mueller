@@ -87,6 +87,8 @@ function initWischKnopf(knopf) {
   }
   reihe.addEventListener('scroll', bald, { passive: true });
   window.addEventListener('resize', bald);
+  // Reihe kann beim Laden versteckt sein (z. B. „Weitere Anliegen“ zugeklappt): beim Aufklappen neu pruefen
+  if (window.ResizeObserver) new ResizeObserver(bald).observe(reihe);
   knopf.addEventListener('click', function () {
     var art = ruhig || document.documentElement.classList.contains('pxa-keine-anim') ? 'auto' : 'smooth';
     if (amEnde) { reihe.scrollTo({ left: 0, behavior: art }); return; }

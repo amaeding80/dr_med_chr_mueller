@@ -456,18 +456,7 @@ html:not(.js) .akk-zeichen { display: none; }
   }
   .digital-journal .journal-card { flex: none !important; min-width: 0; }
 }
-/* Handy: „Weitere Anliegen“ bleibt ein Raster (1 Spalte hoch, 2 quer) */
-@media (max-width: 679px) and (orientation: portrait), (orientation: landscape) and (max-height: 500px) {
-  .digital-journal .journal-grid-mehr {
-    display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    overflow: visible !important; scroll-snap-type: none !important; padding-bottom: 0 !important; gap: 12px !important;
-  }
-  .digital-journal .journal-grid-mehr .journal-card { flex: none !important; min-width: 0; }
-}
-@media (max-width: 599px) and (orientation: portrait) {
-  .digital-journal .journal-grid-mehr { grid-template-columns: 1fr !important; }
-}
-/* Wisch-Reihe (wiederverwendbar: Digital ankommen, Standorte) – nur Handy hoch bis 679px und Handy quer.
+/* Wisch-Reihe (wiederverwendbar: Digital ankommen 01–04 und Weitere Anliegen 05–08, Standorte) – nur Handy hoch bis 679px und Handy quer.
    Karten nebeneinander, naechste schaut heraus, alle so hoch wie die hoechste. */
 @media (max-width: 679px) and (orientation: portrait), (orientation: landscape) and (max-height: 500px) {
   .wisch-reihe {

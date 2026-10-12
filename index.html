@@ -1839,7 +1839,7 @@
         <h3 class="weitere-kopf"><button type="button" class="akk-btn weitere-btn" id="weitere-btn" aria-expanded="false" aria-controls="weitere-box"><span>Weitere Anliegen</span><span class="akk-zeichen" aria-hidden="true"></span></button></h3>
       </div>
       <div id="weitere-box" role="region" aria-labelledby="weitere-btn">
-      <div class="journal-grid journal-grid-mehr">
+      <div class="journal-grid journal-grid-mehr wisch-reihe" id="weitere-reihe">
         <div class="journal-card" onclick="openBefundModal()">
           <div>
             <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:12px;">05 / LABORBEFUNDE</span>
@@ -1881,6 +1881,7 @@
           <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Anfrage stellen →</span>
         </div>
       </div>
+      <button type="button" class="wisch-knopf" data-wisch-knopf aria-controls="weitere-reihe" aria-label="Weiter zur nächsten Karte">Wischen →</button>
       </div>
       <div class="digi-banner">
         <div class="digi-banner-bild"><img src="img/self-checkin.webp" alt="Eine Frau meldet sich am Self-Check-in-Terminal der Praxis an" width="360" height="640" loading="lazy" decoding="async"></div>
