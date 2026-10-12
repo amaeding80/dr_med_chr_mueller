@@ -3623,6 +3623,7 @@ function filterStandort(which) {
         if (floatCta) {
           floatCta.classList.toggle('tfc-visible', sichtbar);
           floatCta.setAttribute('aria-hidden', sichtbar ? 'false' : 'true');
+          floatCta.inert = !sichtbar; // unsichtbar: Buttons nicht per Tab erreichbar
         }
       }
 

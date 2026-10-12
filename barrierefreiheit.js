@@ -37,45 +37,48 @@
 
   // ---------- Styles ----------
   var css = ''
-  + '.pxa-btn{position:fixed;bottom:20px;left:20px;width:52px;height:52px;border-radius:50%;background:#384E33;border:none;cursor:pointer;z-index:99997;box-shadow:0 4px 16px rgba(0,0,0,.22);display:flex;align-items:center;justify-content:center;transition:transform .2s}'
+  + '.pxa-btn{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));right:calc(20px + env(safe-area-inset-right,0px));left:auto;width:52px;height:52px;border-radius:50%;background:#384E33;border:none;cursor:pointer;z-index:99997;box-shadow:0 4px 16px rgba(0,0,0,.22);display:flex;align-items:center;justify-content:center;transition:transform .2s}'
   + '.pxa-btn:hover{transform:scale(1.06)}'
+  + '.pxa-btn:focus-visible,.pxa-reveal:focus-visible,.pxa-icon-btn:focus-visible{outline:3px solid #A36F5A;outline-offset:3px}'
+  + '.pxa-opt:focus-visible{outline:3px solid #A36F5A;outline-offset:2px}'
   + '.pxa-btn svg{width:26px;height:26px;stroke:#fff;fill:none;stroke-width:1.6}'
-  + '.pxa-panel{position:fixed;bottom:84px;left:20px;width:min(360px,calc(100vw - 40px));max-height:min(680px,calc(100vh - 120px));background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.28);z-index:99998;display:none;flex-direction:column;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}'
+  + '.pxa-panel{position:fixed;bottom:calc(84px + env(safe-area-inset-bottom,0px));right:calc(20px + env(safe-area-inset-right,0px));left:auto;width:min(360px,calc(100vw - 40px));max-height:min(680px,calc(100vh - 104px - env(safe-area-inset-bottom,0px)));background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.28);z-index:99998;display:none;flex-direction:column;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}'
   + '.pxa-panel.pxa-offen{display:flex}'
-  + '.pxa-head{background:#384E33;color:#fff;padding:16px 18px;display:flex;align-items:center;gap:10px}'
+  + '.pxa-head{background:#384E33;color:#fff;padding:8px 8px 8px 18px;display:flex;align-items:center;gap:10px}'
   + '.pxa-head svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:1.6;flex-shrink:0}'
   + '.pxa-head h2{font-size:16px;font-weight:600;margin:0;flex:1}'
-  + '.pxa-head-btns{display:flex;align-items:center;gap:4px}'
-  + '.pxa-icon-btn{width:30px;height:30px;border:none;background:transparent;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;opacity:.85}'
+  + '.pxa-head-btns{display:flex;align-items:center;gap:0}'
+  + '.pxa-icon-btn{width:44px;height:44px;border:none;background:transparent;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;opacity:.85}'
   + '.pxa-icon-btn:hover{background:rgba(255,255,255,.15);opacity:1}'
   + '.pxa-icon-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.6}'
-  + '.pxa-body{overflow-y:auto;padding:16px 18px 22px}'
+  + '.pxa-body{overflow-y:auto;overscroll-behavior:contain;padding:14px 16px 18px;flex:1 1 auto;min-height:0}'
   + '.pxa-sektion{margin-bottom:18px}'
   + '.pxa-sektion:last-child{margin-bottom:0}'
-  + '.pxa-sektion-h{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#535B54;margin:0 0 10px}'
+  + '.pxa-sektion-h{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#535B54;margin:0 0 10px}'
   + '.pxa-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}'
-  + '.pxa-opt{background:#F7F5F0;border:1px solid #D5CBBF;border-radius:10px;padding:12px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;transition:background .15s,border-color .15s}'
+  + '.pxa-opt{background:#F7F5F0;border:1px solid #D5CBBF;border-radius:10px;padding:10px 8px;min-height:44px;cursor:pointer;display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;transition:background .15s,border-color .15s}'
   + '.pxa-opt:hover{background:#F2ECE4}'
   + '.pxa-opt.pxa-an{background:#EFF5F7;border-color:#384E33}'
   + '.pxa-opt-icon{width:34px;height:34px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}'
   + '.pxa-opt.pxa-an .pxa-opt-icon{background:#384E33}'
   + '.pxa-opt-icon svg{width:17px;height:17px;stroke:#384E33;fill:none;stroke-width:1.6}'
   + '.pxa-opt.pxa-an .pxa-opt-icon svg{stroke:#fff}'
-  + '.pxa-opt-txt{font-size:12.5px;color:#212522;font-weight:500;line-height:1.25}'
-  + '.pxa-opt-sub{font-size:10.5px;color:#535B54;font-weight:400}'
+  + '.pxa-opt-txt{font-size:13.5px;color:#212522;font-weight:500;line-height:1.25}'
+  + '.pxa-opt-sub{font-size:12px;color:#535B54;font-weight:400}'
   + '.pxa-bar{width:100%;height:3px;background:#D5CBBF;border-radius:2px;overflow:hidden;margin-top:2px;display:flex;gap:2px}'
   + '.pxa-bar i{flex:1;background:#D5CBBF;border-radius:1px}'
   + '.pxa-bar i.pxa-fill{background:#384E33}'
-  + '.pxa-foot{padding:10px 18px;background:#F7F5F0;border-top:1px solid #D5CBBF;font-size:11px;color:#535B54;text-align:center}'
-  + '.pxa-reveal{position:fixed;bottom:20px;left:20px;background:#384E33;color:#fff;border:none;border-radius:999px;padding:10px 16px;font-size:13px;cursor:pointer;z-index:99997;display:none;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(0,0,0,.22)}'
+  + '.pxa-foot{padding:8px 18px;background:#F7F5F0;border-top:1px solid #D5CBBF;font-size:12px;color:#535B54;text-align:center}'
+  + '.pxa-reveal{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));right:calc(20px + env(safe-area-inset-right,0px));left:auto;min-height:44px;background:#384E33;color:#fff;border:none;border-radius:999px;padding:10px 16px;font-size:13px;cursor:pointer;z-index:99997;display:none;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(0,0,0,.22)}'
   + '.pxa-reveal.pxa-zeigen{display:inline-flex}'
-  + '@media(max-width:480px){.pxa-panel{left:12px;bottom:70px;width:calc(100vw - 24px)}.pxa-btn{left:12px;width:44px;height:44px}.pxa-btn svg{width:21px;height:21px}.pxa-reveal{left:12px;padding:8px 14px;font-size:12px}}'
+  + '@media(max-width:480px),(max-height:500px){.pxa-panel{left:auto;right:calc(8px + env(safe-area-inset-right,0px));bottom:calc(8px + env(safe-area-inset-bottom,0px));width:min(360px,calc(100vw - 16px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px)));max-height:calc(100vh - 16px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));max-height:calc(100dvh - 16px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))}.pxa-btn{width:44px;height:44px}.pxa-btn svg{width:21px;height:21px}.pxa-reveal{padding:8px 14px;font-size:13px}}'
   // ---- Effekt-Klassen auf html ----
   + 'html.pxa-links-links main,html.pxa-links-links body{text-align:left !important}'
   + 'html.pxa-lesbare-schrift body,html.pxa-lesbare-schrift body *{font-family:Verdana,Arial,"Helvetica Neue",sans-serif !important;letter-spacing:.02em !important;word-spacing:.05em !important}'
   + 'html.pxa-graustufen body{filter:grayscale(1)}'
   + 'html.pxa-bilder-aus img,html.pxa-bilder-aus picture,html.pxa-bilder-aus video{visibility:hidden !important}'
-  + 'html.pxa-keine-anim *{animation-play-state:paused !important;transition:none !important;scroll-behavior:auto !important}'
+  + 'html.pxa-keine-anim,html.pxa-keine-anim *{scroll-behavior:auto !important}'
+  + 'html.pxa-keine-anim *,html.pxa-keine-anim *::before,html.pxa-keine-anim *::after{animation-duration:.001ms !important;animation-delay:0s !important;animation-iteration-count:1 !important;transition:none !important}'
   + 'html.pxa-links-hervor a{text-decoration:underline !important;text-decoration-thickness:2px !important;text-underline-offset:2px !important;background:rgba(217,115,82,.16) !important;border-radius:2px}'
   + 'html.pxa-umrissfokus *:focus{outline:3px solid #A36F5A !important;outline-offset:2px !important}'
   + 'html.pxa-kontrast-dunkel body,html.pxa-kontrast-dunkel body *{background-color:#14191c !important;background-image:none !important;color:#f2ede4 !important;border-color:#3c4750 !important}'
@@ -115,18 +118,23 @@
   // ---------- HTML aufbauen ----------
   var btn = document.createElement('button');
   btn.className = 'pxa-btn';
+  btn.type = 'button';
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', 'pxa-panel');
   btn.setAttribute('aria-label', 'Barrierefreiheit-Einstellungen öffnen');
   btn.innerHTML = ic.person;
 
   var reveal = document.createElement('button');
   reveal.className = 'pxa-reveal';
+  reveal.type = 'button';
   reveal.innerHTML = ic.person + '<span>Barrierefreiheit</span>';
   reveal.setAttribute('aria-label', 'Barrierefreiheit-Widget wieder einblenden');
 
   var panel = document.createElement('div');
   panel.className = 'pxa-panel';
+  panel.id = 'pxa-panel';
   panel.setAttribute('role', 'dialog');
-  panel.setAttribute('aria-label', 'Barrierefreiheit-Einstellungen');
+  panel.setAttribute('aria-labelledby', 'pxa-titel');
 
   function optHtml(id, icon, label, sub, mitBalken, balkenSchritte){
     var balken = '';
@@ -137,18 +145,18 @@
     }
     return '<div class="pxa-opt" data-opt="'+id+'" tabindex="0" role="button" aria-pressed="false">'
       + '<div class="pxa-opt-icon">'+icon+'</div>'
-      + '<div class="pxa-opt-txt">'+label+(sub?'<div class="pxa-opt-sub" data-sub="'+id+'">'+sub+'</div>':'')+'</div>'
+      + '<div class="pxa-opt-txt">'+label+((sub||mitBalken)?'<div class="pxa-opt-sub" data-sub="'+id+'">'+sub+'</div>':'')+'</div>'
       + balken
       + '</div>';
   }
 
   panel.innerHTML =
     '<div class="pxa-head">' + ic.person +
-    '<h2>Barrierefreiheit</h2>' +
+    '<h2 id="pxa-titel">Barrierefreiheit</h2>' +
     '<div class="pxa-head-btns">' +
-      '<button class="pxa-icon-btn" data-action="verstecken" aria-label="Widget ausblenden">' + ic.ausblenden + '</button>' +
-      '<button class="pxa-icon-btn" data-action="reset" aria-label="Einstellungen zurücksetzen">' + ic.reset + '</button>' +
-      '<button class="pxa-icon-btn" data-action="schliessen" aria-label="Schließen">' + ic.schliessen + '</button>' +
+      '<button type="button" class="pxa-icon-btn" data-action="verstecken" aria-label="Widget ausblenden">' + ic.ausblenden + '</button>' +
+      '<button type="button" class="pxa-icon-btn" data-action="reset" aria-label="Einstellungen zurücksetzen">' + ic.reset + '</button>' +
+      '<button type="button" class="pxa-icon-btn" data-action="schliessen" aria-label="Schließen">' + ic.schliessen + '</button>' +
     '</div></div>' +
     '<div class="pxa-body">' +
       '<div class="pxa-sektion"><p class="pxa-sektion-h">Text</p><div class="pxa-grid">' +
@@ -181,22 +189,23 @@
     document.documentElement.appendChild(reveal);
     verdrahten();
     anwenden();
+    render(); // Zustand (an/aus, Stufe) auch nach Seitenwechsel im Panel anzeigen
   }
 
   function verdrahten(){
-    btn.addEventListener('click', function(){ panelToggle(true); });
+    btn.addEventListener('click', function(){ panelToggle(!panel.classList.contains('pxa-offen'), true); });
     reveal.addEventListener('click', function(){
       state.versteckt = false; speichern(); anwenden();
-      panelToggle(true);
+      panelToggle(true, true);
     });
 
-    panel.querySelector('[data-action="schliessen"]').addEventListener('click', function(){ panelToggle(false); });
+    panel.querySelector('[data-action="schliessen"]').addEventListener('click', function(){ panelToggle(false, true); });
     panel.querySelector('[data-action="reset"]').addEventListener('click', function(){
       state = Object.assign({}, defaults);
       speichern(); anwenden(); render();
     });
     panel.querySelector('[data-action="verstecken"]').addEventListener('click', function(){
-      state.versteckt = true; speichern(); anwenden(); panelToggle(false);
+      state.versteckt = true; speichern(); anwenden(); panelToggle(false); reveal.focus();
     });
 
     var opts = panel.querySelectorAll('[data-opt]');
@@ -231,13 +240,28 @@
     }, {passive:true});
 
     document.addEventListener('keydown', function(e){
-      if(e.key === 'Escape' && panel.classList.contains('pxa-offen')) panelToggle(false);
+      if(!panel.classList.contains('pxa-offen')) return;
+      if(e.key === 'Escape'){ e.preventDefault(); panelToggle(false, true); return; }
+      if(e.key !== 'Tab') return;
+      var f = fokusZiele(); if(!f.length) return;
+      var erst = f[0], letzt = f[f.length-1];
+      if(!panel.contains(document.activeElement)){ e.preventDefault(); erst.focus(); }
+      else if(e.shiftKey && document.activeElement === erst){ e.preventDefault(); letzt.focus(); }
+      else if(!e.shiftKey && document.activeElement === letzt){ e.preventDefault(); erst.focus(); }
     });
   }
 
-  function panelToggle(offen){
+  function fokusZiele(){
+    return Array.prototype.filter.call(panel.querySelectorAll('button,[tabindex="0"]'), function(el){ return el.offsetParent !== null; });
+  }
+  // fokus=true: Fokus wandert mit (oeffnen -> ins Panel, schliessen -> zurueck zum Knopf)
+  function panelToggle(offen, fokus){
+    var war = panel.classList.contains('pxa-offen');
     panel.classList.toggle('pxa-offen', offen);
     btn.setAttribute('aria-expanded', offen ? 'true' : 'false');
+    if(!fokus || war === offen) return;
+    if(offen){ var z = panel.querySelector('[data-opt]'); if(z) z.focus(); }
+    else { (state.versteckt ? reveal : btn).focus(); }
   }
 
   function klick(id){
@@ -274,8 +298,8 @@
         var cs = window.getComputedStyle(el);
         origFontSize.set(el, parseFloat(cs.fontSize) || 16);
       }
-      if(faktor === 1){ el.style.fontSize = ''; }
-      else { el.style.fontSize = (origFontSize.get(el) * faktor) + 'px'; }
+      if(faktor === 1){ el.style.removeProperty('font-size'); }
+      else { el.style.setProperty('font-size', (origFontSize.get(el) * faktor) + 'px', 'important'); }
     });
   }
 
@@ -287,8 +311,8 @@
         var fs = parseFloat(cs.fontSize) || 16;
         origLineHeight.set(el, isNaN(lh) ? fs*1.4 : lh);
       }
-      if(faktor === 1){ el.style.lineHeight = ''; }
-      else { el.style.lineHeight = (origLineHeight.get(el) * faktor) + 'px'; }
+      if(faktor === 1){ el.style.removeProperty('line-height'); }
+      else { el.style.setProperty('line-height', (origLineHeight.get(el) * faktor) + 'px', 'important'); }
     });
   }
 

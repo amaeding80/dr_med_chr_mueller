@@ -88,7 +88,7 @@ function initWischKnopf(knopf) {
   reihe.addEventListener('scroll', bald, { passive: true });
   window.addEventListener('resize', bald);
   knopf.addEventListener('click', function () {
-    var art = ruhig ? 'auto' : 'smooth';
+    var art = ruhig || document.documentElement.classList.contains('pxa-keine-anim') ? 'auto' : 'smooth';
     if (amEnde) { reihe.scrollTo({ left: 0, behavior: art }); return; }
     var k = reihe.firstElementChild;
     var gap = parseFloat(getComputedStyle(reihe).columnGap) || 0;
