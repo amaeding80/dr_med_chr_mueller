@@ -299,20 +299,35 @@ html:not(.js) .akk-zeichen { display: none; }
 /* Digitaler Empfang: Banner nach Vorlage "Digital ankommen" – Bild links, Text-Panel rechts */
 .digi-banner { display: grid; grid-template-columns: 55fr 45fr; margin-top: 28px; border-radius: 14px; overflow: hidden; background: var(--olive-haupt); }
 .digi-banner-bild { min-height: 300px; }
-.digi-banner-bild img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block; }
+.digi-banner-bild img { width: 100%; height: 100%; object-fit: cover; object-position: 92% 30%; display: block; }
 .digi-banner-text { padding: 36px 36px 32px; color: #fff; display: flex; flex-direction: column; justify-content: center; }
 .digi-banner-eyebrow { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #DCE5D6; margin: 0 0 12px; }
 .digi-banner-titel { font-family: var(--font-serif); font-size: 1.75rem; line-height: 1.2; font-weight: 600; color: #fff; margin: 0 0 14px; }
 .digi-banner-text p:last-child { font-size: 1rem; line-height: 1.6; color: #fff; margin: 0; }
-@media (max-width: 767px) {
-  .digi-banner { grid-template-columns: 1fr; }
-  .digi-banner-bild { min-height: 0; }
-  .digi-banner-bild img { aspect-ratio: 4 / 3; height: auto; }
-  .digi-banner-text { padding: 24px 20px; }
-  .digi-banner-titel { font-size: 1.4rem; }
+/* Mobil/schmales Tablet (bis 767px): nebeneinander – Bild links ~40 % in voller Bannerhoehe, gruenes Feld rechts.
+   Ausschnitt rechtslastig, damit Dr. Mueller UND die Patientin im Bild bleiben. */
+@media (max-width: 767px), (orientation: landscape) and (max-height: 500px) {
+  .digi-banner { grid-template-columns: 40fr 60fr; }
+  .digi-banner-bild { min-height: 0; position: relative; }
+  .digi-banner-bild img { position: absolute; inset: 0; object-position: 92% 8%; }
+  .digi-banner-text { padding: 22px 22px 20px; }
+  .digi-banner-titel { font-size: 1.3rem; margin-bottom: 10px; }
+  /* gegen die globale Handy-Regel „main p … 1.0625rem !important“: Bannertext 15px */
+  #empfang .digi-banner-text p:last-child { font-size: 0.9375rem !important; line-height: 1.55; }
+  #empfang .digi-banner-eyebrow { font-size: 0.75rem !important; }
 }
-@media (orientation: landscape) and (max-height: 500px) {
-  .digi-banner-bild { min-height: 240px; }
+/* Handy hochkant (unter 600px): nebeneinander waere zu eng (Bildspalte ~120px bei ~330px Hoehe = nur ein Gesicht).
+   Daher: Bild als runde Kachel oben links neben Kicker + Ueberschrift, Text darunter ueber die volle Breite. */
+@media (max-width: 599px) and (orientation: portrait) {
+  .digi-banner { grid-template-columns: minmax(0, 40%) minmax(0, 1fr); grid-template-areas: "bild kicker" "bild titel" "text text";
+    grid-template-rows: auto 1fr auto; column-gap: 14px; padding: 18px 18px 20px; }
+  .digi-banner-text { display: contents; }
+  .digi-banner-bild { grid-area: bild; align-self: start; aspect-ratio: 1 / 1; border-radius: 10px; overflow: hidden; }
+  .digi-banner-bild img { object-position: 95% 30%; }
+  .digi-banner-eyebrow { grid-area: kicker; margin: 0 0 6px; align-self: end; }
+  .digi-banner-titel { grid-area: titel; font-size: 1.15rem; line-height: 1.22; margin: 0; align-self: start; }
+  .digi-banner-text p:last-child { grid-area: text; margin-top: 14px; }
+  #empfang .digi-banner-text p:last-child { font-size: 1rem !important; }
 }
 
 .team-karte-foto-cm { background: #F2ECE4 !important; padding: 0 !important; overflow: hidden; }
