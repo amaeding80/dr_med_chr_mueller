@@ -497,3 +497,7 @@ html:not(.js) .akk-zeichen { display: none; }
   .hero .slot-card { bottom: 16px !important; }
   .hero .foto-name { bottom: 200px; }
 }
+
+/* Unterseiten: Grid-Spalten duerfen schmaler als ihr laengstes Wort werden (360px: 4px Ueberstand) */
+.inhalt-grid > * { min-width: 0; }
+.akk-kopf .akk-btn > span:first-child { overflow-wrap: break-word; hyphens: auto; }
