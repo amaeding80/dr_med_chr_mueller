@@ -1877,6 +1877,12 @@
           </div>
           <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Überweisung anfragen →</span>
         </div>
+      </div>
+      <div class="weitere-anliegen akk-item">
+        <h3 class="weitere-kopf"><button type="button" class="akk-btn weitere-btn" id="weitere-btn" aria-expanded="false" aria-controls="weitere-box"><span>Weitere Anliegen</span><span class="akk-zeichen" aria-hidden="true"></span></button></h3>
+      </div>
+      <div id="weitere-box" role="region" aria-labelledby="weitere-btn">
+      <div class="journal-grid journal-grid-mehr">
         <div class="journal-card" onclick="openBefundModal()">
           <div>
             <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:12px;">05 / LABORBEFUNDE</span>
@@ -1918,7 +1924,7 @@
           <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Anfrage stellen →</span>
         </div>
       </div>
-      <p class="swipe-hint" id="swipe-hint-journal" aria-hidden="true">Wischen →</p>
+      </div>
       <div class="digi-banner">
         <div class="digi-banner-bild"><img src="img/empfang-gespraech.webp" alt="Dr. Müller begleitet eine Patientin am Empfang beim Anmelden" width="640" height="480" loading="lazy" decoding="async"></div>
         <div class="digi-banner-text">
@@ -3543,7 +3549,6 @@ function filterStandort(which) {
     var pairs = [
       { container: '.chips-row', hint: '#swipe-hint-chips' },
       { container: '.compass-options', hint: '#swipe-hint-kompass' },
-      { container: '.journal-grid', hint: '#swipe-hint-journal' },
       { container: '.download-v2-grid', hint: '#swipe-hint-download' },
     ];
     pairs.forEach(function(p) {
