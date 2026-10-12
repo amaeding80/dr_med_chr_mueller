@@ -423,3 +423,9 @@ html:not(.js) .akk-zeichen { display: none; }
   .blick { grid-template-columns: 5fr 6fr; gap: 24px; }
   .blick-text h2 { font-size: 1.6rem; }
 }
+
+/* Unterseiten-Kopf: Linkleiste passt erst ab ca. 1260px – darunter Burger-Menü (wie Startseite), sonst wird der Kopf rechts abgeschnitten */
+@media (max-width: 1259px) {
+  .nav-inner:has(.nav-termin-btn) .nav-menu { display: none; }
+  .nav-inner:has(.nav-termin-btn) .burger-btn { display: flex !important; }
+}
