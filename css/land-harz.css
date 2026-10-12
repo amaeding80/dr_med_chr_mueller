@@ -162,13 +162,23 @@ html:not(.js) .akk-zeichen { display: none; }
 }
 .insta-folgen .ig-icon { width: 18px; height: 18px; }
 .insta-folgen:hover { background: var(--olive-dark); }
-.insta-folgen:focus-visible, .insta-kachel:focus-visible { outline: 2px solid var(--olive-haupt); outline-offset: 3px; }
-.insta-folgen[aria-disabled="true"], .insta-kachel[aria-disabled="true"] { cursor: default; }
-/* Kacheln bewusst nicht zu gross: Quellbilder sind teils nur ~90px breit */
-.insta-raster { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; max-width: 660px; }
-.insta-kachel { display: block; aspect-ratio: 1 / 1; background: #F2ECE4; padding: 6px; border-radius: 14px; overflow: hidden; }
-.insta-kachel img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 9px; transition: opacity .2s; }
-.insta-kachel:not([aria-disabled="true"]):hover img { opacity: .88; }
+.insta-folgen:focus-visible { outline: 2px solid var(--olive-haupt); outline-offset: 3px; }
+.insta-folgen[aria-disabled="true"] { cursor: default; }
+/* Beispielbeitraege: gestaltete Kacheln ohne Fotos (Farben aus den Variablen, AA-Kontrast) */
+.insta-raster { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; max-width: 660px; list-style: none; margin: 0; padding: 0; }
+.insta-post {
+  aspect-ratio: 1 / 1; border-radius: 14px; padding: 16px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  background: var(--harz-sand-soft); color: var(--olive-haupt); overflow: hidden; margin: 0;
+}
+.insta-post-kopf { display: flex; align-items: center; gap: 6px; font-size: 0.8125rem; font-weight: 600; opacity: .95; }
+.insta-post-titel { font-family: var(--font-serif); font-size: 1.15rem; line-height: 1.25; font-weight: 600; overflow-wrap: anywhere; hyphens: auto; }
+.insta-post-sand { background: var(--harz-sand-soft); color: var(--olive-haupt); }
+.insta-post-olive { background: var(--olive-haupt); color: #fff; }
+.insta-post-salbei { background: var(--olive-soft); color: var(--olive-haupt); }
+.insta-post-terra { background: var(--terracotta-caps, #8B5E4D); color: #fff; }
+.insta-post-ivory { background: var(--bg); color: var(--olive-haupt); border: 1px solid var(--harz-sand); }
+.insta-post-harz { background: var(--harz-sand); color: var(--text); }
 .sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 @media (max-width: 1024px) { .insta-raster { max-width: 560px; } }
 /* Desktop: Kopf links, Raster rechts – keine leere Flaeche neben dem Raster */
@@ -180,7 +190,8 @@ html:not(.js) .akk-zeichen { display: none; }
 @media (max-width: 599px) {
   .insta-sec { padding: 52px 0; }
   .insta-raster { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; max-width: 380px; }
-  .insta-kachel { padding: 5px; border-radius: 12px; }
+  .insta-post { padding: 12px; border-radius: 12px; }
+  .insta-post-titel { font-size: 1.0625rem; }
 }
 
 /* ---------- Termin-Leiste & Hilfe-Button (Korrekturen EasyPeecy) ---------- */
