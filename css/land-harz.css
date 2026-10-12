@@ -501,3 +501,35 @@ html:not(.js) .akk-zeichen { display: none; }
 /* Unterseiten: Grid-Spalten duerfen schmaler als ihr laengstes Wort werden (360px: 4px Ueberstand) */
 .inhalt-grid > * { min-width: 0; }
 .akk-kopf .akk-btn > span:first-child { overflow-wrap: break-word; hyphens: auto; }
+
+/* ================= Mobil: Bild + Text sinnvoll anordnen (statt stumpf untereinander) ================= */
+/* Leistungen (Startseite): kleines Bild rechts, Text fliesst daneben */
+@media (max-width: 767px), (orientation: landscape) and (max-height: 500px) {
+  .service-body:not([hidden]) { display: block; }
+  .service-body::after { content: ""; display: block; clear: both; }
+  .leist-bild { float: right; width: 40%; max-width: 160px; margin: 4px 0 8px 14px; padding: 4px; border-radius: 12px; }
+  .leist-bild img { border-radius: 8px; }
+}
+/* Hausarzt-Karten, Handy hoch: Vorschaubild links, Titel daneben, Liste darunter */
+@media (max-width: 599px) and (orientation: portrait) {
+  .haus-karte { display: grid; grid-template-columns: 112px minmax(0, 1fr); grid-template-areas: "bild titel" "liste liste"; column-gap: 14px; padding: 10px 10px 4px; }
+  .haus-karte-bild, .haus-karte-zahl { grid-area: bild; margin: 0; }
+  .haus-karte-bild { padding: 4px; border-radius: 10px; }
+  .haus-karte-bild img { aspect-ratio: 1 / 1; object-position: 45% 35%; border-radius: 7px; }
+  .haus-karte-zahl { aspect-ratio: 1 / 1; padding: 8px; }
+  .haus-zahl-gross { font-size: 2.2rem; }
+  .haus-zahl-text { font-size: 0.8125rem; line-height: 1.2; margin-top: 4px; }
+  .haus-karte h3 { grid-area: titel; align-self: center; margin: 0; font-size: 1.2rem; }
+  .haus-karte .leistungs-liste { grid-area: liste; margin: 8px 4px 4px; }
+  .haus-karte-nr { top: 4px; left: 4px; width: 28px; height: 28px; font-size: 0.75rem; }
+}
+/* Ernaehrung "Ein Blick": flacher Bildstreifen mit Bildunterschrift-Karte */
+@media (max-width: 599px) {
+  .blick-bild { max-width: 640px; }
+  .blick-bild img { aspect-ratio: 16 / 9; object-position: 50% 30%; }
+}
+/* Praevention: Seitenleisten-Bild unten als flacher Streifen statt Grossbild */
+@media (max-width: 599px) {
+  .sidebar .seiten-bild { max-width: 640px; }
+  .sidebar .seiten-bild img { aspect-ratio: 21 / 9; object-fit: cover; object-position: 60% 45%; }
+}
