@@ -371,3 +371,35 @@ html:not(.js) .akk-zeichen { display: none; }
 .akk-kopf .akk-btn > span:first-child { min-width: 0; }
 .akk-panel[hidden] { display: none !important; }
 .akk-panel > :first-child { margin-top: 0; }
+
+/* Hausarztmedizin: Band "Von akut bis Vorsorge" nach Vorlage – 4 Karten, oben Bild, nicht eingeklappt */
+.haus-band { padding: 0 0 8px; }
+.haus-band-oben { background: var(--olive-haupt); padding: 56px 0 120px; }
+.haus-karten { margin-top: -88px !important; position: relative; }
+.haus-band-kopf { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; color: #fff; }
+.haus-band-eyebrow { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #DCE5D6; margin: 0 0 10px; }
+.haus-band h2 { font-family: var(--font-serif); font-size: 2.4rem; line-height: 1.15; color: #fff; margin: 0; }
+.haus-band-kopf > p { color: #fff; font-size: 1rem; line-height: 1.6; margin: 0; }
+.haus-karten { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.haus-karte { position: relative; background: #fff; border: 1px solid rgba(56,78,51,0.12); border-radius: 14px; overflow: hidden; padding: 0 0 8px; box-shadow: 0 6px 22px rgba(33,37,34,0.06); }
+.haus-karte-bild { background: #F2ECE4; padding: 6px 6px 0; }
+.haus-karte-bild img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 9px; display: block; }
+.haus-karte-zahl { margin: 6px 6px 0; aspect-ratio: 4 / 3; border-radius: 9px; background: var(--olive-dark, #2A3A26); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 12px; }
+.haus-zahl-gross { font-family: var(--font-serif); font-size: 3.4rem; line-height: 1; }
+.haus-zahl-text { font-size: 0.875rem; font-weight: 600; margin-top: 8px; }
+.haus-karte-nr { position: absolute; top: 14px; left: 14px; width: 34px; height: 34px; border-radius: 50%; background: var(--olive-haupt); color: #fff; font-size: 0.8125rem; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 2px #fff; }
+.haus-karte h3 { font-family: var(--font-serif); font-size: 1.3rem; line-height: 1.25; color: var(--olive-haupt); margin: 18px 20px 0; }
+.haus-karte .leistungs-liste { margin: 10px 20px 8px; padding: 0; }
+.haus-karte .leistungs-liste li { font-size: 0.95rem; padding: 8px 0; }
+@media (max-width: 1024px) {
+  .haus-karten { grid-template-columns: repeat(2, 1fr); }
+  .haus-band-kopf { grid-template-columns: 1fr; gap: 14px; }
+}
+@media (max-width: 599px) {
+  .haus-band-oben { padding: 36px 0 110px; }
+  .haus-band h2 { font-size: 1.9rem; }
+  .haus-karten { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  .haus-karten { grid-template-columns: repeat(2, 1fr); }
+}
