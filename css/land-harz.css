@@ -403,3 +403,23 @@ html:not(.js) .akk-zeichen { display: none; }
 @media (orientation: landscape) and (max-height: 500px) {
   .haus-karten { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* Ernährungsmedizin: "Ein Blick. Auf das Ganze." nach Vorlage – Bild links mit Bildunterschrift-Karte, Text rechts */
+.blick { display: grid; grid-template-columns: 5fr 6fr; gap: 56px; align-items: center; margin: 0 0 64px; }
+.blick-bild { position: relative; margin: 0; padding-bottom: 28px; }
+.blick-bild img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+.blick-bild figcaption { position: absolute; left: -12px; bottom: 0; max-width: 62%; background: #fff; color: var(--olive-haupt); font-family: var(--font-serif); font-size: 1.05rem; line-height: 1.3; padding: 14px 18px; border-radius: 10px; box-shadow: 0 8px 24px rgba(33,37,34,0.10); border: 1px solid rgba(56,78,51,0.12); }
+.blick-text h2 { font-family: var(--font-serif); font-size: 2.4rem; line-height: 1.15; color: var(--olive-haupt); margin: 0 0 16px; }
+.blick-text h2 em { font-style: normal; color: var(--terracotta-caps, #8B5E4D); display: block; }
+.blick-text p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.65; margin: 0; max-width: 520px; }
+@media (max-width: 1024px) { .blick { gap: 32px; } .blick-text h2 { font-size: 2rem; } }
+@media (max-width: 767px) {
+  .blick { grid-template-columns: 1fr; gap: 20px; margin-bottom: 36px; }
+  .blick-bild { max-width: 420px; }
+  .blick-bild figcaption { left: 10px; max-width: 75%; font-size: 0.98rem; }
+  .blick-text h2 { font-size: 1.75rem; }
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  .blick { grid-template-columns: 5fr 6fr; gap: 24px; }
+  .blick-text h2 { font-size: 1.6rem; }
+}
