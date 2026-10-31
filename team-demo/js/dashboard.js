@@ -108,21 +108,35 @@
   }
 
   // Termine: eine Liste, nach Tag gruppiert
+  // Demo: feste Uhrzeit, damit "Jetzt" mitten im Vormittag steht
+  var JETZT = '10:15';
+
+  function aufgabe(t) {
+    if (!t.o || t.o.geklaert) return '';
+    if (!t.o.gesendet) return 'senden';
+    return t.o.geoeffnet ? 'fragen' : '';
+  }
+
   function terminZeile(t) {
-    var rechts, klick = '';
-    if (t.art === 'bestand') rechts = '';
-    else if (t.bogen) { rechts = '<span class="marke-status m-da">Bogen da</span>'; klick = ' data-aktion="bogen" data-id="' + t.bogen.id + '"'; }
-    else {
-      var o = t.o; klick = ' data-aktion="termin" data-id="' + o.id + '"';
-      rechts = o.geklaert ? '<span class="marke-status m-erledigt">Vor Ort geklärt</span>' :
-        o.geoeffnet ? '<span class="marke-status m-fragen">Link geöffnet – vor Ort fragen</span>' :
-        o.gesendet ? '<span class="marke-status m-grau">Link nicht geöffnet</span>' :
-        '<button class="btn btn-dringend" data-aktion="senden" data-id="' + o.id + '">Link senden</button>';
+    var status = '', knopf = '', klick = '', o = t.o;
+    if (t.bogen) { status = '<span class="lbl l-gruen">✓ Bogen da</span>'; klick = ' data-aktion="bogen" data-id="' + t.bogen.id + '"'; }
+    else if (o) {
+      klick = ' data-aktion="termin" data-id="' + o.id + '"';
+      if (o.geklaert) status = '<span class="lbl l-gruen">✓ Vor Ort geklärt</span>';
+      else if (o.geoeffnet) {
+        status = '<span class="lbl l-amber">Link geöffnet – vor Ort fragen</span>';
+        knopf = '<button class="btn btn-klein" data-aktion="geklaert" data-id="' + o.id + '">Geklärt</button>';
+      } else if (o.gesendet) {
+        status = '<span class="lbl l-grau">Link nicht geöffnet</span>';
+        knopf = '<button class="btn btn-klein" data-aktion="senden" data-id="' + o.id + '">Erneut senden</button>';
+      } else knopf = '<button class="btn btn-klein btn-dringend" data-aktion="senden" data-id="' + o.id + '">Link senden</button>';
     }
-    return '<li class="termin"' + klick + '><span class="t-zeit">' + t.zeit + '</span>' +
-      '<div class="t-mitte"><div class="t-name">' + t.name + ' <span class="marke-art ' + (t.art === 'neu' ? 'a-neu">Neu' : 'a-bestand">Bestand') + '</span></div>' +
-      '<p class="t-hinweis">' + (t.hinweis || '–') + '</p></div>' +
-      (rechts ? '<div class="t-status">' + rechts + '</div>' : '') + '</li>';
+    var vorbei = tag(t.datum) === HEUTE && t.zeit < JETZT && !knopf;
+    return '<li class="termin' + (aufgabe(t) || knopf ? ' aufgabe' : '') + (vorbei ? ' vorbei' : '') + '"' + (o ? ' id="t-' + o.id + '"' : '') + klick + '>' +
+      '<span class="t-zeit">' + t.zeit + '</span>' +
+      '<div class="t-mitte"><div class="t-name">' + t.name + (t.art === 'neu' ? ' <span class="marke-art a-neu">Neu</span>' : '') + '</div>' +
+      '<p class="t-hinweis">' + (t.hinweis || '–') + '</p>' + status + '</div>' +
+      (knopf ? '<div class="t-knopf">' + knopf + '</div>' : '') + '</li>';
   }
 
   function alleTermine() {
@@ -134,8 +148,16 @@
 
   function heute() {
     $('#heuteDatum').textContent = jetzt.toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long' });
-    var html = '', zuletzt = null;
-    alleTermine().forEach(function (t) {
+    var liste = alleTermine(), html = '', zuletzt = null, jetztDa = false;
+    var heuteL = liste.filter(function (t) { return tag(t.datum) === HEUTE; });
+    var senden = heuteL.filter(function (t) { return aufgabe(t) === 'senden'; });
+    var fragen = heuteL.filter(function (t) { return aufgabe(t) === 'fragen'; });
+    var teile = [];
+    if (senden.length) teile.push('<a href="#" data-aktion="springen" data-id="' + senden[0].o.id + '">' + senden.length + ' Link senden</a>');
+    if (fragen.length) teile.push('<a href="#" data-aktion="springen" data-id="' + fragen[0].o.id + '">' + fragen.length + ' vor Ort fragen</a>');
+    $('#heuteZuTun').innerHTML = teile.length ? 'Heute zu tun: ' + teile.join(', ') : '✓ Heute alles erledigt';
+
+    liste.forEach(function (t) {
       var d = tag(t.datum);
       if (d !== zuletzt) {
         if (zuletzt) html += '</ul>';
@@ -144,6 +166,7 @@
         html += '<h2 class="tag-titel">' + titel + '</h2><ul class="termine">';
         zuletzt = d;
       }
+      if (d === HEUTE && !jetztDa && t.zeit >= JETZT) { html += '<li class="jetzt-linie"><span>Jetzt ' + JETZT + '</span></li>'; jetztDa = true; }
       html += terminZeile(t);
     });
     $('#heuteInhalt').innerHTML = html ? html + '</ul>' : leer('Keine Termine.');
@@ -275,6 +298,12 @@
 
     if (akt === 'bogen') bogenZeigen(id);
     if (akt === 'termin') { terminZeigen(id); return; }
+    if (akt === 'springen') {
+      e.preventDefault();
+      var z = $('#t-' + id); z.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      z.classList.add('markiert'); setTimeout(function () { z.classList.remove('markiert'); }, 1600);
+      return;
+    }
     if (akt === 'gelesen') { finde(BOEGEN, id).gelesen = true; blattZu(); melden('Als gelesen markiert'); }
     if (akt === 'anarzt') { finde(BOEGEN, id).gelesen = true; blattZu(); melden('An Dr. Müller gegeben'); }
 

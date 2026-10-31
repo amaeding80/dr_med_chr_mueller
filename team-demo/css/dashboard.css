@@ -174,8 +174,6 @@ main{max-width:1100px;margin:0 auto;padding:32px 24px 60px}
 .t-mitte{flex:1;min-width:0}
 .t-name{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--olive-dark)}
 .t-hinweis{margin:2px 0 0;color:var(--text-muted);font-size:.95rem}
-.t-status{flex-shrink:0;text-align:right}
-.t-status .btn{min-height:40px}
 .marke-art{display:inline-block;font-family:var(--sans,inherit);font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;vertical-align:middle;margin-left:4px}
 .a-neu{background:var(--terracotta-soft);color:var(--terracotta-caps)}
 .a-bestand{background:var(--sand-soft);color:var(--olive-dark)}
@@ -183,8 +181,32 @@ main{max-width:1100px;margin:0 auto;padding:32px 24px 60px}
 .m-grau{background:#ecebe6;color:#5b5b55}
 @media (max-width:640px){
   .termin{flex-wrap:wrap;padding:14px 16px;gap:4px 12px;align-items:flex-start}
-  .t-status{flex-basis:100%;text-align:left;padding-left:64px}
-  .t-status .marke-status{white-space:normal}
 }
-.t-status .m-da{background:#d9e8cf;color:#2f5a22}
 .blatt a[href^="tel:"]{color:var(--olive-haupt);font-weight:600}
+
+/* Review 2 */
+.zu-tun{margin:-4px 0 6px;font-weight:600;color:var(--olive-dark)}
+.zu-tun a{color:var(--terracotta-caps)}
+.termin{gap:14px}
+.t-name{font-weight:400}
+.termin.aufgabe .t-name{font-weight:700}
+.marke-art.a-neu{background:transparent;border:1.5px solid var(--terracotta);color:var(--terracotta-caps)}
+.lbl{display:inline-flex;align-items:center;gap:6px;margin-top:4px;font-size:.9rem;font-weight:600}
+.l-grau::before,.l-amber::before{content:'';width:9px;height:9px;border-radius:50%;background:currentColor}
+.l-gruen{color:#3d6b2e}
+.l-amber{color:#9a6400}
+.l-grau{color:#6b6b64}
+.t-knopf{flex-shrink:0;margin-left:auto}
+.btn-klein{min-height:40px;padding:0 16px;font-size:.92rem}
+.termin.vorbei{opacity:.55}
+.jetzt-linie{position:relative;height:0;border-top:2px solid var(--terracotta);list-style:none}
+.jetzt-linie span{position:absolute;left:14px;top:-11px;background:var(--surface);padding:0 6px;font-size:.75rem;font-weight:700;color:var(--terracotta-caps)}
+.termin.markiert{background:var(--terracotta-soft)}
+.demo-band .kurz{display:none}
+@media (max-width:640px){
+  .termin{flex-wrap:nowrap;align-items:center}
+  .t-zeit{min-width:46px;font-size:1.05rem}
+  .demo-band .lang{display:none}
+  .demo-band .kurz{display:inline}
+  main{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
+}
