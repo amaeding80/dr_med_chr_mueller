@@ -3,156 +3,132 @@
 <head>
 <meta charset="utf-8">
 <meta name="robots" content="noindex,nofollow">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Praxis-Dashboard | Land-Harz-Praxis Dr. Müller</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Team-Bereich | Land-Harz-Praxis (Demo)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
 
-<!-- Anmeldung (nur Attrappe, kein echter Login) -->
+<!-- Anmeldung (Demo: jede Eingabe geht) -->
 <section id="login" class="login">
   <form class="login-box" id="loginForm">
-    <div class="brand"><span class="brand-zeichen">LH</span><span><strong>Land-Harz-Praxis</strong><small>Dr. med. Christian Müller</small></span></div>
-    <h1>Team-Anmeldung</h1>
-    <label>Benutzername<input type="text" value="empfang" autocomplete="username"></label>
+    <div class="marke"><img src="logo.webp" alt=""><span><strong>Land-Harz-Praxis</strong><small>Wernigerode &amp; Heudeber</small></span></div>
+    <p class="ueberzeile">Team-Bereich</p>
+    <h1>Willkommen zurück.</h1>
+    <label>Name<input type="text" value="Katrin" autocomplete="username"></label>
     <label>Passwort<input type="password" value="demo" autocomplete="current-password"></label>
-    <button class="btn btn-haupt" type="submit">Anmelden</button>
-    <p class="hinweis">Demo – beliebige Eingabe. Alle Daten sind Beispieldaten.</p>
+    <button class="btn btn-gross" type="submit">Anmelden</button>
+    <p class="hinweis">Demo – beliebige Eingabe.</p>
   </form>
 </section>
 
 <div id="app" class="app" hidden>
-  <aside class="seitenleiste">
-    <div class="brand"><span class="brand-zeichen">LH</span><span><strong>Land-Harz-Praxis</strong><small>Team-Dashboard</small></span></div>
-    <nav id="nav">
-      <a href="#heute" data-view="heute">Heute</a>
-      <a href="#anamnese" data-view="anamnese">Anamnesebögen <span class="zaehler" id="zAnamnese"></span></a>
-      <a href="#anfragen" data-view="anfragen">Anfragen <span class="zaehler" id="zAnfragen"></span></a>
-      <a href="#texte" data-view="texte">Webseiten-Texte</a>
-      <a href="#team" data-view="team">Einstellungen / Team</a>
+  <header class="kopfleiste">
+    <div class="marke"><img src="logo.webp" alt=""><span><strong>Land-Harz-Praxis</strong><small>Team-Bereich</small></span></div>
+    <nav class="tabs" id="tabs">
+      <a href="#heute" data-view="heute"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></svg><span>Heute</span></a>
+      <a href="#boegen" data-view="boegen"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg><span>Bögen</span><i class="punkt" id="pBoegen"></i></a>
+      <a href="#anfragen" data-view="anfragen"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg><span>Anfragen</span><i class="punkt" id="pAnfragen"></i></a>
+      <a href="#texte" data-view="texte"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg><span>Texte</span></a>
     </nav>
-    <div class="nutzer">Angemeldet: <strong>Empfang</strong><br><a href="#" id="abmelden">Abmelden</a></div>
-  </aside>
+    <a href="#team" class="zahnrad" data-view="team" aria-label="Team und Einstellungen"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a>
+  </header>
+
+  <div class="demo-band">Demo mit Beispieldaten – alle Namen sind erfunden. <a href="#" id="hilfeAuf">Anleitung</a></div>
 
   <main>
-    <div class="beispiel-band">Demo mit Beispieldaten – alle Namen sind erfunden. <a href="#" id="hilfeAuf">So funktioniert die Demo</a> · <a href="#" id="demoReset">Demo zurücksetzen</a></div>
-
     <section class="view" id="view-heute">
-      <header class="kopf"><h2>Heute</h2><span id="heuteDatum" class="muted"></span></header>
-      <div class="kacheln" id="heuteKacheln"></div>
-      <div class="split gleich">
-        <div class="karte">
-          <h3>Eingegangene Bögen mit Termin heute</h3>
-          <p class="muted klein">Datum und Uhrzeit hat der Patient im Bogen selbst eingetragen.</p>
-          <table class="tabelle" id="heuteBoegen"><thead><tr><th>Uhrzeit</th><th>Patient</th><th>Anlass</th><th></th></tr></thead><tbody></tbody></table>
-          <h3 class="abstand">Bögen mit Termin morgen</h3>
-          <table class="tabelle" id="morgenBoegen"><thead><tr><th>Uhrzeit</th><th>Patient</th><th>Anlass</th><th></th></tr></thead><tbody></tbody></table>
-        </div>
-        <div class="karte">
-          <h3>Bogen übersprungen – Termin heute</h3>
-          <p class="muted klein">Aus dem Abgleich unter „Anamnesebögen“.</p>
-          <table class="tabelle" id="heuteUebersprungen"><thead><tr><th>Uhrzeit</th><th>Patient</th><th>Status</th></tr></thead><tbody></tbody></table>
-        </div>
-      </div>
+      <p class="ueberzeile" id="heuteDatum"></p>
+      <h1>Guten Morgen.</h1>
+      <div id="heuteInhalt"></div>
     </section>
 
-    <section class="view" id="view-anamnese" hidden>
-      <header class="kopf"><h2>Anamnesebögen</h2>
-        <input type="search" id="anamneseSuche" placeholder="Name suchen …"></header>
-      <div class="split">
-        <ul class="liste" id="anamneseListe"></ul>
-        <div class="karte detail" id="anamneseDetail"><p class="muted">Bogen links auswählen.</p></div>
-      </div>
-
-      <!-- Abgleich: Neupatienten aus T2med, die keinen Bogen ausgefüllt haben -->
-      <div class="karte">
-        <h3>Abgleich mit T2med: Neupatienten</h3>
-        <p class="muted klein">Neupatienten aus der T2med-Terminliste hier eintragen. Das Dashboard prüft, ob schon ein Bogen mit gleichem Namen und Termindatum da ist. Nur wer den Bogen bei der Buchung übersprungen hat, bekommt den Link. Übersprungene mit Termin heute erscheinen auch unter „Heute“.</p>
-        <form class="abgleich-form" id="abgleichForm">
-          <input type="text" id="agName" placeholder="Name" required>
-          <input type="date" id="agDatum" required>
-          <input type="time" id="agZeit">
-          <input type="text" id="agKontakt" placeholder="Mail oder Handy">
-          <button class="btn btn-haupt" type="submit">Eintragen</button>
-        </form>
-        <table class="tabelle" id="abgleichTabelle">
-          <thead><tr><th>Name</th><th>Termin</th><th>Kontakt</th><th>Status</th><th></th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
+    <section class="view" id="view-boegen" hidden>
+      <p class="ueberzeile">Anamnesebögen</p>
+      <h1>Bögen</h1>
+      <div id="boegenInhalt"></div>
     </section>
 
     <section class="view" id="view-anfragen" hidden>
-      <header class="kopf"><h2>Anfragen</h2>
-        <div class="filter">
-          <select id="fTyp"><option value="">Alle Arten</option><option>Rezept</option><option>Überweisung</option><option>AU</option><option>Termin</option></select>
-          <select id="fStatus"><option value="">Alle Status</option><option value="neu">neu</option><option value="bearbeitung">in Bearbeitung</option><option value="erledigt">erledigt</option></select>
-          <select id="fPerson"><option value="">Alle Zuständigen</option></select>
-        </div></header>
-      <div class="split">
-        <ul class="liste" id="anfragenListe"></ul>
-        <div class="karte detail" id="anfrageDetail"><p class="muted">Anfrage links auswählen.</p></div>
+      <p class="ueberzeile">Rezept, Überweisung, Krankschreibung, Termin</p>
+      <h1>Anfragen</h1>
+      <p class="klein einleitung">Hier landen die Anfragen von Bestandspatienten über die Webseite: Rezept, Überweisung, Krankschreibung (AU) und Terminanfrage.</p>
+      <div class="pillen" id="statusFilter">
+        <button data-filter="neu" class="pille p-neu">Neu <b></b></button>
+        <button data-filter="arbeit" class="pille p-arbeit">In Arbeit <b></b></button>
+        <button data-filter="erledigt" class="pille p-erledigt">Erledigt <b></b></button>
       </div>
+      <div id="anfragenInhalt"></div>
     </section>
 
     <section class="view" id="view-texte" hidden>
-      <header class="kopf"><h2>Webseiten-Texte</h2><span class="muted">Änderungen gehen erst nach „Veröffentlichen“ online.</span></header>
-      <div class="split editor">
+      <p class="ueberzeile">Texte auf der Webseite</p>
+      <h1>Texte</h1>
+      <div class="pillen" id="textWahl"></div>
+      <div class="zwei">
         <div class="karte">
-          <label>Bereich<select id="textBereich"></select></label>
           <label>Überschrift<input type="text" id="textTitel"></label>
-          <label>Text<textarea id="textInhalt" rows="9"></textarea></label>
-          <div class="knoepfe"><button class="btn" id="textVerwerfen">Verwerfen</button><button class="btn btn-haupt" id="textSpeichern">Veröffentlichen</button></div>
-          <p class="klein muted" id="textStand"></p>
+          <label>Text<textarea id="textInhalt" rows="6"></textarea></label>
+          <button class="btn btn-gross" id="textSpeichern">Veröffentlichen</button>
+          <p class="klein" id="textStand"></p>
         </div>
-        <div class="karte vorschau"><span class="klein muted">Vorschau Webseite</span><h3 id="vTitel"></h3><p id="vInhalt"></p></div>
+        <div class="karte vorschau">
+          <p class="ueberzeile">So sieht es auf der Webseite aus</p>
+          <h2 id="vTitel"></h2>
+          <p id="vInhalt"></p>
+        </div>
       </div>
     </section>
 
     <section class="view" id="view-team" hidden>
-      <header class="kopf"><h2>Einstellungen / Team</h2></header>
-      <div class="split">
-        <div class="karte"><h3>Team</h3><table class="tabelle" id="teamTabelle"><thead><tr><th>Name</th><th>Rolle</th><th>Bekommt</th></tr></thead><tbody></tbody></table></div>
-        <div class="karte"><h3>Weiterleitung</h3>
-          <p class="klein muted">Neue Anfragen landen automatisch bei:</p>
+      <p class="ueberzeile">Einstellungen</p>
+      <h1>Team</h1>
+      <div class="zwei">
+        <div class="karte">
+          <h2>Wer bekommt was?</h2>
           <div id="regeln"></div>
-          <h3>Benachrichtigung</h3>
-          <label class="schalter"><input type="checkbox" checked> Mail bei neuer Anfrage</label>
-          <label class="schalter"><input type="checkbox" checked> Hinweis, wenn Neupatient bis Vortag keinen Bogen hat</label>
-          <label class="schalter"><input type="checkbox"> Tageszusammenfassung um 7:30 Uhr</label>
+        </div>
+        <div class="karte">
+          <h2>Link für die T2med-Bestätigung</h2>
+          <p class="klein">Vorschlag für den Text in der Buchungsbestätigung:</p>
+          <p class="zitat">Sie kommen zum ersten Mal zu uns und haben den Anamnesebogen bei der Buchung übersprungen? Dann füllen Sie ihn bitte vorab hier aus: https://www.land-harz-praxis.de/anamnese. Tragen Sie dort Ihr Termindatum und die Uhrzeit ein.</p>
+          <p class="hinweis-box">Noch zu prüfen: ob T2med hier eigenen Text erlaubt. T2med weiß vermutlich nicht, wer den Bogen übersprungen hat – deshalb bleibt die Liste „Bogen fehlt“ unter „Bögen“ der Hauptweg.</p>
         </div>
       </div>
-      <div class="karte">
-        <h3>Bogen-Link für die T2med-Terminbestätigung</h3>
-        <label>Link zum Anamnesebogen<input type="text" readonly value="https://www.land-harz-praxis.de/anamnese (Beispiel-Adresse)"></label>
-        <label>Vorschlag für den Text in der Bestätigung<textarea rows="4" readonly>Sie kommen zum ersten Mal zu uns und haben den Anamnesebogen bei der Buchung übersprungen? Dann füllen Sie ihn bitte vorab hier aus: https://www.land-harz-praxis.de/anamnese. Tragen Sie dort Ihr Termindatum und die Uhrzeit ein.</textarea></label>
-        <p class="hinweis-box">Wichtig: Der Link ist nur für Neupatienten gedacht, die den Anamnese-Schritt bei der Buchung übersprungen haben. Wer den Bogen schon ausgefüllt hat, bekommt keinen Link. T2med weiß vermutlich nicht, ob jemand unseren Bogen ausgefüllt oder übersprungen hat – ein Text in der Bestätigung ginge also an alle. Hauptweg ist deshalb der Abgleich unter „Anamnesebögen“, wo das Team gezielt nur die Übersprungenen anschreibt.</p>
-        <p class="hinweis-box">Noch zu prüfen: Ob T2med in der Buchungsbestätigung einen eigenen Text oder Link erlaubt, ist nicht geklärt. Bitte in den T2med-Einstellungen bzw. beim T2med-Support nachfragen. Ein solcher Text wäre höchstens eine allgemeine Ergänzung (z. B. „falls noch nicht geschehen“).</p>
-        <button class="btn" id="textKopieren">Text kopieren</button>
-      </div>
+      <button class="btn btn-leise" id="demoReset">Demo zurücksetzen</button>
     </section>
   </main>
 </div>
 
-<div class="meldung" id="meldung"></div>
-
-<!-- Kurzanleitung, erscheint beim ersten Öffnen -->
-<div class="anleitung" id="anleitung" hidden>
-  <div class="anleitung-box">
-    <h2>So funktioniert die Demo</h2>
-    <ol>
-      <li>Klicken Sie auf „Anmelden“ – jede Eingabe funktioniert.</li>
-      <li>Unter <strong>Heute</strong> sehen Sie die Anamnesebögen mit Termin heute und morgen sowie Neupatienten, die den Bogen übersprungen haben.</li>
-      <li>Unter <strong>Anamnesebögen</strong> öffnen Sie einen Bogen. Im Abgleich tragen Sie Neupatienten aus T2med ein und senden bei Bedarf den Link.</li>
-      <li>Unter <strong>Anfragen</strong> leiten Sie Rezept-, Überweisungs-, AU- und Terminanfragen an Ihr Team weiter und ändern den Status.</li>
-      <li>Unter <strong>Webseiten-Texte</strong> ändern Sie Texte mit Live-Vorschau.</li>
-    </ol>
-    <p class="klein muted">Alle Namen und Daten sind erfunden. Es wird nichts wirklich gesendet oder veröffentlicht. Ihre Klicks bleiben nur in diesem Browser gespeichert und lassen sich über „Demo zurücksetzen“ verwerfen.</p>
-    <button class="btn btn-haupt" id="anleitungZu">Verstanden</button>
+<!-- Detail-Ansicht (Blatt von unten auf dem Handy) -->
+<div class="blatt" id="blatt" hidden>
+  <div class="blatt-box" role="dialog" aria-modal="true">
+    <button class="x" data-zu aria-label="Schließen">&times;</button>
+    <div class="blatt-inhalt" id="blattInhalt"></div>
+    <div class="blatt-fuss" id="blattFuss"></div>
   </div>
 </div>
+
+<!-- Kurzanleitung -->
+<div class="blatt" id="anleitung" hidden>
+  <div class="blatt-box" role="dialog" aria-modal="true" aria-labelledby="anleitungTitel">
+    <button class="x" id="anleitungX" aria-label="Schließen">&times;</button>
+    <div class="blatt-inhalt">
+      <p class="ueberzeile">Demo</p>
+      <h2 id="anleitungTitel">So funktioniert es</h2>
+      <ol class="schritte">
+        <li><b>Heute</b> zeigt, was heute zu tun ist.</li>
+        <li>Tippen Sie auf eine Karte und dann auf den grünen Knopf.</li>
+        <li>Fertig. Alles ist Beispiel – nichts wird wirklich gesendet.</li>
+      </ol>
+    </div>
+    <div class="blatt-fuss"><button class="btn btn-gross" id="anleitungZu">Verstanden</button></div>
+  </div>
+</div>
+
+<div class="meldung" id="meldung" role="status"></div>
 <script src="js/beispieldaten.js"></script>
 <script src="js/dashboard.js"></script>
 </body>

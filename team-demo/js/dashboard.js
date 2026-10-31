@@ -1,252 +1,289 @@
 (function () {
   var $ = function (s) { return document.querySelector(s); };
-  var statusText = { neu: 'neu', bearbeitung: 'in Bearbeitung', erledigt: 'erledigt' };
-  var heuteIso = new Date().toISOString().slice(0, 10);
-  var aktivBogen = null, aktivAnfrage = null, aktivText = 0;
+  var STATUS = { neu: 'Neu', arbeit: 'In Arbeit', erledigt: 'Erledigt' };
+  var filter = 'neu', textNr = 0;
 
-  function person(id) {
-    for (var i = 0; i < TEAM.length; i++) if (TEAM[i].id === id) return TEAM[i];
-    return { name: '–' };
+  // Datum
+  function iso(d) {
+    return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
   }
-  function bogen(id) {
-    for (var i = 0; i < BOEGEN.length; i++) if (BOEGEN[i].id === id) return BOEGEN[i];
+  var jetzt = new Date(), morgen = new Date();
+  morgen.setDate(morgen.getDate() + 1);
+  var HEUTE = iso(jetzt), MORGEN = iso(morgen);
+  function tag(d) { return d === 'heute' ? HEUTE : d === 'morgen' ? MORGEN : d; }
+  function tagText(d) {
+    var t = tag(d);
+    if (t === HEUTE) return 'heute';
+    if (t === MORGEN) return 'morgen';
+    return t.split('-').reverse().slice(0, 2).join('.') + '.';
   }
-  function demoSpeichern() {
-    try { localStorage.setItem('lhDemo', JSON.stringify({ b: BOEGEN, a: ANFRAGEN, t: TEXTE, g: ABGLEICH })); } catch (e) {}
+  function uhr() { return new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }); }
+  function nachTermin(a, b) { return (tag(a.datum) + a.zeit) < (tag(b.datum) + b.zeit) ? -1 : 1; }
+
+  function person(id) { return TEAM.filter(function (t) { return t.id === id; })[0] || { kurz: '–' }; }
+  function finde(liste, id) { return liste.filter(function (x) { return x.id == id; })[0]; }
+
+  function speichern() {
+    try { localStorage.setItem('lhDemo2', JSON.stringify({ b: BOEGEN, a: ANFRAGEN, t: TEXTE, o: OHNE_BOGEN })); } catch (e) {}
   }
   function melden(t) {
-    demoSpeichern();
+    speichern();
     var m = $('#meldung');
     m.textContent = t; m.classList.add('an');
-    clearTimeout(m._t); m._t = setTimeout(function () { m.classList.remove('an'); }, 2200);
+    clearTimeout(m._t); m._t = setTimeout(function () { m.classList.remove('an'); }, 2400);
+    alles();
+  }
+  function leer(text, klein) { return '<div class="leer">' + text + (klein ? '<small>' + klein + '</small>' : '') + '</div>'; }
+
+  // Online-Bogen eingegangen? (gleicher Name, gleicher Tag)
+  function bogenDa(o) {
+    return BOEGEN.some(function (b) { return b.name.toLowerCase() === o.name.toLowerCase() && tag(b.datum) === tag(o.datum); });
   }
 
-  // Login-Attrappe
-  $('#loginForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    $('#login').hidden = true; $('#app').hidden = false;
-    zeigen(location.hash.slice(1) || 'heute');
-  });
-  $('#abmelden').addEventListener('click', function (e) {
-    e.preventDefault(); $('#app').hidden = true; $('#login').hidden = false;
+  // Karten
+  function bogenKarte(b) {
+    return '<div class="eintrag" data-aktion="bogen" data-id="' + b.id + '">' +
+      '<div class="oben"><span class="zeit">' + b.zeit + '</span>' +
+      (b.gelesen ? '<span class="marke-status m-erledigt">Gelesen</span>' : '<span class="marke-status m-neu">Neu</span>') + '</div>' +
+      '<div><div class="name">' + b.name + '</div><p>' + tagText(b.datum) + ' · ' + b.grund + '</p></div>' +
+      '<button class="btn" data-aktion="bogen" data-id="' + b.id + '">Ansehen</button></div>';
+  }
+
+  function fehltKarte(o) {
+    var status, knopf = '', extra = '';
+    if (bogenDa(o)) {
+      status = '<span class="marke-status m-da">Bogen ausgefüllt</span>';
+    } else if (o.geklaert) {
+      status = '<span class="marke-status m-erledigt">Vor Ort geklärt</span>';
+    } else if (o.geoeffnet) {
+      status = '<span class="marke-status m-arbeit">Link geöffnet ' + o.geoeffnet + '</span>';
+      extra = '<p><b>Vor Ort fragen:</b> Bogen schon ausgefüllt?</p>';
+      knopf = '<button class="btn" data-aktion="geklaert" data-id="' + o.id + '">Vor Ort geklärt</button>';
+    } else if (o.gesendet) {
+      status = '<span class="marke-status m-arbeit">Link gesendet ' + o.gesendet + '</span>';
+      knopf = '<button class="btn btn-leise" data-aktion="oeffnen" data-id="' + o.id + '">Demo: Patient öffnet Link</button>';
+    } else {
+      status = '<span class="marke-status m-fehlt">Bogen fehlt</span>';
+      knopf = '<button class="btn" data-aktion="senden" data-id="' + o.id + '">Link senden</button>';
+    }
+    return '<div class="eintrag">' +
+      '<div class="oben"><span class="zeit">' + o.zeit + '</span>' + status + '</div>' +
+      '<div><div class="name">' + o.name + '</div><p>' + tagText(o.datum) + ' · ' + o.kontakt + '</p>' + extra + '</div>' +
+      knopf + '</div>';
+  }
+
+  function anfrageKarte(a) {
+    var knopf = a.status === 'neu' ? '<button class="btn" data-aktion="status" data-wert="arbeit" data-id="' + a.id + '">Übernehmen</button>' :
+      a.status === 'arbeit' ? '<button class="btn" data-aktion="status" data-wert="erledigt" data-id="' + a.id + '">Erledigt</button>' :
+      '<button class="btn btn-leise" data-aktion="status" data-wert="neu" data-id="' + a.id + '">Wieder öffnen</button>';
+    return '<div class="eintrag" data-aktion="anfrage" data-id="' + a.id + '">' +
+      '<div class="oben"><span class="ueberzeile">' + a.typ + '</span><span class="marke-status m-' + a.status + '">' + STATUS[a.status] + '</span></div>' +
+      '<div><div class="name">' + a.name + '</div><p>' + a.text + '</p></div>' +
+      '<p class="klein">Bei ' + person(a.an).kurz + ' · ' + a.eingang + '</p>' + knopf + '</div>';
+  }
+
+  // Heute
+  function heute() {
+    var h = jetzt.getHours();
+    $('#view-heute h1').textContent = h < 11 ? 'Guten Morgen.' : h < 17 ? 'Guten Tag.' : 'Guten Abend.';
+    $('#heuteDatum').textContent = jetzt.toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long' });
+    var boegen = BOEGEN.filter(function (b) { return tag(b.datum) === HEUTE; }).sort(nachTermin);
+    var fehlt = OHNE_BOGEN.filter(function (o) { return tag(o.datum) === HEUTE && !bogenDa(o) && !o.geklaert; }).sort(nachTermin);
+    var neu = ANFRAGEN.filter(function (a) { return a.status === 'neu'; });
+
+    $('#heuteInhalt').innerHTML =
+      '<div class="abschnitt"><h2>Bogen fehlt</h2><span class="klein">Neupatienten mit Termin heute</span></div>' +
+      (fehlt.length ? '<div class="liste">' + fehlt.map(fehltKarte).join('') + '</div>' : leer('Alles erledigt.', 'Alle Neupatienten von heute haben ihren Bogen.')) +
+      '<div class="abschnitt"><h2>Neue Bögen</h2><span class="klein">Termin heute</span></div>' +
+      (boegen.length ? '<div class="liste">' + boegen.map(bogenKarte).join('') + '</div>' : leer('Keine Bögen für heute.')) +
+      '<div class="abschnitt"><h2>Neue Anfragen</h2></div>' +
+      (neu.length ? '<div class="liste">' + neu.slice(0, 3).map(anfrageKarte).join('') + '</div>' +
+        (neu.length > 3 ? '<p><a class="btn btn-leise" href="#anfragen">Alle ' + neu.length + ' ansehen</a></p>' : '')
+        : leer('Alles erledigt.', 'Keine neuen Anfragen.'));
+  }
+
+  // Bögen
+  function boegen() {
+    var fehlt = OHNE_BOGEN.filter(function (o) { return !bogenDa(o) && !o.geklaert; }).sort(nachTermin);
+    var liste = BOEGEN.slice().sort(nachTermin);
+    $('#boegenInhalt').innerHTML =
+      '<div class="abschnitt"><h2>Bogen fehlt</h2><button class="btn btn-leise" data-aktion="eintragen">+ Neupatient eintragen</button></div>' +
+      '<p class="klein">Neupatienten aus T2med, die den Bogen bei der Buchung übersprungen haben.</p>' +
+      '<p class="hinweis-box"><b>Persönlicher Link:</b> Wir sehen nur, ob er geöffnet wurde – nicht, ob auf Papier ausgefüllt. ' +
+      'Geplant: Klicks in der ersten Minute nach dem Senden zählen nicht (z. B. automatische Link-Vorschau).</p>' +
+      (fehlt.length ? '<div class="liste">' + fehlt.map(fehltKarte).join('') + '</div>' : leer('Alles erledigt.')) +
+      '<div class="abschnitt"><h2>Eingegangene Bögen</h2><span class="klein">nach Termin sortiert</span></div>' +
+      '<div class="liste">' + liste.map(bogenKarte).join('') + '</div>';
+  }
+
+  // Anfragen
+  function anfragen() {
+    document.querySelectorAll('#statusFilter .pille').forEach(function (p) {
+      var n = ANFRAGEN.filter(function (a) { return a.status === p.dataset.filter; }).length;
+      p.querySelector('b').textContent = n;
+      p.classList.toggle('aktiv', p.dataset.filter === filter);
+    });
+    var l = ANFRAGEN.filter(function (a) { return a.status === filter; });
+    $('#anfragenInhalt').innerHTML = l.length ? '<div class="liste">' + l.map(anfrageKarte).join('') + '</div>' :
+      leer(filter === 'erledigt' ? 'Noch nichts erledigt.' : 'Alles erledigt.', filter === 'neu' ? 'Keine neuen Anfragen.' : '');
+  }
+
+  // Texte
+  function texte() {
+    $('#textWahl').innerHTML = TEXTE.map(function (t, i) {
+      return '<button class="pille' + (i === textNr ? ' aktiv' : '') + '" data-aktion="textwahl" data-id="' + i + '">' + t.bereich + '</button>';
+    }).join('');
+  }
+  function textLaden() {
+    $('#textTitel').value = TEXTE[textNr].titel; $('#textInhalt').value = TEXTE[textNr].text;
+    $('#textStand').textContent = ''; vorschau();
+  }
+  function vorschau() { $('#vTitel').textContent = $('#textTitel').value; $('#vInhalt').textContent = $('#textInhalt').value; }
+
+  // Team
+  function team() {
+    var arten = [['Rezept', 'sl'], ['Überweisung', 'jh'], ['Krankschreibung', 'kb'], ['Termin', 'kb'], ['Befund', 'cm']];
+    $('#regeln').innerHTML = arten.map(function (r) {
+      return '<div class="regel"><b>' + r[0] + '</b><span>' + person(r[1]).name + '</span></div>';
+    }).join('');
+  }
+
+  function zaehler() {
+    var b = BOEGEN.filter(function (x) { return !x.gelesen; }).length;
+    var a = ANFRAGEN.filter(function (x) { return x.status === 'neu'; }).length;
+    $('#pBoegen').textContent = b || ''; $('#pAnfragen').textContent = a || '';
+  }
+  function alles() { heute(); boegen(); anfragen(); texte(); zaehler(); }
+
+  // Blatt (Detail)
+  function blatt(inhalt, fuss) {
+    $('#blattInhalt').innerHTML = inhalt; $('#blattFuss').innerHTML = fuss || '';
+    $('#blatt').hidden = false; $('#blattInhalt').scrollTop = 0;
+  }
+  function blattZu() { $('#blatt').hidden = true; }
+
+  function bogenZeigen(id) {
+    var b = finde(BOEGEN, id);
+    blatt('<p class="ueberzeile">Anamnesebogen · Termin ' + tagText(b.datum) + ', ' + b.zeit + '</p><h2>' + b.name + '</h2>' +
+      '<div class="angaben">' +
+      '<div><span>Anlass</span>' + b.grund + '</div>' +
+      '<div><span>Medikamente</span>' + b.medikamente + '</div>' +
+      '<div><span>Allergien</span>' + b.allergien + '</div>' +
+      '<div><span>Vorerkrankungen</span>' + b.vorerkrankungen + '</div>' +
+      '<div><span>Geboren</span>' + b.geb + '</div>' +
+      '<div><span>Krankenkasse</span>' + b.kasse + '</div></div>',
+      '<button class="btn btn-gross" data-aktion="gelesen" data-id="' + b.id + '">' + (b.gelesen ? 'Schließen' : 'Gelesen') + '</button>' +
+      '<button class="btn btn-leise" data-aktion="anarzt" data-id="' + b.id + '">An Dr. Müller geben</button>');
+  }
+
+  function anfrageZeigen(id) {
+    var a = finde(ANFRAGEN, id);
+    var leute = TEAM.map(function (t) {
+      return '<button class="pille' + (t.id === a.an ? ' aktiv' : '') + '" data-aktion="weiter" data-wert="' + t.id + '" data-id="' + a.id + '">' + t.kurz + '</button>';
+    }).join('');
+    var stat = Object.keys(STATUS).map(function (k) {
+      return '<button class="pille p-' + k + (k === a.status ? ' aktiv' : '') + '" data-aktion="status" data-wert="' + k + '" data-id="' + a.id + '">' + STATUS[k] + '</button>';
+    }).join('');
+    blatt('<p class="ueberzeile">' + a.typ + ' · ' + a.eingang + '</p><h2>' + a.name + '</h2><p><span class="marke-status m-bestand">Bestandspatient</span></p><p>' + a.text + '</p>' +
+      '<p class="ueberzeile">Weitergeben an</p><div class="pillen">' + leute + '</div>' +
+      '<p class="ueberzeile">Stand</p><div class="pillen">' + stat + '</div>',
+      a.status !== 'erledigt' ? '<button class="btn btn-gross" data-aktion="status" data-wert="erledigt" data-id="' + a.id + '">Erledigt</button>' : '');
+  }
+
+  function eintragenZeigen() {
+    blatt('<p class="ueberzeile">Aus T2med übernehmen</p><h2>Neupatient eintragen</h2>' +
+      '<label>Name<input id="nName" type="text" autocomplete="off"></label>' +
+      '<label>Termin<input id="nDatum" type="date" value="' + HEUTE + '"></label>' +
+      '<label>Uhrzeit<input id="nZeit" type="time" value="12:00"></label>' +
+      '<label>Handy oder E-Mail<input id="nKontakt" type="text"></label>',
+      '<button class="btn btn-gross" data-aktion="neu-speichern">Eintragen</button>');
+  }
+
+  // Alle Klicks an einer Stelle
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-aktion],[data-zu]');
+    if (!el) return;
+    if (el.hasAttribute('data-zu')) { blattZu(); return; }
+    var akt = el.dataset.aktion, id = el.dataset.id, wert = el.dataset.wert, o, a;
+    e.stopPropagation();
+
+    if (akt === 'bogen') bogenZeigen(id);
+    if (akt === 'gelesen') { finde(BOEGEN, id).gelesen = true; blattZu(); melden('Als gelesen markiert'); }
+    if (akt === 'anarzt') { finde(BOEGEN, id).gelesen = true; blattZu(); melden('An Dr. Müller gegeben'); }
+
+    if (akt === 'senden') { o = finde(OHNE_BOGEN, id); o.gesendet = uhr(); melden('Link an ' + o.name + ' gesendet (Demo)'); }
+    if (akt === 'oeffnen') { o = finde(OHNE_BOGEN, id); o.geoeffnet = uhr(); melden(o.name + ' hat den Link geöffnet (Demo)'); }
+    if (akt === 'geklaert') { o = finde(OHNE_BOGEN, id); o.geklaert = true; melden('Erledigt: ' + o.name); }
+    if (akt === 'eintragen') eintragenZeigen();
+    if (akt === 'neu-speichern') {
+      var name = $('#nName').value.trim();
+      if (!name) { $('#nName').focus(); return; }
+      OHNE_BOGEN.push({ id: 'o' + Date.now(), name: name, datum: $('#nDatum').value || HEUTE, zeit: $('#nZeit').value || '–',
+        kontakt: $('#nKontakt').value || '–', gesendet: null, geoeffnet: null });
+      blattZu(); melden(name + ' eingetragen');
+    }
+
+    if (akt === 'anfrage') anfrageZeigen(id);
+    if (akt === 'status') {
+      a = finde(ANFRAGEN, id); a.status = wert;
+      if (!$('#blatt').hidden && wert === 'erledigt') blattZu();
+      melden(a.name + ': ' + STATUS[wert]);
+      if (!$('#blatt').hidden) anfrageZeigen(id);
+    }
+    if (akt === 'weiter') { a = finde(ANFRAGEN, id); a.an = wert; melden('Weitergegeben an ' + person(wert).kurz); anfrageZeigen(id); }
+
+    if (akt === 'textwahl') { textNr = +id; texte(); textLaden(); }
   });
 
+  $('#statusFilter').addEventListener('click', function (e) {
+    var p = e.target.closest('.pille'); if (!p) return;
+    filter = p.dataset.filter; anfragen();
+  });
+  $('#blatt').addEventListener('click', function (e) { if (e.target === this) blattZu(); });
+
+  $('#textTitel').addEventListener('input', vorschau);
+  $('#textInhalt').addEventListener('input', vorschau);
+  $('#textSpeichern').addEventListener('click', function () {
+    TEXTE[textNr].titel = $('#textTitel').value; TEXTE[textNr].text = $('#textInhalt').value;
+    $('#textStand').textContent = 'Veröffentlicht um ' + uhr() + ' (Demo – nicht wirklich online).';
+    melden('Text veröffentlicht (Demo)');
+  });
+
+  // Ansichten
   function zeigen(view) {
     if (!$('#view-' + view)) view = 'heute';
     document.querySelectorAll('.view').forEach(function (v) { v.hidden = v.id !== 'view-' + view; });
-    document.querySelectorAll('#nav a').forEach(function (a) { a.classList.toggle('aktiv', a.dataset.view === view); });
+    document.querySelectorAll('[data-view]').forEach(function (a) { a.classList.toggle('aktiv', a.dataset.view === view); });
+    window.scrollTo(0, 0);
   }
   window.addEventListener('hashchange', function () { zeigen(location.hash.slice(1)); });
 
-  // Heute: nur eingegangene Bögen (heute/morgen) und übersprungene Bögen von heute
-  var morgen = new Date(); morgen.setDate(morgen.getDate() + 1);
-  var morgenIso = morgen.toISOString().slice(0, 10);
-  function isoVon(d) { return d === 'heute' ? heuteIso : d === 'morgen' ? morgenIso : d; }
-  function bogenZeilen(iso) {
-    var l = BOEGEN.filter(function (b) { return isoVon(b.datum) === iso; })
-      .sort(function (x, y) { return x.zeit < y.zeit ? -1 : 1; });
-    if (!l.length) return '<tr><td colspan="4" class="muted">Keine Bögen.</td></tr>';
-    return l.map(function (b) {
-      return '<tr><td class="zeit">' + b.zeit + '</td><td>' + b.name + '</td><td>' + b.grund +
-        '</td><td><a class="btn" href="#anamnese" data-bogen="' + b.id + '">Öffnen</a></td></tr>';
-    }).join('');
-  }
-  function heute() {
-    $('#heuteDatum').textContent = new Date().toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-    var hb = BOEGEN.filter(function (b) { return isoVon(b.datum) === heuteIso; }).length;
-    var mb = BOEGEN.filter(function (b) { return isoVon(b.datum) === morgenIso; }).length;
-    var ue = ABGLEICH.filter(function (a) { return isoVon(a.datum) === heuteIso && !bogenVorhanden(a); });
-    var offen = ANFRAGEN.filter(function (a) { return a.status === 'neu'; }).length;
-    $('#heuteKacheln').innerHTML =
-      '<div class="kachel"><b>' + hb + '</b>Bögen für heute</div>' +
-      '<div class="kachel"><b>' + mb + '</b>Bögen für morgen</div>' +
-      '<div class="kachel' + (ue.length ? ' warn' : '') + '"><b>' + ue.length + '</b>Bogen übersprungen</div>' +
-      '<div class="kachel"><b>' + offen + '</b>neue Anfragen</div>';
-    $('#heuteBoegen tbody').innerHTML = bogenZeilen(heuteIso);
-    $('#morgenBoegen tbody').innerHTML = bogenZeilen(morgenIso);
-    $('#heuteUebersprungen tbody').innerHTML = ue.length ? ue.map(function (a) {
-      return '<tr><td class="zeit">' + (a.zeit || '–') + '</td><td>' + a.name + '</td><td>' +
-        (a.gesendet ? '<span class="status s-gesendet">Link gesendet</span>' : '<span class="status s-fehlt">Bogen übersprungen</span>') + '</td></tr>';
-    }).join('') : '<tr><td colspan="3" class="muted">Keine.</td></tr>';
-  }
-  $('#view-heute').addEventListener('click', function (e) {
-    var b = e.target.closest('[data-bogen]');
-    if (b) { aktivBogen = b.dataset.bogen; anamneseListe(); anamneseDetail(); }
-  });
+  function starten() { $('#login').hidden = true; $('#app').hidden = false; zeigen(location.hash.slice(1) || 'heute'); }
+  $('#loginForm').addEventListener('submit', function (e) { e.preventDefault(); starten(); });
 
-  // Anamnesebögen
-  // Sortierung nach dem vom Patienten eingetragenen Termin
-  function sortKey(b) { return isoVon(b.datum) + ' ' + b.zeit; }
-  function anamneseListe() {
-    var q = $('#anamneseSuche').value.toLowerCase();
-    BOEGEN.sort(function (x, y) { return sortKey(x) < sortKey(y) ? -1 : 1; });
-    $('#anamneseListe').innerHTML = BOEGEN.filter(function (b) {
-      return b.name.toLowerCase().indexOf(q) > -1;
-    }).map(function (b) {
-      return '<li data-id="' + b.id + '" class="' + (b.id === aktivBogen ? 'aktiv' : '') + '">' +
-        '<div class="zeile"><strong>' + b.name + '</strong>' +
-        (b.gelesen ? '<span class="status s-grau">gelesen</span>' : '<span class="status s-neu">neu</span>') + '</div>' +
-        '<small>Termin ' + b.termin + ' · eingegangen ' + b.eingang + '</small></li>';
-    }).join('');
-    var n = BOEGEN.filter(function (b) { return !b.gelesen; }).length;
-    $('#zAnamnese').textContent = n || '';
+  // Anleitung
+  function anleitungZu() {
+    $('#anleitung').hidden = true;
+    try { localStorage.setItem('lhDemo2Gesehen', '1'); } catch (e) {}
   }
-  function anamneseDetail() {
-    var b = bogen(aktivBogen);
-    if (!b) return;
-    b.gelesen = true;
-    $('#anamneseDetail').innerHTML = '<h3>' + b.name + '</h3><dl>' +
-      '<dt>Geburtsdatum</dt><dd>' + b.geb + '</dd>' +
-      '<dt>Termin (laut Patient)</dt><dd>' + b.termin + '</dd>' +
-      '<dt>Krankenkasse</dt><dd>' + b.kasse + '</dd>' +
-      '<dt>Anlass</dt><dd>' + b.grund + '</dd>' +
-      '<dt>Medikamente</dt><dd>' + b.medikamente + '</dd>' +
-      '<dt>Allergien</dt><dd>' + b.allergien + '</dd>' +
-      '<dt>Vorerkrankungen</dt><dd>' + b.vorerkrankungen + '</dd>' +
-      '<dt>Bisheriger Hausarzt</dt><dd>' + b.hausarzt + '</dd></dl>' +
-      '<div class="knoepfe"><button class="btn btn-haupt" data-aktion="pdf">Als PDF für T2med</button>' +
-      '<button class="btn" data-aktion="arzt">An Dr. Müller weiterleiten</button></div>';
-    anamneseListe();
-  }
-  $('#anamneseListe').addEventListener('click', function (e) {
-    var li = e.target.closest('li'); if (!li) return;
-    aktivBogen = li.dataset.id; anamneseDetail();
-  });
-  $('#anamneseSuche').addEventListener('input', anamneseListe);
-  $('#anamneseDetail').addEventListener('click', function (e) {
-    var a = e.target.dataset.aktion;
-    if (a === 'pdf') melden('Demo: PDF für T2med würde jetzt erstellt');
-    if (a === 'arzt') melden('Weitergeleitet an Dr. Christian Müller');
-  });
-
-  // Anfragen
-  function anfragenListe() {
-    var typ = $('#fTyp').value, st = $('#fStatus').value, p = $('#fPerson').value;
-    var liste = ANFRAGEN.filter(function (a) {
-      return (!typ || a.typ === typ) && (!st || a.status === st) && (!p || a.an === p);
-    });
-    $('#anfragenListe').innerHTML = liste.length ? liste.map(function (a) {
-      return '<li data-id="' + a.id + '" class="' + (a.id === aktivAnfrage ? 'aktiv' : '') + '">' +
-        '<div class="zeile"><strong>' + a.typ + ' · ' + a.name + '</strong>' +
-        '<span class="status s-' + a.status + '">' + statusText[a.status] + '</span></div>' +
-        '<small>' + a.eingang + ' · zuständig: ' + person(a.an).name + '</small></li>';
-    }).join('') : '<li class="muted">Keine Anfragen für diesen Filter.</li>';
-    $('#zAnfragen').textContent = ANFRAGEN.filter(function (a) { return a.status === 'neu'; }).length || '';
-  }
-  function anfrageDetail() {
-    var a = ANFRAGEN.filter(function (x) { return x.id === aktivAnfrage; })[0];
-    if (!a) return;
-    var optP = TEAM.map(function (t) {
-      return '<option value="' + t.id + '"' + (t.id === a.an ? ' selected' : '') + '>' + t.name + '</option>';
-    }).join('');
-    var optS = Object.keys(statusText).map(function (k) {
-      return '<option value="' + k + '"' + (k === a.status ? ' selected' : '') + '>' + statusText[k] + '</option>';
-    }).join('');
-    $('#anfrageDetail').innerHTML = '<h3>' + a.typ + ' – ' + a.name + '</h3>' +
-      '<p class="muted klein">Eingang über Webseiten-Formular am ' + a.eingang + '</p>' +
-      '<p>' + a.text + '</p>' +
-      '<label>Weiterleiten an<select id="dPerson">' + optP + '</select></label>' +
-      '<label>Status<select id="dStatus">' + optS + '</select></label>' +
-      '<label>Interne Notiz<textarea rows="3" placeholder="z. B. Rückruf versucht, AB besprochen"></textarea></label>' +
-      '<div class="verlauf">' + a.eingang + ' eingegangen, automatisch an ' + person(a.an).name + '</div>';
-  }
-  $('#anfragenListe').addEventListener('click', function (e) {
-    var li = e.target.closest('li[data-id]'); if (!li) return;
-    aktivAnfrage = +li.dataset.id; anfrageDetail(); anfragenListe();
-  });
-  $('#anfrageDetail').addEventListener('change', function (e) {
-    var a = ANFRAGEN.filter(function (x) { return x.id === aktivAnfrage; })[0];
-    if (e.target.id === 'dPerson') { a.an = e.target.value; melden('Weitergeleitet an ' + person(a.an).name); }
-    if (e.target.id === 'dStatus') { a.status = e.target.value; melden('Status: ' + statusText[a.status]); }
-    anfragenListe(); heute();
-  });
-  ['#fTyp', '#fStatus', '#fPerson'].forEach(function (s) { $(s).addEventListener('change', anfragenListe); });
-  $('#fPerson').innerHTML += TEAM.map(function (t) { return '<option value="' + t.id + '">' + t.name + '</option>'; }).join('');
-
-  // Webseiten-Texte
-  function textLaden() {
-    var t = TEXTE[aktivText];
-    $('#textTitel').value = t.titel; $('#textInhalt').value = t.text;
-    vorschau(); $('#textStand').textContent = 'Zuletzt geändert: 27.10. von Katrin Bergmann (Beispiel)';
-  }
-  function vorschau() { $('#vTitel').textContent = $('#textTitel').value; $('#vInhalt').textContent = $('#textInhalt').value; }
-  $('#textBereich').innerHTML = TEXTE.map(function (t, i) { return '<option value="' + i + '">' + t.bereich + '</option>'; }).join('');
-  $('#textBereich').addEventListener('change', function () { aktivText = +this.value; textLaden(); });
-  $('#textTitel').addEventListener('input', vorschau);
-  $('#textInhalt').addEventListener('input', vorschau);
-  $('#textVerwerfen').addEventListener('click', textLaden);
-  $('#textSpeichern').addEventListener('click', function () {
-    TEXTE[aktivText].titel = $('#textTitel').value; TEXTE[aktivText].text = $('#textInhalt').value;
-    $('#textStand').textContent = 'Veröffentlicht um ' + new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }) + ' (Demo)';
-    melden('Veröffentlicht (Demo – nichts wirklich online gestellt)');
-  });
-
-  // Team
-  $('#teamTabelle tbody').innerHTML = TEAM.map(function (t) {
-    return '<tr><td>' + t.name + '</td><td>' + t.rolle + '</td><td>' + t.bekommt + '</td></tr>';
-  }).join('');
-  $('#regeln').innerHTML = [['Rezept', 'sl'], ['Überweisung / Anforderung', 'jh'], ['AU', 'kb'], ['Termin', 'kb'], ['Anamnesebogen', 'kb']]
-    .map(function (r) { return '<div class="regel"><span>' + r[0] + '</span><strong>' + person(r[1]).name + '</strong></div>'; }).join('');
-
-  // Abgleich T2med
-  function agDatum(a) {
-    if (a.datum === 'heute' || a.datum === heuteIso) return 'heute';
-    return a.datum.split('-').reverse().join('.');
-  }
-  // Beispiel-Logik: gibt es schon einen Bogen mit gleichem Namen und Termindatum?
-  function bogenVorhanden(a) {
-    var d = a.datum === 'heute' ? heuteIso : a.datum;
-    if (a.bogenDa) return true;
-    return BOEGEN.some(function (b) {
-      return b.name.toLowerCase() === a.name.toLowerCase() && (b.datum === 'heute' ? heuteIso : b.datum) === d;
-    });
-  }
-  function abgleich() {
-    $('#abgleichTabelle tbody').innerHTML = ABGLEICH.map(function (a, i) {
-      var st, knopf = '';
-      if (bogenVorhanden(a)) st = '<span class="status s-ok">Bogen liegt vor</span>';
-      else if (a.gesendet) st = '<span class="status s-fehlt">Bogen übersprungen</span> <span class="status s-gesendet">Link gesendet</span>';
-      else {
-        st = '<span class="status s-fehlt">Bogen übersprungen</span>';
-        knopf = '<button class="btn" data-senden="' + i + '">Link senden</button>';
-      }
-      if (!bogenVorhanden(a)) {
-        knopf += ' <button class="btn" data-fertig="' + i + '">Bogen da</button>';
-      }
-      return '<tr><td>' + a.name + '</td><td>' + agDatum(a) + (a.zeit ? ', ' + a.zeit : '') + '</td><td>' + (a.kontakt || '–') +
-        '</td><td>' + st + '</td><td>' + knopf + '</td></tr>';
-    }).join('');
-    heute();
-  }
-  $('#abgleichForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    ABGLEICH.push({ name: $('#agName').value, datum: $('#agDatum').value, zeit: $('#agZeit').value, kontakt: $('#agKontakt').value, gesendet: false });
-    this.reset(); abgleich(); melden('Neupatient im Abgleich eingetragen');
-  });
-  $('#abgleichTabelle').addEventListener('click', function (e) {
-    var s = e.target.dataset.senden, f = e.target.dataset.fertig;
-    if (f !== undefined) { ABGLEICH[f].bogenDa = true; melden('Als „Bogen liegt vor“ markiert'); }
-    if (s !== undefined) { ABGLEICH[s].gesendet = true; melden('Link an ' + ABGLEICH[s].name + ' (Demo, nichts gesendet)'); }
-    abgleich();
-  });
-  $('#textKopieren').addEventListener('click', function () { melden('Text kopiert (Demo)'); });
-
-  heute(); abgleich(); anamneseListe(); anfragenListe(); textLaden();
-  aktivBogen = 'a1'; anamneseDetail();
-  bogen('a5').gelesen = false; aktivAnfrage = 2; anfrageDetail(); anfragenListe();
-  BOEGEN[0].gelesen = false; anamneseListe();
-
-  // Demo: Anleitung und Zurücksetzen
-  if (!localStorage.getItem('lhDemoGesehen')) $('#anleitung').hidden = false;
-  $('#anleitungZu').addEventListener('click', function () {
-    $('#anleitung').hidden = true; localStorage.setItem('lhDemoGesehen', '1');
-  });
+  $('#anleitungZu').addEventListener('click', anleitungZu);
+  $('#anleitungX').addEventListener('click', anleitungZu);
+  $('#anleitung').addEventListener('click', function (e) { if (e.target === this) anleitungZu(); });
   $('#hilfeAuf').addEventListener('click', function (e) { e.preventDefault(); $('#anleitung').hidden = false; });
-  $('#demoReset').addEventListener('click', function (e) {
-    e.preventDefault(); localStorage.removeItem('lhDemo'); location.reload();
+  var gesehen = null;
+  try { gesehen = localStorage.getItem('lhDemo2Gesehen'); } catch (e) {}
+  if (!gesehen) $('#anleitung').hidden = false;
+
+  $('#demoReset').addEventListener('click', function () {
+    try { localStorage.removeItem('lhDemo2'); } catch (e) {}
+    location.hash = 'heute'; location.reload();
   });
 
-  // ?direkt=view überspringt die Anmeldung (für Screenshots)
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { blattZu(); anleitungZu(); } });
+
+  alles(); textLaden(); team();
+
+  // ?direkt=ansicht überspringt die Anmeldung
   var d = location.search.match(/direkt=(\w+)/);
-  if (d) { $('#login').hidden = true; $('#app').hidden = false; zeigen(d[1]); }
+  if (d) { location.hash = d[1]; starten(); }
 })();
