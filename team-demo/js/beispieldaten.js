@@ -28,10 +28,20 @@ var BOEGEN = [
 // Neupatienten aus T2med, vom Team eingetragen
 // gesendet / geoeffnet: Uhrzeit oder null; Bogen ausgefüllt = Online-Bogen ist eingegangen
 var OHNE_BOGEN = [
-  { id: 'o1', name: 'Ole Schwanitz', datum: 'heute', zeit: '09:00', kontakt: '0170 0000001', gesendet: null, geoeffnet: null },
-  { id: 'o2', name: 'Lea Thiemann', datum: 'heute', zeit: '10:40', kontakt: 'l.thiemann@example.de', gesendet: '07:45', geoeffnet: '08:12' },
-  { id: 'o3', name: 'Frank Wöhler', datum: 'heute', zeit: '11:20', kontakt: 'f.woehler@example.de', gesendet: '30.10. 17:02', geoeffnet: '30.10. 18:40' },
-  { id: 'o4', name: 'Svenja Kroll', datum: '2026-11-04', zeit: '08:40', kontakt: '0151 0000002', gesendet: '31.10. 14:10', geoeffnet: null }
+  { id: 'o1', name: 'Ole Schwanitz', hinweis: 'Neu in Wernigerode, Hausarzt gesucht', datum: 'heute', zeit: '09:00', kontakt: '0170 0000001', gesendet: null, geoeffnet: null },
+  { id: 'o2', name: 'Lea Thiemann', hinweis: 'Hautausschlag am Arm', datum: 'heute', zeit: '10:40', kontakt: 'l.thiemann@example.de', gesendet: '07:45', geoeffnet: '08:12' },
+  { id: 'o3', name: 'Frank Wöhler', hinweis: 'Bluthochdruck, Tabletten prüfen', datum: 'heute', zeit: '11:20', kontakt: 'f.woehler@example.de', gesendet: '30.10. 17:02', geoeffnet: '30.10. 18:40' },
+  { id: 'o4', name: 'Svenja Kroll', hinweis: 'Check-up 35', datum: '2026-11-04', zeit: '08:40', kontakt: '0151 0000002', gesendet: '31.10. 14:10', geoeffnet: null }
+];
+
+// Bestandspatienten mit Termin, Hinweis kommt aus der Online-Buchung
+var BESTAND = [
+  { id: 's1', name: 'Gisela Hartung', datum: 'heute', zeit: '08:00', hinweis: 'Blutabnahme nüchtern' },
+  { id: 's2', name: 'Dieter Schulze', datum: 'heute', zeit: '10:00', hinweis: 'Kontrolle Blutzucker, Werte mitgebracht' },
+  { id: 's3', name: 'Anja Möbius', datum: 'heute', zeit: '11:40', hinweis: 'Ergebnis Ultraschall besprechen' },
+  { id: 's4', name: 'Horst Wendt', datum: 'morgen', zeit: '08:30', hinweis: 'Grippeimpfung' },
+  { id: 's5', name: 'Petra Lindner', datum: 'morgen', zeit: '09:15', hinweis: 'Knie schmerzt wieder' },
+  { id: 's6', name: 'Bernd Kaiser', datum: '2026-11-03', zeit: '16:00', hinweis: 'Folgerezept und Gespräch' }
 ];
 
 var ANFRAGEN = [
@@ -63,7 +73,7 @@ var TEXTE = [
 // Demo: gespeicherte Klicks aus diesem Browser laden
 (function () {
   try {
-    var d = JSON.parse(localStorage.getItem('lhDemo3') || 'null');
-    if (d) { BOEGEN = d.b; ANFRAGEN = d.a; TEXTE = d.t; OHNE_BOGEN = d.o; }
+    var d = JSON.parse(localStorage.getItem('lhDemo4') || 'null');
+    if (d) { BOEGEN = d.b; ANFRAGEN = d.a; TEXTE = d.t; OHNE_BOGEN = d.o; BESTAND = d.s || BESTAND; }
   } catch (e) {}
 })();

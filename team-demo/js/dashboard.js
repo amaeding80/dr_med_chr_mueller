@@ -31,7 +31,7 @@
   function finde(liste, id) { return liste.filter(function (x) { return x.id == id; })[0]; }
 
   function speichern() {
-    try { localStorage.setItem('lhDemo3', JSON.stringify({ b: BOEGEN, a: ANFRAGEN, t: TEXTE, o: OHNE_BOGEN })); } catch (e) {}
+    try { localStorage.setItem('lhDemo4', JSON.stringify({ b: BOEGEN, a: ANFRAGEN, t: TEXTE, o: OHNE_BOGEN, s: BESTAND })); } catch (e) {}
   }
   function melden(t) {
     speichern();
@@ -107,24 +107,58 @@
       '<div class="knopfreihe">' + knopf + '</div></div>';
   }
 
-  // Heute
+  // Termine: eine Liste, nach Tag gruppiert
+  function terminZeile(t) {
+    var rechts, klick = '';
+    if (t.art === 'bestand') rechts = '';
+    else if (t.bogen) { rechts = '<span class="marke-status m-da">Bogen da</span>'; klick = ' data-aktion="bogen" data-id="' + t.bogen.id + '"'; }
+    else {
+      var o = t.o; klick = ' data-aktion="termin" data-id="' + o.id + '"';
+      rechts = o.geklaert ? '<span class="marke-status m-erledigt">Vor Ort geklärt</span>' :
+        o.geoeffnet ? '<span class="marke-status m-fragen">Link geöffnet – vor Ort fragen</span>' :
+        o.gesendet ? '<span class="marke-status m-grau">Link nicht geöffnet</span>' :
+        '<button class="btn btn-dringend" data-aktion="senden" data-id="' + o.id + '">Link senden</button>';
+    }
+    return '<li class="termin"' + klick + '><span class="t-zeit">' + t.zeit + '</span>' +
+      '<div class="t-mitte"><div class="t-name">' + t.name + ' <span class="marke-art ' + (t.art === 'neu' ? 'a-neu">Neu' : 'a-bestand">Bestand') + '</span></div>' +
+      '<p class="t-hinweis">' + (t.hinweis || '–') + '</p></div>' +
+      (rechts ? '<div class="t-status">' + rechts + '</div>' : '') + '</li>';
+  }
+
+  function alleTermine() {
+    var l = BESTAND.map(function (b) { return { art: 'bestand', name: b.name, datum: b.datum, zeit: b.zeit, hinweis: b.hinweis }; });
+    BOEGEN.forEach(function (b) { l.push({ art: 'neu', name: b.name, datum: b.datum, zeit: b.zeit, hinweis: b.grund, bogen: b }); });
+    OHNE_BOGEN.forEach(function (o) { if (!bogenDa(o)) l.push({ art: 'neu', name: o.name, datum: o.datum, zeit: o.zeit, hinweis: o.hinweis, o: o }); });
+    return l.filter(function (t) { return tag(t.datum) >= HEUTE; }).sort(nachTermin);
+  }
+
   function heute() {
     $('#heuteDatum').textContent = jetzt.toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long' });
-    var boegen = BOEGEN.filter(function (b) { return tag(b.datum) === HEUTE; }).sort(nachTermin);
-    var fehlt = OHNE_BOGEN.filter(function (o) { return tag(o.datum) === HEUTE && !bogenDa(o) && !o.geklaert; }).sort(nachTermin);
-    var neu = ANFRAGEN.filter(function (a) { return a.status === 'neu'; }).sort(nachEingang);
-    var offen = fehlt.length + boegen.filter(function (b) { return !b.gelesen; }).length + neu.length;
-    $('#heuteTitel').textContent = offen ? 'Heute ' + offen + (offen === 1 ? ' Ding' : ' Dinge') + ' zu tun' : 'Heute ist alles erledigt';
+    var html = '', zuletzt = null;
+    alleTermine().forEach(function (t) {
+      var d = tag(t.datum);
+      if (d !== zuletzt) {
+        if (zuletzt) html += '</ul>';
+        var titel = d === HEUTE ? 'Heute' : d === MORGEN ? 'Morgen' :
+          new Date(d + 'T12:00').toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'numeric' });
+        html += '<h2 class="tag-titel">' + titel + '</h2><ul class="termine">';
+        zuletzt = d;
+      }
+      html += terminZeile(t);
+    });
+    $('#heuteInhalt').innerHTML = html ? html + '</ul>' : leer('Keine Termine.');
+  }
 
-    $('#heuteInhalt').innerHTML =
-      '<div class="abschnitt"><h2>Bogen fehlt</h2><span class="klein">Neupatienten, nach Uhrzeit</span></div>' +
-      (fehlt.length ? '<div class="liste">' + fehlt.map(fehltKarte).join('') + '</div>' : leer('Alles erledigt.', 'Alle Neupatienten von heute haben ihren Bogen.')) +
-      '<div class="abschnitt"><h2>Neue Bögen</h2><span class="klein">Termin heute, nach Uhrzeit</span></div>' +
-      (boegen.length ? '<div class="liste">' + boegen.map(bogenKarte).join('') + '</div>' : leer('Keine Bögen für heute.')) +
-      '<div class="abschnitt"><h2>Neue Anfragen</h2><span class="klein">nach Eingang</span></div>' +
-      (neu.length ? '<div class="liste">' + neu.slice(0, 3).map(anfrageKarte).join('') + '</div>' +
-        (neu.length > 3 ? '<p><a class="btn" href="#anfragen">Alle ' + neu.length + ' ansehen</a></p>' : '')
-        : leer('Alles erledigt.', 'Keine neuen Anfragen.'));
+  function terminZeigen(id) {
+    var o = finde(OHNE_BOGEN, id), k = '';
+    if (o.gesendet) k += '<button class="btn" data-aktion="senden" data-id="' + o.id + '">Link erneut senden</button>';
+    if (o.geoeffnet && !o.geklaert) k += '<button class="btn btn-haupt" data-aktion="geklaert" data-id="' + o.id + '">Vor Ort geklärt</button>';
+    if (o.gesendet && !o.geoeffnet) k += '<button class="btn btn-demo" data-aktion="oeffnen" data-id="' + o.id + '">Demo: Patient öffnet Link</button>';
+    if (o.gesendet) k += '<button class="btn btn-demo" data-aktion="eingang" data-id="' + o.id + '">Demo: Bogen kommt an</button>';
+    blatt('<p class="ueberzeile">Neupatient · ' + tagText(o.datum) + ', ' + o.zeit + '</p><h2>' + o.name + '</h2>' +
+      '<p>' + (o.hinweis || '') + '</p><p>' + kontakt(o.kontakt) + '</p>' +
+      (o.gesendet ? '<p class="klein">Link gesendet ' + o.gesendet + (o.geoeffnet ? ' · geöffnet ' + o.geoeffnet : '') + '</p>' : ''),
+      '<div class="knopfreihe">' + k + '</div>');
   }
 
   // Bögen
@@ -226,7 +260,8 @@
       '<label>Name<input id="nName" type="text" autocomplete="off"></label>' +
       '<label>Termin<input id="nDatum" type="date" value="' + HEUTE + '"></label>' +
       '<label>Uhrzeit<input id="nZeit" type="time" value="12:00"></label>' +
-      '<label>Handy oder E-Mail<input id="nKontakt" type="text"></label>',
+      '<label>Handy oder E-Mail<input id="nKontakt" type="text"></label>' +
+      '<label>Hinweis des Patienten<input id="nHinweis" type="text"></label>',
       '<button class="btn btn-gross" data-aktion="neu-speichern">Eintragen</button>');
   }
 
@@ -239,19 +274,23 @@
     e.stopPropagation();
 
     if (akt === 'bogen') bogenZeigen(id);
+    if (akt === 'termin') { terminZeigen(id); return; }
     if (akt === 'gelesen') { finde(BOEGEN, id).gelesen = true; blattZu(); melden('Als gelesen markiert'); }
     if (akt === 'anarzt') { finde(BOEGEN, id).gelesen = true; blattZu(); melden('An Dr. Müller gegeben'); }
 
     if (akt === 'senden') { o = finde(OHNE_BOGEN, id); o.gesendet = uhr(); o.geoeffnet = null; melden('Link an ' + o.name + ' gesendet (Demo)'); }
-    if (akt === 'eingang') { o = finde(OHNE_BOGEN, id); o.eingegangen = true; melden('Bogen von ' + o.name + ' ist da (Demo)'); }
-    if (akt === 'oeffnen') { o = finde(OHNE_BOGEN, id); o.geoeffnet = uhr(); melden(o.name + ' hat den Link geöffnet (Demo)'); }
-    if (akt === 'geklaert') { o = finde(OHNE_BOGEN, id); o.geklaert = true; melden('Erledigt: ' + o.name); }
+    if (akt === 'eingang') { o = finde(OHNE_BOGEN, id); o.eingegangen = true; blattZu();
+      BOEGEN.push({ id: 'b' + o.id, name: o.name, geb: '–', datum: o.datum, zeit: o.zeit, eingang: uhr(), kasse: '–', grund: o.hinweis || '–',
+        medikamente: 'keine', allergien: 'keine', vorerkrankungen: 'keine', gelesen: false });
+      melden('Bogen von ' + o.name + ' ist da (Demo)'); }
+    if (akt === 'oeffnen') { o = finde(OHNE_BOGEN, id); o.geoeffnet = uhr(); blattZu(); melden(o.name + ' hat den Link geöffnet (Demo)'); }
+    if (akt === 'geklaert') { o = finde(OHNE_BOGEN, id); o.geklaert = true; blattZu(); melden('Erledigt: ' + o.name); }
     if (akt === 'eintragen') eintragenZeigen();
     if (akt === 'neu-speichern') {
       var name = $('#nName').value.trim();
       if (!name) { $('#nName').focus(); return; }
       OHNE_BOGEN.push({ id: 'o' + Date.now(), name: name, datum: $('#nDatum').value || HEUTE, zeit: $('#nZeit').value || '–',
-        kontakt: $('#nKontakt').value || '–', gesendet: null, geoeffnet: null });
+        kontakt: $('#nKontakt').value || '–', hinweis: $('#nHinweis').value, gesendet: null, geoeffnet: null });
       blattZu(); melden(name + ' eingetragen');
     }
 
@@ -322,7 +361,7 @@
   $('#hilfeAuf').addEventListener('click', function (e) { e.preventDefault(); $('#anleitung').hidden = false; });
 
   $('#demoReset').addEventListener('click', function () {
-    try { localStorage.removeItem('lhDemo3'); } catch (e) {}
+    try { localStorage.removeItem('lhDemo4'); } catch (e) {}
     location.hash = 'heute'; location.reload();
   });
 

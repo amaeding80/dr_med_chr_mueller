@@ -162,3 +162,29 @@ main{max-width:1100px;margin:0 auto;padding:32px 24px 60px}
   .eintrag .knopfreihe .btn:first-child:nth-last-child(3){flex-basis:100%}
   .pille{flex:1;padding:0 10px}
 }
+
+/* Terminliste */
+.tag-titel{margin:26px 0 10px;font-size:1.25rem}
+.termine{list-style:none;margin:0;padding:0;background:var(--surface);border:var(--rand);border-radius:18px;overflow:hidden}
+.termin{display:flex;align-items:center;gap:14px;padding:14px 18px;border-top:var(--rand)}
+.termin:first-child{border-top:0}
+.termin[data-aktion]{cursor:pointer}
+.termin[data-aktion]:hover{background:var(--olive-soft)}
+.t-zeit{font-size:1.15rem;font-weight:700;color:var(--olive-haupt);font-variant-numeric:tabular-nums;min-width:52px}
+.t-mitte{flex:1;min-width:0}
+.t-name{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--olive-dark)}
+.t-hinweis{margin:2px 0 0;color:var(--text-muted);font-size:.95rem}
+.t-status{flex-shrink:0;text-align:right}
+.t-status .btn{min-height:40px}
+.marke-art{display:inline-block;font-family:var(--sans,inherit);font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;vertical-align:middle;margin-left:4px}
+.a-neu{background:var(--terracotta-soft);color:var(--terracotta-caps)}
+.a-bestand{background:var(--sand-soft);color:var(--olive-dark)}
+.m-fragen{background:#f6e3b4;color:#7a5200}
+.m-grau{background:#ecebe6;color:#5b5b55}
+@media (max-width:640px){
+  .termin{flex-wrap:wrap;padding:14px 16px;gap:4px 12px;align-items:flex-start}
+  .t-status{flex-basis:100%;text-align:left;padding-left:64px}
+  .t-status .marke-status{white-space:normal}
+}
+.t-status .m-da{background:#d9e8cf;color:#2f5a22}
+.blatt a[href^="tel:"]{color:var(--olive-haupt);font-weight:600}
