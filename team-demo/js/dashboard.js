@@ -3,6 +3,10 @@
   var STATUS = { neu: 'Neu', arbeit: 'In Arbeit', erledigt: 'Erledigt' };
   var filter = 'neu', textNr = 0;
 
+  // Schalter: persönlicher Link an Neupatienten (senden, geöffnet, Tracking).
+  // Vorerst aus, evtl. später über T2med. Wieder einschalten: true setzen.
+  var FUNKTIONEN = { link: false };
+
   // Datum
   function iso(d) {
     return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
@@ -113,6 +117,7 @@
 
   function aufgabe(t) {
     if (!t.o || t.o.geklaert) return '';
+    if (!FUNKTIONEN.link) return 'vorort';
     if (!t.o.gesendet) return 'senden';
     return t.o.geoeffnet ? 'fragen' : '';
   }
@@ -120,6 +125,13 @@
   function terminZeile(t) {
     var status = '', knopf = '', klick = '', o = t.o;
     if (t.bogen) { status = '<span class="lbl l-gruen">✓ Bogen da</span>'; klick = ' data-aktion="bogen" data-id="' + t.bogen.id + '"'; }
+    else if (o && !FUNKTIONEN.link) {
+      if (o.geklaert) status = '<span class="lbl l-gruen">✓ Vor Ort ausgefüllt</span>';
+      else {
+        status = '<span class="lbl l-amber">Bogen fehlt – vor Ort ausfüllen</span>';
+        knopf = '<button class="btn btn-klein" data-aktion="geklaert" data-id="' + o.id + '">Erledigt</button>';
+      }
+    }
     else if (o) {
       klick = ' data-aktion="termin" data-id="' + o.id + '"';
       if (o.geklaert) status = '<span class="lbl l-gruen">✓ Vor Ort geklärt</span>';
@@ -152,7 +164,9 @@
     var heuteL = liste.filter(function (t) { return tag(t.datum) === HEUTE; });
     var senden = heuteL.filter(function (t) { return aufgabe(t) === 'senden'; });
     var fragen = heuteL.filter(function (t) { return aufgabe(t) === 'fragen'; });
+    var vorort = heuteL.filter(function (t) { return aufgabe(t) === 'vorort'; });
     var teile = [];
+    if (vorort.length) teile.push('<a href="#" data-aktion="springen" data-id="' + vorort[0].o.id + '">' + vorort.length + (vorort.length === 1 ? ' Bogen' : ' Bögen') + ' vor Ort</a>');
     if (senden.length) teile.push('<a href="#" data-aktion="springen" data-id="' + senden[0].o.id + '">' + senden.length + ' Link senden</a>');
     if (fragen.length) teile.push('<a href="#" data-aktion="springen" data-id="' + fragen[0].o.id + '">' + fragen.length + ' vor Ort fragen</a>');
     $('#heuteZuTun').innerHTML = teile.length ? 'Heute zu tun: ' + teile.join(', ') : '✓ Heute alles erledigt';
@@ -194,8 +208,11 @@
     $('#boegenInhalt').innerHTML =
       '<div class="abschnitt"><h2>Bogen fehlt</h2><button class="btn" data-aktion="eintragen">+ Neupatient eintragen</button></div>' +
       '<p class="klein">Neupatienten aus T2med, die den Bogen bei der Buchung übersprungen haben.</p>' +
-      '<p class="hinweis-box">Wir sehen nur, ob der Link geöffnet wurde.</p>' +
-      '<div class="liste">' + fehlt.map(fehltKarte).join('') + '</div>' +
+      (FUNKTIONEN.link ? '<p class="hinweis-box">Wir sehen nur, ob der Link geöffnet wurde.</p>' +
+        '<div class="liste">' + fehlt.map(fehltKarte).join('') + '</div>' :
+        '<ul class="termine">' + fehlt.filter(function (o) { return !bogenDa(o); }).map(function (o) {
+          return terminZeile({ art: 'neu', name: o.name, datum: o.datum, zeit: o.zeit, hinweis: o.hinweis, o: o });
+        }).join('') + '</ul>') +
       '<div class="abschnitt"><h2>Eingegangene Bögen</h2><span class="klein">nach Termin sortiert</span></div>' +
       '<div class="liste">' + liste.map(bogenKarte).join('') + '</div>';
   }
@@ -283,7 +300,7 @@
       '<label>Name<input id="nName" type="text" autocomplete="off"></label>' +
       '<label>Termin<input id="nDatum" type="date" value="' + HEUTE + '"></label>' +
       '<label>Uhrzeit<input id="nZeit" type="time" value="12:00"></label>' +
-      '<label>Handy oder E-Mail<input id="nKontakt" type="text"></label>' +
+      (FUNKTIONEN.link ? '<label>Handy oder E-Mail<input id="nKontakt" type="text"></label>' : '') +
       '<label>Hinweis des Patienten<input id="nHinweis" type="text"></label>',
       '<button class="btn btn-gross" data-aktion="neu-speichern">Eintragen</button>');
   }
@@ -307,6 +324,7 @@
     if (akt === 'gelesen') { finde(BOEGEN, id).gelesen = true; blattZu(); melden('Als gelesen markiert'); }
     if (akt === 'anarzt') { finde(BOEGEN, id).gelesen = true; blattZu(); melden('An Dr. Müller gegeben'); }
 
+    if (!FUNKTIONEN.link && (akt === 'senden' || akt === 'oeffnen' || akt === 'eingang')) return;
     if (akt === 'senden') { o = finde(OHNE_BOGEN, id); o.gesendet = uhr(); o.geoeffnet = null; melden('Link an ' + o.name + ' gesendet (Demo)'); }
     if (akt === 'eingang') { o = finde(OHNE_BOGEN, id); o.eingegangen = true; blattZu();
       BOEGEN.push({ id: 'b' + o.id, name: o.name, geb: '–', datum: o.datum, zeit: o.zeit, eingang: uhr(), kasse: '–', grund: o.hinweis || '–',
@@ -319,7 +337,7 @@
       var name = $('#nName').value.trim();
       if (!name) { $('#nName').focus(); return; }
       OHNE_BOGEN.push({ id: 'o' + Date.now(), name: name, datum: $('#nDatum').value || HEUTE, zeit: $('#nZeit').value || '–',
-        kontakt: $('#nKontakt').value || '–', hinweis: $('#nHinweis').value, gesendet: null, geoeffnet: null });
+        kontakt: $('#nKontakt') ? $('#nKontakt').value : '–', hinweis: $('#nHinweis').value, gesendet: null, geoeffnet: null });
       blattZu(); melden(name + ' eingetragen');
     }
 
@@ -370,6 +388,8 @@
     window.scrollTo(0, 0);
   }
   window.addEventListener('hashchange', function () { zeigen(location.hash.slice(1)); });
+
+  if (!FUNKTIONEN.link) document.querySelectorAll('.nur-link').forEach(function (el) { el.hidden = true; });
 
   function starten() {
     $('#login').hidden = true; $('#app').hidden = false; zeigen(location.hash.slice(1) || 'heute');
