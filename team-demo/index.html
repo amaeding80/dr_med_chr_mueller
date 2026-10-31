@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Praxis-Dashboard | Land-Harz-Praxis Dr. Müller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+<!-- Anmeldung (nur Attrappe, kein echter Login) -->
+<section id="login" class="login">
+  <form class="login-box" id="loginForm">
+    <div class="brand"><span class="brand-zeichen">LH</span><span><strong>Land-Harz-Praxis</strong><small>Dr. med. Christian Müller</small></span></div>
+    <h1>Team-Anmeldung</h1>
+    <label>Benutzername<input type="text" value="empfang" autocomplete="username"></label>
+    <label>Passwort<input type="password" value="demo" autocomplete="current-password"></label>
+    <button class="btn btn-haupt" type="submit">Anmelden</button>
+    <p class="hinweis">Demo – beliebige Eingabe. Alle Daten sind Beispieldaten.</p>
+  </form>
+</section>
+
+<div id="app" class="app" hidden>
+  <aside class="seitenleiste">
+    <div class="brand"><span class="brand-zeichen">LH</span><span><strong>Land-Harz-Praxis</strong><small>Team-Dashboard</small></span></div>
+    <nav id="nav">
+      <a href="#heute" data-view="heute">Heute</a>
+      <a href="#anamnese" data-view="anamnese">Anamnesebögen <span class="zaehler" id="zAnamnese"></span></a>
+      <a href="#anfragen" data-view="anfragen">Anfragen <span class="zaehler" id="zAnfragen"></span></a>
+      <a href="#texte" data-view="texte">Webseiten-Texte</a>
+      <a href="#team" data-view="team">Einstellungen / Team</a>
+    </nav>
+    <div class="nutzer">Angemeldet: <strong>Empfang</strong><br><a href="#" id="abmelden">Abmelden</a></div>
+  </aside>
+
+  <main>
+    <div class="beispiel-band">Demo mit Beispieldaten – alle Namen sind erfunden. <a href="#" id="hilfeAuf">So funktioniert die Demo</a> · <a href="#" id="demoReset">Demo zurücksetzen</a></div>
+
+    <section class="view" id="view-heute">
+      <header class="kopf"><h2>Heute</h2><span id="heuteDatum" class="muted"></span></header>
+      <div class="kacheln" id="heuteKacheln"></div>
+      <div class="split gleich">
+        <div class="karte">
+          <h3>Eingegangene Bögen mit Termin heute</h3>
+          <p class="muted klein">Datum und Uhrzeit hat der Patient im Bogen selbst eingetragen.</p>
+          <table class="tabelle" id="heuteBoegen"><thead><tr><th>Uhrzeit</th><th>Patient</th><th>Anlass</th><th></th></tr></thead><tbody></tbody></table>
+          <h3 class="abstand">Bögen mit Termin morgen</h3>
+          <table class="tabelle" id="morgenBoegen"><thead><tr><th>Uhrzeit</th><th>Patient</th><th>Anlass</th><th></th></tr></thead><tbody></tbody></table>
+        </div>
+        <div class="karte">
+          <h3>Bogen übersprungen – Termin heute</h3>
+          <p class="muted klein">Aus dem Abgleich unter „Anamnesebögen“.</p>
+          <table class="tabelle" id="heuteUebersprungen"><thead><tr><th>Uhrzeit</th><th>Patient</th><th>Status</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="view-anamnese" hidden>
+      <header class="kopf"><h2>Anamnesebögen</h2>
+        <input type="search" id="anamneseSuche" placeholder="Name suchen …"></header>
+      <div class="split">
+        <ul class="liste" id="anamneseListe"></ul>
+        <div class="karte detail" id="anamneseDetail"><p class="muted">Bogen links auswählen.</p></div>
+      </div>
+
+      <!-- Abgleich: Neupatienten aus T2med, die keinen Bogen ausgefüllt haben -->
+      <div class="karte">
+        <h3>Abgleich mit T2med: Neupatienten</h3>
+        <p class="muted klein">Neupatienten aus der T2med-Terminliste hier eintragen. Das Dashboard prüft, ob schon ein Bogen mit gleichem Namen und Termindatum da ist. Nur wer den Bogen bei der Buchung übersprungen hat, bekommt den Link. Übersprungene mit Termin heute erscheinen auch unter „Heute“.</p>
+        <form class="abgleich-form" id="abgleichForm">
+          <input type="text" id="agName" placeholder="Name" required>
+          <input type="date" id="agDatum" required>
+          <input type="time" id="agZeit">
+          <input type="text" id="agKontakt" placeholder="Mail oder Handy">
+          <button class="btn btn-haupt" type="submit">Eintragen</button>
+        </form>
+        <table class="tabelle" id="abgleichTabelle">
+          <thead><tr><th>Name</th><th>Termin</th><th>Kontakt</th><th>Status</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="view" id="view-anfragen" hidden>
+      <header class="kopf"><h2>Anfragen</h2>
+        <div class="filter">
+          <select id="fTyp"><option value="">Alle Arten</option><option>Rezept</option><option>Überweisung</option><option>AU</option><option>Termin</option></select>
+          <select id="fStatus"><option value="">Alle Status</option><option value="neu">neu</option><option value="bearbeitung">in Bearbeitung</option><option value="erledigt">erledigt</option></select>
+          <select id="fPerson"><option value="">Alle Zuständigen</option></select>
+        </div></header>
+      <div class="split">
+        <ul class="liste" id="anfragenListe"></ul>
+        <div class="karte detail" id="anfrageDetail"><p class="muted">Anfrage links auswählen.</p></div>
+      </div>
+    </section>
+
+    <section class="view" id="view-texte" hidden>
+      <header class="kopf"><h2>Webseiten-Texte</h2><span class="muted">Änderungen gehen erst nach „Veröffentlichen“ online.</span></header>
+      <div class="split editor">
+        <div class="karte">
+          <label>Bereich<select id="textBereich"></select></label>
+          <label>Überschrift<input type="text" id="textTitel"></label>
+          <label>Text<textarea id="textInhalt" rows="9"></textarea></label>
+          <div class="knoepfe"><button class="btn" id="textVerwerfen">Verwerfen</button><button class="btn btn-haupt" id="textSpeichern">Veröffentlichen</button></div>
+          <p class="klein muted" id="textStand"></p>
+        </div>
+        <div class="karte vorschau"><span class="klein muted">Vorschau Webseite</span><h3 id="vTitel"></h3><p id="vInhalt"></p></div>
+      </div>
+    </section>
+
+    <section class="view" id="view-team" hidden>
+      <header class="kopf"><h2>Einstellungen / Team</h2></header>
+      <div class="split">
+        <div class="karte"><h3>Team</h3><table class="tabelle" id="teamTabelle"><thead><tr><th>Name</th><th>Rolle</th><th>Bekommt</th></tr></thead><tbody></tbody></table></div>
+        <div class="karte"><h3>Weiterleitung</h3>
+          <p class="klein muted">Neue Anfragen landen automatisch bei:</p>
+          <div id="regeln"></div>
+          <h3>Benachrichtigung</h3>
+          <label class="schalter"><input type="checkbox" checked> Mail bei neuer Anfrage</label>
+          <label class="schalter"><input type="checkbox" checked> Hinweis, wenn Neupatient bis Vortag keinen Bogen hat</label>
+          <label class="schalter"><input type="checkbox"> Tageszusammenfassung um 7:30 Uhr</label>
+        </div>
+      </div>
+      <div class="karte">
+        <h3>Bogen-Link für die T2med-Terminbestätigung</h3>
+        <label>Link zum Anamnesebogen<input type="text" readonly value="https://www.land-harz-praxis.de/anamnese (Beispiel-Adresse)"></label>
+        <label>Vorschlag für den Text in der Bestätigung<textarea rows="4" readonly>Sie kommen zum ersten Mal zu uns und haben den Anamnesebogen bei der Buchung übersprungen? Dann füllen Sie ihn bitte vorab hier aus: https://www.land-harz-praxis.de/anamnese. Tragen Sie dort Ihr Termindatum und die Uhrzeit ein.</textarea></label>
+        <p class="hinweis-box">Wichtig: Der Link ist nur für Neupatienten gedacht, die den Anamnese-Schritt bei der Buchung übersprungen haben. Wer den Bogen schon ausgefüllt hat, bekommt keinen Link. T2med weiß vermutlich nicht, ob jemand unseren Bogen ausgefüllt oder übersprungen hat – ein Text in der Bestätigung ginge also an alle. Hauptweg ist deshalb der Abgleich unter „Anamnesebögen“, wo das Team gezielt nur die Übersprungenen anschreibt.</p>
+        <p class="hinweis-box">Noch zu prüfen: Ob T2med in der Buchungsbestätigung einen eigenen Text oder Link erlaubt, ist nicht geklärt. Bitte in den T2med-Einstellungen bzw. beim T2med-Support nachfragen. Ein solcher Text wäre höchstens eine allgemeine Ergänzung (z. B. „falls noch nicht geschehen“).</p>
+        <button class="btn" id="textKopieren">Text kopieren</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="meldung" id="meldung"></div>
+
+<!-- Kurzanleitung, erscheint beim ersten Öffnen -->
+<div class="anleitung" id="anleitung" hidden>
+  <div class="anleitung-box">
+    <h2>So funktioniert die Demo</h2>
+    <ol>
+      <li>Klicken Sie auf „Anmelden“ – jede Eingabe funktioniert.</li>
+      <li>Unter <strong>Heute</strong> sehen Sie die Anamnesebögen mit Termin heute und morgen sowie Neupatienten, die den Bogen übersprungen haben.</li>
+      <li>Unter <strong>Anamnesebögen</strong> öffnen Sie einen Bogen. Im Abgleich tragen Sie Neupatienten aus T2med ein und senden bei Bedarf den Link.</li>
+      <li>Unter <strong>Anfragen</strong> leiten Sie Rezept-, Überweisungs-, AU- und Terminanfragen an Ihr Team weiter und ändern den Status.</li>
+      <li>Unter <strong>Webseiten-Texte</strong> ändern Sie Texte mit Live-Vorschau.</li>
+    </ol>
+    <p class="klein muted">Alle Namen und Daten sind erfunden. Es wird nichts wirklich gesendet oder veröffentlicht. Ihre Klicks bleiben nur in diesem Browser gespeichert und lassen sich über „Demo zurücksetzen“ verwerfen.</p>
+    <button class="btn btn-haupt" id="anleitungZu">Verstanden</button>
+  </div>
+</div>
+<script src="js/beispieldaten.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
