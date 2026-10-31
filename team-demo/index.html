@@ -41,7 +41,7 @@
   <main>
     <section class="view" id="view-heute">
       <p class="ueberzeile" id="heuteDatum"></p>
-      <h1>Guten Morgen.</h1>
+      <h1 id="heuteTitel"></h1>
       <div id="heuteInhalt"></div>
     </section>
 
@@ -52,9 +52,9 @@
     </section>
 
     <section class="view" id="view-anfragen" hidden>
-      <p class="ueberzeile">Rezept, Überweisung, Krankschreibung, Termin</p>
+      <p class="ueberzeile">Von Bestandspatienten über die Webseite</p>
       <h1>Anfragen</h1>
-      <p class="klein einleitung">Hier landen die Anfragen von Bestandspatienten über die Webseite: Rezept, Überweisung, Krankschreibung (AU) und Terminanfrage.</p>
+      <p class="klein einleitung">Termin, Rezept, AU, Überweisung, Befund, Impfung, Ernährung und Privatleistung – wie im Digitalen Empfang der Webseite.</p>
       <div class="pillen" id="statusFilter">
         <button data-filter="neu" class="pille p-neu">Neu <b></b></button>
         <button data-filter="arbeit" class="pille p-arbeit">In Arbeit <b></b></button>
@@ -71,12 +71,17 @@
         <div class="karte">
           <label>Überschrift<input type="text" id="textTitel"></label>
           <label>Text<textarea id="textInhalt" rows="6"></textarea></label>
-          <button class="btn btn-gross" id="textSpeichern">Veröffentlichen</button>
+          <div class="knopfreihe">
+            <button class="btn" id="textSpeichern">Speichern</button>
+            <button class="btn btn-haupt" id="textOnline" disabled>Jetzt auf Webseite stellen</button>
+          </div>
+          <button class="btn btn-text" id="textZurueck">Vorherige Version</button>
           <p class="klein" id="textStand"></p>
         </div>
-        <div class="karte vorschau">
-          <p class="ueberzeile">So sieht es auf der Webseite aus</p>
+        <div class="vorschau">
+          <p class="ueberzeile">Vorschau Webseite</p>
           <h2 id="vTitel"></h2>
+          <span class="vorschau-strich"></span>
           <p id="vInhalt"></p>
         </div>
       </div>
@@ -92,12 +97,11 @@
         </div>
         <div class="karte">
           <h2>Link für die T2med-Bestätigung</h2>
-          <p class="klein">Vorschlag für den Text in der Buchungsbestätigung:</p>
+          <p class="klein">Textvorschlag für die Buchungsbestätigung:</p>
           <p class="zitat">Sie kommen zum ersten Mal zu uns und haben den Anamnesebogen bei der Buchung übersprungen? Dann füllen Sie ihn bitte vorab hier aus: https://www.land-harz-praxis.de/anamnese. Tragen Sie dort Ihr Termindatum und die Uhrzeit ein.</p>
-          <p class="hinweis-box">Noch zu prüfen: ob T2med hier eigenen Text erlaubt. T2med weiß vermutlich nicht, wer den Bogen übersprungen hat – deshalb bleibt die Liste „Bogen fehlt“ unter „Bögen“ der Hauptweg.</p>
         </div>
       </div>
-      <button class="btn btn-leise" id="demoReset">Demo zurücksetzen</button>
+      <button class="btn btn-demo" id="demoReset">Demo zurücksetzen</button>
     </section>
   </main>
 </div>
@@ -120,7 +124,7 @@
       <h2 id="anleitungTitel">So funktioniert es</h2>
       <ol class="schritte">
         <li><b>Heute</b> zeigt, was heute zu tun ist.</li>
-        <li>Tippen Sie auf eine Karte und dann auf den grünen Knopf.</li>
+        <li>Rot heißt: bitte zuerst erledigen.</li>
         <li>Fertig. Alles ist Beispiel – nichts wird wirklich gesendet.</li>
       </ol>
     </div>

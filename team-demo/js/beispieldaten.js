@@ -37,8 +37,8 @@ var OHNE_BOGEN = [
 var ANFRAGEN = [
   { id: 1, typ: 'Rezept', name: 'Gerda Pfeiffer', eingang: '31.10. 07:12', status: 'neu', an: 'sl',
     text: 'Folgerezept Metformin 1000, 180 Stück. Abholung Montag.' },
-  { id: 2, typ: 'Krankschreibung', name: 'Kevin Rabe', eingang: '31.10. 06:40', status: 'neu', an: 'kb',
-    text: 'Seit gestern Fieber und Halsschmerzen. Bitte Rückruf wegen Krankschreibung.' },
+  { id: 2, typ: 'AU', name: 'Kevin Rabe', eingang: '31.10. 06:40', status: 'neu', an: 'kb',
+    text: 'Seit gestern Fieber und Halsschmerzen. Bitte Rückruf wegen AU.' },
   { id: 3, typ: 'Überweisung', name: 'Ursula Dahms', eingang: '30.10. 16:05', status: 'arbeit', an: 'jh',
     text: 'Überweisung zum Augenarzt (Diabetes-Kontrolle) für den 12.11.' },
   { id: 4, typ: 'Termin', name: 'Paul Seidler', eingang: '30.10. 12:30', status: 'arbeit', an: 'kb',
@@ -46,22 +46,24 @@ var ANFRAGEN = [
   { id: 5, typ: 'Rezept', name: 'Marlies Kunze', eingang: '29.10. 18:20', status: 'erledigt', an: 'sl',
     text: 'Ramipril 2,5 und Simvastatin 20, je 100 Stück.' },
   { id: 6, typ: 'Befund', name: 'Jonas Engel', eingang: '29.10. 09:44', status: 'neu', an: 'cm',
-    text: 'Laborbefund vom 20.10. bitte an Orthopäde Dr. Krämer faxen.' }
+    text: 'Bitte Kopie meiner Laborwerte vom 20.10. für meinen Orthopäden.' },
+  { id: 7, typ: 'Impfung', name: 'Helga Sauer', eingang: '31.10. 08:05', status: 'neu', an: 'kb',
+    text: 'Grippeimpfung, gern nächste Woche am Vormittag.' }
 ];
 
 var TEXTE = [
-  { bereich: 'Begrüßung', titel: 'Ihre Hausarztpraxis in Wernigerode',
+  { bereich: 'Begrüßung', vorher: null, titel: 'Ihre Hausarztpraxis in Wernigerode',
     text: 'Wir sind für Sie da – mit Zeit für Ihre Fragen und einer Medizin, die den ganzen Menschen sieht.' },
-  { bereich: 'Hinweis', titel: 'Praxis am 20.11. geschlossen',
+  { bereich: 'Hinweis', vorher: null, titel: 'Praxis am 20.11. geschlossen',
     text: 'Am Freitag, 20.11., bleibt die Praxis wegen Fortbildung geschlossen. Vertretung: Praxis am Markt.' },
-  { bereich: 'Sprechzeiten', titel: 'Sprechzeiten',
+  { bereich: 'Sprechzeiten', vorher: null, titel: 'Sprechzeiten',
     text: 'Mo, Di, Do: 8–12 und 15–18 Uhr\nMi, Fr: 8–12 Uhr' }
 ];
 
 // Demo: gespeicherte Klicks aus diesem Browser laden
 (function () {
   try {
-    var d = JSON.parse(localStorage.getItem('lhDemo2') || 'null');
+    var d = JSON.parse(localStorage.getItem('lhDemo3') || 'null');
     if (d) { BOEGEN = d.b; ANFRAGEN = d.a; TEXTE = d.t; OHNE_BOGEN = d.o; }
   } catch (e) {}
 })();

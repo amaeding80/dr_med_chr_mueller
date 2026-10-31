@@ -20,23 +20,31 @@
   function uhr() { return new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }); }
   function nachTermin(a, b) { return (tag(a.datum) + a.zeit) < (tag(b.datum) + b.zeit) ? -1 : 1; }
 
+  function kontakt(k) {
+    if (/^[0-9+ ]+$/.test(k)) return '<a href="tel:' + k.replace(/ /g, '') + '">' + k + '</a>';
+    return k;
+  }
+  function eingangKey(a) { var m = a.eingang.split(/[. ]+/); return m[1] + m[0] + m[2]; }
+  function nachEingang(a, b) { return eingangKey(a) < eingangKey(b) ? -1 : 1; }
+
   function person(id) { return TEAM.filter(function (t) { return t.id === id; })[0] || { kurz: '–' }; }
   function finde(liste, id) { return liste.filter(function (x) { return x.id == id; })[0]; }
 
   function speichern() {
-    try { localStorage.setItem('lhDemo2', JSON.stringify({ b: BOEGEN, a: ANFRAGEN, t: TEXTE, o: OHNE_BOGEN })); } catch (e) {}
+    try { localStorage.setItem('lhDemo3', JSON.stringify({ b: BOEGEN, a: ANFRAGEN, t: TEXTE, o: OHNE_BOGEN })); } catch (e) {}
   }
   function melden(t) {
     speichern();
     var m = $('#meldung');
     m.textContent = t; m.classList.add('an');
-    clearTimeout(m._t); m._t = setTimeout(function () { m.classList.remove('an'); }, 2400);
+    clearTimeout(m._t); m._t = setTimeout(function () { m.classList.remove('an'); }, 2200);
     alles();
   }
   function leer(text, klein) { return '<div class="leer">' + text + (klein ? '<small>' + klein + '</small>' : '') + '</div>'; }
 
   // Online-Bogen eingegangen? (gleicher Name, gleicher Tag)
   function bogenDa(o) {
+    if (o.eingegangen) return true;
     return BOEGEN.some(function (b) { return b.name.toLowerCase() === o.name.toLowerCase() && tag(b.datum) === tag(o.datum); });
   }
 
@@ -46,72 +54,91 @@
       '<div class="oben"><span class="zeit">' + b.zeit + '</span>' +
       (b.gelesen ? '<span class="marke-status m-erledigt">Gelesen</span>' : '<span class="marke-status m-neu">Neu</span>') + '</div>' +
       '<div><div class="name">' + b.name + '</div><p>' + tagText(b.datum) + ' · ' + b.grund + '</p></div>' +
-      '<button class="btn" data-aktion="bogen" data-id="' + b.id + '">Ansehen</button></div>';
+      '<div class="knopfreihe"><button class="btn" data-aktion="bogen" data-id="' + b.id + '">Ansehen</button></div></div>';
+  }
+
+  // Fortschritt: Bogen fehlt, Link gesendet, Link geöffnet, Bogen da
+  function stufe(o) { return bogenDa(o) ? 4 : o.geoeffnet ? 3 : o.gesendet ? 2 : 1; }
+  function punkte(o) {
+    var s = stufe(o), n = ['Bogen fehlt', 'Link gesendet', 'Link geöffnet', 'Bogen da ✓'], h = '';
+    for (var i = 1; i <= 4; i++) h += '<span class="' + (i <= s ? 'an' : '') + '"></span>';
+    return '<div class="schritte-punkte" title="' + n.join(' → ') + '">' + h + '</div>' +
+      '<div class="schritt-text">Schritt ' + s + ' von 4: ' + n[s - 1] + '</div>';
   }
 
   function fehltKarte(o) {
-    var status, knopf = '', extra = '';
-    if (bogenDa(o)) {
-      status = '<span class="marke-status m-da">Bogen ausgefüllt</span>';
+    var status, knopf = '', extra = '', s = stufe(o), cls = '';
+    if (s === 4) {
+      status = '<span class="marke-status m-da">Bogen da ✓</span>';
+      extra = '<p>Fertig – nichts mehr zu tun.</p>'; cls = ' fertig';
     } else if (o.geklaert) {
-      status = '<span class="marke-status m-erledigt">Vor Ort geklärt</span>';
-    } else if (o.geoeffnet) {
+      status = '<span class="marke-status m-erledigt">Vor Ort geklärt ✓</span>';
+      extra = '<p>Fertig – nichts mehr zu tun.</p>'; cls = ' fertig';
+    } else if (s === 3) {
       status = '<span class="marke-status m-arbeit">Link geöffnet ' + o.geoeffnet + '</span>';
       extra = '<p><b>Vor Ort fragen:</b> Bogen schon ausgefüllt?</p>';
-      knopf = '<button class="btn" data-aktion="geklaert" data-id="' + o.id + '">Vor Ort geklärt</button>';
-    } else if (o.gesendet) {
+      knopf = '<button class="btn btn-haupt" data-aktion="geklaert" data-id="' + o.id + '">Vor Ort geklärt</button>' +
+        '<button class="btn btn-leise" data-aktion="senden" data-id="' + o.id + '">Link erneut senden</button>' +
+        '<button class="btn btn-demo" data-aktion="eingang" data-id="' + o.id + '">Demo: Bogen kommt an</button>';
+    } else if (s === 2) {
       status = '<span class="marke-status m-arbeit">Link gesendet ' + o.gesendet + '</span>';
-      knopf = '<button class="btn btn-leise" data-aktion="oeffnen" data-id="' + o.id + '">Demo: Patient öffnet Link</button>';
+      knopf = '<button class="btn btn-leise" data-aktion="senden" data-id="' + o.id + '">Link erneut senden</button>' +
+        '<button class="btn btn-demo" data-aktion="oeffnen" data-id="' + o.id + '">Demo: Patient öffnet Link</button>';
     } else {
-      status = '<span class="marke-status m-fehlt">Bogen fehlt</span>';
-      knopf = '<button class="btn" data-aktion="senden" data-id="' + o.id + '">Link senden</button>';
+      status = '<span class="marke-status m-fehlt">Bogen fehlt</span>'; cls = ' dringend';
+      knopf = '<button class="btn btn-dringend" data-aktion="senden" data-id="' + o.id + '">Link senden</button>';
     }
-    return '<div class="eintrag">' +
+    return '<div class="eintrag' + cls + '">' +
       '<div class="oben"><span class="zeit">' + o.zeit + '</span>' + status + '</div>' +
-      '<div><div class="name">' + o.name + '</div><p>' + tagText(o.datum) + ' · ' + o.kontakt + '</p>' + extra + '</div>' +
-      knopf + '</div>';
+      '<div><div class="name">' + o.name + '</div><p>' + tagText(o.datum) + ' · ' + kontakt(o.kontakt) + '</p>' + extra + '</div>' +
+      (o.geklaert ? '' : punkte(o)) +
+      (knopf ? '<div class="knopfreihe">' + knopf + '</div>' : '') + '</div>';
   }
 
   function anfrageKarte(a) {
-    var knopf = a.status === 'neu' ? '<button class="btn" data-aktion="status" data-wert="arbeit" data-id="' + a.id + '">Übernehmen</button>' :
-      a.status === 'arbeit' ? '<button class="btn" data-aktion="status" data-wert="erledigt" data-id="' + a.id + '">Erledigt</button>' :
+    var knopf = a.status === 'neu' ? '<button class="btn btn-haupt" data-aktion="status" data-wert="arbeit" data-id="' + a.id + '">Übernehmen</button>' :
+      a.status === 'arbeit' ? '<button class="btn" data-aktion="anfrage" data-id="' + a.id + '">Weiterleiten</button>' +
+        '<button class="btn btn-haupt" data-aktion="status" data-wert="erledigt" data-id="' + a.id + '">Erledigt</button>' :
       '<button class="btn btn-leise" data-aktion="status" data-wert="neu" data-id="' + a.id + '">Wieder öffnen</button>';
     return '<div class="eintrag" data-aktion="anfrage" data-id="' + a.id + '">' +
       '<div class="oben"><span class="ueberzeile">' + a.typ + '</span><span class="marke-status m-' + a.status + '">' + STATUS[a.status] + '</span></div>' +
-      '<div><div class="name">' + a.name + '</div><p>' + a.text + '</p></div>' +
-      '<p class="klein">Bei ' + person(a.an).kurz + ' · ' + a.eingang + '</p>' + knopf + '</div>';
+      '<div><span class="marke-status m-bestand">Bestandspatient</span><div class="name">' + a.name + '</div><p>' + a.text + '</p></div>' +
+      '<p class="zustaendig">Zuständig: <b>' + person(a.an).kurz + '</b> · ' + a.eingang + '</p>' +
+      '<div class="knopfreihe">' + knopf + '</div></div>';
   }
 
   // Heute
   function heute() {
-    var h = jetzt.getHours();
-    $('#view-heute h1').textContent = h < 11 ? 'Guten Morgen.' : h < 17 ? 'Guten Tag.' : 'Guten Abend.';
     $('#heuteDatum').textContent = jetzt.toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long' });
     var boegen = BOEGEN.filter(function (b) { return tag(b.datum) === HEUTE; }).sort(nachTermin);
     var fehlt = OHNE_BOGEN.filter(function (o) { return tag(o.datum) === HEUTE && !bogenDa(o) && !o.geklaert; }).sort(nachTermin);
-    var neu = ANFRAGEN.filter(function (a) { return a.status === 'neu'; });
+    var neu = ANFRAGEN.filter(function (a) { return a.status === 'neu'; }).sort(nachEingang);
+    var offen = fehlt.length + boegen.filter(function (b) { return !b.gelesen; }).length + neu.length;
+    $('#heuteTitel').textContent = offen ? 'Heute ' + offen + (offen === 1 ? ' Ding' : ' Dinge') + ' zu tun' : 'Heute ist alles erledigt';
 
     $('#heuteInhalt').innerHTML =
-      '<div class="abschnitt"><h2>Bogen fehlt</h2><span class="klein">Neupatienten mit Termin heute</span></div>' +
+      '<div class="abschnitt"><h2>Bogen fehlt</h2><span class="klein">Neupatienten, nach Uhrzeit</span></div>' +
       (fehlt.length ? '<div class="liste">' + fehlt.map(fehltKarte).join('') + '</div>' : leer('Alles erledigt.', 'Alle Neupatienten von heute haben ihren Bogen.')) +
-      '<div class="abschnitt"><h2>Neue Bögen</h2><span class="klein">Termin heute</span></div>' +
+      '<div class="abschnitt"><h2>Neue Bögen</h2><span class="klein">Termin heute, nach Uhrzeit</span></div>' +
       (boegen.length ? '<div class="liste">' + boegen.map(bogenKarte).join('') + '</div>' : leer('Keine Bögen für heute.')) +
-      '<div class="abschnitt"><h2>Neue Anfragen</h2></div>' +
+      '<div class="abschnitt"><h2>Neue Anfragen</h2><span class="klein">nach Eingang</span></div>' +
       (neu.length ? '<div class="liste">' + neu.slice(0, 3).map(anfrageKarte).join('') + '</div>' +
-        (neu.length > 3 ? '<p><a class="btn btn-leise" href="#anfragen">Alle ' + neu.length + ' ansehen</a></p>' : '')
+        (neu.length > 3 ? '<p><a class="btn" href="#anfragen">Alle ' + neu.length + ' ansehen</a></p>' : '')
         : leer('Alles erledigt.', 'Keine neuen Anfragen.'));
   }
 
   // Bögen
   function boegen() {
-    var fehlt = OHNE_BOGEN.filter(function (o) { return !bogenDa(o) && !o.geklaert; }).sort(nachTermin);
+    var fehlt = OHNE_BOGEN.slice().sort(function (a, b) {
+      var fa = bogenDa(a) || a.geklaert, fb = bogenDa(b) || b.geklaert;
+      return fa !== fb ? (fa ? 1 : -1) : nachTermin(a, b);
+    });
     var liste = BOEGEN.slice().sort(nachTermin);
     $('#boegenInhalt').innerHTML =
-      '<div class="abschnitt"><h2>Bogen fehlt</h2><button class="btn btn-leise" data-aktion="eintragen">+ Neupatient eintragen</button></div>' +
+      '<div class="abschnitt"><h2>Bogen fehlt</h2><button class="btn" data-aktion="eintragen">+ Neupatient eintragen</button></div>' +
       '<p class="klein">Neupatienten aus T2med, die den Bogen bei der Buchung übersprungen haben.</p>' +
-      '<p class="hinweis-box"><b>Persönlicher Link:</b> Wir sehen nur, ob er geöffnet wurde – nicht, ob auf Papier ausgefüllt. ' +
-      'Geplant: Klicks in der ersten Minute nach dem Senden zählen nicht (z. B. automatische Link-Vorschau).</p>' +
-      (fehlt.length ? '<div class="liste">' + fehlt.map(fehltKarte).join('') + '</div>' : leer('Alles erledigt.')) +
+      '<p class="hinweis-box">Wir sehen nur, ob der Link geöffnet wurde.</p>' +
+      '<div class="liste">' + fehlt.map(fehltKarte).join('') + '</div>' +
       '<div class="abschnitt"><h2>Eingegangene Bögen</h2><span class="klein">nach Termin sortiert</span></div>' +
       '<div class="liste">' + liste.map(bogenKarte).join('') + '</div>';
   }
@@ -123,7 +150,7 @@
       p.querySelector('b').textContent = n;
       p.classList.toggle('aktiv', p.dataset.filter === filter);
     });
-    var l = ANFRAGEN.filter(function (a) { return a.status === filter; });
+    var l = ANFRAGEN.filter(function (a) { return a.status === filter; }).sort(nachEingang);
     $('#anfragenInhalt').innerHTML = l.length ? '<div class="liste">' + l.map(anfrageKarte).join('') + '</div>' :
       leer(filter === 'erledigt' ? 'Noch nichts erledigt.' : 'Alles erledigt.', filter === 'neu' ? 'Keine neuen Anfragen.' : '');
   }
@@ -134,15 +161,19 @@
       return '<button class="pille' + (i === textNr ? ' aktiv' : '') + '" data-aktion="textwahl" data-id="' + i + '">' + t.bereich + '</button>';
     }).join('');
   }
+  var gespeichert = false;
   function textLaden() {
-    $('#textTitel').value = TEXTE[textNr].titel; $('#textInhalt').value = TEXTE[textNr].text;
-    $('#textStand').textContent = ''; vorschau();
+    var t = TEXTE[textNr];
+    $('#textTitel').value = t.titel; $('#textInhalt').value = t.text;
+    $('#textStand').textContent = ''; $('#textOnline').disabled = true; gespeichert = false;
+    $('#textZurueck').hidden = !t.vorher;
+    vorschau();
   }
   function vorschau() { $('#vTitel').textContent = $('#textTitel').value; $('#vInhalt').textContent = $('#textInhalt').value; }
 
   // Team
   function team() {
-    var arten = [['Rezept', 'sl'], ['Überweisung', 'jh'], ['Krankschreibung', 'kb'], ['Termin', 'kb'], ['Befund', 'cm']];
+    var arten = [['Termin', 'kb'], ['Rezept', 'sl'], ['AU', 'kb'], ['Überweisung', 'jh'], ['Befund', 'jh'], ['Impfung', 'kb'], ['Ernährung', 'cm'], ['Privatleistung', 'cm']];
     $('#regeln').innerHTML = arten.map(function (r) {
       return '<div class="regel"><b>' + r[0] + '</b><span>' + person(r[1]).name + '</span></div>';
     }).join('');
@@ -211,7 +242,8 @@
     if (akt === 'gelesen') { finde(BOEGEN, id).gelesen = true; blattZu(); melden('Als gelesen markiert'); }
     if (akt === 'anarzt') { finde(BOEGEN, id).gelesen = true; blattZu(); melden('An Dr. Müller gegeben'); }
 
-    if (akt === 'senden') { o = finde(OHNE_BOGEN, id); o.gesendet = uhr(); melden('Link an ' + o.name + ' gesendet (Demo)'); }
+    if (akt === 'senden') { o = finde(OHNE_BOGEN, id); o.gesendet = uhr(); o.geoeffnet = null; melden('Link an ' + o.name + ' gesendet (Demo)'); }
+    if (akt === 'eingang') { o = finde(OHNE_BOGEN, id); o.eingegangen = true; melden('Bogen von ' + o.name + ' ist da (Demo)'); }
     if (akt === 'oeffnen') { o = finde(OHNE_BOGEN, id); o.geoeffnet = uhr(); melden(o.name + ' hat den Link geöffnet (Demo)'); }
     if (akt === 'geklaert') { o = finde(OHNE_BOGEN, id); o.geklaert = true; melden('Erledigt: ' + o.name); }
     if (akt === 'eintragen') eintragenZeigen();
@@ -244,9 +276,22 @@
   $('#textTitel').addEventListener('input', vorschau);
   $('#textInhalt').addEventListener('input', vorschau);
   $('#textSpeichern').addEventListener('click', function () {
-    TEXTE[textNr].titel = $('#textTitel').value; TEXTE[textNr].text = $('#textInhalt').value;
-    $('#textStand').textContent = 'Veröffentlicht um ' + uhr() + ' (Demo – nicht wirklich online).';
-    melden('Text veröffentlicht (Demo)');
+    gespeichert = true; $('#textOnline').disabled = false;
+    $('#textStand').textContent = 'Gespeichert. Noch nicht auf der Webseite.';
+  });
+  $('#textOnline').addEventListener('click', function () {
+    var t = TEXTE[textNr];
+    t.vorher = { titel: t.titel, text: t.text };
+    t.titel = $('#textTitel').value; t.text = $('#textInhalt').value;
+    $('#textOnline').disabled = true; $('#textZurueck').hidden = false;
+    melden('Steht jetzt auf der Webseite (Demo)');
+    $('#textStand').textContent = 'Auf der Webseite seit ' + uhr() + ' (Demo).';
+  });
+  $('#textZurueck').addEventListener('click', function () {
+    var t = TEXTE[textNr];
+    if (!t.vorher) return;
+    t.titel = t.vorher.titel; t.text = t.vorher.text; t.vorher = null;
+    textLaden(); melden('Vorherige Version wiederhergestellt (Demo)');
   });
 
   // Ansichten
@@ -258,24 +303,26 @@
   }
   window.addEventListener('hashchange', function () { zeigen(location.hash.slice(1)); });
 
-  function starten() { $('#login').hidden = true; $('#app').hidden = false; zeigen(location.hash.slice(1) || 'heute'); }
+  function starten() {
+    $('#login').hidden = true; $('#app').hidden = false; zeigen(location.hash.slice(1) || 'heute');
+    var g = null;
+    try { g = localStorage.getItem('lhDemo3Gesehen'); } catch (e) {}
+    if (!g) $('#anleitung').hidden = false;
+  }
   $('#loginForm').addEventListener('submit', function (e) { e.preventDefault(); starten(); });
 
   // Anleitung
   function anleitungZu() {
     $('#anleitung').hidden = true;
-    try { localStorage.setItem('lhDemo2Gesehen', '1'); } catch (e) {}
+    try { localStorage.setItem('lhDemo3Gesehen', '1'); } catch (e) {}
   }
   $('#anleitungZu').addEventListener('click', anleitungZu);
   $('#anleitungX').addEventListener('click', anleitungZu);
   $('#anleitung').addEventListener('click', function (e) { if (e.target === this) anleitungZu(); });
   $('#hilfeAuf').addEventListener('click', function (e) { e.preventDefault(); $('#anleitung').hidden = false; });
-  var gesehen = null;
-  try { gesehen = localStorage.getItem('lhDemo2Gesehen'); } catch (e) {}
-  if (!gesehen) $('#anleitung').hidden = false;
 
   $('#demoReset').addEventListener('click', function () {
-    try { localStorage.removeItem('lhDemo2'); } catch (e) {}
+    try { localStorage.removeItem('lhDemo3'); } catch (e) {}
     location.hash = 'heute'; location.reload();
   });
 
