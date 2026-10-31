@@ -35,7 +35,7 @@
   function finde(liste, id) { return liste.filter(function (x) { return x.id == id; })[0]; }
 
   function speichern() {
-    try { localStorage.setItem('lhDemo4', JSON.stringify({ b: BOEGEN, a: ANFRAGEN, t: TEXTE, o: OHNE_BOGEN, s: BESTAND })); } catch (e) {}
+    try { localStorage.setItem('lhDemo5', JSON.stringify({ b: BOEGEN, a: ANFRAGEN, t: TEXTE, o: OHNE_BOGEN, s: BESTAND })); } catch (e) {}
   }
   function melden(t) {
     speichern();
@@ -144,15 +144,15 @@
       } else knopf = '<button class="btn btn-klein btn-dringend" data-aktion="senden" data-id="' + o.id + '">Link senden</button>';
     }
     var vorbei = tag(t.datum) === HEUTE && t.zeit < JETZT && !knopf;
-    return '<li class="termin' + (aufgabe(t) || knopf ? ' aufgabe' : '') + (vorbei ? ' vorbei' : '') + '"' + (o ? ' id="t-' + o.id + '"' : '') + klick + '>' +
+    return '<li class="termin' + (aufgabe(t) || knopf || (t.akut && !vorbei) ? ' aufgabe' : '') + (t.akut ? ' akut' : '') + (vorbei ? ' vorbei' : '') + '"' + (o ? ' id="t-' + o.id + '"' : t.id ? ' id="t-' + t.id + '"' : '') + klick + '>' +
       '<span class="t-zeit">' + t.zeit + '</span>' +
-      '<div class="t-mitte"><div class="t-name">' + t.name + (t.art === 'neu' ? ' <span class="marke-art a-neu">Neu</span>' : '') + '</div>' +
+      '<div class="t-mitte"><div class="t-name">' + t.name + (t.art === 'neu' ? ' <span class="marke-art a-neu">Neu</span>' : '') + (t.akut ? ' <span class="marke-art a-akut">Akut</span>' : '') + '</div>' +
       '<p class="t-hinweis">' + (t.hinweis || '–') + '</p>' + status + '</div>' +
       (knopf ? '<div class="t-knopf">' + knopf + '</div>' : '') + '</li>';
   }
 
   function alleTermine() {
-    var l = BESTAND.map(function (b) { return { art: 'bestand', name: b.name, datum: b.datum, zeit: b.zeit, hinweis: b.hinweis }; });
+    var l = BESTAND.map(function (b) { return { art: 'bestand', id: b.id, akut: b.akut, name: b.name, datum: b.datum, zeit: b.zeit, hinweis: b.hinweis }; });
     BOEGEN.forEach(function (b) { l.push({ art: 'neu', name: b.name, datum: b.datum, zeit: b.zeit, hinweis: b.grund, bogen: b }); });
     OHNE_BOGEN.forEach(function (o) { if (!bogenDa(o)) l.push({ art: 'neu', name: o.name, datum: o.datum, zeit: o.zeit, hinweis: o.hinweis, o: o }); });
     return l.filter(function (t) { return tag(t.datum) >= HEUTE; }).sort(nachTermin);
@@ -165,7 +165,9 @@
     var senden = heuteL.filter(function (t) { return aufgabe(t) === 'senden'; });
     var fragen = heuteL.filter(function (t) { return aufgabe(t) === 'fragen'; });
     var vorort = heuteL.filter(function (t) { return aufgabe(t) === 'vorort'; });
+    var akut = heuteL.filter(function (t) { return t.akut && t.zeit >= JETZT; });
     var teile = [];
+    if (akut.length) teile.push('<a href="#" data-aktion="springen" data-id="' + akut[0].id + '">' + akut.length + ' Akuttermin' + (akut.length === 1 ? '' : 'e') + '</a>');
     if (vorort.length) teile.push('<a href="#" data-aktion="springen" data-id="' + vorort[0].o.id + '">' + vorort.length + (vorort.length === 1 ? ' Bogen' : ' Bögen') + ' vor Ort</a>');
     if (senden.length) teile.push('<a href="#" data-aktion="springen" data-id="' + senden[0].o.id + '">' + senden.length + ' Link senden</a>');
     if (fragen.length) teile.push('<a href="#" data-aktion="springen" data-id="' + fragen[0].o.id + '">' + fragen.length + ' vor Ort fragen</a>');
@@ -410,7 +412,7 @@
   $('#hilfeAuf').addEventListener('click', function (e) { e.preventDefault(); $('#anleitung').hidden = false; });
 
   $('#demoReset').addEventListener('click', function () {
-    try { localStorage.removeItem('lhDemo4'); } catch (e) {}
+    try { localStorage.removeItem('lhDemo5'); } catch (e) {}
     location.hash = 'heute'; location.reload();
   });
 

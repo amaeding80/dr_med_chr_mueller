@@ -34,14 +34,32 @@ var OHNE_BOGEN = [
   { id: 'o4', name: 'Svenja Kroll', hinweis: 'Check-up 35', datum: '2026-11-04', zeit: '08:40', kontakt: '0151 0000002', gesendet: '31.10. 14:10', geoeffnet: null }
 ];
 
-// Bestandspatienten mit Termin, Hinweis kommt aus der Online-Buchung
+// Bestandspatienten mit Termin, Hinweis kommt aus der Online-Buchung; akut = Akuttermin
 var BESTAND = [
   { id: 's1', name: 'Gisela Hartung', datum: 'heute', zeit: '08:00', hinweis: 'Blutabnahme nüchtern' },
+  { id: 's7', name: 'Werner Albrecht', datum: 'heute', zeit: '08:10', hinweis: 'Blutdruck messen, Tabletten neu' },
+  { id: 's8', name: 'Ingrid Fiedler', datum: 'heute', zeit: '08:30', hinweis: 'Verbandswechsel Unterschenkel' },
+  { id: 's9', name: 'Marco Lehmann', datum: 'heute', zeit: '08:45', hinweis: 'akut: Fieber seit gestern, Halsschmerzen', akut: true },
+  { id: 's10', name: 'Brigitte Seifert', datum: 'heute', zeit: '09:15', hinweis: 'Folgerezept L-Thyroxin' },
+  { id: 's11', name: 'Heinz Pohl', datum: 'heute', zeit: '09:45', hinweis: 'Kontrolle INR' },
   { id: 's2', name: 'Dieter Schulze', datum: 'heute', zeit: '10:00', hinweis: 'Kontrolle Blutzucker, Werte mitgebracht' },
+  { id: 's12', name: 'Sabine Krüger', datum: 'heute', zeit: '10:30', hinweis: 'akut: starke Rückenschmerzen seit heute früh', akut: true },
+  { id: 's13', name: 'Karl-Heinz Busch', datum: 'heute', zeit: '10:50', hinweis: 'Ergebnis Langzeit-EKG' },
+  { id: 's14', name: 'Renate Voigt', datum: 'heute', zeit: '11:00', hinweis: 'Überweisung Kardiologie besprechen' },
   { id: 's3', name: 'Anja Möbius', datum: 'heute', zeit: '11:40', hinweis: 'Ergebnis Ultraschall besprechen' },
+  { id: 's15', name: 'Thomas Reinhardt', datum: 'heute', zeit: '15:00', hinweis: 'Check-up 35' },
+  { id: 's16', name: 'Elke Schröter', datum: 'heute', zeit: '15:30', hinweis: 'Schwindel beim Aufstehen' },
+  { id: 's17', name: 'Jürgen Wolf', datum: 'heute', zeit: '16:10', hinweis: 'Wunde kontrollieren, Fäden ziehen' },
   { id: 's4', name: 'Horst Wendt', datum: 'morgen', zeit: '08:30', hinweis: 'Grippeimpfung' },
+  { id: 's18', name: 'Monika Graf', datum: 'morgen', zeit: '08:50', hinweis: 'Blutabnahme nüchtern' },
   { id: 's5', name: 'Petra Lindner', datum: 'morgen', zeit: '09:15', hinweis: 'Knie schmerzt wieder' },
-  { id: 's6', name: 'Bernd Kaiser', datum: '2026-11-03', zeit: '16:00', hinweis: 'Folgerezept und Gespräch' }
+  { id: 's19', name: 'Uwe Hildebrandt', datum: 'morgen', zeit: '09:40', hinweis: 'DMP Diabetes' },
+  { id: 's20', name: 'Christa Neumann', datum: 'morgen', zeit: '10:20', hinweis: 'Grippeimpfung' },
+  { id: 's21', name: 'Stefan Ludwig', datum: 'morgen', zeit: '11:00', hinweis: 'Hautveränderung am Rücken ansehen' },
+  { id: 's6', name: 'Bernd Kaiser', datum: '2026-11-03', zeit: '16:00', hinweis: 'Folgerezept und Gespräch' },
+  { id: 's22', name: 'Hannelore Beck', datum: '2026-11-03', zeit: '08:20', hinweis: 'Blutabnahme, Schilddrüse' },
+  { id: 's23', name: 'Frieda Meißner', datum: '2026-11-03', zeit: '09:00', hinweis: 'Pflegegrad, Hausbesuch besprechen' },
+  { id: 's24', name: 'Lutz Engelhardt', datum: '2026-11-04', zeit: '10:10', hinweis: 'Gesundheits-Check-up' }
 ];
 
 var ANFRAGEN = [
@@ -73,7 +91,7 @@ var TEXTE = [
 // Demo: gespeicherte Klicks aus diesem Browser laden
 (function () {
   try {
-    var d = JSON.parse(localStorage.getItem('lhDemo4') || 'null');
+    var d = JSON.parse(localStorage.getItem('lhDemo5') || 'null');
     if (d) { BOEGEN = d.b; ANFRAGEN = d.a; TEXTE = d.t; OHNE_BOGEN = d.o; BESTAND = d.s || BESTAND; }
   } catch (e) {}
 })();
