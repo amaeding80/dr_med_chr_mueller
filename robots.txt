@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /team-demo/
+Disallow: /phpmailer/
+Disallow: /sende-termin.php
+Disallow: /entwurf.html
+Disallow: /konzept.html
+Disallow: /konzept2.html
+Disallow: /index_backup_20260803.html
+Disallow: /*-1.html
+
+Sitemap: https://landharzpraxis.de/sitemap.xml

@@ -664,3 +664,6 @@ html:not(.js) .akk-zeichen { display: none; }
 @media (orientation: landscape) and (max-height: 500px) {
   .digi-banner { min-height: 220px; }
 }
+
+/* T2med-Buttons bleiben aus, bis der Schalter in js/land-harz.js an ist */
+.t2med-btn[hidden] { display: none !important; }

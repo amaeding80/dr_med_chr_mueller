@@ -898,7 +898,7 @@ document.getElementById('jahr').textContent=new Date().getFullYear();
     var rezStandort = 'wn';
     var medCount = 0;
 
-    // Slot-Karte: simulierte nächste freie Termine pro Standort
+    // Slot-Karte: Beispielzeiten pro Standort (keine echte Verfügbarkeit)
 var tageKurz = ['So','Mo','Di','Mi','Do','Fr','Sa'];
 var monateKurz = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
 
@@ -940,6 +940,18 @@ var slotDaten = {
 };
 
 function slotKarteInit() {
+  // Beispielzeiten nur zeigen, wenn PRAXIS.beispielTermine an ist (js/land-harz.js)
+  if (!(window.PRAXIS || {}).beispielTermine) {
+    var lbl = document.querySelector('.slot-card-label');
+    if (lbl) lbl.innerHTML = '<span class="slot-dot"></span>Termin vereinbaren';
+    ['wn', 'ils'].forEach(function(standort) {
+      var el = document.getElementById('slot-' + standort);
+      if (el) el.textContent = standort === 'wn' ? '03943 / 48 13 3' : '039458 / 223';
+    });
+    var mehr = document.querySelector('.slot-weitere');
+    if (mehr) mehr.style.display = 'none';
+    return;
+  }
   ['wn', 'ils'].forEach(function(standort) {
     var s = slotDaten[standort][0];
     var d = naechsterTag(s.wochentag, s.offset);
@@ -969,6 +981,7 @@ var wtDaten = {
 };
 
 function weitereTermineOeffnen() {
+  if (!(window.PRAXIS || {}).beispielTermine) { openTerminModal(); return; }
   var inhalt = document.getElementById('wt-inhalt');
   inhalt.innerHTML = '';
   ['wn', 'ils'].forEach(function(standort) {
@@ -1169,7 +1182,7 @@ function openTerminModal(vorauswahlAnliegen, vorauswahlStandort) {
       return sel ? sel.dataset.value : null;
     }
 
-    var terminTitles = ['Anliegen wählen','Termin wählen','Ihre Daten','Bestätigung'];
+    var terminTitles = ['Anliegen wählen','Wunschzeit wählen','Ihre Daten','Wie es weitergeht'];
 
     function updateTerminStep() {
       var isNeu = getRadioVal('rc-patienttyp') === 'neu';
@@ -1181,7 +1194,7 @@ function openTerminModal(vorauswahlAnliegen, vorauswahlStandort) {
         if (!dot) continue;
         dot.classList.remove('active','done');
         if (terminAnamneseActive) {
-          if (i === 1) dot.classList.add('done');
+          if (i <= 3) dot.classList.add('done');
         } else {
           if (i === terminStep) dot.classList.add('active');
           else if (i < terminStep) dot.classList.add('done');
@@ -1190,7 +1203,7 @@ function openTerminModal(vorauswahlAnliegen, vorauswahlStandort) {
       if (dot1b) {
         dot1b.classList.remove('active','done');
         if (terminAnamneseActive) dot1b.classList.add('active');
-        else if (isNeu && terminStep > 1) dot1b.classList.add('done');
+        else if (isNeu && terminStep === 4) dot1b.classList.add('done');
       }
       [1,'1b',2,3,4].forEach(function(s){
         var el = document.getElementById('tm-s' + s);
@@ -1203,10 +1216,11 @@ function openTerminModal(vorauswahlAnliegen, vorauswahlStandort) {
         if (el) el.style.display = '';
       }
       if (terminAnamneseActive) {
-        document.getElementById('tm-step-label').textContent = 'Schritt 2 von ' + total;
-        document.getElementById('tm-title').textContent = 'Anamnesebogen';
+        document.getElementById('tm-step-label').textContent = 'Schritt 4 von ' + total;
+        document.getElementById('tm-title').textContent = 'Kurzer Anamnesebogen (freiwillig)';
+        document.querySelectorAll('#tm-s1b .anamnese-lang').forEach(function(el){ el.style.display = (window.PRAXIS || {}).anamneseLang ? '' : 'none'; });
       } else {
-        var anzeige = (isNeu && terminStep > 1) ? terminStep + 1 : terminStep;
+        var anzeige = (isNeu && terminStep === 4) ? 5 : terminStep;
         document.getElementById('tm-step-label').textContent = 'Schritt ' + anzeige + ' von ' + total;
         document.getElementById('tm-title').textContent = terminTitles[terminStep - 1];
       }
@@ -1219,7 +1233,7 @@ function openTerminModal(vorauswahlAnliegen, vorauswahlStandort) {
         buildSummary();
       } else {
         footer.style.display = 'flex';
-        next.textContent = (terminStep === 3 && !terminAnamneseActive) ? 'Termin anfragen ✓' : 'Weiter →';
+        next.textContent = (terminAnamneseActive || (terminStep === 3 && !isNeu)) ? 'Abschließen' : 'Weiter →';
       }
       if (terminStep === 2 && !terminAnamneseActive) {
         buildSlotContainer('slots-wn', slotsData.wn);
@@ -1230,22 +1244,20 @@ function openTerminModal(vorauswahlAnliegen, vorauswahlStandort) {
         document.getElementById('slots-ils').style.display = 'none';
         slotStandort = 'wn';
       }
-      if (terminAnamneseActive) { initSignaturCanvas(); }
+      if (terminAnamneseActive && (window.PRAXIS || {}).anamneseLang) { initSignaturCanvas(); }
     }
 
         function terminNext() {
       if (terminStep === 1 && !terminAnamneseActive) {
         if (!getRadioVal('rc-patienttyp')) { alert('Bitte wählen Sie Bestand- oder Neupatient.'); return; }
         if (!getRadioVal('rc-anliegen')) { alert('Bitte wählen Sie Ihr Anliegen.'); return; }
-        if (getRadioVal('rc-patienttyp') === 'neu') {
-          terminAnamneseActive = true; updateTerminStep(); return;
-        }
       }
+      // Neupatienten: Anamnese erst nach Termin und Daten, freiwillig
       if (terminAnamneseActive) {
-        if (signaturLeer()) { alert('Bitte unterschreiben Sie den Anamnesebogen.'); return; }
-        terminAnamneseActive = false; terminStep = 2; updateTerminStep(); return;
+        if ((window.PRAXIS || {}).anamneseLang && signaturLeer()) { alert('Bitte unterschreiben Sie den Anamnesebogen.'); return; }
+        terminAnamneseActive = false; terminStep = 4; updateTerminStep(); return;
       }
-      if (terminStep === 2 && !selectedSlot) { alert('Bitte wählen Sie einen freien Termin.'); return; }
+      if (terminStep === 2 && !selectedSlot) { alert('Bitte wählen Sie eine Wunschzeit.'); return; }
       if (terminStep === 3) {
         var vn = document.getElementById('tm-vorname').value.trim();
         var nn = document.getElementById('tm-nachname').value.trim();
@@ -1282,59 +1294,13 @@ function openTerminModal(vorauswahlAnliegen, vorauswahlStandort) {
           });
           fd.append('vorerkrankungen', verk.length ? verk.join(', ') : 'Keine bekannt');
         }
-        // Daten für EmailJS sammeln
-        var ej_vn    = document.getElementById('tm-vorname').value.trim();
-        var ej_nn    = document.getElementById('tm-nachname').value.trim();
-        var ej_em    = document.getElementById('tm-email').value.trim();
-        var ej_tel   = document.getElementById('tm-telefon').value.trim();
-        var ej_geb   = document.getElementById('tm-gebdatum').value;
-        var ej_vers  = document.getElementById('tm-versicherung').value;
-        var ej_kasse = document.getElementById('tm-kasse').value.trim();
-        var ej_anl   = (function(){ var m={akut:'Termin vereinbaren',vorsorge:'Vorsorge / Check-Up',ernaehrung:'Ernährungsmedizin',sonstiges:'Sonstiges'}; return m[getRadioVal('rc-anliegen')]||''; })();
-        var ej_ptyp  = getRadioVal('rc-patienttyp') === 'neu' ? 'Neupatient' : 'Bestandspatient';
-        var ej_datum = selectedSlot ? selectedSlot.day : '';
-        var ej_uhr   = selectedSlot ? selectedSlot.time : '';
-        var ej_ort   = selectedSlot ? selectedSlot.standort : '';
-
-        var ej_params = {
-          vorname: ej_vn, nachname: ej_nn, email: ej_em, telefon: ej_tel,
-          geburtsdatum: ej_geb, versicherung: ej_vers, krankenkasse: ej_kasse,
-          anliegen: ej_anl, patienttyp: ej_ptyp,
-          termin_datum: ej_datum, termin_uhrzeit: ej_uhr, standort: ej_ort,
-          allergien: '', medikamente: '', anliegen_neu: '', raucher: '', vorerkrankungen: ''
-        };
-
-        // Anamnese-Daten anhängen (nur Neupatienten)
-        if (ej_ptyp === 'Neupatient') {
-          ej_params.allergien    = document.getElementById('an-allergien') ? document.getElementById('an-allergien').value : '';
-          ej_params.medikamente  = document.getElementById('an-medikamente') ? document.getElementById('an-medikamente').value : '';
-          ej_params.anliegen_neu = document.getElementById('an-anliegen-neu') ? document.getElementById('an-anliegen-neu').value : '';
-          ej_params.raucher      = getRadioVal('rc-raucher') || '';
-          var verk = [];
-          ['an-blut','an-diab','an-herz','an-schild','an-niere','an-keine'].forEach(function(id){
-            var el = document.getElementById(id); if (el && el.checked) verk.push(el.nextElementSibling.textContent.trim());
-          });
-          ej_params.vorerkrankungen = verk.length ? verk.join(', ') : 'Keine bekannt';
-        }
-
-        // E-Mail an Praxis
-        emailjs.send('EMAILJS_SERVICE_ID', 'EMAILJS_TEMPLATE_PRAXIS', ej_params)
-          .then(function(){ console.log('[EmailJS] Praxis-Mail gesendet'); })
-          .catch(function(e){ console.error('[EmailJS] Fehler Praxis:', e); });
-
-        // Bestätigung an Patienten (nur wenn E-Mail angegeben)
-        if (ej_em) {
-          emailjs.send('EMAILJS_SERVICE_ID', 'EMAILJS_TEMPLATE_PATIENT', ej_params)
-            .then(function(){ console.log('[EmailJS] Patienten-Mail gesendet'); })
-            .catch(function(e){ console.error('[EmailJS] Fehler Patient:', e); });
-        }
       }
+      if (terminStep === 3 && getRadioVal('rc-patienttyp') === 'neu') { terminAnamneseActive = true; updateTerminStep(); return; }
       if (terminStep < 4) { terminStep++; updateTerminStep(); }
     }
 
         function terminBack() {
-      if (terminAnamneseActive) { terminAnamneseActive = false; terminStep = 1; updateTerminStep(); return; }
-      if (terminStep === 2 && getRadioVal('rc-patienttyp') === 'neu') { terminAnamneseActive = true; updateTerminStep(); return; }
+      if (terminAnamneseActive) { terminAnamneseActive = false; terminStep = 3; updateTerminStep(); return; }
       if (terminStep > 1) { terminStep--; updateTerminStep(); }
     }
 
@@ -1478,29 +1444,9 @@ function openTerminModal(vorauswahlAnliegen, vorauswahlStandort) {
         'Bitte telefonisch unter 03943 / 48 13 3 melden bei Rückfragen.\n' +
         'Anfrage automatisch über landharzpraxis.de erstellt.';
       var subject = 'Folgerezept-Anforderung – ' + vn + ' ' + nn + ' (' + gebFmt + ')';
-      var ej_params = {
-        patient_name: vn + ' ' + nn,
-        geburtsdatum: gebFmt,
-        krankenkasse: kasse || '—',
-        telefon: tel,
-        patient_email: email || '—',
-        medikamente: medLines.join('\n'),
-        standort: standortStr,
-        subject: subject,
-        message: body
-      };
       var btn = document.querySelector('#modal-rezept .btn-custom-dark');
-      if (btn) { btn.disabled = true; btn.textContent = 'Wird gesendet…'; }
-      emailjs.send('EMAILJS_SERVICE_ID', 'EMAILJS_TEMPLATE_REZEPT', ej_params)
-        .then(function() {
-          if (btn) { btn.disabled = false; btn.innerHTML = 'Anfrage senden &#10003;'; }
-          document.querySelector('#modal-rezept .modal-body').innerHTML = '<div style="text-align:center;padding:40px 20px;"><div style="font-size:2rem;margin-bottom:16px;">&#10003;</div><h3 style="font-family: var(--font-sans);color:var(--olive-haupt);margin-bottom:10px;">Rezept-Anforderung eingegangen</h3><p style="color:var(--text-muted);font-size:0.88rem;">Wir melden uns bei Ihnen. Rezept in der Regel am nächsten Werktag abholbereit.</p></div>';
-        })
-        .catch(function(err) {
-          console.error('EmailJS Fehler:', err);
-          if (btn) { btn.disabled = false; btn.textContent = 'Anfrage senden'; }
-          alert('Fehler beim Senden. Bitte rufen Sie uns an: 03943 / 48 13 3');
-        });
+      // Online-Rezeptanforderung noch ohne sicheren Versandweg: nichts übertragen
+      document.querySelector('#modal-rezept .modal-body').innerHTML = '<div style="text-align:center;padding:40px 20px;"><h3 style="font-family: var(--font-sans);color:var(--olive-haupt);margin-bottom:10px;">Bitte telefonisch bestellen</h3><p style="color:var(--text-muted);font-size:0.88rem;line-height:1.6;">Die Online-Anforderung ist noch nicht freigeschaltet, Ihre Angaben wurden nicht übertragen. Folgerezepte bestellen Sie bis dahin telefonisch: Wernigerode <a href="tel:+49394348133" style="color:var(--olive-haupt);">03943 / 48 13 3</a>, Heudeber <a href="tel:+4939458223" style="color:var(--olive-haupt);">039458 / 223</a>.</p></div>';
     }
 
 // ── Burger-Menü ──
@@ -1772,9 +1718,9 @@ function filterStandort(which) {
       <div class="modal-body">
         <div class="modal-steps">
           <div class="step-dot active" id="sd-1"></div>
-          <div class="step-dot" id="sd-1b" style="display:none;"></div>
           <div class="step-dot" id="sd-2"></div>
           <div class="step-dot" id="sd-3"></div>
+          <div class="step-dot" id="sd-1b" style="display:none;"></div>
           <div class="step-dot" id="sd-4"></div>
         </div>
 
@@ -1813,15 +1759,15 @@ function filterStandort(which) {
         </div>
 
 
-        <!-- Schritt 1b: Anamnesebogen (nur Neupatienten) -->
+        <!-- Schritt 3b: kurzer Anamnesebogen (nur Neupatienten, nach den Daten) -->
         <div id="tm-s1b" style="display:none;">
           <div class="dsgvo-box">
-            <strong>Datenschutz:</strong> Ihre Angaben dienen ausschließlich Ihrer medizinischen Behandlung bei Dr. Müller und werden gemäß DSGVO sicher verarbeitet. Sie können den Bogen auch vor Ort ausfüllen.
+            <strong>Freiwillig:</strong> Drei kurze Fragen, damit wir uns vorbereiten können. Über die Website werden diese Angaben zurzeit nicht übertragen. Den vollständigen Bogen füllen Sie bei Ihrem ersten Besuch in der Praxis aus.
           </div>
           <div style="text-align:right; margin-bottom:10px;">
-            <button onclick="terminAnamneseActive=false; terminStep=2; updateTerminStep();" type="button"
+            <button onclick="terminAnamneseActive=false; terminStep=4; updateTerminStep();" type="button"
               style="background:none; border:none; color:var(--text-muted); font-size:0.79rem; cursor:pointer; text-decoration:underline; font-family:var(--font-sans); padding:4px 8px;">
-              Bogen vor Ort ausfüllen &mdash; direkt weiter &rarr;
+              Überspringen, Bogen vor Ort ausfüllen &rarr;
             </button>
           </div>
           <div class="m-form-group">
@@ -1843,7 +1789,7 @@ function filterStandort(which) {
             <label class="m-form-label">Aktuelle Dauermedikation</label>
             <textarea class="anamnese-textarea" id="an-medikamente" placeholder="z. B. Ramipril 5 mg, Metformin 500 mg … oder: keine"></textarea>
           </div>
-          <div class="m-form-group">
+          <div class="m-form-group anamnese-lang">
             <label class="m-form-label">Raucherstatus</label>
             <div class="radio-cards-grid" id="rc-raucher" style="grid-template-columns:repeat(3,1fr);">
               <div class="radio-card-m" onclick="selectRadioM(this,'rc-raucher')" data-value="nein"><div class="radio-dot-m"></div><div><div class="radio-lbl">Nein</div></div></div>
@@ -1851,11 +1797,11 @@ function filterStandort(which) {
               <div class="radio-card-m" onclick="selectRadioM(this,'rc-raucher')" data-value="ex"><div class="radio-dot-m"></div><div><div class="radio-lbl">Ich habe aufgehört</div></div></div>
             </div>
           </div>
-          <div class="m-form-group">
+          <div class="m-form-group anamnese-lang">
             <label class="m-form-label">Was bringt Sie zu uns?</label>
             <textarea class="anamnese-textarea" id="an-anliegen-neu" placeholder="Kurze Beschreibung Ihrer Beschwerden oder Ihres Anliegens …" style="min-height:68px;"></textarea>
           </div>
-          <div class="m-form-group">
+          <div class="m-form-group anamnese-lang">
             <label class="m-form-label">Unterschrift (Richtigkeit der Angaben bestätigen)</label>
             <div class="sig-wrap">
               <canvas id="anamnese-canvas"></canvas>
@@ -1867,14 +1813,18 @@ function filterStandort(which) {
 
         <!-- Schritt 2: Standort & Termin -->
         <div id="tm-s2" style="display:none;">
+          <div class="dsgvo-box termin-vorschau">
+            <strong>Vorschau:</strong> Die Uhrzeiten sind Beispiele, keine echten freien Termine.<span class="t2med-folgt"> Die Online-Buchung über T2med folgt. Bis dahin vergeben wir Termine telefonisch: Wernigerode <a href="tel:+49394348133" style="color:var(--olive-haupt);">03943 / 48 13 3</a>, Heudeber <a href="tel:+4939458223" style="color:var(--olive-haupt);">039458 / 223</a>.</span>
+            <a class="t2med-btn" href="#" target="_blank" rel="noopener" hidden style="display:none; color:var(--olive-haupt); font-weight:600;">Freie Termine online über T2med ansehen &rarr;</a>
+          </div>
           <p class="step-intro">Standort w&#228;hlen:</p>
           <div class="standort-toggle-m">
             <button class="standort-btn-m active" id="slot-btn-wn" onclick="switchSlotStandort('wn')">Wernigerode</button>
             <button class="standort-btn-m" id="slot-btn-ils" onclick="switchSlotStandort('ils')">Heudeber</button>
           </div>
           <div class="slots-legend">
-            <span><span class="leg-dot" style="background:var(--olive-haupt);"></span>Frei</span>
-            <span><span class="leg-dot" style="background:#ccc;"></span>Besetzt</span>
+            <span><span class="leg-dot" style="background:var(--olive-haupt);"></span>Beispielzeit</span>
+            <span><span class="leg-dot" style="background:#ccc;"></span>nicht wählbar</span>
           </div>
           <div class="standort-duo-wrap">
             <div id="slots-wn"></div>
@@ -1894,7 +1844,8 @@ function filterStandort(which) {
               <input type="text" class="m-form-input" id="tm-nachname" placeholder="Mustermann" autocomplete="family-name">
             </div>
           </div>
-          <div class="m-form-group">
+          <div class="m-form-row">
+            <div class="m-form-group">
               <label class="m-form-label">Geburtsdatum</label>
               <input type="text" class="m-form-input" id="tm-gebdatum" placeholder="TT.MM.JJJJ" inputmode="numeric">
             </div>
@@ -1936,10 +1887,11 @@ function filterStandort(which) {
         <div id="tm-s4" style="display:none;">
           <div class="success-screen-m">
             <div class="success-icon-m">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#384e33" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
             </div>
-            <h3 style="font-family: var(--font-sans); font-size:1.75rem; color:var(--olive-haupt); margin-bottom:7px;">Termin best&#228;tigt &#10003;</h3>
-            <p style="font-size:0.84rem; color:var(--text-muted); line-height:1.65; max-width:370px; margin:0 auto;">Ihr Termin ist verbindlich gebucht. Eine Best&#228;tigungsmail geht in K&#252;rze an Ihre E-Mail-Adresse. Bitte schauen Sie auch in Ihren Spam-Ordner.</p>
+            <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:7px;">Noch nicht gebucht</h3>
+            <p class="t2med-folgt" style="font-size:0.84rem; color:var(--text-muted); line-height:1.65; max-width:390px; margin:0 auto;">Die Online-Buchung ist noch nicht freigeschaltet, Ihre Angaben wurden nicht übertragen. Die Buchung über T2med folgt. Bitte vereinbaren Sie Ihren Termin telefonisch: Wernigerode <a href="tel:+49394348133" style="color:var(--olive-haupt);">03943 / 48 13 3</a>, Heudeber <a href="tel:+4939458223" style="color:var(--olive-haupt);">039458 / 223</a>.</p>
+            <a class="btn-custom btn-custom-dark t2med-btn" href="#" target="_blank" rel="noopener" hidden style="display:none; margin-top:10px;">Termin online über T2med buchen</a>
             <div class="summary-box-m" id="tm-summary"></div>
             <button class="btn-custom btn-custom-dark" style="margin-top:6px;" onclick="closeModal('modal-termin')">Fertig &#10003;</button>
           </div>

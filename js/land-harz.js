@@ -1,6 +1,26 @@
 // Land-Harz-Praxis – kleine Helfer (Akkordeons usw.)
 // laeuft auf allen Seiten, macht nur was, wenn die Elemente da sind
 
+// Schalter Terminbuchung
+// t2med.aktiv auf true und Link eintragen, dann erscheinen die T2med-Buttons im Termin-Fenster
+var PRAXIS = {
+  t2med: { aktiv: false, link: '' },
+  beispielTermine: false,   // true = Beispielzeiten in der Slot-Karte zeigen
+  anamneseLang: false       // true = Raucher, Anliegen und Unterschrift im Anamnesebogen wieder zeigen
+};
+window.PRAXIS = PRAXIS;
+
+function initT2med() {
+  var an = PRAXIS.t2med.aktiv && PRAXIS.t2med.link;
+  document.querySelectorAll('.t2med-btn').forEach(function (a) {
+    a.hidden = !an;
+    a.style.display = an ? '' : 'none';
+    if (an) a.href = PRAXIS.t2med.link;
+  });
+  if (an) document.querySelectorAll('.t2med-folgt').forEach(function (el) { el.style.display = 'none'; });
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initT2med); else initT2med();
+
 function oeffneAkk(btn, auf) {
     var box = document.getElementById(btn.getAttribute('aria-controls'));
     if (!box) return;
