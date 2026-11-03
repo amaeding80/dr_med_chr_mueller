@@ -667,3 +667,17 @@ html:not(.js) .akk-zeichen { display: none; }
 
 /* T2med-Buttons bleiben aus, bis der Schalter in js/land-harz.js an ist */
 .t2med-btn[hidden] { display: none !important; }
+
+/* Woran Sie uns messen dürfen: fünf Punkte */
+.mess-liste { list-style: none; padding: 0; margin: 0; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.mess-liste .mess-kachel { justify-content: flex-start; }
+.mess-liste .mess-kachel { padding: 22px 20px 24px; }
+.mess-liste .mess-kachel h3 { margin: 0; font-size: 1.1rem; hyphens: auto; overflow-wrap: break-word; }
+.mess-nr { font-size: 0.8rem; letter-spacing: 0.08em; color: var(--terracotta); margin-bottom: 10px; }
+@media (max-width: 1024px) { .mess-liste { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .mess-liste { grid-template-columns: 1fr; } }
+
+/* Leistungen: Spektrum */
+.spektrum-box { border-left: 2px solid var(--terracotta); padding: 2px 0 2px 16px; margin: 0 0 28px; }
+.spektrum-titel { font-family: var(--font-sans); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--olive-haupt); margin: 0 0 8px; }
+.spektrum-box p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.7; margin: 0; }
