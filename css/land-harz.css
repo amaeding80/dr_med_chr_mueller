@@ -179,14 +179,14 @@ html:not(.js) .akk-zeichen { display: none; }
 }
 
 /* ---------- Termin-Leiste & Hilfe-Button (Korrekturen EasyPeecy) ---------- */
-/* Handy hoch: Seitenende nicht von der Leiste verdecken */
+/* Handy hoch: Platz fuer die Leiste vor dem Footer (Leiste blendet am Footer aus) */
 @media (max-width: 679px) and (orientation: portrait) {
-  body { padding-bottom: 104px; }
+  body:has(.mobile-bottom-bar) footer { margin-top: 104px; }
   .mobile-bottom-bar .bar-hint { font-size: 0.875rem !important; }
 }
 /* Handy quer: Leiste einzeilig + Hilfe-Button rechts daneben */
 @media (orientation: landscape) and (max-height: 500px) {
-    body { padding-bottom: 60px; }
+    body:has(.mobile-bottom-bar) footer { margin-top: 60px; }
     .mobile-bottom-bar { bottom: 8px !important; right: 64px !important; padding: 3px 3px 3px 12px !important; }
     .mobile-bottom-bar::before {
         content: "Termin buchen";
@@ -695,7 +695,7 @@ html:not(.js) .akk-zeichen { display: none; }
 /* Termin-Leiste Handy hoch: volle Breite, zwei gleich breite Buttons, Hilfe-Button darueber */
 .bar-kal { display: none; flex-shrink: 0; }
 @media (max-width: 679px) and (orientation: portrait) {
-  body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+  body:has(.mobile-bottom-bar) footer { margin-top: calc(96px + env(safe-area-inset-bottom, 0px)) !important; }
   .mobile-bottom-bar {
     left: calc(12px + env(safe-area-inset-left, 0px)) !important;
     right: calc(12px + env(safe-area-inset-right, 0px)) !important;
@@ -745,5 +745,5 @@ html:not(.js) .akk-zeichen { display: none; }
 .tablet-float-cta .tfc-btn { min-width: 200px; justify-content: center; padding: 12px 20px; box-shadow: none; }
 .tablet-float-cta .tfc-btn:first-child { background: var(--olive-haupt); border-color: var(--olive-haupt); }
 .tablet-float-cta .tfc-btn:first-child .tfc-city, .tablet-float-cta .tfc-btn:first-child .tfc-label, .tablet-float-cta .tfc-btn:first-child svg { color: #fff; stroke: #fff; }
-@media (min-width: 680px) and (max-width: 1366px) and (min-height: 501px) { body { padding-bottom: 88px; } }
+@media (min-width: 680px) and (max-width: 1366px) and (min-height: 501px) { body:has(.tablet-float-cta) footer { margin-top: 88px; } }
 .tablet-float-cta .tfc-btn svg { width: 18px !important; height: 18px !important; flex-shrink: 0; }
