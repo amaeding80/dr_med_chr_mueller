@@ -681,3 +681,69 @@ html:not(.js) .akk-zeichen { display: none; }
 .spektrum-box { border-left: 2px solid var(--terracotta); padding: 2px 0 2px 16px; margin: 0 0 28px; }
 .spektrum-titel { font-family: var(--font-sans); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--olive-haupt); margin: 0 0 8px; }
 .spektrum-box p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.7; margin: 0; }
+
+/* Woran Sie uns messen dürfen: Handy als Wisch-Reihe, Kacheln kompakt */
+@media (max-width: 679px) and (orientation: portrait), (orientation: landscape) and (max-height: 500px) {
+  .mess-liste.wisch-reihe > * { flex-basis: 62% !important; }
+  .mess-liste .mess-kachel { padding: 18px 18px 20px; min-height: 120px; }
+  .mess-liste .mess-kachel h3 { font-size: 1.05rem; hyphens: manual; }
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  .mess-liste.wisch-reihe > * { flex-basis: 30% !important; }
+}
+
+/* Termin-Leiste Handy hoch: volle Breite, zwei gleich breite Buttons, Hilfe-Button darueber */
+.bar-kal { display: none; flex-shrink: 0; }
+@media (max-width: 679px) and (orientation: portrait) {
+  body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+  .mobile-bottom-bar {
+    left: calc(12px + env(safe-area-inset-left, 0px)) !important;
+    right: calc(12px + env(safe-area-inset-right, 0px)) !important;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px)) !important;
+    padding: 8px !important; gap: 8px !important; border-radius: 14px !important;
+  }
+  .mobile-bottom-bar .bar-divider, .mobile-bottom-bar .terracotta-dot { display: none !important; }
+  .mobile-bottom-bar .bar-loc-btn {
+    flex: 1 1 0 !important; min-width: 0; min-height: 50px;
+    justify-content: center !important; gap: 10px !important; padding: 8px 10px !important;
+    border-radius: 10px; background: var(--olive-haupt); color: #fff;
+    border: 1px solid var(--olive-haupt);
+  }
+  .mobile-bottom-bar .bar-loc-btn.bar-loc-zwei { background: #fff; color: var(--olive-haupt); }
+  .mobile-bottom-bar .bar-loc-btn:active { opacity: .85; }
+  .mobile-bottom-bar .bar-kal { display: block; }
+  .mobile-bottom-bar .bar-loc-text { flex-direction: column-reverse; gap: 0; }
+  .mobile-bottom-bar .bar-hint { font-size: 0.75rem !important; color: inherit; opacity: .8; letter-spacing: .02em; }
+  .mobile-bottom-bar .bar-city { font-size: 0.95rem !important; color: inherit; }
+  .pxa-btn { bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important; }
+}
+
+/* Tablet: fuenf Kacheln als 3 + 2 statt 2 + 2 + 1 */
+@media (min-width: 680px) and (max-width: 1024px) and (min-height: 501px) {
+  .mess-liste { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .mess-liste > * { grid-column: span 2; }
+  .mess-liste > :nth-child(n+4) { grid-column: span 3; }
+}
+
+/* Tablet hoch: Termin-Kachel im Hero ueber volle Breite */
+@media (min-width: 680px) and (max-width: 1024px) and (orientation: portrait) {
+  .hero .slot-card { max-width: none !important; }
+}
+/* Tablet quer: Termin-Kachel im Hero mit Abstand zum Hilfe-Button rechts */
+@media (min-width: 768px) and (max-width: 1399px) and (min-height: 501px) and (orientation: landscape) {
+  .hero .slot-card { right: max(calc(var(--fr) + 16px), calc(88px + env(safe-area-inset-right, 0px))) !important; }
+}
+/* Tablet: Termin-Buttons als zentrierte Leiste unten statt links ueber dem Inhalt */
+.tablet-float-cta {
+  left: 50%; right: auto; bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  flex-direction: row; gap: 8px; padding: 8px;
+  background: rgba(255,255,255,0.96); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  border: 1px solid rgba(56,78,51,0.18); border-radius: 14px; box-shadow: 0 8px 30px rgba(0,0,0,0.14);
+  transform: translate(-50%, 160%);
+}
+.tablet-float-cta.tfc-visible { transform: translate(-50%, 0); }
+.tablet-float-cta .tfc-btn { min-width: 200px; justify-content: center; padding: 12px 20px; box-shadow: none; }
+.tablet-float-cta .tfc-btn:first-child { background: var(--olive-haupt); border-color: var(--olive-haupt); }
+.tablet-float-cta .tfc-btn:first-child .tfc-city, .tablet-float-cta .tfc-btn:first-child .tfc-label, .tablet-float-cta .tfc-btn:first-child svg { color: #fff; stroke: #fff; }
+@media (min-width: 680px) and (max-width: 1366px) and (min-height: 501px) { body { padding-bottom: 88px; } }
+.tablet-float-cta .tfc-btn svg { width: 18px !important; height: 18px !important; flex-shrink: 0; }
