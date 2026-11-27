@@ -204,13 +204,6 @@
     delete leinwand.dataset.hatStrich;
   }
 
-  // bis T2med angebunden ist: Hinweis mit Telefonnummern ganz oben
-  function vorschauHinweis() {
-    if ((P.termin || {}).ziel === 't2med') return '';
-    return '<p class="tb-hinweis">Die Online-Buchung folgt in Kürze. Bis dahin bitte anrufen: ' + esc(st('wn').name) + ' <a href="' + st('wn').telLink + '">' + esc(st('wn').tel) + '</a>, ' +
-      esc(st('hd').name) + ' <a href="' + st('hd').telLink + '">' + esc(st('hd').tel) + '</a>.</p>';
-  }
-
   function sAnliegen() {
     kopf('Anliegen');
     var hd = T.standort === 'hd';
@@ -218,7 +211,7 @@
       var aus = hd && nurWn(g.id);
       return { id: g.id, titel: g.titel, text: aus ? 'Nur in ' + st('wn').name : g.text, aus: aus };
     });
-    dlgInhalt.innerHTML = vorschauHinweis() + wahlKarten('tb-grund', liste, T.grund, ' tb-wahl-2') +
+    dlgInhalt.innerHTML = wahlKarten('tb-grund', liste, T.grund, ' tb-wahl-2') +
       '<div class="tb-zusatz" id="tb-zusatz"></div>';
     function zusatz() {
       var g = wert('tb-grund'), z = dlgBox.querySelector('#tb-zusatz');
