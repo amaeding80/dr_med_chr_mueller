@@ -841,7 +841,8 @@ header.kopf-schmal { padding-top: 8px !important; padding-bottom: 8px !important
 .wochen-cta .btn-smart { background: #fff !important; border-color: #fff !important; color: var(--olive-haupt) !important; }
 .wochen-cta .btn-smart .btn-circle { color: var(--olive-haupt) !important; }
 .wochen-cta .btn-smart:hover, .wochen-cta .btn-smart:focus-visible { background: var(--olive-soft) !important; border-color: var(--olive-soft) !important; color: var(--olive-dark) !important; }
-.footer-links-inline a:hover, .footer-links-inline a:focus-visible { color: var(--olive-haupt); text-decoration: underline; }
+.footer-links-inline a:visited { color: var(--text-muted); }
+.footer-links-inline a:hover, .footer-links-inline a:focus-visible, .footer-links-inline a:active { color: var(--olive-haupt) !important; text-decoration: underline; text-underline-offset: 3px; }
 
 /* Unterseiten Desktop: Kopf in zwei Spalten (Titel links, Einleitung rechts) statt leerer rechter Hälfte */
 @media (min-width: 1025px) {
@@ -904,4 +905,28 @@ html, body { overflow-x: clip !important; overflow-y: visible !important; }
   position: relative !important;
   top: auto !important;
   z-index: 1;
+}
+
+/* Kartenlinks im Digitalen Empfang: unterstrichen statt Pfeil, ganze Karte bleibt klickbar */
+.karten-link {
+  display: inline-block;
+  margin-top: 24px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--terracotta-caps);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.journal-card:hover .karten-link,
+.journal-card:focus-visible .karten-link {
+  color: #6E4A3D;
+}
+/* Wo die Karten nebeneinander stehen, bleibt „Videotermin vereinbaren“ in einer Zeile */
+@media (min-width: 680px) {
+  .karten-link.eine-zeile { white-space: nowrap; }
+}
+@media (min-width: 1025px) and (max-width: 1180px) {
+  .karten-link.eine-zeile { font-size: 0.7rem; letter-spacing: 0; }
 }

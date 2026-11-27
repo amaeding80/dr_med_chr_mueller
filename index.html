@@ -311,12 +311,32 @@
       transition: background 0.18s;
       gap: 0;
     }
-    .slot-zeile-wn:hover { background: rgba(56,78,51,0.13); }
-    .slot-zeile-wn:hover .slot-zeile-ort { color: #2A3D26; }
-    .slot-zeile-wn:hover .slot-zeile-btn { background: transparent; border: 1.5px solid #4E8752; color: #4E8752; }
-    .slot-zeile-ils:hover { background: rgba(163,111,90,0.16); }
-    .slot-zeile-ils:hover .slot-zeile-ort { color: var(--terracotta); }
-    .slot-zeile-ils:hover .slot-zeile-btn { background: transparent; border: 1.5px solid var(--terracotta); color: var(--terracotta); }
+    button.slot-zeile {
+      width: 100%;
+      margin: 0;
+      border: 0;
+      border-top: 1px solid rgba(56,78,51,0.1);
+      background: rgba(56,78,51,0.07);
+      text-align: left;
+      font: inherit;
+      white-space: nowrap;
+    }
+    button.slot-zeile-ils { background: rgba(163,111,90,0.10); }
+    /* Textlink statt Kreis-Pfeil, ohne Hover sofort als klickbar erkennbar */
+    .termin-link {
+      margin-left: auto;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--terracotta-caps);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .slot-zeile:hover, .slot-zeile:focus-visible { background: rgba(56,78,51,0.16); }
+    .slot-zeile:hover .slot-zeile-ort, .slot-zeile:focus-visible .slot-zeile-ort { color: #2A3D26; }
+    .slot-zeile-ils:hover, .slot-zeile-ils:focus-visible { background: rgba(163,111,90,0.20); }
+    .slot-zeile:hover .termin-link, .slot-zeile:focus-visible .termin-link { color: #6E4A3D; }
     .slot-zeile-inhalt { display: none; }
     .slot-zeile-ort {
       font-size: 0.75rem;
@@ -332,19 +352,6 @@
       font-weight: 500;
       white-space: nowrap;
       flex: 1;
-    }
-    .slot-zeile-btn {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: var(--olive-haupt);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      flex-shrink: 0;
-      transition: background 0.18s;
     }
     .slot-weitere {
       display: flex;
@@ -1584,10 +1591,10 @@
     @media (max-width: 767px) {
       .hero-chip, .standort-tab, .btn-smart, .service-header, .mob-links li a,
       .compass-btn, .journal-card, .download-paper-card, .team-card-eq,
-      .slot-zeile-btn, .wt-schliessen, .mob-close, .burger-btn {
+      .slot-zeile, .wt-schliessen, .mob-close, .burger-btn {
         min-height: 44px;
       }
-      .burger-btn, .mob-close, .wt-schliessen, .slot-zeile-btn {
+      .burger-btn, .mob-close, .wt-schliessen {
         min-width: 44px;
       }
     }
@@ -1672,16 +1679,16 @@
     <!-- Slot-Card: absolut unten rechts -->
     <div class="slot-card">
       <div class="slot-card-label"><span class="slot-dot"></span>Nächster freier Termin</div>
-      <div class="slot-zeile slot-zeile-wn" onclick="openTerminModal()">
+      <button type="button" class="slot-zeile slot-zeile-wn" onclick="openTerminModal(null,'wernigerode')">
         <span class="slot-zeile-ort">Wernigerode</span>
         <span class="slot-zeile-datum" id="slot-wn"></span>
-        <span class="slot-zeile-btn">→</span>
-      </div>
-      <div class="slot-zeile slot-zeile-ils" onclick="openTerminModal()">
+        <span class="termin-link">Termin wählen</span>
+      </button>
+      <button type="button" class="slot-zeile slot-zeile-ils" onclick="openTerminModal(null,'heudeber')">
         <span class="slot-zeile-ort">Heudeber</span>
         <span class="slot-zeile-datum" id="slot-ils"></span>
-        <span class="slot-zeile-btn">→</span>
-      </div>
+        <span class="termin-link">Termin wählen</span>
+      </button>
       <div class="slot-weitere" onclick="weitereTermineOeffnen()">Weitere Termine anzeigen ↓</div>
     </div>
   </section>
@@ -1809,7 +1816,7 @@
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Termin vereinbaren</h3>
             <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Neu oder schon Patient, Standort, Anliegen – in wenigen Schritten zum Termin, ohne Warteschleife.</p>
           </div>
-          <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Termin vereinbaren →</span>
+          <span class="karten-link">Termin vereinbaren</span>
         </div>
         <div class="journal-card" onclick="openRezeptModal()">
           <div>
@@ -1817,7 +1824,7 @@
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Folgerezept online bestellen</h3>
             <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Dauermedikamente online anfordern. Verschlüsselt übertragen, nicht per E-Mail. Das Rezept kommt auf Ihre Gesundheitskarte.</p>
           </div>
-          <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Rezept anfordern →</span>
+          <span class="karten-link">Rezept anfordern</span>
         </div>
         <!-- Krankmeldung online: ausgeblendet, Schalter PRAXIS.funktionen.au in js/land-harz.js -->
         <div class="journal-card" onclick="openAuModal()" data-funktion="au" hidden>
@@ -1826,7 +1833,7 @@
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Krankmeldung anfordern</h3>
             <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Arbeitgeber-Attest oder Folge-AU digital anfragen — wenn keine Vorstellung nötig ist.</p>
           </div>
-          <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">AU beantragen →</span>
+          <span class="karten-link">AU beantragen</span>
         </div>
         <div class="journal-card" onclick="openVideoModal()">
           <div>
@@ -1834,7 +1841,7 @@
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Videosprechstunde</h3>
             <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Ärztliches Gespräch per Video über Patmed – wenn Sie dafür nicht in die Praxis kommen müssen.</p>
           </div>
-          <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Videotermin vereinbaren →</span>
+          <span class="karten-link eine-zeile">Videotermin vereinbaren</span>
         </div>
         <div class="journal-card" onclick="openUeberweisungModal()">
           <div>
@@ -1842,7 +1849,7 @@
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Überweisung anfordern</h3>
             <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Überweisung zum Facharzt oder zur Untersuchung. Vorerst telefonisch, die Online-Anfrage folgt.</p>
           </div>
-          <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">So geht es →</span>
+          <span class="karten-link">So geht es</span>
         </div>
       </div>
       <button type="button" class="wisch-knopf" data-wisch-knopf aria-controls="journal-reihe" aria-label="Weiter zur nächsten Karte">Wischen →</button>
@@ -1857,7 +1864,7 @@
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Befunde anfordern</h3>
             <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Befunde geben wir nur verschlüsselt oder persönlich heraus – nie per E-Mail.</p>
           </div>
-          <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">So geht es →</span>
+          <span class="karten-link">So geht es</span>
         </div>
         <div class="journal-card journal-card-ernaehrung" onclick="toggleErnaehrungsFlow(this)">
           <div>
@@ -1873,7 +1880,7 @@
               <button onclick="event.stopPropagation(); openTerminModal('Mangelernährung / Sarkopenie')" style="text-align:left; background:rgba(56,78,51,0.06); border:1px solid rgba(56,78,51,0.14); border-radius:8px; padding:10px 14px; font-size:0.84rem; color:var(--olive-haupt); font-weight:600; cursor:pointer;">Mangelernährung / Sarkopenie</button>
             </div>
           </div>
-          <span id="ernaehrung-cta" style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Beratungsgespräch vereinbaren →</span>
+          <span id="ernaehrung-cta" class="karten-link">Beratungsgespräch vereinbaren</span>
         </div>
         <div class="journal-card" onclick="openImpfModal()">
           <div>
@@ -1881,7 +1888,7 @@
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Impftermin vereinbaren</h3>
             <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Impfberatung, Auffrischung oder Reiseimpfung — Termin online voranmelden.</p>
           </div>
-          <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Impftermin vereinbaren →</span>
+          <span class="karten-link">Impftermin vereinbaren</span>
         </div>
         <div class="journal-card" onclick="openIgelModal()">
           <div>
@@ -1889,7 +1896,7 @@
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Privatleistung vereinbaren</h3>
             <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">BIA-Messung, Gesundheitszeugnis, Tauglichkeit, Sporttauglichkeit oder andere individuelle Leistungen.</p>
           </div>
-          <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Termin vereinbaren →</span>
+          <span class="karten-link">Termin vereinbaren</span>
         </div>
       </div>
       <button type="button" class="wisch-knopf" data-wisch-knopf aria-controls="weitere-reihe" aria-label="Weiter zur nächsten Karte">Wischen →</button>
@@ -2182,6 +2189,7 @@
       <div class="footer-links-inline">
         <a href="impressum.html">Impressum</a>
         <a href="datenschutz.html">Datenschutz</a>
+        <a href="https://www.instagram.com/nutridoccheck/" data-insta="link" target="_blank" rel="noopener">Instagram<span class="sr-only"> (neues Fenster)</span></a>
         <span>© <span id="jahr"></span></span>
       </div>
     </div>
