@@ -930,3 +930,9 @@ html, body { overflow-x: clip !important; overflow-y: visible !important; }
 @media (min-width: 1025px) and (max-width: 1180px) {
   .karten-link.eine-zeile { font-size: 0.7rem; letter-spacing: 0; }
 }
+
+
+/* Terminkasten ohne Nummer: auf dem Tablet nicht als leere breite Leiste */
+@media (min-width: 680px) and (max-width: 1024px) and (orientation: portrait) {
+  .hero .slot-card.nur-ort { width: 340px !important; }
+}

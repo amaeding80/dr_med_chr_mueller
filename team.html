@@ -676,10 +676,9 @@ function slotKarteInit() {
   if (!(window.PRAXIS || {}).beispielTermine) {
     var lbl = document.querySelector('.slot-card-label');
     if (lbl) lbl.innerHTML = '<span class="slot-dot"></span>Termin vereinbaren';
-    ['wn', 'ils'].forEach(function(standort) {
-      var el = document.getElementById('slot-' + standort);
-      if (el) el.textContent = standort === 'wn' ? '03943 48133' : '039458 223';
-    });
+    // Im Kasten keine Telefonnummer, nur die Online-Terminwahl
+    var kasten = document.querySelector('.slot-card');
+    if (kasten) kasten.classList.add('nur-ort');
     var mehr = document.querySelector('.slot-weitere');
     if (mehr) mehr.style.display = 'none';
     return;
