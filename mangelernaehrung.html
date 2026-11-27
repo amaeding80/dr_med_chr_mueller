@@ -289,8 +289,11 @@
     }
     </style>
   <link rel="stylesheet" href="css/land-harz.css">
+  <link rel="stylesheet" href="css/termin.css">
   <script>document.documentElement.classList.add('js');</script>
+  <script src="js/praxis-daten.js"></script>
   <script src="js/land-harz.js" defer></script>
+  <script src="js/termin.js" defer></script>
 </head>
 <body>
 
@@ -313,7 +316,7 @@
           <span id="live-dot" class="pulse-dot"></span>
           <span id="live-txt">Status wird geprüft...</span>
         </div>
-        <a href="index.html#empfang" class="nav-termin-btn">Termin buchen</a>
+        <a href="index.html#empfang" class="nav-termin-btn" data-termin="">Termin buchen</a>
       </div>
       <button class="burger-btn" id="burger-btn" onclick="toggleMobMenu()" aria-label="Menü öffnen" aria-expanded="false">
         <span class="burger-line"></span>
@@ -375,9 +378,7 @@
   <div class="container">
     <div class="inhalt-grid">
       <div class="prose">
-        <h2 class="akk-kopf"><button type="button" class="akk-btn" id="man-btn-1" aria-expanded="false" aria-controls="man-akk-1"><span>Wenn weniger Gewicht nicht automatisch besser ist</span><span class="akk-zeichen" aria-hidden="true"></span></button></h2>
-        <p>Ungewollter Gewichtsverlust, zunehmende Schwäche und Verlust von Muskelmasse werden gerade im höheren Lebensalter häufig unterschätzt.</p>
-        <div class="akk-panel" id="man-akk-1" role="region" aria-labelledby="man-btn-1">
+                <div class="inhalt-text" id="man-akk-1">
         <p>Mangelernährung kann mit schlechterer körperlicher Leistungsfähigkeit und ungünstigeren Krankheitsverläufen verbunden sein; die DGE empfiehlt eine strukturierte Erfassung des Ernährungszustands.</p>
 
         <h3>Wir untersuchen mögliche Ursachen und betrachten:</h3>
@@ -393,7 +394,21 @@
         </ul>
         </div>
 
-        <div class="verwandte-seiten" style="margin-top:32px;"><a href="ernaehrungsmedizin.html" class="organisch-link">Mehr zur Ernährungsmedizin</a></div>
+
+        <section class="ablauf" aria-labelledby="ablauf-titel">
+          <h2 id="ablauf-titel">So beginnt es</h2>
+          <ol class="ablauf-liste">
+            <li><span class="ablauf-nr">01</span><div><strong>Beratungsgespräch</strong><p>Per Video oder vor Ort in Wernigerode. Wir sprechen in Ruhe darüber, was möglich ist und was nicht.</p></div></li>
+            <li><span class="ablauf-nr">02</span><div><strong>Gemeinsamer Plan</strong><p>Erst danach legen wir fest, welche Untersuchungen und Termine sinnvoll sind. Einen langen Termin gibt es nie gleich am Anfang.</p></div></li>
+            <li><span class="ablauf-nr">03</span><div><strong>Begleitung</strong><p>Verlaufskontrollen in festen Zeitfenstern, die Dr. Müller für die Ernährungsmedizin einplant.</p></div></li>
+          </ol>
+          <p class="ablauf-notiz">Ernährungsmedizin gibt es nur am Hauptstandort Wernigerode.</p>
+          <a href="index.html#empfang" class="btn-smart dark" data-termin="wn" data-anliegen="ernaehrung"><span>Beratungsgespräch anfragen</span><span class="btn-circle">&#8594;</span></a>
+        </section>
+        <nav class="themen-links" aria-label="Weitere Themen">
+          <h2>Weitere Themen</h2>
+          <ul><li><a href="ernaehrungsmedizin.html"><strong>Ernährungsmedizin</strong><span>Ernährung als Teil der Therapie</span></a></li><li><a href="adipositas.html"><strong>Adipositas &amp; Gewichtsmedizin</strong><span>Abnehmen ist nicht das eigentliche Ziel</span></a></li><li><a href="praeventionsmedizin.html"><strong>Vorsorge &amp; Prävention</strong><span>Vorsorge, bevor Krankheit entsteht</span></a></li><li><a href="hausarztmedizin.html"><strong>Hausärztliche Versorgung</strong><span>Von akut bis Vorsorge</span></a></li></ul>
+        </nav>
       </div>
 
       <div class="sidebar">
@@ -405,7 +420,7 @@
         <div class="sidebar-card sidebar-link-box">
           <h4>Termin vereinbaren</h4>
           <p>Für Laborabklärung und BIA-Messung direkt online buchen.</p>
-          <a href="index.html#empfang" class="btn-smart dark" style="width:100%;justify-content:center;">
+          <a href="index.html#empfang" class="btn-smart dark" style="width:100%;justify-content:center;" data-termin="" data-anliegen="ernaehrung">
             <span>Jetzt Termin buchen</span><span class="btn-circle">&#8594;</span>
           </a>
         </div>
@@ -413,7 +428,7 @@
         <div class="sidebar-card sidebar-standort">
           <h4>Zwei Standorte im Harz</h4>
           <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:8px;"><strong style="color:var(--text);">Wernigerode</strong><br>Oberhof 9 · 38855 Wernigerode<br>Tel 03943 / 48 13 3</p>
-          <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;"><strong style="color:var(--text);">Heudeber</strong><br>Bahnhofstraße 18 · 38855 Heudeber<br>Tel 039458 / 223<br><span style="color:var(--olive-haupt);font-size:0.82rem;">Dr. Heldt · FA Allgemeinmedizin</span></p>
+          <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;"><strong style="color:var(--text);">Heudeber</strong><br>Bahnhofstraße 18 · 38855 Heudeber<br>Tel 039458 / 223<br><span style="color:var(--olive-haupt);font-size:0.82rem;">Dr. Heldt · FA Allgemeinmedizin</span><br><span style="font-size:0.8rem;">Ernährungsmedizin nur in Wernigerode</span></p>
           <a href="index.html#standort" class="btn-smart" style="width:100%;justify-content:center;">
             <span>Anfahrt &amp; Öffnungszeiten</span><span class="btn-circle">&#8594;</span>
           </a>
@@ -441,18 +456,18 @@
 <!-- PC-DESKTOP TERMIN-KACHEL (links, immer sichtbar) -->
 <div class="pc-termin-card" id="pc-termin-card">
   <span class="ptc-label">Termin buchen</span>
-  <a href="index.html#empfang" class="ptc-row" aria-label="Termin Wernigerode buchen">
+  <a href="index.html#empfang" class="ptc-row" aria-label="Termin Wernigerode buchen" data-termin="wn">
     <span>Wernigerode</span><span class="ptc-arrow">→</span>
   </a>
   <div class="ptc-divider"></div>
-  <a href="index.html#empfang" class="ptc-row" aria-label="Termin Heudeber buchen">
+  <a href="index.html#empfang" class="ptc-row" aria-label="Termin Heudeber buchen" data-termin="hd">
     <span>Heudeber</span><span class="ptc-arrow">→</span>
   </a>
 </div>
 
 <!-- Mobile Bottom Bar -->
 <div class="mobile-bottom-bar">
-  <a class="bar-loc-btn" href="index.html#empfang">
+  <a class="bar-loc-btn" href="index.html#empfang" data-termin="wn">
     <span class="terracotta-dot"></span>
     <div class="bar-loc-text">
       <span class="bar-city">Wernigerode</span>
@@ -460,7 +475,7 @@
     </div>
   </a>
   <div class="bar-divider"></div>
-  <a class="bar-loc-btn" href="index.html#empfang">
+  <a class="bar-loc-btn" href="index.html#empfang" data-termin="hd">
     <span class="terracotta-dot"></span>
     <div class="bar-loc-text">
       <span class="bar-city">Heudeber</span>
@@ -544,8 +559,8 @@ document.getElementById('jahr').textContent=new Date().getFullYear();
   <script>
 // ── Burger: Zwei-Standort-Status ──
 (function() {
-  var sWN={1:[[480,720],[960,1080]],2:[[780,1020]],3:[[480,720]],4:[[480,780]],5:[[540,720]]};
-  var sHD={1:[[480,720]],3:[[480,720]],5:[[480,720]]};
+  var sWN=PRAXIS_DATEN.sprechzeiten.wn; // Zeiten: js/praxis-daten.js
+  var sHD=PRAXIS_DATEN.sprechzeiten.hd;
   var ft=[[1,1],[1,6],[5,1],[8,15],[10,3],[11,1],[12,24],[12,25],[12,26],[12,31]];
   function ost(j){var a=j%19,b=Math.floor(j/100),c=j%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),n=Math.floor((h+l-7*m+114)/31),p=(h+l-7*m+114)%31+1;return[n,p];}
   function isFT(d){var j=d.getFullYear(),m=d.getMonth()+1,t=d.getDate();for(var i=0;i<ft.length;i++){if(ft[i][0]===m&&ft[i][1]===t)return true;}var o=ost(j),om=o[0],ot=o[1];var mv=[[om,ot-2],[om,ot+1],[om,ot+39],[om,ot+50],[om,ot+60]];for(var i=0;i<mv.length;i++){var md=new Date(j,mv[i][0]-1,mv[i][1]);if(md.getMonth()+1===m&&md.getDate()===t)return true;}return false;}

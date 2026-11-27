@@ -687,8 +687,11 @@
     }
   </style>
   <link rel="stylesheet" href="css/land-harz.css">
+  <link rel="stylesheet" href="css/termin.css">
   <script>document.documentElement.classList.add('js');</script>
+  <script src="js/praxis-daten.js"></script>
   <script src="js/land-harz.js" defer></script>
+  <script src="js/termin.js" defer></script>
 </head>
 <body>
 
@@ -788,9 +791,9 @@
 
     <div class="inhalt-grid">
       <div class="prose">
-        <h2 class="akk-kopf"><button type="button" class="akk-btn" id="adi-btn-1" aria-expanded="false" aria-controls="adi-akk-1"><span>Adipositas-Therapie – medizinisch begleitet und individuell</span><span class="akk-zeichen" aria-hidden="true"></span></button></h2>
+        <h2>Adipositas-Therapie – medizinisch begleitet und individuell</h2>
         <p>Eine erfolgreiche Adipositas-Therapie bedeutet für uns mehr als reine Gewichtsabnahme. Wir behandeln Übergewicht und Adipositas im Rahmen eines ärztlich begleiteten, individuell abgestimmten Gesamtkonzeptes. Dazu gehören die medizinische Diagnostik, Ernährungs- und Bewegungsstrategien sowie die Berücksichtigung von Stoffwechsel, Begleiterkrankungen und persönlichen Voraussetzungen.</p>
-        <div class="akk-panel" id="adi-akk-1" role="region" aria-labelledby="adi-btn-1">
+        <div class="inhalt-text" id="adi-akk-1">
         <p>Wenn eine medikamentöse Unterstützung, beispielsweise mit GLP-1-basierten Arzneimitteln, medizinisch sinnvoll und angezeigt ist, kann sie Bestandteil der Behandlung sein. Auch diese Therapie erfolgt bei uns nicht als isolierte „Abnehmspritze", sondern eingebettet in ein verantwortungsvolles Gesamtkonzept mit ärztlicher Beratung, Verlaufskontrollen und langfristiger Betreuung.</p>
         <p>Unser Ziel ist nicht nur weniger Gewicht, sondern eine nachhaltige Verbesserung von Gesundheit, Stoffwechsel und Lebensqualität.</p>
         </div>
@@ -843,7 +846,7 @@
         <div class="sidebar-card sidebar-standort">
           <h4>Standorte</h4>
           <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:8px;"><strong style="color:var(--text);">Wernigerode</strong><br>Oberhof 9 · 38855 Wernigerode<br>Tel 03943 / 48 13 3</p>
-          <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;"><strong style="color:var(--text);">Heudeber</strong><br>Bahnhofstraße 18 · 38855 Heudeber<br>Tel 039458 / 223</p>
+          <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;"><strong style="color:var(--text);">Heudeber</strong><br>Bahnhofstraße 18 · 38855 Heudeber<br>Tel 039458 / 223<br><span style="font-size:0.8rem;">Ernährungsmedizin nur in Wernigerode</span></p>
           <a href="javascript:void(0)" onclick="openTerminModal()" class="btn-smart dark" style="width:100%;justify-content:center;">
             <span>Termin buchen</span><span class="btn-circle">&#8594;</span>
           </a>
@@ -2045,8 +2048,8 @@ function filterStandort(which) {
 <script>
 // ── Burger: Zwei-Standort-Status ──
 (function() {
-  var sWN={1:[[480,720],[960,1080]],2:[[780,1020]],3:[[480,720]],4:[[480,780]],5:[[540,720]]};
-  var sHD={1:[[480,720]],3:[[480,720]],5:[[480,720]]};
+  var sWN=PRAXIS_DATEN.sprechzeiten.wn; // Zeiten: js/praxis-daten.js
+  var sHD=PRAXIS_DATEN.sprechzeiten.hd;
   var ft=[[1,1],[1,6],[5,1],[8,15],[10,3],[11,1],[12,24],[12,25],[12,26],[12,31]];
   function ost(j){var a=j%19,b=Math.floor(j/100),c=j%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),n=Math.floor((h+l-7*m+114)/31),p=(h+l-7*m+114)%31+1;return[n,p];}
   function isFT(d){var j=d.getFullYear(),m=d.getMonth()+1,t=d.getDate();for(var i=0;i<ft.length;i++){if(ft[i][0]===m&&ft[i][1]===t)return true;}var o=ost(j),om=o[0],ot=o[1];var mv=[[om,ot-2],[om,ot+1],[om,ot+39],[om,ot+50],[om,ot+60]];for(var i=0;i<mv.length;i++){var md=new Date(j,mv[i][0]-1,mv[i][1]);if(md.getMonth()+1===m&&md.getDate()===t)return true;}return false;}

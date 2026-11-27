@@ -5,7 +5,20 @@
 
   // Schalter: persönlicher Link an Neupatienten (senden, geöffnet, Tracking).
   // Vorerst aus, evtl. später über T2med. Wieder einschalten: true setzen.
-  var FUNKTIONEN = { link: false };
+  var FUNKTIONEN = { link: false, au: false }; // au: Krankmeldung online (laut Dr. Müller raus)
+  var ortFilter = 'alle';
+
+  // Besuchsgrund für die Beispieldaten aus dem Hinweis ableiten (echte Termine bringen ihn aus der Buchung mit)
+  function grundAus(h) {
+    h = (h || '').toLowerCase();
+    if (/akut|fieber|schmerz|schwindel/.test(h)) return 'Akute Beschwerden';
+    if (/impf/.test(h)) return 'Impfung';
+    if (/ultraschall/.test(h)) return 'Ultraschall';
+    if (/check|vorsorge/.test(h)) return 'Vorsorge / Check-up';
+    if (/gewicht|ernähr/.test(h)) return 'Ernährungsmedizin';
+    if (/blut|kontrolle|inr|dmp|ergebnis|rezept|tabletten|ekg|schilddrüse/.test(h)) return 'Kontrolle oder Dauerbehandlung';
+    return 'Sonstiges';
+  }
 
   // Datum
   function iso(d) {
@@ -35,7 +48,7 @@
   function finde(liste, id) { return liste.filter(function (x) { return x.id == id; })[0]; }
 
   function speichern() {
-    try { localStorage.setItem('lhDemo5', JSON.stringify({ b: BOEGEN, a: ANFRAGEN, t: TEXTE, o: OHNE_BOGEN, s: BESTAND })); } catch (e) {}
+    try { localStorage.setItem('lhDemo6', JSON.stringify({ b: BOEGEN, a: ANFRAGEN, t: TEXTE, o: OHNE_BOGEN, s: BESTAND })); } catch (e) {}
   }
   function melden(t) {
     speichern();
@@ -106,7 +119,7 @@
       '<button class="btn btn-leise" data-aktion="status" data-wert="neu" data-id="' + a.id + '">Wieder öffnen</button>';
     return '<div class="eintrag" data-aktion="anfrage" data-id="' + a.id + '">' +
       '<div class="oben"><span class="ueberzeile">' + a.typ + '</span><span class="marke-status m-' + a.status + '">' + STATUS[a.status] + '</span></div>' +
-      '<div><span class="marke-status m-bestand">Bestandspatient</span><div class="name">' + a.name + '</div><p>' + a.text + '</p></div>' +
+      '<div><span class="marke-status m-bestand">' + (a.web ? 'Von der Webseite' : 'Bestandspatient') + '</span>' + (a.standort ? ' <span class="klein">' + STANDORTE[a.standort] + '</span>' : '') + '<div class="name">' + a.name + '</div><p>' + a.text + '</p></div>' +
       '<p class="zustaendig">Zuständig: <b>' + person(a.an).kurz + '</b> · ' + a.eingang + '</p>' +
       '<div class="knopfreihe">' + knopf + '</div></div>';
   }
@@ -123,8 +136,16 @@
   }
 
   function terminZeile(t) {
-    var status = '', knopf = '', klick = '', o = t.o;
-    if (t.bogen) { status = '<span class="lbl l-gruen">✓ Bogen da</span>'; klick = ' data-aktion="bogen" data-id="' + t.bogen.id + '"'; }
+    var status = '', knopf = '', klick = '', o = t.o, w = t.web;
+    if (w) {
+      klick = ' data-aktion="details" data-id="' + t.id + '"';
+      if (w.patient === 'neu' && w.anamnese && w.anamnese.status === 'vorhanden') status = '<span class="lbl l-gruen">✓ Bogen da</span>';
+      else if (w.patient === 'neu') {
+        status = '<span class="lbl l-amber">Bogen fehlt – ' + (w.anamnese && w.anamnese.weg === 'praxis' ? 'vor Ort ausfüllen' : 'folgt') + '</span>';
+        knopf = '<button class="btn btn-klein" data-aktion="web-bogen" data-id="' + t.id + '">Erledigt</button>';
+      }
+    }
+    else if (t.bogen) { status = '<span class="lbl l-gruen">✓ Bogen da</span>'; klick = ' data-aktion="details" data-id="' + t.id + '"'; }
     else if (o && !FUNKTIONEN.link) {
       if (o.geklaert) status = '<span class="lbl l-gruen">✓ Vor Ort ausgefüllt</span>';
       else {
@@ -143,19 +164,29 @@
         knopf = '<button class="btn btn-klein" data-aktion="senden" data-id="' + o.id + '">Erneut senden</button>';
       } else knopf = '<button class="btn btn-klein btn-dringend" data-aktion="senden" data-id="' + o.id + '">Link senden</button>';
     }
+    if (!klick) klick = ' data-aktion="details" data-id="' + t.id + '"';
     var vorbei = tag(t.datum) === HEUTE && t.zeit < JETZT && !knopf;
     return '<li class="termin' + (aufgabe(t) || knopf || (t.akut && !vorbei) ? ' aufgabe' : '') + (t.akut ? ' akut' : '') + (vorbei ? ' vorbei' : '') + '"' + (o ? ' id="t-' + o.id + '"' : t.id ? ' id="t-' + t.id + '"' : '') + klick + '>' +
       '<span class="t-zeit">' + t.zeit + '</span>' +
       '<div class="t-mitte"><div class="t-name">' + t.name + (t.art === 'neu' ? ' <span class="marke-art a-neu">Neu</span>' : '') + (t.akut ? ' <span class="marke-art a-akut">Akut</span>' : '') + '</div>' +
+      '<p class="t-info">' + STANDORTE[t.standort || 'wn'] + (t.grund ? ' · ' + t.grund : '') + (w ? ' · <span class="marke-art a-web">Web</span>' : '') + '</p>' +
       '<p class="t-hinweis">' + (t.hinweis || '–') + '</p>' + status + '</div>' +
       (knopf ? '<div class="t-knopf">' + knopf + '</div>' : '') + '</li>';
   }
 
   function alleTermine() {
-    var l = BESTAND.map(function (b) { return { art: 'bestand', id: b.id, akut: b.akut, name: b.name, datum: b.datum, zeit: b.zeit, hinweis: b.hinweis }; });
-    BOEGEN.forEach(function (b) { l.push({ art: 'neu', name: b.name, datum: b.datum, zeit: b.zeit, hinweis: b.grund, bogen: b }); });
-    OHNE_BOGEN.forEach(function (o) { if (!bogenDa(o)) l.push({ art: 'neu', name: o.name, datum: o.datum, zeit: o.zeit, hinweis: o.hinweis, o: o }); });
-    return l.filter(function (t) { return tag(t.datum) >= HEUTE; }).sort(nachTermin);
+    var l = BESTAND.map(function (b) { return { art: 'bestand', id: b.id, akut: b.akut, name: b.name, datum: b.datum, zeit: b.zeit, hinweis: b.hinweis, standort: b.standort || 'wn', grund: grundAus(b.hinweis) }; });
+    BOEGEN.forEach(function (b) { l.push({ art: 'neu', id: b.id, name: b.name, datum: b.datum, zeit: b.zeit, hinweis: b.grund, bogen: b, standort: b.standort || 'wn', grund: grundAus(b.grund) }); });
+    OHNE_BOGEN.forEach(function (o) { if (!bogenDa(o)) l.push({ art: 'neu', id: o.id, name: o.name, datum: o.datum, zeit: o.zeit, hinweis: o.hinweis, o: o, standort: o.standort || 'wn', grund: grundAus(o.hinweis) }); });
+    // Online-Termine von der Webseite (js/eingang.js)
+    WEB.forEach(function (e) {
+      if (e.art !== 'termin') return;
+      var k = e.kontakt || {};
+      l.push({ art: e.patient, id: e.id, web: e, name: ((k.vorname || '') + ' ' + (k.nachname || '')).trim() || 'Ohne Namen',
+        datum: (e.termin && e.termin.datum) || HEUTE, zeit: (e.termin && e.termin.zeit) || '–',
+        hinweis: e.hinweis || '', standort: e.standort || 'wn', grund: e.grundText || '' });
+    });
+    return l.filter(function (t) { return tag(t.datum) >= HEUTE && (ortFilter === 'alle' || t.standort === ortFilter); }).sort(nachTermin);
   }
 
   function heute() {
@@ -200,6 +231,33 @@
       '<div class="knopfreihe">' + k + '</div>');
   }
 
+  // Angaben aus der Online-Buchung, gleiche Reihenfolge wie auf der Webseite
+  function details(id) {
+    var t = alleTermineOhneFilter().filter(function (x) { return x.id == id; })[0];
+    if (!t) return;
+    var w = t.web, k = (w && w.kontakt) || {}, an = w && w.anamnese;
+    var bogen = t.art !== 'neu' ? 'nicht nötig (Bestandspatient)' :
+      (t.bogen || (an && an.status === 'vorhanden') || (t.o && t.o.geklaert)) ? 'vorhanden' :
+      'fehlt' + (an && an.weg === 'praxis' ? ' – wird vor Ort ausgefüllt' : '');
+    var kurz = an && an.kurz && (an.kurz.allergien || an.kurz.medikamente || (an.kurz.vorerkrankungen || []).length) ?
+      '<small>Kurz vorab: ' + [an.kurz.allergien && 'Allergien: ' + an.kurz.allergien, (an.kurz.vorerkrankungen || []).length && 'Vorerkrankungen: ' + an.kurz.vorerkrankungen.join(', '), an.kurz.medikamente && 'Medikamente: ' + an.kurz.medikamente].filter(Boolean).join(' · ') + '</small>' : '';
+    var grund = t.grund + (w && w.grund === 'ernaehrung' && w.ernaehrung ? ' · Beratungsgespräch ' + (w.ernaehrung.form === 'video' ? 'per Video' : 'vor Ort') + (w.ernaehrung.thema ? ' · ' + w.ernaehrung.thema : '') : '');
+    var zeilen = [
+      ['Patient', t.art === 'neu' ? 'Neupatient' : 'Bestandspatient'],
+      ['Standort', STANDORTE[t.standort || 'wn']],
+      ['Besuchsgrund', grund],
+      ['Hinweis', (t.hinweis || '–') + (k.telefon ? '<small>Tel. ' + k.telefon + (k.geb ? ' · geb. ' + k.geb : '') + (k.email ? ' · ' + k.email : '') + '</small>' : '')],
+      ['Datenschutz', w && w.datenschutz && w.datenschutz.ok ? '✓ bestätigt ' + webZeit(w.datenschutz.zeit) : '✓ bestätigt bei der Buchung'],
+      ['Termin', tagText(t.datum) + ', ' + t.zeit + ' Uhr' + (w ? '<small>' + (w.termin && w.termin.quelle === 't2med' ? 'aus T2med' : 'Vorschau, noch nicht in T2med') + '</small>' : '')],
+      ['Anamnesebogen', bogen + kurz]
+    ];
+    blatt('<p class="ueberzeile">' + (w ? 'Online-Termin von der Webseite · Eingang ' + webZeit(w.eingang) : 'Termin') + '</p><h2>' + t.name + '</h2>' +
+      '<ol class="angaben angaben-nr">' + zeilen.map(function (z) { return '<li><span>' + z[0] + '</span>' + z[1] + '</li>'; }).join('') + '</ol>',
+      w && t.art === 'neu' && !(an && an.status === 'vorhanden') ? '<button class="btn btn-gross" data-aktion="web-bogen" data-id="' + t.id + '">Bogen ist da</button>' :
+      t.bogen ? '<button class="btn btn-gross" data-aktion="bogen" data-id="' + t.bogen.id + '">Bogen ansehen</button>' : '');
+  }
+  function alleTermineOhneFilter() { var f = ortFilter; ortFilter = 'alle'; var l = alleTermine(); ortFilter = f; return l; }
+
   // Bögen
   function boegen() {
     var fehlt = OHNE_BOGEN.slice().sort(function (a, b) {
@@ -222,11 +280,11 @@
   // Anfragen
   function anfragen() {
     document.querySelectorAll('#statusFilter .pille').forEach(function (p) {
-      var n = ANFRAGEN.filter(function (a) { return a.status === p.dataset.filter; }).length;
+      var n = ANFRAGEN.filter(function (a) { return a.status === p.dataset.filter && (FUNKTIONEN.au || a.typ !== 'AU'); }).length;
       p.querySelector('b').textContent = n;
       p.classList.toggle('aktiv', p.dataset.filter === filter);
     });
-    var l = ANFRAGEN.filter(function (a) { return a.status === filter; }).sort(nachEingang);
+    var l = ANFRAGEN.filter(function (a) { return a.status === filter && (FUNKTIONEN.au || a.typ !== 'AU'); }).sort(nachEingang);
     $('#anfragenInhalt').innerHTML = l.length ? '<div class="liste">' + l.map(anfrageKarte).join('') + '</div>' :
       leer(filter === 'erledigt' ? 'Noch nichts erledigt.' : 'Alles erledigt.', filter === 'neu' ? 'Keine neuen Anfragen.' : '');
   }
@@ -249,7 +307,8 @@
 
   // Team
   function team() {
-    var arten = [['Termin', 'kb'], ['Rezept', 'sl'], ['AU', 'kb'], ['Überweisung', 'jh'], ['Befund', 'jh'], ['Impfung', 'kb'], ['Ernährung', 'cm'], ['Privatleistung', 'cm']];
+    var arten = [['Termin', 'kb'], ['Rezept', 'sl'], ['Rückruf', 'kb'], ['Überweisung', 'jh'], ['Befund', 'jh'], ['Impfung', 'kb'], ['Ernährung', 'cm'], ['Videosprechstunde', 'cm'], ['Privatleistung', 'cm']];
+    if (FUNKTIONEN.au) arten.splice(3, 0, ['AU', 'kb']);
     $('#regeln').innerHTML = arten.map(function (r) {
       return '<div class="regel"><b>' + r[0] + '</b><span>' + person(r[1]).name + '</span></div>';
     }).join('');
@@ -257,7 +316,7 @@
 
   function zaehler() {
     var b = BOEGEN.filter(function (x) { return !x.gelesen; }).length;
-    var a = ANFRAGEN.filter(function (x) { return x.status === 'neu'; }).length;
+    var a = ANFRAGEN.filter(function (x) { return x.status === 'neu' && (FUNKTIONEN.au || x.typ !== 'AU'); }).length;
     $('#pBoegen').textContent = b || ''; $('#pAnfragen').textContent = a || '';
   }
   function alles() { heute(); boegen(); anfragen(); texte(); zaehler(); }
@@ -316,6 +375,12 @@
     e.stopPropagation();
 
     if (akt === 'bogen') bogenZeigen(id);
+    if (akt === 'details') { details(id); return; }
+    if (akt === 'web-bogen') {
+      var we = WEB.filter(function (x) { return x.id === id; })[0];
+      if (we) { we.anamnese = we.anamnese || {}; we.anamnese.status = 'vorhanden'; webSpeichern(); }
+      blattZu(); melden('Bogen vorhanden'); return;
+    }
     if (akt === 'termin') { terminZeigen(id); return; }
     if (akt === 'springen') {
       e.preventDefault();
@@ -354,6 +419,15 @@
 
     if (akt === 'textwahl') { textNr = +id; texte(); textLaden(); }
   });
+
+  $('#ortFilter').addEventListener('click', function (e) {
+    var p = e.target.closest('.pille'); if (!p) return;
+    ortFilter = p.dataset.ort;
+    document.querySelectorAll('#ortFilter .pille').forEach(function (x) { x.classList.toggle('aktiv', x === p); });
+    heute();
+  });
+  // neue Online-Termine aus einem anderen Tab sofort zeigen
+  window.addEventListener('storage', function (e) { if (e.key === 'lhpEingang') location.reload(); });
 
   $('#statusFilter').addEventListener('click', function (e) {
     var p = e.target.closest('.pille'); if (!p) return;
@@ -412,7 +486,7 @@
   $('#hilfeAuf').addEventListener('click', function (e) { e.preventDefault(); $('#anleitung').hidden = false; });
 
   $('#demoReset').addEventListener('click', function () {
-    try { localStorage.removeItem('lhDemo5'); } catch (e) {}
+    try { localStorage.removeItem('lhDemo6'); } catch (e) {}
     location.hash = 'heute'; location.reload();
   });
 

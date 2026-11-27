@@ -656,8 +656,11 @@
     }
   </style>
   <link rel="stylesheet" href="css/land-harz.css">
+  <link rel="stylesheet" href="css/termin.css">
   <script>document.documentElement.classList.add('js');</script>
+  <script src="js/praxis-daten.js"></script>
   <script src="js/land-harz.js" defer></script>
+  <script src="js/termin.js" defer></script>
 </head>
 <body>
 
@@ -751,9 +754,8 @@
       <div class="prose">
         <!-- Desktop: normaler Fließtext -->
         <div class="themen-desktop">
-          <h2 class="akk-kopf"><button type="button" class="akk-btn" id="ern-btn-1" aria-expanded="false" aria-controls="ern-akk-1"><span>Ernährungsmedizin ist Medizin.</span><span class="akk-zeichen" aria-hidden="true"></span></button></h2>
-          <p>Ernährung beeinflusst zahlreiche Erkrankungen – gleichzeitig können Erkrankungen selbst den Ernährungszustand erheblich verändern.</p>
-          <div class="akk-panel" id="ern-akk-1" role="region" aria-labelledby="ern-btn-1">
+          <h2>Ernährungsmedizin ist Medizin.</h2>
+          <div class="inhalt-text" id="ern-akk-1">
           <h3>Adipositas &amp; Übergewicht</h3>
           <p>Adipositas ist eine chronische Erkrankung und nicht einfach eine Frage mangelnder Disziplin. Die Ursachen sind vielfältig. Deshalb setzen wir auf eine strukturierte und langfristig ausgerichtete Behandlung.</p>
           <h3>Stoffwechselmedizin</h3>
@@ -796,7 +798,22 @@
           <div class="themen-hint" id="themen-hint">Wischen →</div>
         </div>
 
-        <div class="verwandte-seiten"><a href="adipositas.html" class="organisch-link">Adipositas &amp; Gewichtsmedizin</a><a href="mangelernaehrung.html" class="organisch-link">Mangelernährung &amp; Sarkopenie</a></div>
+
+        <section class="ablauf" aria-labelledby="ablauf-titel">
+          <h2 id="ablauf-titel">So beginnt es</h2>
+          <ol class="ablauf-liste">
+            <li><span class="ablauf-nr">01</span><div><strong>Beratungsgespräch</strong><p>Per Video oder vor Ort in Wernigerode. Wir sprechen in Ruhe darüber, was möglich ist und was nicht.</p></div></li>
+            <li><span class="ablauf-nr">02</span><div><strong>Gemeinsamer Plan</strong><p>Erst danach legen wir fest, welche Untersuchungen und Termine sinnvoll sind. Einen langen Termin gibt es nie gleich am Anfang.</p></div></li>
+            <li><span class="ablauf-nr">03</span><div><strong>Begleitung</strong><p>Verlaufskontrollen in festen Zeitfenstern, die Dr. Müller für die Ernährungsmedizin einplant.</p></div></li>
+          </ol>
+          <p class="ablauf-notiz">Ernährungsmedizin gibt es nur am Hauptstandort Wernigerode.</p>
+          <a href="index.html#empfang" class="btn-smart dark" data-termin="wn" data-anliegen="ernaehrung"><span>Beratungsgespräch anfragen</span><span class="btn-circle">&#8594;</span></a>
+        </section>
+        <nav class="themen-links" aria-label="Weitere Themen">
+          <h2>Weitere Themen</h2>
+          <ul><li><a href="adipositas.html"><strong>Adipositas &amp; Gewichtsmedizin</strong><span>Abnehmen ist nicht das eigentliche Ziel</span></a></li><li><a href="12-wochen.html"><strong>12-Wochen-Programm</strong><span>Strukturierte Begleitung mit festen Etappen</span></a></li><li><a href="glp1-therapie.html"><strong>Medikamentöse Adipositastherapie</strong><span>GLP-1 nur im Gesamtkonzept</span></a></li><li><a href="mangelernaehrung.html"><strong>Mangelernährung &amp; Sarkopenie</strong><span>Wenn weniger Gewicht nicht besser ist</span></a></li><li><a href="praeventionsmedizin.html"><strong>Vorsorge &amp; Prävention</strong><span>Vorsorge, bevor Krankheit entsteht</span></a></li></ul>
+        </nav>
+        <p class="insta-hinweis">Ernährungsthemen aus der Praxis auf Instagram: <a href="https://www.instagram.com/nutridoccheck/" target="_blank" rel="noopener">@nutridoccheck</a></p>
       </div>
 
       <div class="sidebar">
@@ -811,7 +828,7 @@
         <div class="sidebar-card sidebar-standort">
           <h4>Standorte</h4>
           <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:8px;"><strong style="color:var(--text);">Wernigerode</strong><br>Oberhof 9 · 38855 Wernigerode<br>Tel 03943 / 48 13 3</p>
-          <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;"><strong style="color:var(--text);">Heudeber</strong><br>Bahnhofstraße 18 · 38855 Heudeber<br>Tel 039458 / 223</p>
+          <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;"><strong style="color:var(--text);">Heudeber</strong><br>Bahnhofstraße 18 · 38855 Heudeber<br>Tel 039458 / 223<br><span style="font-size:0.8rem;">Ernährungsmedizin nur in Wernigerode</span></p>
           <a href="index.html#standort" class="btn-smart" style="width:100%;justify-content:center;">
             <span>Anfahrt &amp; Öffnungszeiten</span><span class="btn-circle">&#8594;</span>
           </a>
@@ -823,10 +840,10 @@
         </div>
 
         <div class="sidebar-card sidebar-link-box">
-          <h4>Termin vereinbaren</h4>
-          <p>Online rund um die Uhr – ohne Warteschleife.</p>
-          <a href="javascript:void(0)" onclick="openTerminModal()" class="btn-smart dark" style="width:100%;justify-content:center;">
-            <span>Jetzt Termin buchen</span><span class="btn-circle">&#8594;</span>
+          <h4>Beratungsgespräch</h4>
+          <p>Am Anfang steht immer ein Beratungsgespräch, per Video oder vor Ort in Wernigerode.</p>
+          <a href="javascript:void(0)" onclick="openTerminModal('ernaehrung','wn')" class="btn-smart dark" style="width:100%;justify-content:center;">
+            <span>Gespräch anfragen</span><span class="btn-circle">&#8594;</span>
           </a>
         </div>
       </div>
@@ -2037,8 +2054,8 @@ function filterStandort(which) {
 <script>
 // ── Burger: Zwei-Standort-Status ──
 (function() {
-  var sWN={1:[[480,720],[960,1080]],2:[[780,1020]],3:[[480,720]],4:[[480,780]],5:[[540,720]]};
-  var sHD={1:[[480,720]],3:[[480,720]],5:[[480,720]]};
+  var sWN=PRAXIS_DATEN.sprechzeiten.wn; // Zeiten: js/praxis-daten.js
+  var sHD=PRAXIS_DATEN.sprechzeiten.hd;
   var ft=[[1,1],[1,6],[5,1],[8,15],[10,3],[11,1],[12,24],[12,25],[12,26],[12,31]];
   function ost(j){var a=j%19,b=Math.floor(j/100),c=j%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),n=Math.floor((h+l-7*m+114)/31),p=(h+l-7*m+114)%31+1;return[n,p];}
   function isFT(d){var j=d.getFullYear(),m=d.getMonth()+1,t=d.getDate();for(var i=0;i<ft.length;i++){if(ft[i][0]===m&&ft[i][1]===t)return true;}var o=ost(j),om=o[0],ot=o[1];var mv=[[om,ot-2],[om,ot+1],[om,ot+39],[om,ot+50],[om,ot+60]];for(var i=0;i<mv.length;i++){var md=new Date(j,mv[i][0]-1,mv[i][1]);if(md.getMonth()+1===m&&md.getDate()===t)return true;}return false;}

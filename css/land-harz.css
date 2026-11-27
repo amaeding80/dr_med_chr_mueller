@@ -748,3 +748,57 @@ body { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: col
 body > * { flex-shrink: 0; }
 body > main { flex: 1 0 auto; width: 100%; }
 body > footer { margin-top: auto; width: 100%; }
+
+/* ---------- Nov. 2026: Feedback Dr. Müller ---------- */
+
+/* Harz-Zeile im Hero: am Handy die kurze Fassung */
+.hero-harz-kurz { display: none; }
+@media (max-width: 679px) and (orientation: portrait), (orientation: landscape) and (max-height: 500px) {
+  .hero-harz-kurz { display: block; font-size: 1rem; line-height: 1.35; color: var(--olive-dark); margin: 2px 0 8px; }
+}
+
+/* Zweigstandort Heudeber */
+.zweig-sec { padding: 56px 0; background: #fff; border-top: 1px solid rgba(56,78,51,0.08); }
+.zweig-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 24px 56px; align-items: start; }
+.zweig-text { color: var(--text-muted); font-size: 1rem; line-height: 1.7; max-width: 520px; margin: 0; }
+.zweig-liste { list-style: none; margin: 0; padding: 0; grid-row: span 2; }
+.zweig-liste li { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(56,78,51,0.12); }
+.zweig-liste li:first-child { border-top: 1px solid rgba(56,78,51,0.12); }
+.zweig-liste strong { display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; color: var(--terracotta-caps); margin-bottom: 2px; }
+.zweig-liste a { color: var(--olive-haupt); font-weight: 600; }
+.zweig-nr { font-family: var(--font-serif); color: var(--olive-light); font-size: 1.1rem; min-width: 28px; }
+.zweig-knoepfe { display: flex; flex-wrap: wrap; gap: 12px; }
+@media (max-width: 760px) {
+  .zweig-sec { padding: 40px 0; }
+  .zweig-grid { grid-template-columns: 1fr; }
+  .zweig-liste { grid-row: auto; }
+}
+
+/* Unterseiten: Text offen statt Akkordeon, weniger Leerraum */
+@media (min-width: 1025px) {
+  .inhalt { padding: 48px 0 64px; }
+}
+.prose .inhalt-text > :first-child { margin-top: 0; }
+
+/* Ablauf in drei Schritten (Ernährungsmedizin) */
+.ablauf { margin-top: 40px; padding: 26px 28px; background: #fff; border: 1px solid rgba(56,78,51,0.12); border-left: 3px solid var(--terracotta); border-radius: 0 14px 14px 0; }
+.ablauf h2 { margin-top: 0; }
+.ablauf-liste { list-style: none; margin: 16px 0 14px; padding: 0; }
+.ablauf-liste li { display: flex; gap: 16px; padding: 12px 0; border-bottom: 1px solid rgba(56,78,51,0.1); }
+.ablauf-liste li:last-child { border-bottom: none; }
+.ablauf-liste strong { color: var(--text); }
+.ablauf-liste p { margin: 4px 0 0; color: var(--text-muted); font-size: 0.95rem; }
+.ablauf-nr { font-family: var(--font-serif); color: var(--olive-light); font-size: 1.15rem; min-width: 30px; }
+.ablauf-notiz { font-size: 0.9rem; color: var(--terracotta-caps); font-weight: 600; margin: 0 0 16px; }
+
+/* Weitere Themen: interne Links kompakt als Raster */
+.themen-links { margin-top: 40px; }
+.themen-links h2 { font-size: 1.35rem; margin: 0 0 14px; }
+.themen-links ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.themen-links a { display: block; height: 100%; padding: 14px 16px; border: 1px solid rgba(56,78,51,0.14); border-radius: 12px; background: var(--bg); text-decoration: none; transition: border-color .2s, background .2s; }
+.themen-links a:hover, .themen-links a:focus-visible { border-color: var(--olive-haupt); background: var(--olive-soft); }
+.themen-links strong { display: block; color: var(--olive-haupt); font-weight: 600; font-size: 0.98rem; }
+.themen-links span { display: block; color: var(--text-muted); font-size: 0.88rem; margin-top: 2px; }
+@media (max-width: 560px) { .themen-links ul { grid-template-columns: 1fr; } .ablauf { padding: 20px 18px; } }
+.insta-hinweis { margin-top: 24px; font-size: 0.95rem; color: var(--text-muted); }
+.insta-hinweis a { color: var(--olive-haupt); font-weight: 600; }

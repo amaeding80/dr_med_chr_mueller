@@ -55,7 +55,7 @@
           {"@type": "AdministrativeArea", "name": "Nordharz"}
         ],
         "availableService": [
-          {"@type": "MedicalTherapy", "name": "Hausärztliche Versorgung & Internistik"},
+          {"@type": "MedicalTherapy", "name": "Hausärztliche Versorgung, Vorsorge und Lebensstil"},
           {"@type": "MedicalTherapy", "name": "Ernährungsmedizinische Beratung"},
           {"@type": "MedicalTherapy", "name": "Präventionsmedizin & Check-up"},
           {"@type": "MedicalTherapy", "name": "Labordiagnostik"},
@@ -83,12 +83,11 @@
         "faxNumber": "+493943500434",
         "geo": {"@type": "GeoCoordinates", "latitude": "51.831928", "longitude": "10.862330"},
         "openingHoursSpecification": [
-          {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday"], "opens": "08:00", "closes": "12:00"},
-          {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday"], "opens": "16:00", "closes": "18:00"},
-          {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday"], "opens": "13:00", "closes": "17:00"},
-          {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Wednesday"], "opens": "08:00", "closes": "12:00"},
-          {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Thursday"], "opens": "08:00", "closes": "13:00"},
-          {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday"], "opens": "09:00", "closes": "12:00"}
+          {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday"], "opens": "07:30", "closes": "12:30"},
+          {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday"], "opens": "13:00", "closes": "18:00"},
+          {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Wednesday"], "opens": "07:00", "closes": "12:00"},
+          {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Thursday"], "opens": "07:30", "closes": "13:00"},
+          {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday"], "opens": "08:00", "closes": "12:00"}
         ],
         "priceRange": "Kasse & Privat",
         "hasMap": "https://maps.google.com/?q=Oberhof+9,+38855+Wernigerode"
@@ -106,8 +105,9 @@
           "addressCountry": "DE"
         },
         "openingHoursSpecification": [
-          {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Wednesday","Friday"], "opens": "08:00", "closes": "12:00"},
-          {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday","Thursday"], "opens": "15:00", "closes": "18:00"}
+          {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Friday"], "opens": "08:00", "closes": "13:00"},
+          {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Wednesday"], "opens": "07:00", "closes": "12:00"},
+          {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Thursday"], "opens": "13:00", "closes": "18:00"}
         ],
         "priceRange": "Kasse & Privat",
         "hasMap": "https://maps.google.com/?q=Bahnhofstra%C3%9Fe+18,+38855+Heudeber"
@@ -1593,8 +1593,11 @@
     }
   </style>
   <link rel="stylesheet" href="css/land-harz.css">
+  <link rel="stylesheet" href="css/termin.css">
   <script>document.documentElement.classList.add('js');</script>
+  <script src="js/praxis-daten.js"></script>
   <script src="js/land-harz.js" defer></script>
+  <script src="js/termin.js" defer></script>
 </head>
 <body>
   <!-- HEADER -->
@@ -1640,8 +1643,9 @@
             <em>Und Menschen, die sie sich nehmen.</em>
           </h1>
           <hr class="hero-divider">
-          <p class="hero-sub">Medizin, die den Menschen im Blick beh&auml;lt.</p>
-          <p class="hero-location">Hausarztmedizin &middot; Innere Medizin &middot; Ern&auml;hrungsmedizin</p>
+          <p class="hero-sub">Mit dem Harz und seinen Menschen verbunden.</p>
+          <p class="hero-harz-kurz">Mit dem Harz verbunden.</p>
+          <p class="hero-location">Hausärztliche Versorgung &middot; Vorsorge und Lebensstil &middot; Ern&auml;hrungsmedizin</p>
           <p class="hero-lead-text">Moderne hausärztliche Versorgung und spezialisierte Ernährungs- und Stoffwechselmedizin an zwei Standorten im Harz.</p>
 
           <div class="hero-chips">
@@ -1695,7 +1699,7 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--olive-haupt)" stroke-width="1.8" style="flex-shrink:0;margin-top:2px;align-self:flex-start;" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           <div style="display:flex;flex-direction:column;flex:1;">
             <div style="font-family: var(--font-sans);font-size:1.0rem;color:var(--olive-haupt);font-weight:600;margin-bottom:3px;">Hausärztliche Versorgung</div>
-            <div style="font-size:1rem;color:var(--text-muted);line-height:1.5;">Persönliche hausärztliche Betreuung vom akuten Infekt bis zur langfristigen Begleitung chronischer Erkrankungen. Mit internistischer und allgemeinmedizinischer Kompetenz, moderner Diagnostik und kurzen Wegen.</div>
+            <div style="font-size:1rem;color:var(--text-muted);line-height:1.5;">Persönliche hausärztliche Betreuung vom akuten Infekt bis zur langfristigen Begleitung chronischer Erkrankungen. Mit moderner Diagnostik und kurzen Wegen.</div>
             <div class="chip-arrow" style="display:flex;align-items:center;gap:5px;margin-top:auto;padding-top:10px;font-size:0.75rem;color:var(--olive-haupt);font-weight:500;opacity:0.55;transition:opacity .2s,gap .2s;">
               <span>Mehr erfahren</span>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg>
@@ -1802,19 +1806,20 @@
           <div>
             <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:12px;">01 / ONLINE TERMIN</span>
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Termin vereinbaren</h3>
-            <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">24/7 Wunschtermin im Praxissystem auswählen – ohne Telefon-Warteschleife.</p>
+            <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Neu oder schon Patient, Standort, Anliegen – in wenigen Schritten zum Termin, ohne Warteschleife.</p>
           </div>
-          <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Freie Zeiten wählen →</span>
+          <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Termin anfragen →</span>
         </div>
         <div class="journal-card" onclick="openRezeptModal()">
           <div>
             <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:12px;">02 / REZEPT-SERVICE</span>
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Folgerezept online bestellen</h3>
-            <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Dauermedikamente digital anfordern und am Folgetag direkt in der Apotheke abholen.</p>
+            <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Dauermedikamente online anfordern. Verschlüsselt übertragen, nicht per E-Mail. Das Rezept kommt auf Ihre Gesundheitskarte.</p>
           </div>
           <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Rezept anfordern →</span>
         </div>
-        <div class="journal-card" onclick="openAuModal()">
+        <!-- Krankmeldung online: ausgeblendet, Schalter PRAXIS.funktionen.au in js/land-harz.js -->
+        <div class="journal-card" onclick="openAuModal()" data-funktion="au" hidden>
           <div>
             <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:12px;">03 / AU-BESCHEINIGUNG</span>
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Krankmeldung anfordern</h3>
@@ -1822,13 +1827,21 @@
           </div>
           <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">AU beantragen →</span>
         </div>
+        <div class="journal-card" onclick="openVideoModal()">
+          <div>
+            <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:12px;">03 / VIDEO</span>
+            <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Videosprechstunde</h3>
+            <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Ärztliches Gespräch per Video über Patmed – wenn Sie dafür nicht in die Praxis kommen müssen.</p>
+          </div>
+          <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Video anfragen →</span>
+        </div>
         <div class="journal-card" onclick="openUeberweisungModal()">
           <div>
             <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:12px;">04 / ÜBERWEISUNG</span>
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Überweisung anfordern</h3>
-            <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Überweisung zum Facharzt oder zur Untersuchung vorab digital beantragen.</p>
+            <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Überweisung zum Facharzt oder zur Untersuchung. Vorerst telefonisch, die Online-Anfrage folgt.</p>
           </div>
-          <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Überweisung anfragen →</span>
+          <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">So geht es →</span>
         </div>
       </div>
       <button type="button" class="wisch-knopf" data-wisch-knopf aria-controls="journal-reihe" aria-label="Weiter zur nächsten Karte">Wischen →</button>
@@ -1841,15 +1854,15 @@
           <div>
             <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:12px;">05 / LABORBEFUNDE</span>
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Befunde anfordern</h3>
-            <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Laborergebnisse oder Befundkopien digital anfordern — für Sie oder weiterbehandelnde Ärzte.</p>
+            <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;">Befunde geben wir nur verschlüsselt oder persönlich heraus – nie per E-Mail.</p>
           </div>
-          <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Befund anfragen →</span>
+          <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">So geht es →</span>
         </div>
         <div class="journal-card journal-card-ernaehrung" onclick="toggleErnaehrungsFlow(this)">
           <div>
             <span style="font-size:0.75rem; font-weight:700; letter-spacing:0.03em; color:var(--olive-light); display:block; margin-bottom:12px;">06 / ERNÄHRUNGSMEDIZIN</span>
             <h3 style="font-family: var(--font-sans); font-size:1.5rem; color:var(--olive-haupt); margin-bottom:10px;">Ernährungsberatung anfragen</h3>
-            <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;" id="ernaehrung-sub">Wählen Sie Ihr Anliegen — Dr. Müller bereitet sich gezielt vor.</p>
+            <p style="font-size:1rem; color:var(--text-muted); line-height:1.6;" id="ernaehrung-sub">Immer zuerst ein Beratungsgespräch – per Video oder vor Ort in Wernigerode.</p>
           </div>
           <div id="ernaehrung-flow" style="display:none; margin-top:20px; border-top:1px solid rgba(56,78,51,0.12); padding-top:16px;">
             <div style="display:flex; flex-direction:column; gap:8px;">
@@ -1859,7 +1872,7 @@
               <button onclick="event.stopPropagation(); openTerminModal('Mangelernährung / Sarkopenie')" style="text-align:left; background:rgba(56,78,51,0.06); border:1px solid rgba(56,78,51,0.14); border-radius:8px; padding:10px 14px; font-size:0.84rem; color:var(--olive-haupt); font-weight:600; cursor:pointer;">Mangelernährung / Sarkopenie</button>
             </div>
           </div>
-          <span id="ernaehrung-cta" style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Anliegen wählen ↓</span>
+          <span id="ernaehrung-cta" style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:24px; display:block;">Beratungsgespräch anfragen →</span>
         </div>
         <div class="journal-card" onclick="openImpfModal()">
           <div>
@@ -1879,6 +1892,16 @@
         </div>
       </div>
       <button type="button" class="wisch-knopf" data-wisch-knopf aria-controls="weitere-reihe" aria-label="Weiter zur nächsten Karte">Wischen →</button>
+      </div>
+      <div class="tel-box" data-telefon>
+        <div>
+          <h3>Telefonsprechstunde</h3>
+          <p>In der Telefonsprechstunde erreichen Sie uns direkt. Außerhalb davon rufen wir Sie gern zurück.</p>
+        </div>
+        <div class="tel-orte">
+          <div class="tel-ort"><p class="tel-name">Wernigerode</p><a class="tb-btn" href="tel:+49394348133">03943 / 48 13 3</a></div>
+          <div class="tel-ort"><p class="tel-name">Heudeber</p><a class="tb-btn" href="tel:+4939458223">039458 / 223</a></div>
+        </div>
       </div>
       <div class="digi-banner">
         <div class="digi-banner-bild"><img src="img/self-checkin.webp" alt="Eine Frau meldet sich am Self-Check-in-Terminal der Praxis an" width="360" height="640" loading="lazy" decoding="async"></div>
@@ -1947,7 +1970,7 @@
           <div class="service-item akk-item active">
             <h3 class="service-h">
               <button type="button" class="service-header akk-btn" id="leist-btn-1" aria-expanded="true" aria-controls="leist-1" data-gruppe="leistungen">
-                <span class="service-title-wrap"><span class="service-num">01</span><span class="service-item-title">Hausärztliche Versorgung &amp; Internistik</span></span>
+                <span class="service-title-wrap"><span class="service-num">01</span><span class="service-item-title">Hausärztliche Versorgung, Vorsorge und Lebensstil</span></span>
                 <span class="service-toggle-icon">
               <svg class="si-plus" width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="6.5" y1="1" x2="6.5" y2="12"/><line x1="1" y1="6.5" x2="12" y2="6.5"/></svg>
               <svg class="si-x" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="1.5" y1="1.5" x2="10.5" y2="10.5"/><line x1="10.5" y1="1.5" x2="1.5" y2="10.5"/></svg>
@@ -2061,8 +2084,8 @@
         </div>
         <div class="insta-profil">
           <span class="insta-avatar" aria-hidden="true"><svg class="ig-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>
-          <span class="insta-handle" data-insta="name">@praxis-harz</span>
-          <a class="insta-folgen" href="#" data-insta="link" aria-disabled="true"><svg class="ig-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>Folgen</span><span class="sr-only"> (Instagram-Profil, noch nicht freigeschaltet)</span></a>
+          <span class="insta-handle" data-insta="name">@nutridoccheck</span>
+          <a class="insta-folgen" href="https://www.instagram.com/nutridoccheck/" data-insta="link"><svg class="ig-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>Folgen</span><span class="sr-only"> (Instagram-Profil, noch nicht freigeschaltet)</span></a>
         </div>
       </div>
       <ul class="insta-raster" aria-label="Beispielbeiträge für den Instagram-Bereich">
@@ -2075,6 +2098,27 @@
       </ul>
     </div>
   </div>
+  <!-- ZWEIGSTANDORT -->
+  <section class="zweig-sec" id="heudeber" aria-labelledby="zweig-titel">
+    <div class="container">
+      <div class="zweig-grid">
+        <div>
+          <span class="sec-tag">Zweigstandort am Bahnhof</span>
+          <h2 class="sec-title" id="zweig-titel">Praxis Heudeber</h2>
+          <p class="zweig-text">In Heudeber, in der Bahnhofstraße, betreut Sie Dr. med. Andreas Heldt, Facharzt für Allgemeinmedizin. Ihren Termin buchen Sie über dieselbe Online-Terminbuchung wie in Wernigerode.</p>
+        </div>
+        <ul class="zweig-liste">
+          <li><span class="zweig-nr">01</span><span><strong>Adresse</strong>Bahnhofstraße 18, 38855 Heudeber</span></li>
+          <li><span class="zweig-nr">02</span><span><strong>Telefon</strong><a href="tel:+4939458223">039458 / 223</a></span></li>
+          <li><span class="zweig-nr">03</span><span><strong>Nur in Wernigerode</strong>Ultraschall und Ernährungsmedizin</span></li>
+        </ul>
+        <div class="zweig-knoepfe">
+          <a href="#termin" class="btn-smart dark" data-termin="hd"><span>Termin in Heudeber</span><span class="btn-circle">→</span></a>
+          <a href="#loc-ils" class="btn-smart"><span>Sprechzeiten</span><span class="btn-circle">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
   <!-- STANDORTE -->
   <section class="locations-sec reveal-sec" id="standort">
     <div class="container">
@@ -2092,11 +2136,11 @@
           <p style="font-size:0.95rem; color:var(--olive-haupt); margin-bottom:16px; font-weight:600;">Dr. med. Christian M&#252;ller · Facharzt f&#252;r Innere Medizin</p>
           <p style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--olive-haupt); margin-top:12px;">Sprechzeiten</p>
           <table class="hours-table">
-            <tr><td>Montag</td><td><span class="nw">08:00 – 12:00 &amp;</span> <span class="nw">16:00 – 18:00 Uhr</span></td></tr>
-            <tr><td>Dienstag</td><td>13:00 – 17:00 Uhr</td></tr>
-            <tr><td>Mittwoch</td><td>08:00 – 12:00 Uhr</td></tr>
-            <tr><td>Donnerstag</td><td>08:00 – 13:00 Uhr</td></tr>
-            <tr><td>Freitag</td><td>09:00 – 12:00 Uhr</td></tr>
+            <tr><td>Montag</td><td>07:30 – 12:30 Uhr</td></tr>
+            <tr><td>Dienstag</td><td>13:00 – 18:00 Uhr</td></tr>
+            <tr><td>Mittwoch</td><td>07:00 – 12:00 Uhr</td></tr>
+            <tr><td>Donnerstag</td><td>07:30 – 13:00 Uhr</td></tr>
+            <tr><td>Freitag</td><td>08:00 – 12:00 Uhr</td></tr>
           </table>
           <a href="https://maps.google.com/?q=Oberhof+9,+38855+Wernigerode" target="_blank" rel="noopener" class="btn-smart" style="margin-top:24px;">
             <span>Route planen</span>
@@ -2111,8 +2155,11 @@
           <p style="font-size:0.95rem; color:var(--olive-haupt); margin-bottom:16px; font-weight:600;">Dr. med. Andreas Heldt · Facharzt f&#252;r Allgemeinmedizin</p>
           <p style="font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--terracotta-caps); margin-top:12px;">Sprechzeiten</p>
           <table class="hours-table">
-            <tr><td>Mo, Mi, Fr</td><td>08:00 – 12:00 Uhr</td></tr>
-            <tr><td>Di, Do</td><td>15:00 – 18:00 Uhr</td></tr>
+            <tr><td>Montag</td><td>08:00 – 13:00 Uhr</td></tr>
+            <tr><td>Dienstag</td><td>08:00 – 13:00 Uhr</td></tr>
+            <tr><td>Mittwoch</td><td>07:00 – 12:00 Uhr</td></tr>
+            <tr><td>Donnerstag</td><td>13:00 – 18:00 Uhr</td></tr>
+            <tr><td>Freitag</td><td>08:00 – 13:00 Uhr</td></tr>
           </table>
           <a href="https://maps.google.com/?q=Bahnhofsstra%C3%9Fe+18,+38855+Heudeber" target="_blank" rel="noopener" class="btn-smart terracotta" style="margin-top:24px;">
             <span>Route planen</span>
@@ -2184,8 +2231,9 @@
 
     var aktuellerStandort = 'wn';
 
-    var slotsWN  = {1:[[480,720],[960,1080]],2:[[780,1020]],3:[[480,720]],4:[[480,780]],5:[[540,720]]};
-    var slotsHD  = {1:[[480,720]],3:[[480,720]],5:[[480,720]]};
+    // Sprechzeiten kommen aus js/praxis-daten.js
+    var slotsWN  = PRAXIS_DATEN.sprechzeiten.wn;
+    var slotsHD  = PRAXIS_DATEN.sprechzeiten.hd;
 
     function updatePraxisStatus() {
       var now = new Date();
@@ -3400,7 +3448,7 @@ function filterStandort(which) {
         </div>
 
         <div class="modal-footer-btns">
-          <span style="font-size:0.77rem; color:var(--text-muted);">Wird als E-Mail an die Praxis gesendet.</span>
+          <span style="font-size:0.77rem; color:var(--text-muted);">Wird verschlüsselt übertragen, nicht per E-Mail.</span>
           <button class="btn-custom btn-custom-dark" onclick="submitRezept()">
             Anfrage senden
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-left:4px;vertical-align:middle;" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -3446,6 +3494,7 @@ function filterStandort(which) {
       <li><a href="team.html" onclick="toggleMobMenu()">Team</a></li>
       <li><a href="#empfang" onclick="toggleMobMenu()">Digitaler Empfang</a></li>
       <li><a href="#leistungen" onclick="toggleMobMenu()">Leistungen</a></li>
+      <li><a href="#heudeber" onclick="toggleMobMenu()">Zweigstandort Heudeber</a></li>
       <li><a href="#standort" onclick="toggleMobMenu()">Anfahrt &amp; Standorte</a></li>
     </ul>
   </nav>

@@ -6,7 +6,31 @@
 var PRAXIS = {
   t2med: { aktiv: false, link: '' },
   beispielTermine: false,   // true = Beispielzeiten in der Slot-Karte zeigen
-  anamneseLang: false       // true = Raucher, Anliegen und Unterschrift im Anamnesebogen wieder zeigen
+  anamneseLang: false,      // true = Raucher, Anliegen und Unterschrift im Anamnesebogen wieder zeigen
+
+  // Online-Termin (js/termin.js)
+  // ziel: 'vorschau' = nichts wird gesendet, Angaben landen nur in diesem Browser in der Dashboard-Demo
+  //       't2med'    = Schritt "Termin" zeigt T2med (einbettung = Adresse des T2med-Buchungsfensters, sonst link)
+  //       'endpunkt' = alle Angaben gehen verschlüsselt (https) als JSON an endpunkt, von dort ins Praxis-Dashboard
+  termin: { ziel: 'vorschau', einbettung: '', endpunkt: '' },
+
+  // Anamnesebogen: Vorlage folgt. Adresse eintragen, dann wird die Auswahl im Termin-Ablauf freigeschaltet
+  anamnese: { online: '', download: '' },
+
+  // Videosprechstunde über Patmed: Link eintragen, dann führt der Knopf direkt dorthin
+  patmed: { link: '' },
+
+  // Rezept und Rückruf: endpunkt eintragen (https), sonst nur Vorschau. Nie per E-Mail.
+  rezept: { endpunkt: '' },
+  rueckruf: { endpunkt: '' },
+
+  // Schalter: Funktionen ausblenden statt löschen (true = wieder sichtbar)
+  funktionen: {
+    au: false,            // Krankmeldung/Folge-AU online – laut Dr. Müller raus, stattdessen Videosprechstunde
+    terminAlt: false,     // alter Termin-Ablauf statt js/termin.js
+    demoKnoepfe: false,   // schwebende Demo-Knöpfe (Bestandspatient/Neupatient) für den alten Ablauf
+    whatsapp: false       // vorerst kein WhatsApp
+  }
 };
 window.PRAXIS = PRAXIS;
 
@@ -66,8 +90,8 @@ document.addEventListener('DOMContentLoaded', initAkk);
 // TODO: Akkordeon auch auf den Unterseiten nutzen, wenn Dr. Müller die Texte freigibt
 
 // Instagram – nur HIER Name eintragen und freischalten
-var instaName = 'praxis-harz'; // TODO: echten Instagram-Namen eintragen
-var instaAktiv = false; // TODO: auf true setzen, sobald das Profil online ist
+var instaName = 'nutridoccheck';
+var instaAktiv = true; // false = Folgen-Knopf wieder aus
 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-insta="name"]').forEach(el => { el.textContent = '@' + instaName; });

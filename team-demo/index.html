@@ -43,6 +43,11 @@
       <p class="ueberzeile" id="heuteDatum"></p>
       <h1 id="heuteTitel">Termine</h1>
       <p class="zu-tun" id="heuteZuTun"></p>
+      <div class="pillen" id="ortFilter">
+        <button class="pille aktiv" data-ort="alle">Beide</button>
+        <button class="pille" data-ort="wn">Wernigerode</button>
+        <button class="pille" data-ort="hd">Heudeber</button>
+      </div>
       <div id="heuteInhalt"></div>
     </section>
 
@@ -55,7 +60,7 @@
     <section class="view" id="view-anfragen" hidden>
       <p class="ueberzeile">Von Bestandspatienten über die Webseite</p>
       <h1>Anfragen</h1>
-      <p class="klein einleitung">Termin, Rezept, AU, Überweisung, Befund, Impfung, Ernährung und Privatleistung – wie im Digitalen Empfang der Webseite.</p>
+      <p class="klein einleitung">Termin, Rezept, Rückruf, Überweisung, Befund, Impfung, Ernährung und Privatleistung – wie im Digitalen Empfang der Webseite.</p>
       <div class="pillen" id="statusFilter">
         <button data-filter="neu" class="pille p-neu">Neu <b></b></button>
         <button data-filter="arbeit" class="pille p-arbeit">In Arbeit <b></b></button>
@@ -124,7 +129,9 @@
       <p class="ueberzeile">Demo</p>
       <h2 id="anleitungTitel">So funktioniert es</h2>
       <ol class="schritte">
-        <li><b>Heute</b> zeigt alle Termine nach Uhrzeit.</li>
+        <li><b>Heute</b> zeigt alle Termine nach Uhrzeit, mit Standort und Besuchsgrund.</li>
+        <li>Antippen zeigt die Angaben aus der Online-Buchung in derselben Reihenfolge: Patient, Standort, Besuchsgrund, Hinweis, Datenschutz, Termin, Anamnesebogen.</li>
+        <li>Online-Termine von der Webseite erscheinen hier sofort mit „Web“ markiert (Vorschau: nur im selben Browser).</li>
         <li>„Bogen fehlt“ heißt: Bogen vor Ort ausfüllen lassen, dann auf Erledigt tippen.</li>
         <li>Fertig. Alles ist Beispiel – nichts wird wirklich gesendet.</li>
       </ol>
@@ -135,6 +142,7 @@
 
 <div class="meldung" id="meldung" role="status"></div>
 <script src="js/beispieldaten.js"></script>
+<script src="js/eingang.js"></script>
 <script src="js/dashboard.js"></script>
 </body>
 </html>
