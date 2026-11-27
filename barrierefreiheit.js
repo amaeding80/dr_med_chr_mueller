@@ -178,7 +178,7 @@
         optHtml('struktur', ic.struktur, 'Seitenstruktur', '') +
       '</div></div>' +
     '</div>' +
-    '<div class="pxa-foot">Land-Harz-Praxis Dr. med. Christian Müller</div>';
+    '<div class="pxa-foot">Land Harz Praxis Dr. med. Christian Müller</div>';
 
   function anhaengen(){
     // als Geschwister von <body> anhaengen (nicht als Kind) - so bleibt das

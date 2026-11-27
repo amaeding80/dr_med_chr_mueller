@@ -4,9 +4,9 @@
 var PRAXIS_DATEN = {
   standorte: {
     wn: { name: 'Wernigerode', art: 'Hauptstandort', adresse: 'Oberhof 9, 38855 Wernigerode',
-          tel: '03943 / 48 13 3', telLink: 'tel:+49394348133' },
+          tel: '03943 48133', telLink: 'tel:+49394348133' },
     hd: { name: 'Heudeber', art: 'Zweigstandort am Bahnhof', adresse: 'Bahnhofstraße 18, 38855 Heudeber',
-          tel: '039458 / 223', telLink: 'tel:+4939458223' }
+          tel: '039458 223', telLink: 'tel:+4939458223' }
   },
 
   // Sprechzeiten laut Dr. Müller (Gespräch 24.11.2026)

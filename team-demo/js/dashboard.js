@@ -48,7 +48,7 @@
   function finde(liste, id) { return liste.filter(function (x) { return x.id == id; })[0]; }
 
   function speichern() {
-    try { localStorage.setItem('lhDemo6', JSON.stringify({ b: BOEGEN, a: ANFRAGEN, t: TEXTE, o: OHNE_BOGEN, s: BESTAND })); } catch (e) {}
+    try { localStorage.setItem('lhDemo7', JSON.stringify({ b: BOEGEN, a: ANFRAGEN, t: TEXTE, o: OHNE_BOGEN, s: BESTAND })); } catch (e) {}
   }
   function melden(t) {
     speichern();
@@ -286,7 +286,7 @@
     });
     var l = ANFRAGEN.filter(function (a) { return a.status === filter && (FUNKTIONEN.au || a.typ !== 'AU'); }).sort(nachEingang);
     $('#anfragenInhalt').innerHTML = l.length ? '<div class="liste">' + l.map(anfrageKarte).join('') + '</div>' :
-      leer(filter === 'erledigt' ? 'Noch nichts erledigt.' : 'Alles erledigt.', filter === 'neu' ? 'Keine neuen Anfragen.' : '');
+      leer(filter === 'erledigt' ? 'Noch nichts erledigt.' : 'Alles erledigt.', filter === 'neu' ? 'Keine neuen Anliegen.' : '');
   }
 
   // Texte
@@ -486,7 +486,7 @@
   $('#hilfeAuf').addEventListener('click', function (e) { e.preventDefault(); $('#anleitung').hidden = false; });
 
   $('#demoReset').addEventListener('click', function () {
-    try { localStorage.removeItem('lhDemo6'); } catch (e) {}
+    try { localStorage.removeItem('lhDemo7'); } catch (e) {}
     location.hash = 'heute'; location.reload();
   });
 

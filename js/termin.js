@@ -1,4 +1,4 @@
-// Land-Harz-Praxis – Online-Termin, Rezept, Rückruf, Videosprechstunde
+// Land Harz Praxis – Online-Termin, Rezept, Rückruf, Videosprechstunde
 // Ablauf Termin: Bestands-/Neupatient > Standort > Besuchsgrund > Hinweis > Datenschutz > Termin > Anamnesebogen
 // Einstellungen: js/land-harz.js (PRAXIS) und js/praxis-daten.js (Zeiten)
 // Alles, was bei der Praxis ankommt, ist ein "Eingang" (siehe senden). Das Praxis-Dashboard liest genau dieses Format.
@@ -141,13 +141,20 @@
       anamnese: { status: '', weg: '', kurz: { allergien: '', vorerkrankungen: [], medikamente: '' } } };
   }
   function gesamt() { return T.patient === 'bestand' ? 6 : 7; }
-  function kopf(n) { auf('Online-Termin · Schritt ' + n + ' von ' + gesamt(), SCHRITTE[n - 1] === 'Patient' ? 'Waren Sie schon bei uns?' : ({
+  function kopf(n) { auf('Termin vereinbaren · Schritt ' + n + ' von ' + gesamt(), SCHRITTE[n - 1] === 'Patient' ? 'Waren Sie schon bei uns?' : ({
     Standort: 'Welcher Standort?', Besuchsgrund: 'Worum geht es?', Hinweis: 'Ihre Angaben', Datenschutz: 'Datenschutz',
-    Termin: 'Termin wählen', Anamnesebogen: 'Anamnesebogen' })[SCHRITTE[n - 1]]); fortschritt(n, gesamt()); }
+    Termin: 'Freien Termin wählen', Anamnesebogen: 'Anamnesebogen' })[SCHRITTE[n - 1]]); fortschritt(n, gesamt()); }
+
+  // bis T2med angebunden ist: Hinweis mit Telefonnummern ganz oben
+  function vorschauHinweis() {
+    if ((P.termin || {}).ziel === 't2med') return '';
+    return '<p class="tb-hinweis">Die Online-Buchung folgt in Kürze. Bis dahin bitte anrufen: ' + esc(st('wn').name) + ' <a href="' + st('wn').telLink + '">' + esc(st('wn').tel) + '</a>, ' +
+      esc(st('hd').name) + ' <a href="' + st('hd').telLink + '">' + esc(st('hd').tel) + '</a>.</p>';
+  }
 
   function s1() {
     kopf(1);
-    dlgInhalt.innerHTML = wahlKarten('tb-patient', [
+    dlgInhalt.innerHTML = vorschauHinweis() + wahlKarten('tb-patient', [
       { id: 'bestand', titel: 'Ja, ich bin Patientin / Patient der Praxis', text: 'Bestandspatient' },
       { id: 'neu', titel: 'Nein, ich komme zum ersten Mal', text: 'Neupatient – wir nehmen neue Patientinnen und Patienten auf' }
     ], T.patient);
@@ -271,17 +278,17 @@
     var fallback = '<p class="tb-klein">Lieber telefonisch? <a href="' + sTel.telLink + '">' + esc(sTel.tel) + '</a></p>';
     if (ziel === 't2med' && t2) {
       // Platzhalter für die T2med-Buchung: hier wird nur das Fenster eingebunden
-      dlgInhalt.innerHTML = '<div class="tb-t2med" id="t2med-termin"><iframe src="' + esc(t2) + '" title="Termin bei T2med wählen" loading="lazy"></iframe></div>' +
-        '<label class="tb-check"><input type="checkbox" id="tb-gebucht"><span>Ich habe meinen Termin gewählt.</span></label>' + fallback;
+      dlgInhalt.innerHTML = '<div class="tb-t2med" id="t2med-termin"><iframe src="' + esc(t2) + '" title="Freien Termin bei T2med wählen und verbindlich buchen" loading="lazy"></iframe></div>' +
+        '<label class="tb-check"><input type="checkbox" id="tb-gebucht"><span>Ich habe meinen Termin bei T2med gebucht.</span></label>' + fallback;
       fuss(s5, 'Weiter', function () {
-        if (!dlgBox.querySelector('#tb-gebucht').checked) return fehler('Bitte wählen Sie zuerst Ihren Termin.');
+        if (!dlgBox.querySelector('#tb-gebucht').checked) return fehler('Bitte buchen Sie zuerst Ihren Termin.');
         T.termin = { datum: '', zeit: '', quelle: 't2med' };
         T.patient === 'neu' ? s7() : abschicken();
       });
       return;
     }
     var tage = beispielZeiten(T.standort, T.grund);
-    dlgInhalt.innerHTML = '<p class="tb-hinweis tb-vorschau">Vorschau: Diese Uhrzeiten sind Beispiele aus den Sprechzeiten, keine echten freien Termine. Die Online-Buchung über T2med folgt.</p>' +
+    dlgInhalt.innerHTML = '<p class="tb-hinweis tb-vorschau">Vorschau: Diese Uhrzeiten sind Beispiele aus den Sprechzeiten, keine echten freien Termine. Später suchen Sie sich hier über T2med selbst einen freien Termin aus und buchen ihn verbindlich.</p>' +
       (T.grund === 'ernaehrung' ? '<p class="tb-klein">Für Beratungsgespräche gibt es feste Zeitfenster, die Dr. Müller festlegt.</p>' : '') +
       tage.map(function (t) {
         return '<fieldset class="tb-gruppe"><legend>' + datumText(t.datum) + '</legend><div class="tb-zeiten">' + t.slots.map(function (s) {
@@ -290,7 +297,7 @@
             (T.termin.datum + ' ' + T.termin.zeit === v ? ' checked' : '') + '><span>' + s.zeit + (s.belegt ? '<span class="tb-sr"> belegt</span>' : '') + '</span></label>';
         }).join('') + '</div></fieldset>';
       }).join('') + fallback;
-    fuss(s5, T.patient === 'neu' ? 'Weiter' : 'Termin anfragen', function () {
+    fuss(s5, T.patient === 'neu' ? 'Weiter' : 'Termin vereinbaren', function () {
       var v = wert('tb-slot');
       if (!v) return fehler('Bitte wählen Sie eine Uhrzeit.');
       T.termin = { datum: v.split(' ')[0], zeit: v.split(' ')[1], quelle: 'vorschau' };
@@ -314,7 +321,7 @@
         return '<label class="tb-pille"><input type="checkbox" name="tb-vor" value="' + v + '"' + (k.vorerkrankungen.indexOf(v) > -1 ? ' checked' : '') + '><span>' + v + '</span></label>';
       }).join('') + '</div></fieldset>' +
       '<label class="tb-feld">Medikamente<textarea id="tb-medis" rows="2" placeholder="z. B. Ramipril 5 mg … oder: keine">' + esc(k.medikamente) + '</textarea></label></details>';
-    fuss(s6, 'Termin anfragen', function () {
+    fuss(s6, 'Termin vereinbaren', function () {
       T.anamnese.weg = wert('tb-weg') || 'praxis';
       k.allergien = feld('tb-allergien'); k.medikamente = feld('tb-medis');
       k.vorerkrankungen = [].map.call(dlgBox.querySelectorAll('input[name="tb-vor"]:checked'), function (c) { return c.value; });
@@ -333,7 +340,7 @@
 
   function zeile(a, b) { return b ? '<div><dt>' + a + '</dt><dd>' + esc(b) + '</dd></div>' : ''; }
   function fertig(vorschau) {
-    auf('Online-Termin', vorschau ? 'Vorschau: so sieht die Bestätigung aus' : 'Danke, Ihre Anfrage ist angekommen');
+    auf('Termin vereinbaren', vorschau ? 'Vorschau: so sieht die Bestätigung aus' : 'Ihr Termin ist vereinbart');
     fortschritt(0);
     var s = st(T.standort);
     dlgInhalt.innerHTML = '<dl class="tb-zusammen">' +
@@ -387,8 +394,8 @@
       medikamente: medis, datenschutz: { ok: true, zeit: new Date().toISOString() } };
     var body = document.querySelector('#modal-rezept .modal-body');
     senden(e, (P.rezept || {}).endpunkt).then(function (r) {
-      body.innerHTML = '<div class="tb-danke"><h3>' + (r.vorschau ? 'Vorschau: Rezeptanfrage' : 'Danke, Ihre Rezeptanfrage ist angekommen') + '</h3>' +
-        (r.vorschau ? '<p>Es wurde nichts an die Praxis gesendet. Die Online-Rezeptbestellung wird gerade eingerichtet, bis dahin bestellen Sie bitte telefonisch: <a href="' + st('wn').telLink + '">' + st('wn').tel + '</a>.</p><p class="tb-klein">Die Anfrage erscheint zur Ansicht in der <a href="team-demo/#anfragen" target="_blank" rel="noopener">Dashboard-Demo</a>.</p>'
+      body.innerHTML = '<div class="tb-danke"><h3>' + (r.vorschau ? 'Vorschau: Rezeptbestellung' : 'Danke, Ihre Rezeptbestellung ist angekommen') + '</h3>' +
+        (r.vorschau ? '<p>Es wurde nichts an die Praxis gesendet. Die Online-Rezeptbestellung wird gerade eingerichtet, bis dahin bestellen Sie bitte telefonisch: <a href="' + st('wn').telLink + '">' + st('wn').tel + '</a>.</p><p class="tb-klein">Das Anliegen erscheint zur Ansicht in der <a href="team-demo/#anfragen" target="_blank" rel="noopener">Dashboard-Demo</a>.</p>'
           : '<p>Das Rezept wird auf Ihre Gesundheitskarte übertragen. Bei Rückfragen rufen wir Sie an.</p>') +
         '<button type="button" class="tb-btn tb-haupt" onclick="closeModal(\'modal-rezept\')">Schließen</button></div>';
     }).catch(function () { alert('Das hat leider nicht geklappt. Bitte rufen Sie uns an: ' + st('wn').tel); });
@@ -398,7 +405,9 @@
   function rueckruf(standort) {
     auf('Telefon', 'Rückruf anfordern'); fortschritt(0);
     var tz = D.telefonsprechstunde || {};
-    dlgInhalt.innerHTML = '<p>Wir rufen Sie zurück, sobald wir können.</p>' +
+    var rrVorschau = !/^https:\/\//.test((P.rueckruf || {}).endpunkt || '');
+    dlgInhalt.innerHTML = (rrVorschau ? '<p class="tb-hinweis">Vorschau: Es wird noch nichts gesendet. Bitte rufen Sie uns an: <a href="' + st('wn').telLink + '">' + esc(st('wn').tel) + '</a> (' + esc(st('wn').name) + '), <a href="' + st('hd').telLink + '">' + esc(st('hd').tel) + '</a> (' + esc(st('hd').name) + ').</p>' : '') +
+      '<p>Wir rufen Sie zurück, sobald wir können.</p>' +
       wahlKarten('tb-rr-st', [{ id: 'wn', titel: st('wn').name }, { id: 'hd', titel: st('hd').name }], standort || 'wn', ' tb-wahl-2') +
       '<div class="tb-reihe"><label class="tb-feld">Name<input id="tb-rr-name" autocomplete="name"></label>' +
       '<label class="tb-feld">Telefon<input id="tb-rr-tel" type="tel" autocomplete="tel"></label></div>' +
@@ -447,8 +456,16 @@
   }
 
   // ---------- an die Seite hängen ----------
+  // Kopfleiste schmaler, sobald gescrollt wird
+  function kopfleiste() {
+    var h = document.querySelector('header');
+    if (!h) return;
+    var an = function () { h.classList.toggle('kopf-schmal', window.scrollY > 60); };
+    window.addEventListener('scroll', an, { passive: true }); an();
+  }
+
   function start() {
-    dialogBauen();
+    dialogBauen(); kopfleiste();
     if (!F.terminAlt) {
       window.openTerminModal = terminStarten;
       window.toggleErnaehrungsFlow = function () { terminStarten('ernaehrung', 'wn'); };

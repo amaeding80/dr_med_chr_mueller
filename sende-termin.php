@@ -52,7 +52,7 @@ if ($patienttyp === 'Neupatient') {
 
 $praxis_html = '<!DOCTYPE html><html><head><meta charset="utf-8"></head>
 <body style="font-family:Arial,sans-serif;font-size:14px;color:#1a1a1a;max-width:560px;margin:0 auto;padding:24px;line-height:1.6;">
-<p style="font-size:16px;font-weight:700;color:#4a5a3a;">Neuer Termin – Land-Harz-Praxis</p>
+<p style="font-size:16px;font-weight:700;color:#4a5a3a;">Neuer Termin – Land Harz Praxis</p>
 <table style="width:100%;border-collapse:collapse;">
   <tr><td style="padding:5px 16px 5px 0;color:#666;white-space:nowrap;">Name</td><td style="padding:5px 0;font-weight:600;">' . htmlspecialchars($name) . '</td></tr>
   <tr><td style="padding:5px 16px 5px 0;color:#666;">Geburtsdatum</td><td style="padding:5px 0;">' . htmlspecialchars($gebdatum ?: '—') . '</td></tr>
@@ -69,7 +69,7 @@ $praxis_html = '<!DOCTYPE html><html><head><meta charset="utf-8"></head>
 </body></html>';
 
 $ok1 = $mailer->send([
-    'from_name'  => 'Land-Harz-Praxis Buchungssystem',
+    'from_name'  => 'Land Harz Praxis Buchungssystem',
     'from_email' => 'studio@maeding.design',
     'to'         => $praxis_empfaenger,
     'reply_to'   => $email,
@@ -87,18 +87,18 @@ if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 <div style="background:#f3f7ee;border-left:4px solid #5f7053;border-radius:8px;padding:16px 20px;margin:20px 0;">
   <p style="margin:0 0 6px;font-size:13px;color:#666;text-transform:uppercase;letter-spacing:.06em;">Ihr Termin</p>
   <p style="margin:0;font-size:18px;font-weight:700;color:#4a5a3a;">' . htmlspecialchars($datum . ', ' . $uhrzeit . ' Uhr') . '</p>
-  <p style="margin:4px 0 0;color:#555;">Land-Harz-Praxis ' . htmlspecialchars($standort) . '<br>' . htmlspecialchars($adresse) . '</p>
+  <p style="margin:4px 0 0;color:#555;">Land Harz Praxis ' . htmlspecialchars($standort) . '<br>' . htmlspecialchars($adresse) . '</p>
 </div>
 <p>Bitte erscheinen Sie pünktlich. Bei Verhinderung bitten wir Sie, den Termin mindestens <strong>24 Stunden vorher</strong> telefonisch abzusagen:</p>
-<p style="font-size:16px;font-weight:700;">☎ 03943 / 48 13 3</p>
-<p style="margin-top:28px;font-size:12px;color:#999;">Land-Harz-Praxis – Dr. med. Christian Müller<br>
+<p style="font-size:16px;font-weight:700;">☎ 03943 48133</p>
+<p style="margin-top:28px;font-size:12px;color:#999;">Land Harz Praxis – Dr. med. Christian Müller<br>
 Innere Medizin · Ernährungsmedizin · Notfallmedizin<br>
 www.landharzpraxis.de<br><br>
 Diese E-Mail wurde automatisch generiert.</p>
 </body></html>';
 
     $ok2 = $mailer->send([
-        'from_name'  => 'Land-Harz-Praxis Dr. Müller',
+        'from_name'  => 'Land Harz Praxis Dr. Müller',
         'from_email' => 'studio@maeding.design',
         'to'         => $email,
         'subject'    => 'Terminbestätigung – ' . $datum . ', ' . $uhrzeit . ' Uhr – Dr. Müller',

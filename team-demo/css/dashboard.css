@@ -220,3 +220,6 @@ main{max-width:1100px;margin:0 auto;padding:32px 24px 60px}
 .angaben-nr li{counter-increment:nr;border-bottom:var(--rand);padding:0 0 10px 34px;position:relative}
 .angaben-nr li::before{content:counter(nr,decimal-leading-zero);position:absolute;left:0;top:2px;font-size:.8rem;font-weight:700;color:var(--terracotta-caps)}
 .angaben-nr small{display:block;color:var(--text-muted);font-size:.85rem;margin-top:2px}
+
+/* Demo-Hinweis oben auf der Anmeldung */
+.demo-oben{margin:0 0 18px;padding:10px 14px;border-left:3px solid var(--terracotta);background:var(--terracotta-soft);border-radius:0 10px 10px 0;font-size:.95rem;font-weight:600;color:var(--olive-dark)}

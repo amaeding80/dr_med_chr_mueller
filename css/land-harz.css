@@ -1,4 +1,4 @@
-/* Land-Harz-Praxis – Ergaenzungen Okt. 2026 (nach dem Inline-CSS geladen) */
+/* Land Harz Praxis – Ergaenzungen Okt. 2026 (nach dem Inline-CSS geladen) */
 
 /* Buttons sollen die Schrift erben */
 button, input, select, textarea { font-family: inherit; }
@@ -556,7 +556,7 @@ html:not(.js) .akk-zeichen { display: none; }
   .leist-bild img { width: 100%; height: auto; aspect-ratio: 16 / 7; object-fit: cover; object-position: 50% 0%; }
   .leist-bild img[src*="ernaehrungsberatung"] { object-position: 50% 8%; }
   .leist-bild img[src*="impfung"] { object-position: 50% 55%; }
-  /* alle Chips der 3 Akkordeons gleich hoch (Platz fuer zwei Zeilen, z. B. „Land-Harz GesundheitsCheck“) */
+  /* alle Chips der 3 Akkordeons gleich hoch (Platz fuer zwei Zeilen, z. B. „Land Harz GesundheitsCheck“) */
   #leistungen .service-tag-pill { min-height: calc(2.6em + 12px); }
 }
 /* Stichwort-Chips: alle gleich hoch, Text mittig, normaler Zeilenabstand beim Umbruch */
@@ -802,3 +802,98 @@ body > footer { margin-top: auto; width: 100%; }
 @media (max-width: 560px) { .themen-links ul { grid-template-columns: 1fr; } .ablauf { padding: 20px 18px; } }
 .insta-hinweis { margin-top: 24px; font-size: 0.95rem; color: var(--text-muted); }
 .insta-hinweis a { color: var(--olive-haupt); font-weight: 600; }
+
+/* Handy hoch: Hilfe-Knopf rechts NEBEN die Termin-Leiste statt darüber – verdeckt so keinen Text */
+@media (max-width: 679px) and (orientation: portrait) {
+  .mobile-bottom-bar { right: calc(64px + env(safe-area-inset-right, 0px)) !important; }
+  .mobile-bottom-bar .bar-loc-btn { padding-left: 8px !important; padding-right: 8px !important; min-width: 0; }
+  .mobile-bottom-bar .bar-kal { display: none !important; }
+  .pxa-btn { right: calc(12px + env(safe-area-inset-right, 0px)) !important; bottom: calc(28px + env(safe-area-inset-bottom, 0px)) !important; }
+  body:not(:has(.mobile-bottom-bar)) .pxa-btn { bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important; }
+}
+
+/* Kopfzeile: Termin-Knopf auf allen Seiten im Praxisdesign (vorher teils Browser-Blau) */
+.nav-right .nav-termin-btn {
+  display: inline-flex; align-items: center; min-height: 38px; padding: 8px 16px;
+  border-radius: 7px; border: 1px solid var(--olive-haupt); background: var(--olive-haupt);
+  color: #fff !important; font-family: var(--font-sans); font-size: 0.88rem; font-weight: 600;
+  text-decoration: none !important; white-space: nowrap; opacity: 1 !important; transition: background .2s, border-color .2s;
+}
+.nav-right .nav-termin-btn:visited { color: #fff !important; }
+.nav-right .nav-termin-btn:hover, .nav-right .nav-termin-btn:focus-visible, .nav-right .nav-termin-btn:active {
+  background: var(--olive-dark); border-color: var(--olive-dark); color: #fff !important;
+}
+@media (max-width: 679px) { .nav-right .nav-termin-btn { display: none !important; } }
+@media (min-width: 680px) and (max-width: 1024px) { .nav-right .nav-termin-btn { min-height: 36px; padding: 6px 12px; font-size: 0.82rem; } }
+
+/* Kopfleiste beim Scrollen: bleibt oben, wird schmaler – Status und Termin-Knopf immer sichtbar */
+header { transition: padding .2s ease, box-shadow .2s ease; }
+header.kopf-schmal { padding-top: 8px !important; padding-bottom: 8px !important; box-shadow: 0 2px 12px rgba(42,58,38,0.08); }
+
+/* Kontrast: Links in allen Zuständen gut lesbar (Brotkrumen wurden beim Drüberfahren weiß) */
+.breadcrumb a, .breadcrumb a:visited { color: var(--olive-haupt); }
+.breadcrumb a:hover, .breadcrumb a:focus-visible, .breadcrumb a:active { color: var(--olive-dark) !important; text-decoration: underline; text-underline-offset: 3px; }
+.ptc-row:hover, .ptc-row:focus-visible { color: var(--terracotta-caps) !important; }
+.service-num { color: var(--olive-haupt) !important; }
+.compass-btn { color: var(--olive-haupt); }
+.wochen-cta { background: linear-gradient(135deg, var(--terracotta-caps) 0%, #7A5143 100%) !important; }
+.wochen-cta p { color: #fff !important; }
+.wochen-cta .btn-smart { background: #fff !important; border-color: #fff !important; color: var(--olive-haupt) !important; }
+.wochen-cta .btn-smart .btn-circle { color: var(--olive-haupt) !important; }
+.wochen-cta .btn-smart:hover, .wochen-cta .btn-smart:focus-visible { background: var(--olive-soft) !important; border-color: var(--olive-soft) !important; color: var(--olive-dark) !important; }
+.footer-links-inline a:hover, .footer-links-inline a:focus-visible { color: var(--olive-haupt); text-decoration: underline; }
+
+/* Unterseiten Desktop: Kopf in zwei Spalten (Titel links, Einleitung rechts) statt leerer rechter Hälfte */
+@media (min-width: 1025px) {
+  .seiten-kopf .kopf-geteilt { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); column-gap: 64px; align-items: end; }
+  .seiten-kopf .kopf-geteilt > * { grid-column: 1; justify-self: start; }
+  .seiten-kopf .kopf-geteilt > h1 { grid-row: 3; margin-bottom: 0; }
+  .seiten-kopf .kopf-geteilt > p, .seiten-kopf .kopf-geteilt > .kopf-text { grid-column: 2; grid-row: 3; align-self: end; max-width: none; margin: 0 0 8px; padding-left: 28px; border-left: 2px solid rgba(56,78,51,0.15); }
+  .seiten-kopf .kopf-geteilt > .kopf-text p:last-child { margin-bottom: 0; }
+}
+
+/* Unterseiten: Ablauf und Themen-Links über die volle Breite */
+.unten-breit .ablauf { margin-top: 48px; }
+@media (min-width: 681px) {
+  .unten-breit .ablauf { padding: 30px 34px; }
+  .unten-breit .ablauf-liste { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 18px 0 20px; }
+  .unten-breit .ablauf-liste li { flex-direction: column; gap: 6px; border-bottom: none; border-top: 1px solid rgba(56,78,51,0.12); padding: 14px 0 0; }
+  .unten-breit .themen-links ul { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 1025px) {
+  .unten-breit .themen-links ul { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+}
+.unten-breit .insta-hinweis { margin-top: 18px; }
+@media (min-width: 1025px) {
+  .seiten-kopf .kopf-geteilt > .lead-sub { grid-column: 1; grid-row: 4; padding-left: 0; border-left: none; margin: 8px 0 0; }
+  .seiten-kopf .kopf-geteilt:has(> .lead-sub) > p.lead { grid-row: 3 / span 2; }
+}
+
+/* overflow-x: hidden auf html und body macht body zum Scroll-Container – dann klebt die Kopfleiste nicht.
+   clip schneidet genauso ab, ohne Scroll-Container. */
+html, body { overflow-x: clip !important; overflow-y: visible !important; }
+
+/* Tablet hochkant: Status und Termin-Knopf auch auf den Unterseiten neben dem Burger */
+@media (min-width: 680px) and (max-width: 1024px) and (orientation: portrait) {
+  .nav-right { display: flex !important; align-items: center; gap: 10px; margin-left: auto; margin-right: 10px; }
+  .nav-right .live-status-pill { font-size: 0.75rem; padding: 4px 10px; }
+  .tablet-float-cta { display: none !important; }
+}
+
+/* Instagram ohne Kacheln: ruhiger Block mit Text und Knopf (Raster per Schalter instaRaster) */
+.insta-sec.ohne-raster { padding: 56px 0 !important; }
+.insta-sec.ohne-raster .container { display: block !important; }
+.insta-sec.ohne-raster .insta-kopf {
+  display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: space-between;
+  gap: 24px 40px; margin: 0 !important; padding: 28px 32px; flex-wrap: wrap;
+  background: var(--bg); border: 1px solid rgba(56,78,51,0.12); border-left: 4px solid var(--olive-haupt); border-radius: 14px;
+}
+.insta-sec.ohne-raster .insta-kopf > div:first-child { flex: 1 1 320px; min-width: 0; }
+.insta-sec.ohne-raster .sec-title { font-size: clamp(1.4rem, 2.2vw, 1.9rem); }
+.insta-sec.ohne-raster .insta-folgen:visited { color: #fff; }
+@media (max-width: 679px), (orientation: landscape) and (max-height: 500px) {
+  .insta-sec.ohne-raster { padding: 36px 0 !important; }
+  .insta-sec.ohne-raster .insta-kopf { flex-direction: column !important; align-items: flex-start !important; padding: 22px 20px; }
+  .insta-sec.ohne-raster .insta-kopf > div:first-child { flex-basis: auto; }
+}
+.insta-raster[hidden] { display: none !important; }

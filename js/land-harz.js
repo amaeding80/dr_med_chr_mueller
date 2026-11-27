@@ -1,4 +1,4 @@
-// Land-Harz-Praxis – kleine Helfer (Akkordeons usw.)
+// Land Harz Praxis – kleine Helfer (Akkordeons usw.)
 // laeuft auf allen Seiten, macht nur was, wenn die Elemente da sind
 
 // Schalter Terminbuchung
@@ -92,8 +92,13 @@ document.addEventListener('DOMContentLoaded', initAkk);
 // Instagram – nur HIER Name eintragen und freischalten
 var instaName = 'nutridoccheck';
 var instaAktiv = true; // false = Folgen-Knopf wieder aus
+var instaRaster = false; // true = Kachel-Raster mit Bildern wieder zeigen (erst mit echten Bildern)
 
 document.addEventListener('DOMContentLoaded', () => {
+    if (instaRaster) {
+        document.querySelectorAll('[data-insta="raster"]').forEach(el => { el.hidden = false; });
+        document.querySelectorAll('.insta-sec').forEach(el => el.classList.remove('ohne-raster'));
+    }
     document.querySelectorAll('[data-insta="name"]').forEach(el => { el.textContent = '@' + instaName; });
     document.querySelectorAll('a[data-insta="link"]').forEach(a => {
         if (instaAktiv) {

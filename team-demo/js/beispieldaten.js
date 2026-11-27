@@ -69,14 +69,14 @@ var ANFRAGEN = [
     text: 'Seit gestern Fieber und Halsschmerzen. Bitte Rückruf wegen AU.' },
   { id: 3, typ: 'Überweisung', name: 'Ursula Dahms', eingang: '30.10. 16:05', status: 'arbeit', an: 'jh',
     text: 'Überweisung zum Augenarzt (Diabetes-Kontrolle) für den 12.11.' },
-  { id: 4, typ: 'Termin', name: 'Paul Seidler', eingang: '30.10. 12:30', status: 'arbeit', an: 'kb',
-    text: 'Online kein Termin frei für den Check-up. Gern vormittags, Di oder Do.' },
+  { id: 4, typ: 'Rückruf', name: 'Paul Seidler', eingang: '30.10. 12:30', status: 'arbeit', an: 'kb',
+    text: 'Bitte Rückruf wegen Check-up, online war nichts Passendes frei. Gut erreichbar vormittags.' },
   { id: 5, typ: 'Rezept', name: 'Marlies Kunze', eingang: '29.10. 18:20', status: 'erledigt', an: 'sl',
     text: 'Ramipril 2,5 und Simvastatin 20, je 100 Stück.' },
   { id: 6, typ: 'Befund', name: 'Jonas Engel', eingang: '29.10. 09:44', status: 'neu', an: 'cm',
     text: 'Bitte Kopie meiner Laborwerte vom 20.10. für meinen Orthopäden.' },
   { id: 7, typ: 'Impfung', name: 'Helga Sauer', eingang: '31.10. 08:05', status: 'neu', an: 'kb',
-    text: 'Grippeimpfung, gern nächste Woche am Vormittag.' },
+    text: 'Frage, ob der Grippeimpfstoff für dieses Jahr schon da ist.' },
   { id: 8, typ: 'Rückruf', name: 'Erika Brandt', eingang: '31.10. 08:20', status: 'neu', an: 'kb', standort: 'hd',
     text: 'Bitte Rückruf wegen Laborwerten, gut erreichbar ab 14 Uhr.' }
 ];
@@ -93,7 +93,7 @@ var TEXTE = [
 // Demo: gespeicherte Klicks aus diesem Browser laden
 (function () {
   try {
-    var d = JSON.parse(localStorage.getItem('lhDemo6') || 'null');
+    var d = JSON.parse(localStorage.getItem('lhDemo7') || 'null');
     if (d) { BOEGEN = d.b; ANFRAGEN = d.a; TEXTE = d.t; OHNE_BOGEN = d.o; BESTAND = d.s || BESTAND; }
   } catch (e) {}
 })();
