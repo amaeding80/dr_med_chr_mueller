@@ -8,19 +8,19 @@ var TEAM = [
 
 // Bögen: Datum und Uhrzeit trägt der Patient selbst ein
 var BOEGEN = [
-  { id: 'a1', name: 'Tobias Rehbein', geb: '14.03.1988', datum: 'heute', zeit: '08:20', eingang: '29.10. 19:42',
+  { id: 'a1', standort: 'wn', patmed: true, kasseArt: 'gkv', name: 'Tobias Rehbein', geb: '14.03.1988', datum: 'heute', zeit: '08:20', eingang: '29.10. 19:42',
     kasse: 'AOK Sachsen-Anhalt', grund: 'Rückenschmerzen seit 6 Wochen', medikamente: 'Ibuprofen 400 bei Bedarf',
     allergien: 'keine', vorerkrankungen: 'keine', gelesen: false },
-  { id: 'a2', name: 'Henrike Vogt', geb: '02.11.1975', datum: 'heute', zeit: '09:30', eingang: '30.10. 08:15',
+  { id: 'a2', standort: 'wn', patmed: true, kasseArt: 'gkv', name: 'Henrike Vogt', geb: '02.11.1975', datum: 'heute', zeit: '09:30', eingang: '30.10. 08:15',
     kasse: 'TK', grund: 'Beratung Gewicht, erhöhter Blutzucker', medikamente: 'L-Thyroxin 50',
     allergien: 'Penicillin', vorerkrankungen: 'Hashimoto', gelesen: true },
-  { id: 'a3', name: 'Frank Wöhler', geb: '21.07.1961', datum: 'heute', zeit: '11:20', eingang: '31.10. 06:58',
+  { id: 'a3', standort: 'wn', patmed: true, kasseArt: 'gkv', name: 'Frank Wöhler', geb: '21.07.1961', datum: 'heute', zeit: '11:20', eingang: '31.10. 06:58',
     kasse: 'Barmer', grund: 'Bluthochdruck, Tabletten prüfen', medikamente: 'Ramipril 5, ASS 100',
     allergien: 'Pflaster', vorerkrankungen: 'Bluthochdruck, Knie-OP 2019', gelesen: false },
-  { id: 'a4', standort: 'hd', name: 'Mia Grünwald', geb: '09.05.1999', datum: 'morgen', zeit: '10:00', eingang: '28.10. 21:10',
+  { id: 'a4', standort: 'hd', patmed: false, kasseArt: 'gkv', name: 'Mia Grünwald', geb: '09.05.1999', datum: 'morgen', zeit: '10:00', eingang: '28.10. 21:10',
     kasse: 'IKK gesund plus', grund: 'Müdigkeit, Blutbild gewünscht', medikamente: 'keine',
     allergien: 'Heuschnupfen', vorerkrankungen: 'keine', gelesen: true },
-  { id: 'a5', name: 'Ralf Brettschneider', geb: '17.01.1970', datum: '2026-11-03', zeit: '15:20', eingang: '31.10. 15:02',
+  { id: 'a5', standort: 'wn', patmed: false, kasseArt: 'gkv', name: 'Ralf Brettschneider', geb: '17.01.1970', datum: '2026-11-03', zeit: '15:20', eingang: '31.10. 15:02',
     kasse: 'DAK', grund: 'Erstbesuch, Vorsorge', medikamente: 'keine',
     allergien: 'keine', vorerkrankungen: 'keine', gelesen: false }
 ];
@@ -28,56 +28,56 @@ var BOEGEN = [
 // Neupatienten aus T2med, vom Team eingetragen
 // gesendet / geoeffnet: Uhrzeit oder null; Bogen ausgefüllt = Online-Bogen ist eingegangen
 var OHNE_BOGEN = [
-  { id: 'o1', name: 'Ole Schwanitz', hinweis: 'Neu in Wernigerode, Hausarzt gesucht', datum: 'heute', zeit: '09:00', kontakt: '0170 0000001', gesendet: null, geoeffnet: null },
-  { id: 'o2', name: 'Lea Thiemann', hinweis: 'Hautausschlag am Arm', datum: 'heute', zeit: '10:40', kontakt: 'l.thiemann@example.de', gesendet: '07:45', geoeffnet: '08:12' },
-  { id: 'o3', name: 'Frank Wöhler', hinweis: 'Bluthochdruck, Tabletten prüfen', datum: 'heute', zeit: '11:20', kontakt: 'f.woehler@example.de', gesendet: '30.10. 17:02', geoeffnet: '30.10. 18:40' },
-  { id: 'o4', standort: 'hd', name: 'Svenja Kroll', hinweis: 'Check-up 35', datum: '2026-11-04', zeit: '08:40', kontakt: '0151 0000002', gesendet: '31.10. 14:10', geoeffnet: null }
+  { id: 'o1', standort: 'wn', patmed: false, kasseArt: 'gkv', name: 'Ole Schwanitz', hinweis: 'Neu in Wernigerode, Hausarzt gesucht', datum: 'heute', zeit: '09:00', kontakt: '0170 0000001', gesendet: null, geoeffnet: null },
+  { id: 'o2', standort: 'wn', patmed: false, kasseArt: 'gkv', name: 'Lea Thiemann', hinweis: 'Hautausschlag am Arm', datum: 'heute', zeit: '10:40', kontakt: 'l.thiemann@example.de', gesendet: '07:45', geoeffnet: '08:12' },
+  { id: 'o3', standort: 'wn', patmed: true, kasseArt: 'gkv', name: 'Frank Wöhler', hinweis: 'Bluthochdruck, Tabletten prüfen', datum: 'heute', zeit: '11:20', kontakt: 'f.woehler@example.de', gesendet: '30.10. 17:02', geoeffnet: '30.10. 18:40' },
+  { id: 'o4', standort: 'hd', patmed: false, kasseArt: 'gkv', name: 'Svenja Kroll', hinweis: 'Check-up 35', datum: '2026-11-04', zeit: '08:40', kontakt: '0151 0000002', gesendet: '31.10. 14:10', geoeffnet: null }
 ];
 
 // Bestandspatienten mit Termin, Hinweis kommt aus der Online-Buchung; akut = Akuttermin
 var BESTAND = [
-  { id: 's1', name: 'Gisela Hartung', datum: 'heute', zeit: '08:00', hinweis: 'Blutabnahme nüchtern' },
-  { id: 's7', name: 'Werner Albrecht', datum: 'heute', zeit: '08:10', hinweis: 'Blutdruck messen, Tabletten neu' },
-  { id: 's8', standort: 'hd', name: 'Ingrid Fiedler', datum: 'heute', zeit: '08:30', hinweis: 'Verbandswechsel Unterschenkel' },
-  { id: 's9', name: 'Marco Lehmann', datum: 'heute', zeit: '08:45', hinweis: 'akut: Fieber seit gestern, Halsschmerzen', akut: true },
-  { id: 's10', name: 'Brigitte Seifert', datum: 'heute', zeit: '09:15', hinweis: 'Folgerezept L-Thyroxin' },
-  { id: 's11', standort: 'hd', name: 'Heinz Pohl', datum: 'heute', zeit: '09:45', hinweis: 'Kontrolle INR' },
-  { id: 's2', name: 'Dieter Schulze', datum: 'heute', zeit: '10:00', hinweis: 'Kontrolle Blutzucker, Werte mitgebracht' },
-  { id: 's12', name: 'Sabine Krüger', datum: 'heute', zeit: '10:30', hinweis: 'akut: starke Rückenschmerzen seit heute früh', akut: true },
-  { id: 's13', name: 'Karl-Heinz Busch', datum: 'heute', zeit: '10:50', hinweis: 'Ergebnis Langzeit-EKG' },
-  { id: 's14', name: 'Renate Voigt', datum: 'heute', zeit: '11:00', hinweis: 'Überweisung Kardiologie besprechen' },
-  { id: 's3', name: 'Anja Möbius', datum: 'heute', zeit: '11:40', hinweis: 'Ergebnis Ultraschall besprechen' },
-  { id: 's15', name: 'Thomas Reinhardt', datum: 'heute', zeit: '15:00', hinweis: 'Check-up 35' },
-  { id: 's16', standort: 'hd', name: 'Elke Schröter', datum: 'heute', zeit: '15:30', hinweis: 'Schwindel beim Aufstehen' },
-  { id: 's17', name: 'Jürgen Wolf', datum: 'heute', zeit: '16:10', hinweis: 'Wunde kontrollieren, Fäden ziehen' },
-  { id: 's4', name: 'Horst Wendt', datum: 'morgen', zeit: '08:30', hinweis: 'Grippeimpfung' },
-  { id: 's18', name: 'Monika Graf', datum: 'morgen', zeit: '08:50', hinweis: 'Blutabnahme nüchtern' },
-  { id: 's5', standort: 'hd', name: 'Petra Lindner', datum: 'morgen', zeit: '09:15', hinweis: 'Knie schmerzt wieder' },
-  { id: 's19', standort: 'hd', name: 'Uwe Hildebrandt', datum: 'morgen', zeit: '09:40', hinweis: 'DMP Diabetes' },
-  { id: 's20', standort: 'hd', name: 'Christa Neumann', datum: 'morgen', zeit: '10:20', hinweis: 'Grippeimpfung' },
-  { id: 's21', name: 'Stefan Ludwig', datum: 'morgen', zeit: '11:00', hinweis: 'Hautveränderung am Rücken ansehen' },
-  { id: 's6', name: 'Bernd Kaiser', datum: '2026-11-03', zeit: '16:00', hinweis: 'Folgerezept und Gespräch' },
-  { id: 's22', name: 'Hannelore Beck', datum: '2026-11-03', zeit: '08:20', hinweis: 'Blutabnahme, Schilddrüse' },
-  { id: 's23', name: 'Frieda Meißner', datum: '2026-11-03', zeit: '09:00', hinweis: 'Pflegegrad, Hausbesuch besprechen' },
-  { id: 's24', name: 'Lutz Engelhardt', datum: '2026-11-04', zeit: '10:10', hinweis: 'Gesundheits-Check-up' }
+  { id: 's1', patmed: true, kasseArt: 'gkv', standort: 'wn', name: 'Gisela Hartung', datum: 'heute', zeit: '08:00', hinweis: 'Blutabnahme nüchtern' },
+  { id: 's7', patmed: true, kasseArt: 'gkv', standort: 'wn', name: 'Werner Albrecht', datum: 'heute', zeit: '08:10', hinweis: 'Blutdruck messen, Tabletten neu' },
+  { id: 's8', patmed: true, kasseArt: 'gkv', standort: 'hd', name: 'Ingrid Fiedler', datum: 'heute', zeit: '08:30', hinweis: 'Verbandswechsel Unterschenkel' },
+  { id: 's9', patmed: false, kasseArt: 'gkv', standort: 'wn', name: 'Marco Lehmann', datum: 'heute', zeit: '08:45', hinweis: 'akut: Fieber seit gestern, Halsschmerzen', akut: true },
+  { id: 's10', patmed: false, kasseArt: 'gkv', standort: 'wn', name: 'Brigitte Seifert', datum: 'heute', zeit: '09:15', hinweis: 'Folgerezept L-Thyroxin' },
+  { id: 's11', patmed: true, kasseArt: 'gkv', standort: 'hd', name: 'Heinz Pohl', datum: 'heute', zeit: '09:45', hinweis: 'Kontrolle INR' },
+  { id: 's2', patmed: true, kasseArt: 'gkv', standort: 'wn', name: 'Dieter Schulze', datum: 'heute', zeit: '10:00', hinweis: 'Kontrolle Blutzucker, Werte mitgebracht' },
+  { id: 's12', patmed: false, kasseArt: 'gkv', standort: 'wn', name: 'Sabine Krüger', datum: 'heute', zeit: '10:30', hinweis: 'akut: starke Rückenschmerzen seit heute früh', akut: true },
+  { id: 's13', patmed: true, kasseArt: 'gkv', standort: 'wn', name: 'Karl-Heinz Busch', datum: 'heute', zeit: '10:50', hinweis: 'Ergebnis Langzeit-EKG' },
+  { id: 's14', patmed: true, kasseArt: 'gkv', standort: 'wn', name: 'Renate Voigt', datum: 'heute', zeit: '11:00', hinweis: 'Überweisung Kardiologie besprechen' },
+  { id: 's3', patmed: true, kasseArt: 'gkv', standort: 'wn', name: 'Anja Möbius', datum: 'heute', zeit: '11:40', hinweis: 'Ergebnis Ultraschall besprechen' },
+  { id: 's15', patmed: false, kasseArt: 'privat', standort: 'wn', name: 'Thomas Reinhardt', datum: 'heute', zeit: '15:00', hinweis: 'Check-up 35' },
+  { id: 's16', patmed: true, kasseArt: 'gkv', standort: 'hd', name: 'Elke Schröter', datum: 'heute', zeit: '15:30', hinweis: 'Schwindel beim Aufstehen' },
+  { id: 's17', patmed: false, kasseArt: 'gkv', standort: 'wn', name: 'Jürgen Wolf', datum: 'heute', zeit: '16:10', hinweis: 'Wunde kontrollieren, Fäden ziehen' },
+  { id: 's4', patmed: false, kasseArt: 'gkv', standort: 'wn', name: 'Horst Wendt', datum: 'morgen', zeit: '08:30', hinweis: 'Grippeimpfung' },
+  { id: 's18', patmed: false, kasseArt: 'gkv', standort: 'wn', name: 'Monika Graf', datum: 'morgen', zeit: '08:50', hinweis: 'Blutabnahme nüchtern' },
+  { id: 's5', patmed: false, kasseArt: 'gkv', standort: 'hd', name: 'Petra Lindner', datum: 'morgen', zeit: '09:15', hinweis: 'Knie schmerzt wieder' },
+  { id: 's19', patmed: false, kasseArt: 'gkv', standort: 'hd', name: 'Uwe Hildebrandt', datum: 'morgen', zeit: '09:40', hinweis: 'DMP Diabetes' },
+  { id: 's20', patmed: false, kasseArt: 'gkv', standort: 'hd', name: 'Christa Neumann', datum: 'morgen', zeit: '10:20', hinweis: 'Grippeimpfung' },
+  { id: 's21', patmed: false, kasseArt: 'gkv', standort: 'wn', name: 'Stefan Ludwig', datum: 'morgen', zeit: '11:00', hinweis: 'Hautveränderung am Rücken ansehen' },
+  { id: 's6', patmed: false, kasseArt: 'gkv', standort: 'wn', name: 'Bernd Kaiser', datum: '2026-11-03', zeit: '16:00', hinweis: 'Folgerezept und Gespräch' },
+  { id: 's22', patmed: false, kasseArt: 'gkv', standort: 'wn', name: 'Hannelore Beck', datum: '2026-11-03', zeit: '08:20', hinweis: 'Blutabnahme, Schilddrüse' },
+  { id: 's23', patmed: false, kasseArt: 'gkv', standort: 'wn', name: 'Frieda Meißner', datum: '2026-11-03', zeit: '09:00', hinweis: 'Pflegegrad, Hausbesuch besprechen' },
+  { id: 's24', patmed: false, kasseArt: 'gkv', standort: 'wn', name: 'Lutz Engelhardt', datum: '2026-11-04', zeit: '10:10', hinweis: 'Gesundheits-Check-up' }
 ];
 
 var ANFRAGEN = [
-  { id: 1, typ: 'Rezept', name: 'Gerda Pfeiffer', eingang: '31.10. 07:12', status: 'neu', an: 'sl',
+  { id: 1, patmed: true, kasseArt: 'gkv', typ: 'Rezept', name: 'Gerda Pfeiffer', eingang: '31.10. 07:12', status: 'neu', an: 'sl',
     text: 'Folgerezept Metformin 1000, 180 Stück. Abholung Montag.' },
-  { id: 2, typ: 'AU', name: 'Kevin Rabe', eingang: '31.10. 06:40', status: 'neu', an: 'kb',
+  { id: 2, patmed: false, kasseArt: 'gkv', typ: 'AU', name: 'Kevin Rabe', eingang: '31.10. 06:40', status: 'neu', an: 'kb',
     text: 'Seit gestern Fieber und Halsschmerzen. Bitte Rückruf wegen AU.' },
-  { id: 3, typ: 'Überweisung', name: 'Ursula Dahms', eingang: '30.10. 16:05', status: 'arbeit', an: 'jh',
+  { id: 3, patmed: true, kasseArt: 'gkv', typ: 'Überweisung', name: 'Ursula Dahms', eingang: '30.10. 16:05', status: 'arbeit', an: 'jh',
     text: 'Überweisung zum Augenarzt (Diabetes-Kontrolle) für den 12.11.' },
-  { id: 4, typ: 'Rückruf', name: 'Paul Seidler', eingang: '30.10. 12:30', status: 'arbeit', an: 'kb',
+  { id: 4, patmed: false, kasseArt: 'gkv', typ: 'Rückruf', name: 'Paul Seidler', eingang: '30.10. 12:30', status: 'arbeit', an: 'kb',
     text: 'Bitte Rückruf wegen Check-up, online war nichts Passendes frei. Gut erreichbar vormittags.' },
-  { id: 5, typ: 'Rezept', name: 'Marlies Kunze', eingang: '29.10. 18:20', status: 'erledigt', an: 'sl',
+  { id: 5, patmed: true, kasseArt: 'gkv', typ: 'Rezept', name: 'Marlies Kunze', eingang: '29.10. 18:20', status: 'erledigt', an: 'sl',
     text: 'Ramipril 2,5 und Simvastatin 20, je 100 Stück.' },
-  { id: 6, typ: 'Befund', name: 'Jonas Engel', eingang: '29.10. 09:44', status: 'neu', an: 'cm',
+  { id: 6, patmed: true, kasseArt: 'gkv', typ: 'Befund', name: 'Jonas Engel', eingang: '29.10. 09:44', status: 'neu', an: 'cm',
     text: 'Bitte Kopie meiner Laborwerte vom 20.10. für meinen Orthopäden.' },
-  { id: 7, typ: 'Impfung', name: 'Helga Sauer', eingang: '31.10. 08:05', status: 'neu', an: 'kb',
+  { id: 7, patmed: false, kasseArt: 'gkv', typ: 'Impfung', name: 'Helga Sauer', eingang: '31.10. 08:05', status: 'neu', an: 'kb',
     text: 'Frage, ob der Grippeimpfstoff für dieses Jahr schon da ist.' },
-  { id: 8, typ: 'Rückruf', name: 'Erika Brandt', eingang: '31.10. 08:20', status: 'neu', an: 'kb', standort: 'hd',
+  { id: 8, patmed: false, kasseArt: 'privat', typ: 'Rückruf', name: 'Erika Brandt', eingang: '31.10. 08:20', status: 'neu', an: 'kb', standort: 'hd',
     text: 'Bitte Rückruf wegen Laborwerten, gut erreichbar ab 14 Uhr.' }
 ];
 

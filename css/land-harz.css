@@ -936,3 +936,10 @@ html, body { overflow-x: clip !important; overflow-y: visible !important; }
 @media (min-width: 680px) and (max-width: 1024px) and (orientation: portrait) {
   .hero .slot-card.nur-ort { width: 340px !important; }
 }
+
+
+/* Karte im Digitalen Empfang darf auch ein Link sein */
+a.journal-card {
+  text-decoration: none;
+  color: inherit;
+}

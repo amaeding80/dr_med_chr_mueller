@@ -96,3 +96,30 @@ html.tb-offen, html.tb-offen body { overflow: hidden; }
 
 /* per Schalter ausgeblendete Funktionen */
 [data-funktion][hidden] { display: none !important; }
+
+/* Mitbringen und Beispiel-Anamnesebogen */
+.tb-mitbringen { margin: 8px 0 16px; padding-left: 1.2em; }
+.tb-mitbringen li { margin: 0 0 8px; color: var(--text); line-height: 1.5; }
+.tb-beispiel {
+  border-left: 3px solid var(--terracotta);
+  background: var(--terracotta-soft);
+  padding: 10px 14px;
+  border-radius: 0 10px 10px 0;
+  font-size: 0.92rem;
+  color: var(--text);
+  margin: 0 0 16px;
+}
+.tb-unterschrift-feld { margin: 16px 0 8px; }
+.tb-unterschrift-feld p { margin: 0 0 8px; font-size: 0.92rem; }
+.tb-unterschrift {
+  display: block;
+  width: 100%;
+  height: 140px;
+  max-width: 100%;
+  background: #fff;
+  border: 1px solid rgba(56,78,51,0.28);
+  border-radius: 10px;
+  touch-action: none;
+  cursor: crosshair;
+}
+.tb-unterschrift-feld .tb-btn { margin-top: 8px; }

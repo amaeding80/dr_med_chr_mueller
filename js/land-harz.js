@@ -2,9 +2,10 @@
 // laeuft auf allen Seiten, macht nur was, wenn die Elemente da sind
 
 // Schalter Terminbuchung
-// t2med.aktiv auf true und Link eintragen, dann erscheinen die T2med-Buttons im Termin-Fenster
+// t2med.aktiv auf true und api/link eintragen: Buchungsfenster und später die Schnittstelle
+// api bleibt leer, bis der Vertrag steht. Ohne api und aktiv geht nichts nach außen.
 var PRAXIS = {
-  t2med: { aktiv: false, link: '' },
+  t2med: { aktiv: false, link: '', api: '' },
   beispielTermine: false,   // true = Beispielzeiten in der Slot-Karte zeigen
   anamneseLang: false,      // true = Raucher, Anliegen und Unterschrift im Anamnesebogen wieder zeigen
 
@@ -17,8 +18,14 @@ var PRAXIS = {
   // Anamnesebogen: Vorlage folgt. Adresse eintragen, dann wird die Auswahl im Termin-Ablauf freigeschaltet
   anamnese: { online: '', download: '' },
 
-  // Videosprechstunde über Patmed: Link eintragen, dann führt der Knopf direkt dorthin
-  patmed: { link: '' },
+  // Videosprechstunde über Patmed: url eintragen und aktiv auf true,
+  // dann führt der Einstieg auf videosprechstunde.html dorthin
+  video: { aktiv: false, url: '' },
+
+  // alter Schalter, bleibt stehen. Wenn video.url leer ist, wird patmed.link genutzt
+  // kanal: im Dashboard PatMed als ersten Antwortweg nutzen
+  // portal: eigenes Download-Portal im Dashboard wieder zeigen (sonst aus)
+  patmed: { link: '', kanal: true, portal: false },
 
   // Rezept und Rückruf: endpunkt eintragen (https), sonst nur Vorschau. Nie per E-Mail.
   rezept: { endpunkt: '' },
@@ -188,3 +195,26 @@ if (PRAXIS.funktionen.demoKnoepfe) document.documentElement.classList.add('demo-
   if (window.ResizeObserver) new ResizeObserver(pruefe).observe(kompass);
   pruefe();
 })();
+
+// Einstieg Videosprechstunde: echter Link nur, wenn er freigeschaltet ist
+function videoZugang() {
+  var v = (window.PRAXIS && PRAXIS.video) ? PRAXIS.video : {};
+  var alt = (window.PRAXIS && PRAXIS.patmed) ? (PRAXIS.patmed.link || '') : '';
+  var url = v.url || alt || '';
+  return { an: !!(v.aktiv && url), url: url };
+}
+function initVideoZugang() {
+  var z = videoZugang();
+  document.querySelectorAll('[data-video-platzhalter]').forEach(function (el) { el.hidden = z.an; });
+  document.querySelectorAll('[data-video-zugang-wrap]').forEach(function (el) { el.hidden = !z.an; });
+  document.querySelectorAll('[data-video-zugang]').forEach(function (el) {
+    if (!z.an) return;
+    el.hidden = false;
+    if (el.tagName === 'A') {
+      el.href = z.url;
+      el.target = '_blank';
+      el.rel = 'noopener';
+    }
+  });
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initVideoZugang); else initVideoZugang();

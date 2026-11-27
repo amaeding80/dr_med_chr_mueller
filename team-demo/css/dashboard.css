@@ -223,3 +223,92 @@ main{max-width:1100px;margin:0 auto;padding:32px 24px 60px}
 
 /* Demo-Hinweis oben auf der Anmeldung */
 .demo-oben{margin:0 0 18px;padding:10px 14px;border-left:3px solid var(--terracotta);background:var(--terracotta-soft);border-radius:0 10px 10px 0;font-size:.95rem;font-weight:600;color:var(--olive-dark)}
+
+/* Einfaches Menü, Standort und Vorschau wie auf der Webseite */
+.tabs a { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; text-decoration: none; color: var(--olive-haupt); font-weight: 600; }
+.einstellungen-link { font-size: .85rem; color: var(--text-muted); text-decoration: none; margin-left: auto; padding: 8px; }
+.einstellungen-link:hover { color: var(--olive-haupt); text-decoration: underline; text-underline-offset: 3px; }
+
+.ort-zeichen {
+  display: inline-block;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin: 0 8px 0 0;
+  vertical-align: middle;
+}
+.ort-wn { background: #EDF2EA; color: #384E33; }
+.ort-hd { background: #F8F1EE; color: #8B5E4D; }
+.t-bogen { margin: 6px 0 0; font-size: .9rem; font-weight: 700; }
+.t-bogen.fehlt { color: #8B5E4D; }
+.t-bogen.da { color: #2A3A26; }
+.t-bogen.egal { color: #535B54; font-weight: 600; }
+.t-bogen-hinweis { margin: 2px 0 0; font-size: .82rem; color: #535B54; }
+
+.antwort-wege { margin: 16px 0 8px; }
+.antwort-wege p { margin: 0 0 8px; }
+.antwort-weg {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin: 0 0 8px;
+  padding: 12px 14px;
+  border: 1px solid rgba(56,78,51,.18);
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  font: inherit;
+}
+.antwort-weg strong { display: block; color: #384E33; }
+.antwort-weg span { display: block; font-size: .88rem; color: #535B54; }
+.antwort-weg.aktiv { border-color: #384E33; background: #EDF2EA; }
+.antwort-weg.nicht { opacity: .7; cursor: not-allowed; }
+
+.vorschau-ort { font-size: .85rem; color: #535B54; margin: 0 0 12px; }
+.web-vorschau { background: #F7F5F0; border: 1px solid rgba(56,78,51,.14); border-radius: 14px; padding: 24px 22px; overflow: hidden; }
+.web-vorschau .hero-title-main { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.8rem; font-weight: 600; line-height: 1.15; color: #384E33; margin: 0 0 12px; }
+.web-vorschau .hero-lead-text { font-size: 1rem; color: #535B54; line-height: 1.7; margin: 0; max-width: 36em; }
+.web-vorschau .hinweis-leiste { border-left: 3px solid #A36F5A; background: #F8F1EE; padding: 12px 16px; border-radius: 0 10px 10px 0; }
+.web-vorschau .hinweis-leiste strong { display: block; font-size: .75rem; letter-spacing: .03em; text-transform: uppercase; color: #8B5E4D; margin: 0 0 6px; }
+.web-vorschau .hinweis-leiste p { margin: 0; color: #535B54; line-height: 1.6; }
+.web-vorschau .zeiten-vorschau { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.web-vorschau .zeiten-karte { background: #fff; border: 1px solid rgba(56,78,51,.12); border-radius: 14px; padding: 16px; }
+.web-vorschau .zeiten-karte h3 { margin: 0 0 8px; font-size: 1.05rem; color: #384E33; }
+.web-vorschau .zeiten-karte p { margin: 0; color: #535B54; white-space: pre-line; line-height: 1.55; font-size: .95rem; }
+@media (max-width: 680px) {
+  .web-vorschau .zeiten-vorschau { grid-template-columns: 1fr; }
+}
+
+.vorschau { background: #F7F5F0; color: #212522; }
+.vorschau .ueberzeile { color: #8B5E4D; }
+.vorschau-ort { color: #535B54 !important; }
+.antwort-weg.nicht { opacity: 1; background: #F4F1EC; color: #535B54; border-style: dashed; }
+.antwort-weg.nicht strong { color: #535B54; text-decoration: line-through; }
+.web-vorschau.schnitt-hero { background: #2A3A26; padding: 28px 24px; }
+.web-vorschau.schnitt-hero .hero-title-main { color: #fff; }
+.web-vorschau.schnitt-hero .hero-lead-text { color: #E9E4DA; }
+.web-vorschau.schnitt-seite { background: #F7F5F0; }
+@media (max-width: 900px) {
+  #view-texte .zwei { display: flex; flex-direction: column; }
+  #view-texte .vorschau { order: -1; margin-bottom: 4px; }
+}
+
+/* PatMed-Status und Antwortwege */
+.t-patmed { margin: 4px 0 0; font-size: .82rem; }
+.t-patmed.da { color: #2A3A26; font-weight: 600; }
+.t-patmed.fehlt { color: #8B5E4D; font-weight: 700; }
+.patmed-stand { margin: 0 0 10px; font-size: .92rem; color: #2A3A26; }
+.patmed-warnung {
+  margin: 0 0 12px;
+  padding: 10px 14px;
+  border-left: 3px solid #A36F5A;
+  background: #F8F1EE;
+  border-radius: 0 10px 10px 0;
+  color: #535B54;
+  font-size: .92rem;
+}
+.antwort-wege .btn-leise { margin: 4px 0 10px; }
+
+.antwort-wege { padding-bottom: 8px; }

@@ -1,5 +1,5 @@
 // Land Harz Praxis – Online-Termin, Rezept, Rückruf, Videosprechstunde
-// Ablauf Termin: Bestands-/Neupatient > Standort > Besuchsgrund > Hinweis > Datenschutz > Termin > Anamnesebogen
+// Ablauf Termin: Anliegen > Mitbringen > Patient > Standort > Vorab-Angaben > Datenschutz > Termin > Anamnesebogen
 // Einstellungen: js/land-harz.js (PRAXIS) und js/praxis-daten.js (Zeiten)
 // Alles, was bei der Praxis ankommt, ist ein "Eingang" (siehe senden). Das Praxis-Dashboard liest genau dieses Format.
 
@@ -21,8 +21,20 @@
     { id: 'sonstiges', titel: 'Sonstiges', text: 'Attest oder anderes Anliegen' }
   ];
   var THEMEN = ['Gewicht / Adipositas', 'Stoffwechsel / Diabetes', 'Unverträglichkeit', 'Mangelernährung / Muskelabbau'];
-  var SCHRITTE = ['Patient', 'Standort', 'Besuchsgrund', 'Hinweis', 'Datenschutz', 'Termin', 'Anamnesebogen'];
+  var SCHRITTE = ['Anliegen', 'Mitbringen', 'Patient', 'Standort', 'Angaben', 'Datenschutz', 'Termin', 'Anamnesebogen'];
   var TAGE = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+
+  // typische Mitbring-Liste je Terminart (allgemein, keine festgelegte Liste der Praxis)
+  var MITBRINGEN = {
+    akut: ['Versichertenkarte', 'Liste Ihrer Medikamente, falls vorhanden', 'Kurz notieren, seit wann die Beschwerden bestehen'],
+    kontrolle: ['Versichertenkarte', 'Medikamentenplan', 'Aktuelle Befunde oder Messwerte, falls vorhanden'],
+    vorsorge: ['Versichertenkarte', 'Impfausweis', 'Vorhandene Vorbefunde'],
+    ultraschall: ['Versichertenkarte', 'Überweisung, falls Sie eine haben', 'Frühere Befunde zum Untersuchungsgebiet, falls vorhanden'],
+    impfung: ['Versichertenkarte', 'Impfausweis'],
+    ernaehrung: ['Versichertenkarte', 'Medikamentenplan', 'Aktuelle Laborwerte, falls vorhanden'],
+    privat: ['Versichertenkarte oder Ausweis', 'Unterlagen zu Ihrem Anliegen, falls vorhanden'],
+    sonstiges: ['Versichertenkarte', 'Unterlagen zu Ihrem Anliegen, falls vorhanden']
+  };
 
   function st(id) { return (D.standorte || {})[id] || { name: id, tel: '', telLink: '' }; }
   function nurWn(grund) { return (D.nurHauptstandort || []).indexOf(grund) > -1; }
@@ -136,14 +148,61 @@
   var T; // aktuelle Angaben
   function neu(grund, standort) {
     T = { art: 'termin', patient: '', standort: standort || '', grund: grund || '', ernaehrung: { form: '', thema: '' },
-      kontakt: { vorname: '', nachname: '', geb: '', telefon: '', email: '' }, hinweis: '',
+      kontakt: { vorname: '', nachname: '', geb: '', kasse: '', telefon: '', email: '' }, hinweis: '',
       datenschutz: { ok: false, zeit: '' }, termin: { datum: '', zeit: '', quelle: '' },
-      anamnese: { status: '', weg: '', kurz: { allergien: '', vorerkrankungen: [], medikamente: '' } } };
+      anamnese: { status: '', weg: '', unterschrift: '', kurz: { allergien: '', vorerkrankungen: [], medikamente: '' } } };
   }
-  function gesamt() { return T.patient === 'bestand' ? 6 : 7; }
-  function kopf(n) { auf('Termin vereinbaren · Schritt ' + n + ' von ' + gesamt(), SCHRITTE[n - 1] === 'Patient' ? 'Waren Sie schon bei uns?' : ({
-    Standort: 'Welcher Standort?', Besuchsgrund: 'Worum geht es?', Hinweis: 'Ihre Angaben', Datenschutz: 'Datenschutz',
-    Termin: 'Freien Termin wählen', Anamnesebogen: 'Anamnesebogen' })[SCHRITTE[n - 1]]); fortschritt(n, gesamt()); }
+  function schrittListe() {
+    return T.patient === 'bestand' ? SCHRITTE.slice(0, 7) : SCHRITTE;
+  }
+  function gesamt() { return schrittListe().length; }
+  var SCHRITT_TITEL = {
+    Anliegen: 'Worum geht es?',
+    Mitbringen: 'Was Sie bitte mitbringen',
+    Patient: 'Waren Sie schon bei uns?',
+    Standort: 'Welcher Standort?',
+    Angaben: 'Ihre Angaben',
+    Datenschutz: 'Datenschutz',
+    Termin: 'Freien Termin wählen',
+    Anamnesebogen: 'Beispiel-Anamnesebogen'
+  };
+  function kopf(name) {
+    var l = schrittListe(), n = l.indexOf(name) + 1;
+    if (n < 1) n = 1;
+    auf('Termin vereinbaren · Schritt ' + n + ' von ' + l.length, SCHRITT_TITEL[name] || name);
+    fortschritt(n, l.length);
+  }
+
+  function unterschriftStarten(leinwand) {
+    var ctx = leinwand.getContext('2d');
+    var zeichnen = false;
+    function pos(e) {
+      var r = leinwand.getBoundingClientRect();
+      return { x: (e.clientX - r.left) * (leinwand.width / r.width), y: (e.clientY - r.top) * (leinwand.height / r.height) };
+    }
+    leinwand.addEventListener('pointerdown', function (e) {
+      e.preventDefault();
+      leinwand.setPointerCapture(e.pointerId);
+      zeichnen = true;
+      var p = pos(e);
+      ctx.beginPath(); ctx.moveTo(p.x, p.y);
+      leinwand.dataset.hatStrich = '1';
+    });
+    leinwand.addEventListener('pointermove', function (e) {
+      if (!zeichnen) return;
+      var p = pos(e);
+      ctx.lineWidth = 2.2; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = '#212522';
+      ctx.lineTo(p.x, p.y); ctx.stroke();
+    });
+    function ende() { zeichnen = false; }
+    leinwand.addEventListener('pointerup', ende);
+    leinwand.addEventListener('pointercancel', ende);
+  }
+  function unterschriftLeeren(leinwand) {
+    var ctx = leinwand.getContext('2d');
+    ctx.clearRect(0, 0, leinwand.width, leinwand.height);
+    delete leinwand.dataset.hatStrich;
+  }
 
   // bis T2med angebunden ist: Hinweis mit Telefonnummern ganz oben
   function vorschauHinweis() {
@@ -152,101 +211,115 @@
       esc(st('hd').name) + ' <a href="' + st('hd').telLink + '">' + esc(st('hd').tel) + '</a>.</p>';
   }
 
-  function s1() {
-    kopf(1);
-    dlgInhalt.innerHTML = vorschauHinweis() + wahlKarten('tb-patient', [
-      { id: 'bestand', titel: 'Ja, ich bin Patientin / Patient der Praxis', text: 'Bestandspatient' },
-      { id: 'neu', titel: 'Nein, ich komme zum ersten Mal', text: 'Neupatient – wir nehmen neue Patientinnen und Patienten auf' }
-    ], T.patient);
-    fuss(null, 'Weiter', function () {
-      T.patient = wert('tb-patient');
-      if (!T.patient) return fehler('Bitte wählen Sie eine Antwort.');
-      s2();
-    });
-  }
-
-  function s2() {
-    kopf(2);
-    var wn = st('wn'), hd = st('hd');
-    dlgInhalt.innerHTML = wahlKarten('tb-standort', [
-      { id: 'wn', titel: wn.name + ' · ' + wn.art, text: wn.adresse },
-      { id: 'hd', titel: hd.name + ' · ' + hd.art, text: hd.adresse }
-    ], T.standort) + '<p class="tb-klein">Ultraschall und Ernährungsmedizin gibt es nur in ' + esc(wn.name) + '. Die Termine für beide Standorte laufen über dieselbe Buchung.</p>';
-    fuss(s1, 'Weiter', function () {
-      T.standort = wert('tb-standort');
-      if (!T.standort) return fehler('Bitte wählen Sie einen Standort.');
-      if (T.standort === 'hd' && nurWn(T.grund)) T.grund = '';
-      s3();
-    });
-  }
-
-  function s3() {
-    kopf(3);
+  function sAnliegen() {
+    kopf('Anliegen');
     var hd = T.standort === 'hd';
     var liste = GRUENDE.map(function (g) {
       var aus = hd && nurWn(g.id);
       return { id: g.id, titel: g.titel, text: aus ? 'Nur in ' + st('wn').name : g.text, aus: aus };
     });
-    dlgInhalt.innerHTML = wahlKarten('tb-grund', liste, T.grund, ' tb-wahl-2') +
-      (hd ? '<p class="tb-klein">Ernährungsmedizin oder Ultraschall? <button type="button" class="tb-link" data-tb="zu-wn">Zu ' + esc(st('wn').name) + ' wechseln</button></p>' : '') +
+    dlgInhalt.innerHTML = vorschauHinweis() + wahlKarten('tb-grund', liste, T.grund, ' tb-wahl-2') +
       '<div class="tb-zusatz" id="tb-zusatz"></div>';
-    var w = dlgBox.querySelector('[data-tb="zu-wn"]');
-    if (w) w.addEventListener('click', function () { T.standort = 'wn'; s3(); });
     function zusatz() {
       var g = wert('tb-grund'), z = dlgBox.querySelector('#tb-zusatz');
-      if (g === 'akut') z.innerHTML = '<p class="tb-hinweis">Bei starken oder schnell schlimmer werdenden Beschwerden rufen Sie bitte direkt an: <a href="' + st(T.standort).telLink + '">' + esc(st(T.standort).tel) + '</a>. Im Notfall: 112.</p>';
+      if (g === 'akut') z.innerHTML = '<p class="tb-hinweis">Bei starken oder schnell schlimmer werdenden Beschwerden rufen Sie bitte direkt an: <a href="' + st(T.standort || 'wn').telLink + '">' + esc(st(T.standort || 'wn').tel) + '</a>. Im Notfall: 112.</p>';
       else if (g === 'ernaehrung') {
         z.innerHTML = '<p class="tb-hinweis">Bei uns gibt es nie gleich einen langen Termin. Zuerst sprechen wir in einem Beratungsgespräch darüber, was möglich ist und was nicht. Ernährungsmedizinische Leistungen zahlt die gesetzliche Krankenkasse nicht. Über mögliche Kosten informieren wir Sie vorher.</p>' +
           '<fieldset class="tb-gruppe"><legend>Beratungsgespräch</legend>' + wahlKarten('tb-form', [
             { id: 'video', titel: 'Per Video', text: 'Videosprechstunde über Patmed' },
             { id: 'vorort', titel: 'Vor Ort', text: st('wn').name }], T.ernaehrung.form) + '</fieldset>' +
-          '<fieldset class="tb-gruppe"><legend>Thema (freiwillig)</legend><div class="tb-pillen">' + THEMEN.map(function (t) {
-            return '<label class="tb-pille"><input type="radio" name="tb-thema" value="' + esc(t) + '"' + (T.ernaehrung.thema === t ? ' checked' : '') + '><span>' + esc(t) + '</span></label>';
+          '<fieldset class="tb-gruppe"><legend>Thema (freiwillig)</legend><div class="tb-pillen">' + THEMEN.map(function (th) {
+            return '<label class="tb-pille"><input type="radio" name="tb-thema" value="' + esc(th) + '"' + (T.ernaehrung.thema === th ? ' checked' : '') + '><span>' + esc(th) + '</span></label>';
           }).join('') + '</div></fieldset>';
       } else z.innerHTML = '';
     }
     dlgBox.querySelectorAll('input[name="tb-grund"]').forEach(function (r) { r.addEventListener('change', zusatz); });
     zusatz();
-    fuss(s2, 'Weiter', function () {
+    fuss(null, 'Weiter', function () {
       var g = wert('tb-grund');
       if (!g) return fehler('Bitte wählen Sie einen Besuchsgrund.');
       if (g === 'ernaehrung') {
         T.ernaehrung.form = wert('tb-form'); T.ernaehrung.thema = wert('tb-thema');
         if (!T.ernaehrung.form) return fehler('Bitte wählen Sie: per Video oder vor Ort.');
       }
-      T.grund = g; s4();
+      T.grund = g; sMitbringen();
     });
   }
 
-  function s4() {
-    kopf(4);
+  function sMitbringen() {
+    kopf('Mitbringen');
+    var liste = MITBRINGEN[T.grund] || MITBRINGEN.sonstiges;
+    var extra = (T.grund === 'ernaehrung' && T.ernaehrung.form === 'video')
+      ? '<li>Ruhiger Raum und ein Gerät mit Kamera und Mikrofon. Den Zugangslink erhalten Sie vor dem Termin.</li>' : '';
+    dlgInhalt.innerHTML = '<p>Damit am Empfang möglichst nichts fehlt, bringen Sie bitte Folgendes mit. Die Liste ist eine Orientierung.</p>' +
+      '<ul class="tb-mitbringen">' + liste.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + extra + '</ul>' +
+      '<p class="tb-klein">Was sonst noch offen ist, klären wir in der Praxis.</p>';
+    fuss(sAnliegen, 'Weiter', sPatient);
+  }
+
+  function sPatient() {
+    kopf('Patient');
+    dlgInhalt.innerHTML = wahlKarten('tb-patient', [
+      { id: 'bestand', titel: 'Ja, ich bin Patientin / Patient der Praxis', text: 'Bestandspatient' },
+      { id: 'neu', titel: 'Nein, ich komme zum ersten Mal', text: 'Neupatient – wir nehmen neue Patientinnen und Patienten auf' }
+    ], T.patient);
+    fuss(sMitbringen, 'Weiter', function () {
+      T.patient = wert('tb-patient');
+      if (!T.patient) return fehler('Bitte wählen Sie eine Antwort.');
+      sStandort();
+    });
+  }
+
+  function sStandort() {
+    kopf('Standort');
+    var wn = st('wn'), hd = st('hd');
+    var nurHaupt = nurWn(T.grund);
+    dlgInhalt.innerHTML = wahlKarten('tb-standort', [
+      { id: 'wn', titel: wn.name + ' · ' + wn.art, text: wn.adresse },
+      { id: 'hd', titel: hd.name + ' · ' + hd.art, text: nurHaupt ? 'Dieses Anliegen gibt es nur in ' + wn.name : hd.adresse, aus: nurHaupt }
+    ], nurHaupt ? 'wn' : T.standort) +
+      (nurHaupt ? '<p class="tb-klein">Ultraschall und Ernährungsmedizin gibt es nur in ' + esc(wn.name) + '.</p>' :
+        '<p class="tb-klein">Die Termine für beide Standorte laufen über dieselbe Buchung.</p>');
+    fuss(sPatient, 'Weiter', function () {
+      T.standort = wert('tb-standort');
+      if (!T.standort) return fehler('Bitte wählen Sie einen Standort.');
+      if (T.standort === 'hd' && nurWn(T.grund)) return fehler('Dieses Anliegen gibt es nur in ' + wn.name + '.');
+      sAngaben();
+    });
+  }
+
+  function sAngaben() {
+    kopf('Angaben');
     var k = T.kontakt;
     dlgInhalt.innerHTML =
+      '<p>Bitte tragen Sie Ihre Angaben in Ruhe ein. Am Empfang reicht dann der Termin und die Versichertenkarte.</p>' +
       '<div class="tb-reihe"><label class="tb-feld">Vorname<input id="tb-vorname" autocomplete="given-name" value="' + esc(k.vorname) + '"></label>' +
       '<label class="tb-feld">Nachname<input id="tb-nachname" autocomplete="family-name" value="' + esc(k.nachname) + '"></label></div>' +
       '<div class="tb-reihe"><label class="tb-feld">Geburtsdatum<input id="tb-geb" inputmode="numeric" placeholder="TT.MM.JJJJ" value="' + esc(k.geb) + '"></label>' +
-      '<label class="tb-feld">Telefon<input id="tb-tel" type="tel" autocomplete="tel" value="' + esc(k.telefon) + '"></label></div>' +
-      '<label class="tb-feld">E-Mail <span class="tb-opt">(freiwillig, nur für die Terminbestätigung)</span><input id="tb-mail" type="email" autocomplete="email" value="' + esc(k.email) + '"></label>' +
+      '<label class="tb-feld">Krankenkasse<input id="tb-kasse" autocomplete="organization" value="' + esc(k.kasse || '') + '" placeholder="z. B. AOK Sachsen-Anhalt"></label></div>' +
+      '<div class="tb-reihe"><label class="tb-feld">Telefon<input id="tb-tel" type="tel" autocomplete="tel" value="' + esc(k.telefon) + '"></label>' +
+      '<label class="tb-feld">E-Mail <span class="tb-opt">(freiwillig, nur für die Terminbestätigung)</span><input id="tb-mail" type="email" autocomplete="email" value="' + esc(k.email) + '"></label></div>' +
       '<label class="tb-feld">Hinweis an die Praxis <span class="tb-opt">(freiwillig)</span><textarea id="tb-hinweis" rows="3" placeholder="z. B. kurz Ihre Beschwerden, Rollstuhl, Begleitperson, Dolmetscher">' + esc(T.hinweis) + '</textarea></label>' +
       '<p class="tb-klein">Bitte schicken Sie uns hier keine Befunde. Befunde tauschen wir nur verschlüsselt oder persönlich aus.</p>';
-    fuss(s3, 'Weiter', function () {
+    fuss(sStandort, 'Weiter', function () {
       k.vorname = feld('tb-vorname'); k.nachname = feld('tb-nachname'); k.geb = feld('tb-geb');
-      k.telefon = feld('tb-tel'); k.email = feld('tb-mail'); T.hinweis = feld('tb-hinweis');
+      k.kasse = feld('tb-kasse'); k.telefon = feld('tb-tel'); k.email = feld('tb-mail'); T.hinweis = feld('tb-hinweis');
       if (!k.vorname || !k.nachname) return fehler('Bitte geben Sie Ihren Namen ein.');
       if (!k.geb) return fehler('Bitte geben Sie Ihr Geburtsdatum ein.');
+      if (!k.kasse) return fehler('Bitte geben Sie Ihre Krankenkasse an.');
       if (!k.telefon) return fehler('Bitte geben Sie eine Telefonnummer für Rückfragen an.');
-      s5();
+      sDatenschutz();
     });
   }
 
-  function s5() {
-    kopf(5);
+  function sDatenschutz() {
+    kopf('Datenschutz');
     dlgInhalt.innerHTML = '<p>Ihre Angaben nutzen wir nur, um Ihren Termin zu planen und vorzubereiten. Sie werden verschlüsselt übertragen und nicht per E-Mail verschickt.</p>' +
       '<label class="tb-check"><input type="checkbox" id="tb-ds"' + (T.datenschutz.ok ? ' checked' : '') + '><span>Ich habe die <a href="datenschutz.html" target="_blank" rel="noopener">Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Angaben einverstanden.</span></label>';
-    fuss(s4, 'Weiter', function () {
+    fuss(sAngaben, 'Weiter', function () {
       if (!dlgBox.querySelector('#tb-ds').checked) return fehler('Bitte bestätigen Sie die Datenschutzerklärung.');
       T.datenschutz = { ok: true, zeit: new Date().toISOString() };
-      s6();
+      sTermin();
     });
   }
 
@@ -270,72 +343,110 @@
     return tage;
   }
 
-  function s6() {
-    kopf(6);
+  function sTermin() {
+    kopf('Termin');
     var ziel = (P.termin || {}).ziel || 'vorschau';
     var t2 = (P.termin || {}).einbettung || (P.t2med && P.t2med.aktiv && P.t2med.link) || '';
     var sTel = st(T.standort);
     var fallback = '<p class="tb-klein">Lieber telefonisch? <a href="' + sTel.telLink + '">' + esc(sTel.tel) + '</a></p>';
     if (ziel === 't2med' && t2) {
-      // Platzhalter für die T2med-Buchung: hier wird nur das Fenster eingebunden
       dlgInhalt.innerHTML = '<div class="tb-t2med" id="t2med-termin"><iframe src="' + esc(t2) + '" title="Freien Termin bei T2med wählen und verbindlich buchen" loading="lazy"></iframe></div>' +
         '<label class="tb-check"><input type="checkbox" id="tb-gebucht"><span>Ich habe meinen Termin bei T2med gebucht.</span></label>' + fallback;
-      fuss(s5, 'Weiter', function () {
+      fuss(sDatenschutz, T.patient === 'neu' ? 'Weiter' : 'Termin vereinbaren', function () {
         if (!dlgBox.querySelector('#tb-gebucht').checked) return fehler('Bitte buchen Sie zuerst Ihren Termin.');
         T.termin = { datum: '', zeit: '', quelle: 't2med' };
-        T.patient === 'neu' ? s7() : abschicken();
+        T.patient === 'neu' ? sAnamnese() : abschicken();
       });
       return;
     }
     var tage = beispielZeiten(T.standort, T.grund);
-    dlgInhalt.innerHTML = '<p class="tb-hinweis tb-vorschau">Vorschau: Diese Uhrzeiten sind Beispiele aus den Sprechzeiten, keine echten freien Termine. Später suchen Sie sich hier über T2med selbst einen freien Termin aus und buchen ihn verbindlich.</p>' +
+    dlgInhalt.innerHTML = '<p class="tb-hinweis tb-vorschau">Vorschau: Diese Uhrzeiten sind Beispiele aus den Sprechzeiten, keine echten freien Termine. Später wählen Sie hier über T2med einen freien Termin und buchen ihn verbindlich.</p>' +
       (T.grund === 'ernaehrung' ? '<p class="tb-klein">Für Beratungsgespräche gibt es feste Zeitfenster, die Dr. Müller festlegt.</p>' : '') +
-      tage.map(function (t) {
-        return '<fieldset class="tb-gruppe"><legend>' + datumText(t.datum) + '</legend><div class="tb-zeiten">' + t.slots.map(function (s) {
-          var v = t.datum + ' ' + s.zeit;
+      tage.map(function (tag) {
+        return '<fieldset class="tb-gruppe"><legend>' + datumText(tag.datum) + '</legend><div class="tb-zeiten">' + tag.slots.map(function (s) {
+          var v = tag.datum + ' ' + s.zeit;
           return '<label class="tb-zeit' + (s.belegt ? ' aus' : '') + '"><input type="radio" name="tb-slot" value="' + v + '"' + (s.belegt ? ' disabled' : '') +
             (T.termin.datum + ' ' + T.termin.zeit === v ? ' checked' : '') + '><span>' + s.zeit + (s.belegt ? '<span class="tb-sr"> belegt</span>' : '') + '</span></label>';
         }).join('') + '</div></fieldset>';
       }).join('') + fallback;
-    fuss(s5, T.patient === 'neu' ? 'Weiter' : 'Termin vereinbaren', function () {
+    fuss(sDatenschutz, T.patient === 'neu' ? 'Weiter' : 'Termin vereinbaren', function () {
       var v = wert('tb-slot');
       if (!v) return fehler('Bitte wählen Sie eine Uhrzeit.');
       T.termin = { datum: v.split(' ')[0], zeit: v.split(' ')[1], quelle: 'vorschau' };
-      T.patient === 'neu' ? s7() : abschicken();
+      T.patient === 'neu' ? sAnamnese() : abschicken();
     });
   }
 
-  function s7() {
-    kopf(7);
-    var A = P.anamnese || {}, k = T.anamnese.kurz;
+  function sAnamnese() {
+    kopf('Anamnesebogen');
+    var k = T.anamnese.kurz;
     var vor = ['Bluthochdruck', 'Diabetes', 'Herzerkrankung', 'Schilddrüse', 'Nierenerkrankung', 'Keine bekannt'];
-    dlgInhalt.innerHTML = '<p>Für den ersten Termin brauchen wir Ihren Anamnesebogen. Wie möchten Sie ihn ausfüllen?</p>' +
+    dlgInhalt.innerHTML =
+      '<p class="tb-beispiel">Beispiel-Anamnesebogen. Das ist eine Vorlage, bis der Bogen der Praxis vorliegt. Keine Angaben aus einem echten Bogen von Dr. Müller.</p>' +
       wahlKarten('tb-weg', [
-        { id: 'praxis', titel: 'In der Praxis', text: 'Bitte kommen Sie dafür etwas früher.' },
-        { id: 'online', titel: 'Online ausfüllen', text: A.online ? 'Direkt nach der Buchung' : 'Folgt in Kürze', aus: !A.online },
-        { id: 'download', titel: 'Zum Ausdrucken', text: A.download ? 'Ausfüllen und mitbringen' : 'Folgt in Kürze', aus: !A.download }
-      ], T.anamnese.weg || 'praxis') +
-      '<details class="tb-details"><summary>Kurz vorab (freiwillig)</summary>' +
+        { id: 'jetzt', titel: 'Jetzt ausfüllen', text: 'Auf diesem Gerät, mit Unterschrift' },
+        { id: 'praxis', titel: 'In der Praxis', text: 'Bitte kommen Sie dafür etwas früher. Am Empfang oder am Tablet.' }
+      ], T.anamnese.weg || 'jetzt') +
+      '<div id="tb-bogen-felder">' +
       '<label class="tb-feld">Allergien<textarea id="tb-allergien" rows="2" placeholder="z. B. Penicillin, Nüsse … oder: keine bekannt">' + esc(k.allergien) + '</textarea></label>' +
       '<fieldset class="tb-gruppe"><legend>Vorerkrankungen</legend><div class="tb-pillen">' + vor.map(function (v) {
         return '<label class="tb-pille"><input type="checkbox" name="tb-vor" value="' + v + '"' + (k.vorerkrankungen.indexOf(v) > -1 ? ' checked' : '') + '><span>' + v + '</span></label>';
       }).join('') + '</div></fieldset>' +
-      '<label class="tb-feld">Medikamente<textarea id="tb-medis" rows="2" placeholder="z. B. Ramipril 5 mg … oder: keine">' + esc(k.medikamente) + '</textarea></label></details>';
-    fuss(s6, 'Termin vereinbaren', function () {
-      T.anamnese.weg = wert('tb-weg') || 'praxis';
+      '<label class="tb-feld">Dauermedikamente<textarea id="tb-medis" rows="2" placeholder="z. B. Ramipril 5 mg … oder: keine">' + esc(k.medikamente) + '</textarea></label>' +
+      '<div class="tb-unterschrift-feld">' +
+      '<p><strong>Unterschrift</strong> mit Finger, Stift oder Maus</p>' +
+      '<canvas id="tb-unterschrift" class="tb-unterschrift" width="600" height="180" aria-label="Unterschrift"></canvas>' +
+      '<button type="button" class="tb-btn tb-leise" id="tb-unterschrift-leeren">Unterschrift löschen</button>' +
+      '</div>' +
+      '<label class="tb-check"><input type="checkbox" id="tb-bogen-ok"' + (T.anamnese.ok ? ' checked' : '') + '><span>Ich bestätige, dass meine Angaben nach bestem Wissen richtig sind.</span></label>' +
+      '</div>';
+    var leinwand = dlgBox.querySelector('#tb-unterschrift');
+    unterschriftStarten(leinwand);
+    dlgBox.querySelector('#tb-unterschrift-leeren').addEventListener('click', function () { unterschriftLeeren(leinwand); });
+    function felderZeigen() {
+      var jetzt = wert('tb-weg') !== 'praxis';
+      dlgBox.querySelector('#tb-bogen-felder').hidden = !jetzt;
+    }
+    dlgBox.querySelectorAll('input[name="tb-weg"]').forEach(function (r) { r.addEventListener('change', felderZeigen); });
+    felderZeigen();
+    fuss(sTermin, 'Termin vereinbaren', function () {
+      T.anamnese.weg = wert('tb-weg') || 'jetzt';
       k.allergien = feld('tb-allergien'); k.medikamente = feld('tb-medis');
       k.vorerkrankungen = [].map.call(dlgBox.querySelectorAll('input[name="tb-vor"]:checked'), function (c) { return c.value; });
+      if (T.anamnese.weg === 'praxis') {
+        T.anamnese.status = 'fehlt';
+        T.anamnese.unterschrift = '';
+        abschicken();
+        return;
+      }
+      if (!k.allergien || !k.medikamente) return fehler('Bitte füllen Sie Allergien und Medikamente aus, oder schreiben Sie „keine bekannt“.');
+      if (!k.vorerkrankungen.length) return fehler('Bitte wählen Sie mindestens eine Angabe bei den Vorerkrankungen.');
+      if (!leinwand.dataset.hatStrich) return fehler('Bitte unterschreiben Sie den Bogen.');
+      if (!dlgBox.querySelector('#tb-bogen-ok').checked) return fehler('Bitte bestätigen Sie Ihre Angaben.');
+      T.anamnese.unterschrift = leinwand.toDataURL('image/png');
+      T.anamnese.status = 'ausgefuellt';
+      T.anamnese.ok = true;
       abschicken();
     });
   }
 
   function abschicken() {
-    if (T.patient !== 'neu') T.anamnese.status = 'nicht-noetig';
-    else T.anamnese.status = 'fehlt'; // vollständiger Bogen kommt erst mit der Vorlage
+    if (T.patient !== 'neu' && !T.anamnese.status) T.anamnese.status = 'nicht-noetig';
     T.grundText = grundTitel(T.grund);
     var btn = dlgFuss.querySelector('[data-tb="weiter"]'); if (btn) btn.disabled = true;
-    senden(JSON.parse(JSON.stringify(T)), (P.termin || {}).endpunkt).then(function (r) { fertig(r.vorschau); })
-      .catch(function () { fehler('Das hat leider nicht geklappt. Bitte rufen Sie uns an: ' + st(T.standort).tel); if (btn) btn.disabled = false; });
+    var paket = JSON.parse(JSON.stringify(T));
+    var nachher = function (r) { fertig(r.vorschau); };
+    var scheitern = function () { fehler('Das hat leider nicht geklappt. Bitte rufen Sie uns an: ' + st(T.standort).tel); if (btn) btn.disabled = false; };
+    var kette = window.t2medAnbindung
+      ? t2medAnbindung.terminAnT2med(paket).then(function (r) {
+          if (r && r.vorschau) return senden(paket, (P.termin || {}).endpunkt);
+          if (T.anamnese.status === 'ausgefuellt') {
+            return t2medAnbindung.anamneseInAkte(paket.kontakt, paket.anamnese).then(function () { return r; });
+          }
+          return r;
+        })
+      : senden(paket, (P.termin || {}).endpunkt);
+    kette.then(nachher).catch(scheitern);
   }
 
   function zeile(a, b) { return b ? '<div><dt>' + a + '</dt><dd>' + esc(b) + '</dd></div>' : ''; }
@@ -350,7 +461,8 @@
       zeile('Hinweis', T.hinweis) +
       zeile('Datenschutz', 'bestätigt') +
       zeile('Termin', T.termin.datum ? datumText(T.termin.datum) + ', ' + T.termin.zeit + ' Uhr' : 'über T2med gewählt') +
-      zeile('Anamnesebogen', T.anamnese.status === 'nicht-noetig' ? 'nicht nötig' : T.anamnese.weg === 'praxis' ? 'wird in der Praxis ausgefüllt' : 'folgt') +
+      zeile('Krankenkasse', T.kontakt.kasse) +
+      zeile('Anamnesebogen', T.anamnese.status === 'ausgefuellt' ? 'ausgefüllt' : T.anamnese.status === 'nicht-noetig' ? 'nicht nötig' : 'fehlt, wird in der Praxis ausgefüllt') +
       '</dl>' +
       (vorschau ? '<p class="tb-hinweis tb-vorschau">Vorschau: Es wurde nichts an die Praxis gesendet. Die Angaben sind nur in diesem Browser gespeichert und erscheinen in der <a href="team-demo/#heute" target="_blank" rel="noopener">Dashboard-Demo</a>.</p>'
         : '<p>Wir melden uns, falls etwas unklar ist. Bitte bringen Sie Ihre Versichertenkarte mit.</p>');
@@ -372,7 +484,7 @@
     var s = standort === 'heudeber' || standort === 'hd' || standort === 'ils' ? 'hd' : standort === 'wernigerode' || standort === 'wn' ? 'wn' : '';
     if (g === 'ernaehrung') s = 'wn';
     neu(g, s); T.ernaehrung.thema = thema;
-    s1();
+    sAnliegen();
   }
 
   // ---------- Rezept (bestehendes Fenster auf der Startseite) ----------
@@ -448,11 +560,13 @@
     fuss(null, 'Schließen', zu);
   }
   function video() {
-    var link = (P.patmed || {}).link;
+    var v = P.video || {};
+    var link = (v.aktiv && v.url) ? v.url : ((P.patmed || {}).link || '');
     if (link) { window.open(link, '_blank', 'noopener'); return; }
     info('Digitaler Empfang', 'Videosprechstunde',
-      '<p>Die Videosprechstunde läuft über Patmed. Den Zugang richten wir gerade ein.</p>' +
-      '<p>Bis dahin vereinbaren Sie die Videosprechstunde bitte telefonisch: <a href="' + st('wn').telLink + '">' + st('wn').tel + '</a>.</p>');
+      '<p>Die Videosprechstunde läuft über Patmed. Den persönlichen Link erhalten Sie vor dem Termin per SMS oder E-Mail.</p>' +
+      '<p><a href="videosprechstunde.html">So läuft die Videosprechstunde ab</a></p>' +
+      '<p>Einen Termin vereinbaren Sie auf dieser Seite oder telefonisch: <a href="' + st('wn').telLink + '">' + st('wn').tel + '</a>.</p>');
   }
 
   // ---------- an die Seite hängen ----------

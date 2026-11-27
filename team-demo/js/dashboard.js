@@ -6,6 +6,70 @@
   // Schalter: persönlicher Link an Neupatienten (senden, geöffnet, Tracking).
   // Vorerst aus, evtl. später über T2med. Wieder einschalten: true setzen.
   var FUNKTIONEN = { link: false, au: false }; // au: Krankmeldung online (laut Dr. Müller raus)
+
+  // Schalter aus js/land-harz.js, mit sicherem Fallback
+  function kanalEinstellung() {
+    var p = (window.PRAXIS && PRAXIS.patmed) ? PRAXIS.patmed : {};
+    return { kanal: p.kanal !== false, portal: !!p.portal };
+  }
+  function patmedHinweis(verbunden) {
+    return verbunden
+      ? '<p class="t-patmed da">Mit PatMed verbunden</p>'
+      : '<p class="t-patmed fehlt">Noch nicht mit PatMed verbunden – QR-Code beim nächsten Besuch mitgeben</p>';
+  }
+  function stammVon(id) {
+    return finde(BESTAND, id) || finde(BOEGEN, id) || finde(OHNE_BOGEN, id) || finde(ANFRAGEN, id);
+  }
+  function antwortWegeHtml(dat, aktion) {
+    var s = kanalEinstellung();
+    var weg = (dat && dat.antwortweg) || '';
+    var verbunden = !!(dat && dat.patmed);
+    var gesetzlich = !dat || dat.kasseArt !== 'privat';
+    var id = dat && dat.id;
+    function wegBtn(wert, titel, text) {
+      return '<button type="button" class="antwort-weg' + (weg === wert ? ' aktiv' : '') + '"' +
+        ' data-aktion="' + aktion + '" data-wert="' + wert + '" data-id="' + id + '">' +
+        '<strong>' + titel + '</strong><span>' + text + '</span></button>';
+    }
+    var html = '<div class="antwort-wege"><p class="ueberzeile">Antwort an den Patienten</p>';
+    html += verbunden
+      ? '<p class="patmed-stand">Mit PatMed verbunden. Dokumente landen in der T2med-Akte.</p>'
+      : '<p class="patmed-warnung">Noch nicht mit PatMed verbunden – QR-Code beim nächsten Besuch mitgeben.</p>';
+    if (!verbunden) {
+      html += '<button type="button" class="btn btn-leise" data-aktion="patmed-an" data-id="' + id + '">PatMed jetzt verbunden (Demo: QR übergeben)</button>';
+    }
+    if (s.kanal) {
+      html += wegBtn('patmed', 'Über PatMed senden',
+        verbunden
+          ? 'Ende-zu-Ende verschlüsselt. Das Dokument landet in der T2med-Akte. Demo: Es wird nichts wirklich gesendet.'
+          : 'Erst nach dem QR-Code aus der Praxis. Bitte den Code beim nächsten Besuch mitgeben.');
+    }
+    if (gesetzlich) {
+      html += wegBtn('epa', 'Befund liegt in der ePA',
+        'Für gesetzlich Versicherte: Der Befund ist oder wird in der elektronischen Patientenakte hinterlegt. Der Patient sieht ihn in der App seiner Krankenkasse.');
+    } else {
+      html += '<p class="klein">ePA: Dieser Patient ist privat versichert. Ein Einstellen nur, wenn die Kasse eine ePA anbietet und der Patient einverstanden ist.</p>';
+    }
+    html += wegBtn('praxis', 'Abholung in der Praxis oder Brief', 'Reserve: persönlich übergeben oder per Brief schicken.');
+    if (s.portal) {
+      html += wegBtn('portal', 'Eigenes Download-Portal', 'Persönlicher, zeitlich begrenzter Link. Vorbereitung, noch nicht angebunden.');
+    }
+    html += '<p class="klein">Befunde gehen nicht per E-Mail.</p></div>';
+    return html;
+  }
+  function antwortWegSetzen(id, wert, danach) {
+    var d = stammVon(id);
+    if (!d) return;
+    d.antwortweg = wert;
+    speichern();
+    if (danach) danach(id);
+    if (wert === 'patmed' && !d.patmed) melden('PatMed erst nach dem QR-Code. Bitte beim nächsten Besuch mitgeben.');
+    else if (wert === 'patmed') melden('Über PatMed merken (Demo, nichts gesendet)');
+    else if (wert === 'epa') melden('Hinweis: Befund liegt in der ePA');
+    else if (wert === 'praxis') melden('Abholung oder Brief merken');
+    else if (wert === 'portal') melden('Download-Portal merken (Demo)');
+    else melden('Antwortweg merken (Demo)');
+  }
   var ortFilter = 'alle';
 
   // Besuchsgrund für die Beispieldaten aus dem Hinweis ableiten (echte Termine bringen ihn aus der Buchung mit)
@@ -119,7 +183,7 @@
       '<button class="btn btn-leise" data-aktion="status" data-wert="neu" data-id="' + a.id + '">Wieder öffnen</button>';
     return '<div class="eintrag" data-aktion="anfrage" data-id="' + a.id + '">' +
       '<div class="oben"><span class="ueberzeile">' + a.typ + '</span><span class="marke-status m-' + a.status + '">' + STATUS[a.status] + '</span></div>' +
-      '<div><span class="marke-status m-bestand">' + (a.web ? 'Von der Webseite' : 'Bestandspatient') + '</span>' + (a.standort ? ' <span class="klein">' + STANDORTE[a.standort] + '</span>' : '') + '<div class="name">' + a.name + '</div><p>' + a.text + '</p></div>' +
+      '<div><span class="marke-status m-bestand">' + (a.web ? 'Von der Webseite' : 'Bestandspatient') + '</span>' + (a.standort ? ' <span class="klein">' + STANDORTE[a.standort] + '</span>' : '') + '<div class="name">' + a.name + '</div><p>' + a.text + '</p>' + patmedHinweis(!!a.patmed) + '</div>' +
       '<p class="zustaendig">Zuständig: <b>' + person(a.an).kurz + '</b> · ' + a.eingang + '</p>' +
       '<div class="knopfreihe">' + knopf + '</div></div>';
   }
@@ -166,25 +230,47 @@
     }
     if (!klick) klick = ' data-aktion="details" data-id="' + t.id + '"';
     var vorbei = tag(t.datum) === HEUTE && t.zeit < JETZT && !knopf;
+    var ort = t.standort || 'wn';
+    var bogen = bogenStand(t);
+    var bogenHtml = bogen === 'da'
+      ? '<p class="t-bogen da">Anamnesebogen ausgefüllt</p>'
+      : bogen === 'fehlt'
+        ? '<p class="t-bogen fehlt">Anamnesebogen fehlt</p><p class="t-bogen-hinweis">Bitte vor Ort ausfüllen lassen, zum Beispiel am Tablet.</p>'
+        : '<p class="t-bogen egal">Anamnesebogen nicht nötig</p>';
     return '<li class="termin' + (aufgabe(t) || knopf || (t.akut && !vorbei) ? ' aufgabe' : '') + (t.akut ? ' akut' : '') + (vorbei ? ' vorbei' : '') + '"' + (o ? ' id="t-' + o.id + '"' : t.id ? ' id="t-' + t.id + '"' : '') + klick + '>' +
       '<span class="t-zeit">' + t.zeit + '</span>' +
-      '<div class="t-mitte"><div class="t-name">' + t.name + (t.art === 'neu' ? ' <span class="marke-art a-neu">Neu</span>' : '') + (t.akut ? ' <span class="marke-art a-akut">Akut</span>' : '') + '</div>' +
-      '<p class="t-info">' + STANDORTE[t.standort || 'wn'] + (t.grund ? ' · ' + t.grund : '') + (w ? ' · <span class="marke-art a-web">Web</span>' : '') + '</p>' +
-      '<p class="t-hinweis">' + (t.hinweis || '–') + '</p>' + status + '</div>' +
+      '<div class="t-mitte"><div class="t-name">' +
+      '<span class="ort-zeichen ort-' + ort + '">' + STANDORTE[ort] + '</span> ' +
+      t.name + (t.art === 'neu' ? ' <span class="marke-art a-neu">Neu</span>' : '') + (t.akut ? ' <span class="marke-art a-akut">Akut</span>' : '') + '</div>' +
+      '<p class="t-info">' + (t.grund ? t.grund : '') + (w ? (t.grund ? ' · ' : '') + '<span class="marke-art a-web">Web</span>' : '') + '</p>' +
+      '<p class="t-hinweis">' + (t.hinweis || '–') + '</p>' + bogenHtml + patmedHinweis(!!t.patmed) + (status && status.indexOf('Bogen') < 0 && status.indexOf('Vor Ort') < 0 ? status : '') + '</div>' +
       (knopf ? '<div class="t-knopf">' + knopf + '</div>' : '') + '</li>';
   }
 
+  function bogenStand(t) {
+    var w = t.web, an = w && w.anamnese;
+    if (w) {
+      if (an && (an.status === 'ausgefuellt' || an.status === 'vorhanden')) return 'da';
+      if (w.patient === 'bestand' || (an && an.status === 'nicht-noetig')) return 'egal';
+      return 'fehlt';
+    }
+    if (t.bogen) return 'da';
+    if (t.art === 'neu') return (t.o && t.o.geklaert) ? 'da' : 'fehlt';
+    return 'egal';
+  }
+
   function alleTermine() {
-    var l = BESTAND.map(function (b) { return { art: 'bestand', id: b.id, akut: b.akut, name: b.name, datum: b.datum, zeit: b.zeit, hinweis: b.hinweis, standort: b.standort || 'wn', grund: grundAus(b.hinweis) }; });
-    BOEGEN.forEach(function (b) { l.push({ art: 'neu', id: b.id, name: b.name, datum: b.datum, zeit: b.zeit, hinweis: b.grund, bogen: b, standort: b.standort || 'wn', grund: grundAus(b.grund) }); });
-    OHNE_BOGEN.forEach(function (o) { if (!bogenDa(o)) l.push({ art: 'neu', id: o.id, name: o.name, datum: o.datum, zeit: o.zeit, hinweis: o.hinweis, o: o, standort: o.standort || 'wn', grund: grundAus(o.hinweis) }); });
+    var l = BESTAND.map(function (b) { return { art: 'bestand', id: b.id, akut: b.akut, name: b.name, datum: b.datum, zeit: b.zeit, hinweis: b.hinweis, standort: b.standort || 'wn', grund: grundAus(b.hinweis), patmed: b.patmed, kasseArt: b.kasseArt, antwortweg: b.antwortweg }; });
+    BOEGEN.forEach(function (b) { l.push({ art: 'neu', id: b.id, name: b.name, datum: b.datum, zeit: b.zeit, hinweis: b.grund, bogen: b, standort: b.standort || 'wn', grund: grundAus(b.grund), patmed: b.patmed, kasseArt: b.kasseArt, antwortweg: b.antwortweg }); });
+    OHNE_BOGEN.forEach(function (o) { if (!bogenDa(o)) l.push({ art: 'neu', id: o.id, name: o.name, datum: o.datum, zeit: o.zeit, hinweis: o.hinweis, o: o, standort: o.standort || 'wn', grund: grundAus(o.hinweis), patmed: o.patmed, kasseArt: o.kasseArt, antwortweg: o.antwortweg }); });
     // Online-Termine von der Webseite (js/eingang.js)
     WEB.forEach(function (e) {
       if (e.art !== 'termin') return;
       var k = e.kontakt || {};
       l.push({ art: e.patient, id: e.id, web: e, name: ((k.vorname || '') + ' ' + (k.nachname || '')).trim() || 'Ohne Namen',
         datum: (e.termin && e.termin.datum) || HEUTE, zeit: (e.termin && e.termin.zeit) || '–',
-        hinweis: e.hinweis || '', standort: e.standort || 'wn', grund: e.grundText || '' });
+        hinweis: e.hinweis || '', standort: e.standort || 'wn', grund: e.grundText || '',
+        patmed: e.patmed, kasseArt: e.kasseArt, antwortweg: e.antwortweg });
     });
     return l.filter(function (t) { return tag(t.datum) >= HEUTE && (ortFilter === 'alle' || t.standort === ortFilter); }).sort(nachTermin);
   }
@@ -199,7 +285,7 @@
     var akut = heuteL.filter(function (t) { return t.akut && t.zeit >= JETZT; });
     var teile = [];
     if (akut.length) teile.push('<a href="#" data-aktion="springen" data-id="' + akut[0].id + '">' + akut.length + ' Akuttermin' + (akut.length === 1 ? '' : 'e') + '</a>');
-    if (vorort.length) teile.push('<a href="#" data-aktion="springen" data-id="' + vorort[0].o.id + '">' + vorort.length + (vorort.length === 1 ? ' Bogen' : ' Bögen') + ' vor Ort</a>');
+    if (vorort.length) teile.push('<a href="#" data-aktion="springen" data-id="' + vorort[0].o.id + '">' + vorort.length + (vorort.length === 1 ? ' Anamnesebogen fehlt' : ' Anamnesebögen fehlen') + '</a>');
     if (senden.length) teile.push('<a href="#" data-aktion="springen" data-id="' + senden[0].o.id + '">' + senden.length + ' Link senden</a>');
     if (fragen.length) teile.push('<a href="#" data-aktion="springen" data-id="' + fragen[0].o.id + '">' + fragen.length + ' vor Ort fragen</a>');
     $('#heuteZuTun').innerHTML = teile.length ? 'Heute zu tun: ' + teile.join(', ') : '✓ Heute alles erledigt';
@@ -251,8 +337,10 @@
       ['Termin', tagText(t.datum) + ', ' + t.zeit + ' Uhr' + (w ? '<small>' + (w.termin && w.termin.quelle === 't2med' ? 'aus T2med' : 'Vorschau, noch nicht in T2med') + '</small>' : '')],
       ['Anamnesebogen', bogen + kurz]
     ];
+    var stamm = stammVon(t.id) || t;
     blatt('<p class="ueberzeile">' + (w ? 'Online-Termin von der Webseite · Eingang ' + webZeit(w.eingang) : 'Termin') + '</p><h2>' + t.name + '</h2>' +
-      '<ol class="angaben angaben-nr">' + zeilen.map(function (z) { return '<li><span>' + z[0] + '</span>' + z[1] + '</li>'; }).join('') + '</ol>',
+      '<ol class="angaben angaben-nr">' + zeilen.map(function (z) { return '<li><span>' + z[0] + '</span>' + z[1] + '</li>'; }).join('') + '</ol>' +
+      antwortWegeHtml(stamm, 'termin-antwortweg'),
       w && t.art === 'neu' && !(an && an.status === 'vorhanden') ? '<button class="btn btn-gross" data-aktion="web-bogen" data-id="' + t.id + '">Bogen ist da</button>' :
       t.bogen ? '<button class="btn btn-gross" data-aktion="bogen" data-id="' + t.bogen.id + '">Bogen ansehen</button>' : '');
   }
@@ -303,7 +391,34 @@
     $('#textZurueck').hidden = !t.vorher;
     vorschau();
   }
-  function vorschau() { $('#vTitel').textContent = $('#textTitel').value; $('#vInhalt').textContent = $('#textInhalt').value; }
+  function vorschau() {
+    var t = TEXTE[textNr], titel = $('#textTitel').value, text = $('#textInhalt').value;
+    var ort = '', rahmen = $('#vRahmen');
+    rahmen.className = 'web-vorschau';
+    if (t.bereich === 'Begrüßung') {
+      $('#vOrt').textContent = 'Startseite, im oberen Bereich (Hero): die große Überschrift und der Text darunter.';
+      rahmen.className = 'web-vorschau schnitt-hero';
+      rahmen.innerHTML = '<h1 class="hero-title-main"></h1><p class="hero-lead-text"></p>';
+      rahmen.querySelector('h1').textContent = titel;
+      rahmen.querySelector('p').textContent = text;
+    } else if (t.bereich === 'Hinweis') {
+      $('#vOrt').textContent = 'Startseite, als Hinweisleiste direkt unter der Kopfzeile.';
+      rahmen.className = 'web-vorschau schnitt-seite';
+      rahmen.innerHTML = '<div class="hinweis-leiste"><strong></strong><p></p></div>';
+      rahmen.querySelector('strong').textContent = titel;
+      rahmen.querySelector('p').textContent = text;
+    } else {
+      $('#vOrt').textContent = 'Startseite, im Bereich der beiden Standorte, bei den Sprechzeiten.';
+      rahmen.className = 'web-vorschau schnitt-seite';
+      var teile = text.split(/\n+/);
+      rahmen.innerHTML = '<div class="zeiten-vorschau"><div class="zeiten-karte"><h3></h3><p></p></div><div class="zeiten-karte"><h3></h3><p></p></div></div>';
+      var k = rahmen.querySelectorAll('.zeiten-karte');
+      k[0].querySelector('h3').textContent = 'Wernigerode';
+      k[0].querySelector('p').textContent = teile[0] || text;
+      k[1].querySelector('h3').textContent = 'Heudeber';
+      k[1].querySelector('p').textContent = teile[1] || '';
+    }
+  }
 
   // Team
   function team() {
@@ -350,9 +465,10 @@
     var stat = Object.keys(STATUS).map(function (k) {
       return '<button class="pille p-' + k + (k === a.status ? ' aktiv' : '') + '" data-aktion="status" data-wert="' + k + '" data-id="' + a.id + '">' + STATUS[k] + '</button>';
     }).join('');
-    blatt('<p class="ueberzeile">' + a.typ + ' · ' + a.eingang + '</p><h2>' + a.name + '</h2><p><span class="marke-status m-bestand">Bestandspatient</span></p><p>' + a.text + '</p>' +
-      '<p class="ueberzeile">Weitergeben an</p><div class="pillen">' + leute + '</div>' +
-      '<p class="ueberzeile">Stand</p><div class="pillen">' + stat + '</div>',
+    blatt('<p class="ueberzeile">' + a.typ + ' · ' + a.eingang + '</p><h2>' + a.name + '</h2><p><span class="marke-status m-bestand">' + (a.web ? 'Von der Webseite' : 'Bestandspatient') + '</span>' + (a.standort ? ' · ' + STANDORTE[a.standort] : '') + '</p><p>' + a.text + '</p>' +
+      '<p class="ueberzeile">Bearbeitung</p><div class="pillen">' + stat + '</div>' +
+      '<p class="ueberzeile">Zuständig</p><div class="pillen">' + leute + '</div>' +
+      antwortWegeHtml(a, 'antwortweg'),
       a.status !== 'erledigt' ? '<button class="btn btn-gross" data-aktion="status" data-wert="erledigt" data-id="' + a.id + '">Erledigt</button>' : '');
   }
 
@@ -390,6 +506,17 @@
     }
     if (akt === 'gelesen') { finde(BOEGEN, id).gelesen = true; blattZu(); melden('Als gelesen markiert'); }
     if (akt === 'anarzt') { finde(BOEGEN, id).gelesen = true; blattZu(); melden('An Dr. Müller gegeben'); }
+    if (akt === 'antwortweg') { antwortWegSetzen(id, wert, anfrageZeigen); return; }
+    if (akt === 'termin-antwortweg') { antwortWegSetzen(id, wert, details); return; }
+    if (akt === 'patmed-an') {
+      var dat = stammVon(id);
+      if (dat) { dat.patmed = true; speichern(); }
+      alles();
+      if (finde(ANFRAGEN, id)) anfrageZeigen(id);
+      else details(id);
+      melden('PatMed verbunden (Demo: QR übergeben)');
+      return;
+    }
 
     if (!FUNKTIONEN.link && (akt === 'senden' || akt === 'oeffnen' || akt === 'eingang')) return;
     if (akt === 'senden') { o = finde(OHNE_BOGEN, id); o.gesendet = uhr(); o.geoeffnet = null; melden('Link an ' + o.name + ' gesendet (Demo)'); }
