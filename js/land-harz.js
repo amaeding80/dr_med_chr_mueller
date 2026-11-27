@@ -149,3 +149,42 @@ function initWischKnopf(knopf) {
 }
 function initWischKnoepfe() { document.querySelectorAll('[data-wisch-knopf]').forEach(initWischKnopf); }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initWischKnoepfe); else initWischKnoepfe();
+
+// Klasse fuer den Hilfe-Button: nur wenn die Demo-Knoepfe wirklich an sind
+if (PRAXIS.funktionen.demoKnoepfe) document.documentElement.classList.add('demo-knoepfe-an');
+
+// Praxis-Kompass: nicht mehr kleben, bevor er den Digitalen Empfang ueberdeckt
+(function () {
+  var kompass = document.getElementById('kompass');
+  var empfang = document.getElementById('empfang');
+  if (!kompass || !empfang) return;
+
+  var hoehe = 0;
+  var haftTop = 60;
+  var weg = false;
+
+  function merken() {
+    if (kompass.classList.contains('kompass-weg')) return;
+    var r = kompass.getBoundingClientRect();
+    if (r.height > 8) hoehe = r.height;
+    var t = parseFloat(getComputedStyle(kompass).top);
+    if (!isNaN(t)) haftTop = t;
+  }
+
+  function pruefe() {
+    merken();
+    var eTop = empfang.getBoundingClientRect().top;
+    var puffer = 24;
+    var grenze = haftTop + hoehe + puffer;
+    var sollWeg = weg ? (eTop < grenze + 24) : (eTop < grenze);
+    if (sollWeg === weg) return;
+    weg = sollWeg;
+    kompass.classList.toggle('kompass-weg', sollWeg);
+  }
+
+  window.addEventListener('scroll', pruefe, { passive: true });
+  window.addEventListener('resize', pruefe);
+  window.addEventListener('hashchange', pruefe);
+  if (window.ResizeObserver) new ResizeObserver(pruefe).observe(kompass);
+  pruefe();
+})();

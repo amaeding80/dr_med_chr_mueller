@@ -261,7 +261,7 @@ html:not(.js) .akk-zeichen { display: none; }
   .mobile-bottom-bar { right: calc(64px + env(safe-area-inset-right, 0px)) !important; }
   .pxa-btn {
     left: auto !important; right: calc(12px + env(safe-area-inset-right, 0px)) !important;
-    bottom: calc(34px + env(safe-area-inset-bottom, 0px)) !important;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important;
   }
 }
 /* Handy quer: Orts-Buttons in der Leiste wie die Buttons im Entwurf */
@@ -610,10 +610,10 @@ html:not(.js) .akk-zeichen { display: none; }
   #standort .loc-tel { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; vertical-align: middle; margin: -10px 0; }
 }
 
-/* Desktop: Hilfe-Button rechts unten – ueber dem Demo-Modus-Kasten (69px, nur >1024px auf einigen Seiten), nicht darauf */
+/* Desktop: Hilfe-Button nur anheben, wenn die Demo-Knoepfe sichtbar sind (Schalter PRAXIS.funktionen.demoKnoepfe) */
 @media (min-width: 1025px) {
-  body:has(#demo-buttons-wrap) ~ .pxa-btn { bottom: calc(101px + env(safe-area-inset-bottom, 0px)) !important; }
-  body:has(#demo-buttons-wrap) ~ .pxa-panel { bottom: calc(165px + env(safe-area-inset-bottom, 0px)); max-height: min(680px, calc(100vh - 185px)); }
+  html.demo-knoepfe-an .pxa-btn { bottom: calc(101px + env(safe-area-inset-bottom, 0px)) !important; }
+  html.demo-knoepfe-an .pxa-panel { bottom: calc(165px + env(safe-area-inset-bottom, 0px)); max-height: min(680px, calc(100vh - 185px)); }
 }
 
 /* Handy quer: Kopf „Digitaler Empfang“ wie hochkant gestapelt (sonst 4 Zeilen in schmaler Spalte bei 667px);
@@ -808,7 +808,7 @@ body > footer { margin-top: auto; width: 100%; }
   .mobile-bottom-bar { right: calc(64px + env(safe-area-inset-right, 0px)) !important; }
   .mobile-bottom-bar .bar-loc-btn { padding-left: 8px !important; padding-right: 8px !important; min-width: 0; }
   .mobile-bottom-bar .bar-kal { display: none !important; }
-  .pxa-btn { right: calc(12px + env(safe-area-inset-right, 0px)) !important; bottom: calc(28px + env(safe-area-inset-bottom, 0px)) !important; }
+  .pxa-btn { right: calc(12px + env(safe-area-inset-right, 0px)) !important; bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important; }
   body:not(:has(.mobile-bottom-bar)) .pxa-btn { bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important; }
 }
 
@@ -897,3 +897,11 @@ html, body { overflow-x: clip !important; overflow-y: visible !important; }
   .insta-sec.ohne-raster .insta-kopf > div:first-child { flex-basis: auto; }
 }
 .insta-raster[hidden] { display: none !important; }
+
+/* Praxis-Kompass: nicht mehr kleben, sobald er den Digitalen Empfang verdecken wuerde.
+   position bleibt im Dokumentfluss, damit der Empfang nicht nach oben springt. */
+#kompass.kompass-weg {
+  position: relative !important;
+  top: auto !important;
+  z-index: 1;
+}
