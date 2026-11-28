@@ -9,7 +9,7 @@ var PRAXIS_DATEN = {
           tel: '039458 223', telLink: 'tel:+4939458223' }
   },
 
-  // Sprechzeiten laut Dr. Müller (Gespräch 24.11.2026)
+  // Sprechzeiten laut Dr. Müller
   sprechzeiten: {
     wn: { 1: [[450, 750]], 2: [[780, 1080]], 3: [[420, 720]], 4: [[450, 780]], 5: [[480, 720]] },
     hd: { 1: [[480, 780]], 2: [[480, 780]], 3: [[420, 720]], 4: [[780, 1080]], 5: [[480, 780]] }

@@ -35,7 +35,7 @@
     try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){}
   }
 
-  // ---------- Styles ----------
+  // Styles
   var css = ''
   + '.pxa-btn{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));right:calc(20px + env(safe-area-inset-right,0px));left:auto;width:52px;height:52px;border-radius:50%;background:#384E33;border:none;cursor:pointer;z-index:99997;box-shadow:0 4px 16px rgba(0,0,0,.22);display:flex;align-items:center;justify-content:center;transition:transform .2s}'
   + '.pxa-btn:hover{transform:scale(1.06)}'
@@ -72,7 +72,7 @@
   + '.pxa-reveal{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));right:calc(20px + env(safe-area-inset-right,0px));left:auto;min-height:44px;background:#384E33;color:#fff;border:none;border-radius:999px;padding:10px 16px;font-size:13px;cursor:pointer;z-index:99997;display:none;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(0,0,0,.22)}'
   + '.pxa-reveal.pxa-zeigen{display:inline-flex}'
   + '@media(max-width:480px),(max-height:500px){.pxa-panel{left:auto;right:calc(8px + env(safe-area-inset-right,0px));bottom:calc(8px + env(safe-area-inset-bottom,0px));width:min(360px,calc(100vw - 16px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px)));max-height:calc(100vh - 16px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));max-height:calc(100dvh - 16px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))}.pxa-btn{width:44px;height:44px}.pxa-btn svg{width:21px;height:21px}.pxa-reveal{padding:8px 14px;font-size:13px}}'
-  // ---- Effekt-Klassen auf html ----
+  // Effekt-Klassen auf html
   + 'html.pxa-links-links main,html.pxa-links-links body{text-align:left !important}'
   + 'html.pxa-lesbare-schrift body,html.pxa-lesbare-schrift body *{font-family:Verdana,Arial,"Helvetica Neue",sans-serif !important;letter-spacing:.02em !important;word-spacing:.05em !important}'
   + 'html.pxa-graustufen body{filter:grayscale(1)}'
@@ -95,7 +95,7 @@
   styleEl.textContent = css;
   document.head.appendChild(styleEl);
 
-  // ---------- Icons (schlichte Strich-Icons) ----------
+  // Icons (schlichte Strich-Icons)
   var ic = {
     person: '<svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.4"/><path d="M12 8v6M12 10.3l-5 2.7M12 10.3l5 2.7M12 14l-3.5 6M12 14l3.5 6"/></svg>',
     schliessen: '<svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>',
@@ -115,7 +115,7 @@
     struktur: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>'
   };
 
-  // ---------- HTML aufbauen ----------
+  // HTML aufbauen
   var btn = document.createElement('button');
   btn.className = 'pxa-btn';
   btn.type = 'button';
@@ -274,7 +274,7 @@
     render();
   }
 
-  // ---------- Effekte anwenden ----------
+  // Effekte anwenden
   var textSchritte = [1, 1.15, 1.3, 1.45, 1.6];
   var zeileSchritte = [1, 1.25, 1.5, 1.8];
   var origFontSize = new WeakMap();

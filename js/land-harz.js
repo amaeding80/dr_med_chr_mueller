@@ -11,8 +11,8 @@ var PRAXIS = {
 
   // Online-Termin (js/termin.js)
   // ziel: 'vorschau' = nichts wird gesendet, Angaben landen nur in diesem Browser in der Dashboard-Demo
-  //       't2med'    = Schritt "Termin" zeigt T2med (einbettung = Adresse des T2med-Buchungsfensters, sonst link)
-  //       'endpunkt' = alle Angaben gehen verschlüsselt (https) als JSON an endpunkt, von dort ins Praxis-Dashboard
+  // 't2med'    = Schritt "Termin" zeigt T2med (einbettung = Adresse des T2med-Buchungsfensters, sonst link)
+  // 'endpunkt' = alle Angaben gehen verschlüsselt (https) als JSON an endpunkt, von dort ins Praxis-Dashboard
   termin: { ziel: 'vorschau', einbettung: '', endpunkt: '' },
 
   // Anamnesebogen: Vorlage folgt. Adresse eintragen, dann wird die Auswahl im Termin-Ablauf freigeschaltet
@@ -94,7 +94,6 @@ function toggleService(el) {
 }
 
 document.addEventListener('DOMContentLoaded', initAkk);
-// TODO: Akkordeon auch auf den Unterseiten nutzen, wenn Dr. Müller die Texte freigibt
 
 // Instagram – nur HIER Name eintragen und freischalten
 var instaName = 'nutridoccheck';

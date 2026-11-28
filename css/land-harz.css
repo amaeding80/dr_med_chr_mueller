@@ -1,24 +1,38 @@
-/* Land Harz Praxis – Ergaenzungen Okt. 2026 (nach dem Inline-CSS geladen) */
-
 /* Buttons sollen die Schrift erben */
-button, input, select, textarea { font-family: inherit; }
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
 
 /* Hero: zweite Zeile immer Terracotta */
-.hero-title-main em { color: var(--terracotta) !important; font-style: normal !important; }
+.hero-title-main em {
+  color: var(--terracotta) !important;
+  font-style: normal;
+}
 
-/* ---------- Hero-Foto (Desktop/Tablet) ---------- */
-.hero-portrait-col.foto-spalte { display: none; }
+/* Hero-Foto (Desktop/Tablet) */
+.hero-portrait-col.foto-spalte {
+  display: none;
+}
 .foto-rahmen {
-    background: var(--harz-sand-soft);
-    padding: 10px;
-    border-radius: 22px;
+  background: var(--harz-sand-soft);
+  padding: 10px;
+  border-radius: 22px;
 }
 .foto-rahmen img {
-    display: block; width: 100%; height: auto;
-    aspect-ratio: 427 / 560; object-fit: cover; object-position: 50% 0;
-    border-radius: 14px;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 427 / 560;
+  object-fit: cover;
+  object-position: 50% 0;
+  border-radius: 14px;
 }
-.slot-card { border-top: 2px solid var(--terracotta) !important; }
+.slot-card {
+  border-top: 2px solid var(--terracotta);
+}
 
 @media (min-width: 744px) and (min-height: 501px) {
   .hero-layout {
@@ -27,328 +41,799 @@ button, input, select, textarea { font-family: inherit; }
     gap: 48px;
     align-items: start;
   }
-  .hero-portrait-col.foto-spalte { display: block; justify-self: end; width: 100%; }
+  .hero-portrait-col.foto-spalte {
+    display: block;
+    justify-self: end;
+    width: 100%;
+  }
 }
-/* Tablet hoch: Foto schmaler, Kachel bleibt wie bisher unter dem Text */
 @media (min-width: 744px) and (max-width: 1024px) and (orientation: portrait) {
-  .hero-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 260px); gap: 32px; }
+  .hero-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 260px);
+    gap: 32px;
+  }
 }
 @media (min-width: 1400px) {
-  .hero-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 380px); gap: 72px; }
-  .hero-portrait-col.foto-spalte { max-width: 380px; }
+  .hero-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+    gap: 72px;
+  }
+  .hero-portrait-col.foto-spalte {
+    max-width: 380px;
+  }
 }
 
 /* Tablet hoch: Kachel klebte am linken Rand – an den Container angleichen */
 @media (min-width: 680px) and (max-width: 1024px) and (orientation: portrait) {
-  .hero .slot-card { margin-left: 28px !important; width: calc(100% - 56px) !important; }
+  .hero .slot-card {
+    margin-left: 28px;
+    width: calc(100% - 56px);
+  }
 }
 
 /* Handy hoch: etwas mehr Luft ueber der H1 (Header ist fixed, 52px) */
 @media (max-width: 679px) and (orientation: portrait) {
-  .hero { padding-top: 76px !important; }
+  .hero {
+    padding-top: 76px !important;
+  }
 }
-/* 680–767 hoch: Header ist dort fixed (95px) und lag ueber der H1 – Bugfix */
 @media (min-width: 680px) and (max-width: 767px) and (orientation: portrait) {
-  .hero { padding-top: 119px !important; }
+  .hero {
+    padding-top: 119px;
+  }
 }
 
-/* ---------- Akkordeon (Leistungen + allgemein) ---------- */
-.service-h { margin: 0; font: inherit; }
-.akk-btn {
-    width: 100%; background: none; border: 0; padding: 0;
-    text-align: left; color: inherit; cursor: pointer;
-    min-height: 44px;
+/* Akkordeon (Leistungen + allgemein) */
+.service-h {
+  margin: 0;
+  font: inherit;
 }
-.akk-btn:focus-visible { outline: 2px solid var(--olive-haupt); outline-offset: 4px; border-radius: 6px; }
-.service-item-title { display: block; }
-.service-body, .service-item.active .service-body { max-height: none !important; overflow: visible; padding-top: 16px; padding-bottom: 8px; }
-.service-body[hidden] { display: none !important; }
-html:not(.js) .service-item .service-toggle-icon { display: none; }
+.akk-btn {
+  width: 100%;
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+  min-height: 44px;
+}
+.akk-btn:focus-visible {
+  outline: 2px solid var(--olive-haupt);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+.service-item-title {
+  display: block;
+}
+.service-body,
+.service-item.active .service-body {
+  max-height: none;
+  overflow: visible;
+  padding-top: 16px;
+  padding-bottom: 8px;
+}
+.service-body[hidden] {
+  display: none;
+}
+html:not(.js) .service-item .service-toggle-icon {
+  display: none;
+}
 
 /* Unterlagen: zuklappbar */
-.unterl-btn { display: flex; align-items: center; gap: 12px; font-size: inherit; font-weight: inherit; color: inherit; }
+.unterl-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
 .akk-zeichen {
-  width: 28px; height: 28px; flex-shrink: 0;
-  border: 1px solid rgba(56,78,51,0.25); border-radius: 50%;
-  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border: 1px solid rgba(56, 78, 51, 0.25);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
-.akk-zeichen::before { content: "+"; font-size: 18px; line-height: 1; color: var(--olive-haupt); }
-.akk-btn[aria-expanded="true"] .akk-zeichen::before { content: "–"; }
-html:not(.js) .akk-zeichen { display: none; }
-#unterl-box[hidden] { display: none; }
-.download-v2-head.akk-item:not(.offen) { margin-bottom: 0; border-bottom: 0; padding-bottom: 0; }
+.akk-zeichen::before {
+  content: '+';
+  font-size: 18px;
+  line-height: 1;
+  color: var(--olive-haupt);
+}
+.akk-btn[aria-expanded='true'] .akk-zeichen::before {
+  content: '–';
+}
+html:not(.js) .akk-zeichen {
+  display: none;
+}
+#unterl-box[hidden] {
+  display: none;
+}
+.download-head.akk-item:not(.offen) {
+  margin-bottom: 0;
+  border-bottom: 0;
+  padding-bottom: 0;
+}
 
-/* ---------- Handy: Fliesstext mind. 17px ---------- */
+/* Handy: Fliesstext mind. 17px */
 @media (max-width: 767px), (orientation: landscape) and (max-height: 500px) {
-    body { font-size: 1.0625rem; }
-    main p:not(.hero-location):not(.swipe-hint):not(.leistungs-label-mob):not(.platzh-mini),
-    main li, .service-desc, .hero-lead-text, .journal-sub {
-        font-size: 1.0625rem !important;
-        line-height: 1.6 !important;
-    }
+  body {
+    font-size: 1.0625rem;
+  }
+  main p:not(.hero-location):not(.swipe-hint):not(.leistungs-label-mob):not(.platzh-mini),
+  main li,
+  .service-desc,
+  .hero-lead-text,
+  .journal-sub {
+    font-size: 1.0625rem !important;
+    line-height: 1.6 !important;
+  }
 }
 
-/* ---------- Woran Sie uns messen duerfen ---------- */
-.mess-sec { background: var(--bg); padding: 88px 0 96px; }
-.mess-kopf {
-    display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-    gap: 48px; align-items: end; margin-bottom: 48px;
+/* Woran Sie uns messen duerfen */
+.mess-sec {
+  background: var(--bg);
+  padding: 88px 0 96px;
 }
-.mess-titel { font-weight: 600 !important; line-height: 1.1; margin: 0; }
-.mess-titel em { font-style: normal; font-weight: 400; color: var(--terracotta); display: block; }
-.mess-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.mess-kopf {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: end;
+  margin-bottom: 48px;
+}
+.mess-titel {
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0;
+}
+.mess-titel em {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--terracotta);
+  display: block;
+}
+.mess-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
 .mess-kachel {
   background: var(--surface);
-  border: 1px solid rgba(56,78,51,0.14);
+  border: 1px solid rgba(56, 78, 51, 0.14);
   border-radius: 14px;
   padding: 28px 28px 30px;
 }
 .mess-kachel h3 {
-  font-family: var(--font-sans) !important; font-weight: 600; font-size: 1.25rem;
-  color: var(--olive-haupt); margin: 0 0 12px; line-height: 1.3;
+  font-family: var(--font-sans) !important;
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--olive-haupt);
+  margin: 0 0 12px;
+  line-height: 1.3;
 }
 /* Platzhalter: sichtbar als "fehlt noch" */
 .platzh {
-    color: var(--text-muted);
-    border: 1px dashed var(--harz-sand);
-    background: var(--harz-sand-soft);
-    border-radius: 8px;
-    padding: 10px 12px;
-    font-size: 0.95rem;
-    margin: 0;
+  color: var(--text-muted);
+  border: 1px dashed var(--harz-sand);
+  background: var(--harz-sand-soft);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  margin: 0;
 }
 @media (max-width: 1024px) {
-  .mess-sec { padding: 64px 0 72px; }
-  .mess-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mess-sec {
+    padding: 64px 0 72px;
+  }
+  .mess-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 @media (max-width: 767px) {
-  .mess-kopf { grid-template-columns: 1fr; gap: 16px; margin-bottom: 28px; }
+  .mess-kopf {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
 }
 @media (max-width: 599px) {
-  .mess-sec { padding: 48px 0 56px; }
-  .mess-grid { grid-template-columns: 1fr; gap: 14px; }
-  .mess-kachel { padding: 22px 20px 24px; }
-  .mess-titel { font-size: 2rem !important; }
+  .mess-sec {
+    padding: 48px 0 56px;
+  }
+  .mess-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .mess-kachel {
+    padding: 22px 20px 24px;
+  }
+  .mess-titel {
+    font-size: 2rem;
+  }
 }
 
-/* ---------- Instagram ---------- */
-.insta-sec { background: var(--surface); padding: 80px 0; border-top: 1px solid rgba(56,78,51,0.08); }
-.insta-kopf { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 28px; flex-wrap: wrap; }
-.insta-kopf .sec-title { margin: 0 0 8px; }
-.insta-sub { color: var(--text-muted); margin: 0; }
-.insta-profil { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.insta-avatar { width: 44px; height: 44px; border-radius: 50%; background: #F2ECE4; color: var(--olive-haupt); display: inline-flex; align-items: center; justify-content: center; }
-.insta-handle { font-weight: 600; color: var(--text); }
+/* Instagram */
+.insta-sec {
+  background: var(--surface);
+  padding: 80px 0;
+  border-top: 1px solid rgba(56, 78, 51, 0.08);
+}
+.insta-kopf {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.insta-kopf .sec-title {
+  margin: 0 0 8px;
+}
+.insta-sub {
+  color: var(--text-muted);
+  margin: 0;
+}
+.insta-profil {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.insta-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #f2ece4;
+  color: var(--olive-haupt);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.insta-handle {
+  font-weight: 600;
+  color: var(--text);
+}
 .insta-folgen {
-    display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px;
-    background: var(--olive-haupt); color: #fff; border-radius: 8px;
-    font-weight: 600; text-decoration: none; transition: background .2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  background: var(--olive-haupt);
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
 }
-.insta-folgen .ig-icon { width: 18px; height: 18px; }
-.insta-folgen:hover { background: var(--olive-dark); }
-.insta-folgen:focus-visible { outline: 2px solid var(--olive-haupt); outline-offset: 3px; }
-.insta-folgen[aria-disabled="true"] { cursor: default; }
-/* Beispielbeitraege: gestaltete Kacheln ohne Fotos (Farben aus den Variablen, AA-Kontrast) */
-.insta-raster { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; max-width: 660px; list-style: none; margin: 0; padding: 0; }
+.insta-folgen .ig-icon {
+  width: 18px;
+  height: 18px;
+}
+.insta-folgen:hover {
+  background: var(--olive-dark);
+}
+.insta-folgen:focus-visible {
+  outline: 2px solid var(--olive-haupt);
+  outline-offset: 3px;
+}
+.insta-folgen[aria-disabled='true'] {
+  cursor: default;
+}
+.insta-raster {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 660px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 .insta-post {
-  aspect-ratio: 1 / 1; border-radius: 14px; padding: 16px;
-  display: flex; flex-direction: column; justify-content: space-between;
-  background: var(--harz-sand-soft); color: var(--olive-haupt); overflow: hidden; margin: 0;
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--harz-sand-soft);
+  color: var(--olive-haupt);
+  overflow: hidden;
+  margin: 0;
 }
-.insta-post-kopf { display: flex; align-items: center; gap: 6px; font-size: 0.8125rem; font-weight: 600; opacity: .95; }
-.insta-post-titel { font-family: var(--font-serif); font-size: 1.15rem; line-height: 1.25; font-weight: 600; overflow-wrap: anywhere; hyphens: auto; }
-.insta-post-sand { background: var(--harz-sand-soft); color: var(--olive-haupt); }
-.insta-post-olive { background: var(--olive-haupt); color: #fff; }
-.insta-post-salbei { background: var(--olive-soft); color: var(--olive-haupt); }
-.insta-post-terra { background: var(--terracotta-caps, #8B5E4D); color: #fff; }
-.insta-post-ivory { background: var(--bg); color: var(--olive-haupt); border: 1px solid var(--harz-sand); }
-.insta-post-harz { background: var(--harz-sand); color: var(--text); }
-.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-@media (max-width: 1024px) { .insta-raster { max-width: 560px; } }
-/* Desktop: Kopf links, Raster rechts – keine leere Flaeche neben dem Raster */
+.insta-post-kopf {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  opacity: 0.95;
+}
+.insta-post-titel {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  line-height: 1.25;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+.insta-post-sand {
+  background: var(--harz-sand-soft);
+  color: var(--olive-haupt);
+}
+.insta-post-olive {
+  background: var(--olive-haupt);
+  color: #fff;
+}
+.insta-post-salbei {
+  background: var(--olive-soft);
+  color: var(--olive-haupt);
+}
+.insta-post-terra {
+  background: var(--terracotta-caps, #8b5e4d);
+  color: #fff;
+}
+.insta-post-ivory {
+  background: var(--bg);
+  color: var(--olive-haupt);
+  border: 1px solid var(--harz-sand);
+}
+.insta-post-harz {
+  background: var(--harz-sand);
+  color: var(--text);
+}
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+@media (max-width: 1024px) {
+  .insta-raster {
+    max-width: 560px;
+  }
+}
 @media (min-width: 1025px) {
-  .insta-sec .container { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,620px); gap: 56px; align-items: center; }
-  .insta-kopf { flex-direction: column; align-items: flex-start; margin-bottom: 0; }
-  .insta-raster { max-width: none; }
+  .insta-sec .container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 620px);
+    gap: 56px;
+    align-items: center;
+  }
+  .insta-kopf {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 0;
+  }
+  .insta-raster {
+    max-width: none;
+  }
 }
 @media (max-width: 599px) {
-  .insta-sec { padding: 52px 0; }
-  .insta-raster { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; max-width: 380px; }
-  .insta-post { padding: 12px; border-radius: 12px; }
-  .insta-post-titel { font-size: 1.0625rem; }
+  .insta-sec {
+    padding: 52px 0;
+  }
+  .insta-raster {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    max-width: 380px;
+  }
+  .insta-post {
+    padding: 12px;
+    border-radius: 12px;
+  }
+  .insta-post-titel {
+    font-size: 1.0625rem;
+  }
 }
 
-/* ---------- Termin-Leiste & Hilfe-Button (Korrekturen EasyPeecy) ---------- */
-@media (max-width: 679px) and (orientation: portrait) {
-  .mobile-bottom-bar .bar-hint { font-size: 0.875rem !important; }
-}
 /* Handy quer: Leiste einzeilig + Hilfe-Button rechts daneben */
 @media (orientation: landscape) and (max-height: 500px) {
-    .mobile-bottom-bar { bottom: 8px !important; right: 64px !important; padding: 3px 3px 3px 12px !important; }
-    .mobile-bottom-bar::before {
-        content: "Termin buchen";
-        font-size: 0.875rem; font-weight: 600; color: var(--olive-haupt);
-        white-space: nowrap; padding-right: 8px;
-    }
-    .mobile-bottom-bar .bar-loc-btn { padding: 0 12px !important; min-height: 38px; }
-    .mobile-bottom-bar .bar-city { font-size: 0.875rem !important; }
-    .mobile-bottom-bar .bar-hint {
-        position: absolute !important; width: 1px; height: 1px; overflow: hidden;
-        clip: rect(0 0 0 0); white-space: nowrap;
-    }
-    .mobile-bottom-bar .terracotta-dot { width: 8px; height: 8px; }
-    .pxa-btn { left: auto !important; right: calc(12px + env(safe-area-inset-right, 0px)) !important; bottom: calc(8px + env(safe-area-inset-bottom, 0px)) !important; width: 44px !important; height: 44px !important; }
-    .pxa-btn svg { width: 21px !important; height: 21px !important; }
+  .mobile-bottom-bar {
+    bottom: 8px !important;
+    right: 64px !important;
+    padding: 3px 3px 3px 12px !important;
+  }
+  .mobile-bottom-bar::before {
+    content: 'Termin buchen';
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--olive-haupt);
+    white-space: nowrap;
+    padding-right: 8px;
+  }
+  .mobile-bottom-bar .bar-loc-btn {
+    padding: 0 12px !important;
+  }
+  .mobile-bottom-bar .bar-city {
+    font-size: 0.875rem;
+  }
+  .mobile-bottom-bar .bar-hint {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .mobile-bottom-bar .terracotta-dot {
+    width: 8px;
+    height: 8px;
+  }
+  .pxa-btn {
+    left: auto !important;
+    right: calc(12px + env(safe-area-inset-right, 0px)) !important;
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px)) !important;
+    width: 44px !important;
+    height: 44px !important;
+  }
+  .pxa-btn svg {
+    width: 21px !important;
+    height: 21px !important;
+  }
 }
-/* Nest Hub & Co. (quer, wenig Hoehe): Hero kuerzer, Hilfe-Button nach rechts */
 @media (min-width: 768px) and (min-height: 501px) and (max-height: 700px) and (orientation: landscape) {
-  .pxa-btn { left: auto !important; right: calc(14px + env(safe-area-inset-right, 0px)) !important; bottom: calc(14px + env(safe-area-inset-bottom, 0px)) !important; width: 44px !important; height: 44px !important; }
+  .pxa-btn {
+    left: auto !important;
+    right: calc(14px + env(safe-area-inset-right, 0px)) !important;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px)) !important;
+    width: 44px !important;
+    height: 44px !important;
+  }
 }
 
 /* Handy: Fachrichtungs-Zeile lesbar statt Versalien */
 @media (max-width: 767px), (orientation: landscape) and (max-height: 500px) {
-  .hero-location { font-size: 0.875rem !important; text-transform: none !important; letter-spacing: normal !important; }
+  .hero-location {
+    font-size: 0.875rem;
+    text-transform: none;
+    letter-spacing: normal;
+  }
 }
 
 /* Hinweis unter den Platzhaltern (wie lang der Text sein soll) */
-.platzh-mini { font-size: 0.875rem; color: var(--text-muted); margin: 6px 0 0; }
-.mess-kachel { display: flex; flex-direction: column; }
+.mess-kachel {
+  display: flex;
+  flex-direction: column;
+}
 
 /* Handy: nichts unter 13px (ausser Footer-Kleingedrucktes) */
 @media (max-width: 767px), (orientation: landscape) and (max-height: 500px) {
-  .brand-mark span, .leistungs-label-mob, .swipe-hint, .service-tag-pill,
-  .sec-tag, .badge-wernigerode, .badge-ilsenburg { font-size: 0.8125rem !important; }
-  .compass-btn-title, .team-card-role-eq, .locations-sec td { font-size: 0.875rem !important; }
+  .brand-mark span,
+  .leistungs-label-mob,
+  .swipe-hint,
+  .service-tag-pill,
+  .sec-tag,
+  .badge-wernigerode,
+  .badge-ilsenburg {
+    font-size: 0.8125rem !important;
+  }
+  .compass-btn-title,
+  .team-card-role-eq,
+  .locations-sec td {
+    font-size: 0.875rem;
+  }
 }
 @media (max-width: 767px), (orientation: landscape) and (max-height: 500px) {
-  html body .loc-box span.badge-wernigerode, html body .loc-box span.badge-ilsenburg,
-  html body .leistungs-kachel span, html body .mob-standort-zeile span, html body .hero .hero-chip, html body .chip-arrow span { font-size: 0.8125rem !important; }
+  html body .loc-box span.badge-wernigerode,
+  html body .loc-box span.badge-ilsenburg,
+  html body .leistungs-kachel span,
+  html body .mob-standort-zeile span,
+  html body .hero .hero-chip,
+  html body .chip-arrow span {
+    font-size: 0.8125rem !important;
+  }
 }
 
-/* ---------- Mobil-Hero: Foto gross oben mit Namenszeile (Variante C) ---------- */
-.foto-rahmen { position: relative; }
-.foto-name { display: none; }
+.foto-rahmen {
+  position: relative;
+}
+.foto-name {
+  display: none;
+}
 @media (max-width: 679px) and (orientation: portrait) {
-  .hero-layout { display: flex; flex-direction: column; }
-  .hero-portrait-col.foto-spalte { display: block !important; order: -1; margin: 0 0 20px; }
-  .foto-rahmen { padding: 6px; border-radius: 18px; }
+  .hero-layout {
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-portrait-col.foto-spalte {
+    display: block;
+    order: -1;
+    margin: 0 0 20px;
+  }
+  .foto-rahmen {
+    padding: 6px;
+    border-radius: 18px;
+  }
   .foto-rahmen img {
-      border-radius: 14px;
-      aspect-ratio: 4 / 3; max-height: 38vh; max-height: 38svh;
-      object-position: 50% 16%;
+    border-radius: 14px;
+    aspect-ratio: 4 / 3;
+    max-height: 38vh;
+    max-height: 38svh;
+    object-position: 50% 16%;
   }
 }
 @media (orientation: landscape) and (max-height: 500px) {
-  .hero > .container { padding-right: 16px !important; }
-  .hero-layout { display: grid !important; grid-template-columns: minmax(0, 38%) minmax(0, 1fr); gap: 20px; align-items: center; }
-  .hero-portrait-col.foto-spalte { display: block !important; grid-row: 1; grid-column: 1; }
-  .hero-text-col { grid-row: 1; grid-column: 2; }
-  .foto-rahmen { padding: 6px; border-radius: 16px; }
-  .foto-rahmen img { border-radius: 12px; aspect-ratio: auto; height: 50vh; object-position: 50% 14%; }
+  .hero > .container {
+    padding-right: 16px;
+  }
+  .hero-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 38%) minmax(0, 1fr);
+    gap: 20px;
+    align-items: center;
+  }
+  .hero-portrait-col.foto-spalte {
+    display: block;
+    grid-row: 1;
+    grid-column: 1;
+  }
+  .hero-text-col {
+    grid-row: 1;
+    grid-column: 2;
+  }
+  .foto-rahmen {
+    padding: 6px;
+    border-radius: 16px;
+  }
+  .foto-rahmen img {
+    border-radius: 12px;
+    aspect-ratio: auto;
+    height: 50vh;
+    object-position: 50% 14%;
+  }
 }
 @media (max-width: 679px) and (orientation: portrait), (orientation: landscape) and (max-height: 500px) {
-    .foto-name {
-        display: block;
-        margin: 0; padding: 7px 6px 2px;
-        color: var(--text);
-        font-size: 0.8125rem !important; line-height: 1.35 !important; font-weight: 600;
-    }
-}
-
-/* Handy hoch: Hilfe-Button NEBEN der Termin-Leiste (Leiste rueckt 52px ein) – verdeckt so keinen Inhalt
-   und liegt nicht auf der Leiste; Leiste 89px hoch, Knopf 44px mittig dazu */
-@media (max-width: 679px) and (orientation: portrait) {
-  .mobile-bottom-bar { right: calc(64px + env(safe-area-inset-right, 0px)) !important; }
-  .pxa-btn {
-    left: auto !important; right: calc(12px + env(safe-area-inset-right, 0px)) !important;
-    bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important;
+  .foto-name {
+    display: block;
+    margin: 0;
+    padding: 7px 6px 2px;
+    color: var(--text);
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    font-weight: 600;
   }
 }
-/* Handy quer: Orts-Buttons in der Leiste wie die Buttons im Entwurf */
+
+@media (max-width: 679px) and (orientation: portrait) {
+  .pxa-btn {
+    left: auto !important;
+  }
+}
 @media (orientation: landscape) and (max-height: 500px) {
-    .mobile-bottom-bar .bar-loc-btn {
-        background: var(--olive-soft) !important;
-        border: 1px solid rgba(56,78,51,0.18) !important;
-        border-radius: 8px !important;
-        min-height: 40px; margin-left: 4px;
-        color: var(--olive-haupt);
-        font-family: var(--font-sans);
-        transition: background .2s, border-color .2s;
-    }
-    .mobile-bottom-bar .bar-loc-btn:hover { background: #E2EADD !important; border-color: var(--olive-haupt) !important; }
-    .mobile-bottom-bar .bar-loc-btn:focus-visible { outline: 2px solid var(--olive-haupt); outline-offset: 2px; }
-    .mobile-bottom-bar .bar-city { color: var(--olive-haupt) !important; }
-    .mobile-bottom-bar .bar-divider { display: none !important; }
+  .mobile-bottom-bar .bar-loc-btn {
+    background: var(--olive-soft) !important;
+    border: 1px solid rgba(56, 78, 51, 0.18) !important;
+    border-radius: 8px;
+    min-height: 40px;
+    margin-left: 4px;
+    color: var(--olive-haupt);
+    font-family: var(--font-sans);
+    transition:
+      background 0.2s,
+      border-color 0.2s;
+  }
+  .mobile-bottom-bar .bar-loc-btn:hover {
+    background: #e2eadd !important;
+    border-color: var(--olive-haupt) !important;
+  }
+  .mobile-bottom-bar .bar-loc-btn:focus-visible {
+    outline: 2px solid var(--olive-haupt);
+    outline-offset: 2px;
+  }
+  .mobile-bottom-bar .bar-city {
+    color: var(--olive-haupt) !important;
+  }
+  .mobile-bottom-bar .bar-divider {
+    display: none;
+  }
 }
 
 /* Bilder von Dr. Mueller: Sandrahmen wie beim Hero-Foto */
-.bild-rahmen { background: #F2ECE4; padding: 6px; border-radius: 14px; line-height: 0; }
-.bild-rahmen img { display: block; width: 100%; height: auto; border-radius: 9px; }
-
-/* Leistungen: Bild neben dem Text im offenen Feld (Quellen 640px breit, Anzeige max. 220px) */
-.service-body:not([hidden]) { display: grid; grid-template-columns: minmax(0,1fr) auto; column-gap: 28px; align-items: start; }
-.leist-text { min-width: 0; }
-.leist-bild { order: 2; width: 220px; margin-top: 4px; }
-@media (max-width: 1024px) { .leist-bild { width: 180px; } }
-@media (max-width: 767px), (orientation: landscape) and (max-height: 500px) {
-  .service-body:not([hidden]) { grid-template-columns: minmax(0,1fr); }
-  .leist-bild { order: -1; width: 100%; max-width: 280px; margin: 0 0 12px; }
+.bild-rahmen {
+  background: #f2ece4;
+  padding: 6px;
+  border-radius: 14px;
+  line-height: 0;
+}
+.bild-rahmen img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 9px;
 }
 
-/* Digitaler Empfang: Banner „Digital ankommen“ – Bild links, Text-Panel rechts.
-   Self-Check-in-Foto ist nur 360x640: Bildspalte hoechstens 360px (und 40 %), damit es nie hochskaliert wird */
-.digi-banner { display: grid; grid-template-columns: minmax(0, min(40%, 360px)) minmax(0, 1fr); margin-top: 28px; border-radius: 14px; overflow: hidden; background: var(--olive-haupt); }
-.digi-banner-bild { min-height: 300px; position: relative; }
-.digi-banner-bild img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 5%; display: block; }
-.digi-banner-text > * { max-width: 560px; }
-.nowrap-wort { white-space: nowrap; }
-.digi-banner-text { padding: 36px 40px 32px; color: #fff; display: flex; flex-direction: column; justify-content: center; }
-.digi-banner-eyebrow { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #DCE5D6; margin: 0 0 12px; }
-.digi-banner-titel { font-family: var(--font-serif); font-size: 1.75rem; line-height: 1.2; font-weight: 600; color: #fff; margin: 0 0 14px; }
-.digi-banner-text p:last-child { font-size: 1rem; line-height: 1.6; color: #fff; margin: 0; }
-/* Mobil/schmales Tablet (bis 767px): nebeneinander – Bild links ~40 % in voller Bannerhoehe, gruenes Feld rechts.
-   Ausschnitt rechtslastig, damit Dr. Mueller UND die Patientin im Bild bleiben. */
-@media (max-width: 767px), (orientation: landscape) and (max-height: 500px) {
-  .digi-banner { grid-template-columns: minmax(0, min(40%, 360px)) minmax(0, 1fr); }
-  .digi-banner-bild { min-height: 0; position: relative; }
-  .digi-banner-bild img { position: absolute; inset: 0; object-position: 50% 5%; }
-  .digi-banner-text { padding: 22px 22px 20px; }
-  .digi-banner-titel { font-size: 1.3rem; margin-bottom: 10px; }
-  /* gegen die globale Handy-Regel „main p … 1.0625rem !important“: Bannertext 15px */
-  #empfang .digi-banner-text p:last-child { font-size: 0.9375rem !important; line-height: 1.55; }
-  #empfang .digi-banner-eyebrow { font-size: 0.75rem !important; }
+.service-body:not([hidden]) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 28px;
+  align-items: start;
 }
-/* Handy hochkant (unter 600px): Bild (3:4) links gefloatet, Kicker + Ueberschrift oben buendig auf Kopfhoehe,
-   Text laeuft daneben weiter und dann in voller Breite darunter.
-   Bildhoehe = Kicker (16) + 6 + Ueberschrift (2 x 1,22 x --tf) + 10 + 3 Textzeilen (--zn x 24,8) - 4,
-   damit die Bildunterkante genau mit der 3. Textzeile abschliesst (keine Einzelwoerter am Bildrand). */
+.leist-text {
+  min-width: 0;
+}
+.leist-bild {
+  order: 2;
+  width: 220px;
+  margin-top: 4px;
+}
+@media (max-width: 1024px) {
+  .leist-bild {
+    width: 180px;
+  }
+}
+@media (max-width: 767px), (orientation: landscape) and (max-height: 500px) {
+  .service-body:not([hidden]) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .leist-bild {
+    order: -1;
+  }
+}
+
+.digi-banner {
+  display: grid;
+  grid-template-columns: minmax(0, min(40%, 360px)) minmax(0, 1fr);
+  margin-top: 28px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--olive-haupt);
+}
+.digi-banner-bild {
+  min-height: 300px;
+  position: relative;
+}
+.digi-banner-bild img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 5%;
+  display: block;
+}
+.digi-banner-text > * {
+  max-width: 560px;
+}
+.nowrap-wort {
+  white-space: nowrap;
+}
+.digi-banner-text {
+  padding: 36px 40px 32px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.digi-banner-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #dce5d6;
+  margin: 0 0 12px;
+}
+.digi-banner-titel {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  line-height: 1.2;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 14px;
+}
+.digi-banner-text p:last-child {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #fff;
+  margin: 0;
+}
+@media (max-width: 767px), (orientation: landscape) and (max-height: 500px) {
+  .digi-banner {
+    grid-template-columns: minmax(0, min(40%, 360px)) minmax(0, 1fr);
+  }
+  .digi-banner-bild {
+    min-height: 0;
+    position: relative;
+  }
+  .digi-banner-bild img {
+    position: absolute;
+    inset: 0;
+    object-position: 50% 5%;
+  }
+  .digi-banner-text {
+    padding: 22px 22px 20px;
+  }
+  .digi-banner-titel {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+  }
+  #empfang .digi-banner-text p:last-child {
+    font-size: 0.9375rem !important;
+    line-height: 1.55;
+  }
+  #empfang .digi-banner-eyebrow {
+    font-size: 0.75rem !important;
+  }
+}
 @media (max-width: 599px) and (orientation: portrait) {
-  .digi-banner { display: flow-root; container-type: inline-size; padding: 14px 12px 18px;
-    --tf: clamp(14px, calc(8.7cqi - 7.8px), 22px); --zn: 3; }
-  .digi-banner-text { display: block; padding: 0; }
-  .digi-banner-text > * { max-width: none; }
-  .digi-banner-bild { float: left; min-height: 0; height: calc(16px + 6px + 2.44 * var(--tf) + 10px + var(--zn) * 24.8px - 4px);
-    aspect-ratio: 3 / 4; margin: 0 12px 0 0; border-radius: 10px; overflow: hidden; }
-  .digi-banner-bild img { object-position: 50% 0%; }
-  #empfang .digi-banner-eyebrow { margin: 0 0 6px; font-size: 0.6875rem !important; line-height: 16px; letter-spacing: 0.04em; white-space: nowrap; }
-  .digi-banner-titel { font-size: var(--tf); line-height: 1.22; margin: 0 0 10px; text-wrap: balance; }
-  .digi-banner-text p:last-child { margin: 0; text-wrap: pretty; }
-  #empfang .digi-banner-text p:last-child { font-size: 1rem !important; line-height: 1.55 !important; }
+  .digi-banner {
+    display: flow-root;
+    container-type: inline-size;
+    padding: 14px 12px 18px;
+    --tf: clamp(14px, calc(8.7cqi - 7.8px), 22px);
+    --zn: 3;
+  }
+  .digi-banner-text {
+    display: block;
+    padding: 0;
+  }
+  .digi-banner-text > * {
+    max-width: none;
+  }
+  .digi-banner-bild {
+    float: left;
+    min-height: 0;
+    height: calc(16px + 6px + 2.44 * var(--tf) + 10px + var(--zn) * 24.8px - 4px);
+    aspect-ratio: 3 / 4;
+    margin: 0 12px 0 0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .digi-banner-bild img {
+    object-position: 50% 0%;
+  }
+  #empfang .digi-banner-eyebrow {
+    margin: 0 0 6px;
+    font-size: 0.6875rem !important;
+    line-height: 16px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .digi-banner-titel {
+    font-size: var(--tf);
+    line-height: 1.22;
+    margin: 0 0 10px;
+    text-wrap: balance;
+  }
+  .digi-banner-text p:last-child {
+    margin: 0;
+    text-wrap: pretty;
+  }
+  #empfang .digi-banner-text p:last-child {
+    font-size: 1rem !important;
+    line-height: 1.55 !important;
+  }
 }
-/* Sehr schmale Handys (unter 350px): nur 2 Textzeilen neben dem Bild, sonst wird die Spalte fuer die Ueberschrift zu schmal */
 @media (max-width: 349px) and (orientation: portrait) {
-  .digi-banner { --zn: 2; --tf: clamp(14px, calc(8.7cqi - 6.2px), 22px); }
+  .digi-banner {
+    --zn: 2;
+    --tf: clamp(14px, calc(8.7cqi - 6.2px), 22px);
+  }
 }
+.team-karte-bild {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 35% 30%;
+  display: block;
 }
-}
-
-.team-karte-foto-cm { background: #F2ECE4 !important; padding: 0 !important; overflow: hidden; }
-.team-karte-bild { width: 100%; height: 100%; object-fit: cover; object-position: 35% 30%; display: block; }
 
 /* Unterseiten: Bild oben in der Seitenleiste */
-.seiten-bild { width: 100%; max-width: 360px; }
-.panel-bild { width: 100%; max-width: 320px; margin: 0 0 18px; }
-
+.seiten-bild {
+  width: 100%;
+  max-width: 360px;
+}
 
 /* Unterseiten Desktop: Inhalt rechts neben der festen Termin-Karte */
 @media (min-width: 1025px) {
@@ -357,557 +842,1537 @@ html:not(.js) .akk-zeichen { display: none; }
   }
 }
 
-
 /* Impressum / Datenschutz (Platzhalter) */
-.recht-text { max-width: 760px; }
-.recht-text .platzh { margin: 0 0 22px; }
-.recht-hinweis { margin-top: 40px; background: var(--olive-soft); border: 1px solid rgba(56,78,51,.18); border-radius: 14px; padding: 22px 26px; }
-.recht-hinweis h2 { margin-top: 0; }
-.recht-hinweis li { margin-bottom: 6px; }
+.recht-text {
+  max-width: 760px;
+}
+.recht-text .platzh {
+  margin: 0 0 22px;
+}
 
-/* Unterseiten: lange Textbloecke zuklappbar (gleiches Akkordeon wie Startseite) */
-.akk-kopf .akk-btn { display: flex; align-items: center; justify-content: space-between; gap: 16px; font: inherit; letter-spacing: inherit; }
-.akk-kopf .akk-btn > span:first-child { min-width: 0; }
-.akk-panel[hidden] { display: none !important; }
-.akk-panel > :first-child { margin-top: 0; }
-
-/* Hausarztmedizin: Band "Von akut bis Vorsorge" nach Vorlage – 4 Karten, oben Bild, nicht eingeklappt */
-.haus-band { padding: 0 0 8px; }
-.haus-band-oben { background: var(--olive-haupt); padding: 56px 0 120px; }
-.haus-karten { margin-top: -88px !important; position: relative; }
-.haus-band-kopf { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; color: #fff; }
-.haus-band-eyebrow { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #DCE5D6; margin: 0 0 10px; }
-.haus-band h2 { font-family: var(--font-serif); font-size: 2.4rem; line-height: 1.15; color: #fff; margin: 0; }
-.haus-band-kopf > p { color: #fff; font-size: 1rem; line-height: 1.6; margin: 0; }
-.haus-karten { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
-.haus-karte { position: relative; background: #fff; border: 1px solid rgba(56,78,51,0.12); border-radius: 14px; overflow: hidden; padding: 0 0 8px; box-shadow: 0 6px 22px rgba(33,37,34,0.06); }
-.haus-karte-bild { background: #F2ECE4; padding: 6px 6px 0; }
-.haus-karte-bild img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 9px; display: block; }
-.haus-karte-zahl { margin: 6px 6px 0; aspect-ratio: 4 / 3; border-radius: 9px; background: var(--olive-dark, #2A3A26); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 12px; }
-.haus-zahl-gross { font-family: var(--font-serif); font-size: 3.4rem; line-height: 1; }
-.haus-zahl-text { font-size: 0.875rem; font-weight: 600; margin-top: 8px; }
-.haus-karte-nr { position: absolute; top: 14px; left: 14px; width: 34px; height: 34px; border-radius: 50%; background: var(--olive-haupt); color: #fff; font-size: 0.8125rem; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 2px #fff; }
-.haus-karte h3 { font-family: var(--font-serif); font-size: 1.3rem; line-height: 1.25; color: var(--olive-haupt); margin: 18px 20px 0; }
-.haus-karte .leistungs-liste { margin: 10px 20px 8px; padding: 0; }
-.haus-karte .leistungs-liste li { font-size: 0.95rem; padding: 8px 0; }
+.haus-band {
+  padding: 0 0 8px;
+}
+.haus-band-oben {
+  background: var(--olive-haupt);
+  padding: 56px 0 120px;
+}
+.haus-karten {
+  margin-top: -88px !important;
+  position: relative;
+}
+.haus-band-kopf {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: end;
+  color: #fff;
+}
+.haus-band-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #dce5d6;
+  margin: 0 0 10px;
+}
+.haus-band h2 {
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  line-height: 1.15;
+  color: #fff;
+  margin: 0;
+}
+.haus-band-kopf > p {
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+.haus-karten {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+.haus-karte {
+  position: relative;
+  background: #fff;
+  border: 1px solid rgba(56, 78, 51, 0.12);
+  border-radius: 14px;
+  overflow: hidden;
+  padding: 0 0 8px;
+  box-shadow: 0 6px 22px rgba(33, 37, 34, 0.06);
+}
+.haus-karte-bild {
+  background: #f2ece4;
+  padding: 6px 6px 0;
+}
+.haus-karte-bild img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 9px;
+  display: block;
+}
+.haus-karte-zahl {
+  margin: 6px 6px 0;
+  aspect-ratio: 4 / 3;
+  border-radius: 9px;
+  background: var(--olive-dark, #2a3a26);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 12px;
+}
+.haus-zahl-gross {
+  font-family: var(--font-serif);
+  font-size: 3.4rem;
+  line-height: 1;
+}
+.haus-zahl-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-top: 8px;
+}
+.haus-karte-nr {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--olive-haupt);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 2px #fff;
+}
+.haus-karte h3 {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  line-height: 1.25;
+  color: var(--olive-haupt);
+  margin: 18px 20px 0;
+}
+.haus-karte .leistungs-liste {
+  margin: 10px 20px 8px;
+  padding: 0;
+}
+.haus-karte .leistungs-liste li {
+  font-size: 0.95rem;
+  padding: 8px 0;
+}
 @media (max-width: 1024px) {
-  .haus-karten { grid-template-columns: repeat(2, 1fr); }
-  .haus-band-kopf { grid-template-columns: 1fr; gap: 14px; }
+  .haus-karten {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .haus-band-kopf {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
 }
 @media (max-width: 599px) {
-  .haus-band-oben { padding: 36px 0 110px; }
-  .haus-band h2 { font-size: 1.9rem; }
-  .haus-karten { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
+  .haus-band-oben {
+    padding: 36px 0 110px;
+  }
+  .haus-band h2 {
+    font-size: 1.9rem;
+  }
+  .haus-karten {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 @media (orientation: landscape) and (max-height: 500px) {
-  .haus-karten { grid-template-columns: repeat(2, 1fr); }
+  .haus-karten {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-/* Ernährungsmedizin: "Ein Blick. Auf das Ganze." nach Vorlage – Bild links mit Bildunterschrift-Karte, Text rechts */
-.blick { display: grid; grid-template-columns: 5fr 6fr; gap: 56px; align-items: center; margin: 0 0 64px; }
-.blick-bild { position: relative; margin: 0; padding-bottom: 28px; }
-.blick-bild img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
-.blick-bild figcaption { position: absolute; left: -12px; bottom: 0; max-width: 62%; background: #fff; color: var(--olive-haupt); font-family: var(--font-serif); font-size: 1.05rem; line-height: 1.3; padding: 14px 18px; border-radius: 10px; box-shadow: 0 8px 24px rgba(33,37,34,0.10); border: 1px solid rgba(56,78,51,0.12); }
-.blick-text h2 { font-family: var(--font-serif); font-size: 2.4rem; line-height: 1.15; color: var(--olive-haupt); margin: 0 0 16px; }
-.blick-text h2 em { font-style: normal; color: var(--terracotta-caps, #8B5E4D); display: block; }
-.blick-text p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.65; margin: 0; max-width: 520px; }
-@media (max-width: 1024px) { .blick { gap: 32px; } .blick-text h2 { font-size: 2rem; } }
+.blick {
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  gap: 56px;
+  align-items: center;
+  margin: 0 0 64px;
+}
+.blick-bild {
+  position: relative;
+  margin: 0;
+  padding-bottom: 28px;
+}
+.blick-bild img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+.blick-bild figcaption {
+  position: absolute;
+  left: -12px;
+  bottom: 0;
+  max-width: 62%;
+  background: #fff;
+  color: var(--olive-haupt);
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.3;
+  padding: 14px 18px;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(33, 37, 34, 0.1);
+  border: 1px solid rgba(56, 78, 51, 0.12);
+}
+.blick-text h2 {
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  line-height: 1.15;
+  color: var(--olive-haupt);
+  margin: 0 0 16px;
+}
+.blick-text h2 em {
+  font-style: normal;
+  color: var(--terracotta-caps, #8b5e4d);
+  display: block;
+}
+.blick-text p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  margin: 0;
+  max-width: 520px;
+}
+@media (max-width: 1024px) {
+  .blick {
+    gap: 32px;
+  }
+  .blick-text h2 {
+    font-size: 2rem;
+  }
+}
 @media (max-width: 767px) {
-  .blick { grid-template-columns: 1fr; gap: 20px; margin-bottom: 36px; }
-  .blick-bild { max-width: 420px; }
-  .blick-bild figcaption { left: 10px; max-width: 75%; font-size: 0.98rem; }
-  .blick-text h2 { font-size: 1.75rem; }
+  .blick {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 36px;
+  }
+  .blick-bild {
+    max-width: 420px;
+  }
+  .blick-bild figcaption {
+    left: 10px;
+    max-width: 75%;
+    font-size: 0.98rem;
+  }
+  .blick-text h2 {
+    font-size: 1.75rem;
+  }
 }
 @media (orientation: landscape) and (max-height: 500px) {
-  .blick { grid-template-columns: 5fr 6fr; gap: 24px; }
-  .blick-text h2 { font-size: 1.6rem; }
+  .blick {
+    grid-template-columns: 5fr 6fr;
+    gap: 24px;
+  }
+  .blick-text h2 {
+    font-size: 1.6rem;
+  }
 }
 
-/* Unterseiten-Kopf: Linkleiste passt erst ab ca. 1260px – darunter Burger-Menü (wie Startseite), sonst wird der Kopf rechts abgeschnitten */
 @media (max-width: 1259px) {
-  .nav-inner:has(.nav-termin-btn) .nav-menu { display: none; }
-  .nav-inner:has(.nav-termin-btn) .burger-btn { display: flex !important; }
+  .nav-inner:has(.nav-termin-btn) .nav-menu {
+    display: none;
+  }
+  .nav-inner:has(.nav-termin-btn) .burger-btn {
+    display: flex;
+  }
 }
 
-/* Digital ankommen nach Vorlage: 4 Anliegen sichtbar, Rest hinter „Weitere Anliegen (+)“ */
-.digital-journal .journal-grid { margin-bottom: 18px; }
-.digital-journal .journal-grid-mehr { margin-bottom: 0; }
-.weitere-anliegen { margin: 0 0 18px; }
-.weitere-kopf { margin: 0; font-size: 1rem; line-height: 1.3; }
-.akk-btn.weitere-btn {
-  display: inline-flex; width: auto; align-items: center; gap: 14px;
-  background: #fff; border: 1px solid rgba(56,78,51,0.18); border-radius: 12px;
-  padding: 8px 12px 8px 20px; font-family: var(--font-sans); font-size: 1rem; font-weight: 600; color: var(--olive-haupt);
+.digital-journal .journal-grid {
+  margin-bottom: 18px;
 }
-.akk-btn.weitere-btn:hover { border-color: var(--olive-haupt); }
-#weitere-box[hidden] { display: none; }
+.digital-journal .journal-grid-mehr {
+  margin-bottom: 0;
+}
+.weitere-anliegen {
+  margin: 0 0 18px;
+}
+.weitere-kopf {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+.akk-btn.weitere-btn {
+  display: inline-flex;
+  width: auto;
+  align-items: center;
+  gap: 14px;
+  background: #fff;
+  border: 1px solid rgba(56, 78, 51, 0.18);
+  border-radius: 12px;
+  padding: 8px 12px 8px 20px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--olive-haupt);
+}
+.akk-btn.weitere-btn:hover {
+  border-color: var(--olive-haupt);
+}
+#weitere-box[hidden] {
+  display: none;
+}
 @media (min-width: 1025px) {
-  .digital-journal .journal-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
-  .digital-journal .journal-card { padding: 24px; }
+  .digital-journal .journal-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .digital-journal .journal-card {
+    padding: 24px;
+  }
 }
 /* Tablet (ab 680px, nicht Handy quer): Raster statt Wisch-Karussell */
 @media (min-width: 680px) and (max-width: 1024px) and (min-height: 501px) {
   .digital-journal .journal-grid {
-    display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    overflow: visible !important; scroll-snap-type: none !important; padding-bottom: 0 !important; gap: 12px !important;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow: visible;
+    scroll-snap-type: none;
+    padding-bottom: 0;
+    gap: 12px;
   }
-  .digital-journal .journal-card { flex: none !important; min-width: 0; }
+  .digital-journal .journal-card {
+    flex: none;
+    min-width: 0;
+  }
 }
-/* Wisch-Reihe (wiederverwendbar: Digital ankommen 01–04 und Weitere Anliegen 05–08, Standorte) – nur Handy hoch bis 679px und Handy quer.
-   Karten nebeneinander, naechste schaut heraus, alle so hoch wie die hoechste. */
 @media (max-width: 679px) and (orientation: portrait), (orientation: landscape) and (max-height: 500px) {
   .wisch-reihe {
-    display: flex !important; flex-wrap: nowrap !important; align-items: stretch !important;
-    overflow-x: auto !important; scroll-snap-type: x mandatory !important; scrollbar-width: none;
-    gap: 12px !important; padding-bottom: 6px !important; margin-bottom: 4px;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    scrollbar-width: none;
+    gap: 12px !important;
+    padding-bottom: 6px !important;
+    margin-bottom: 4px;
   }
-  .wisch-reihe::-webkit-scrollbar { display: none; }
-  .wisch-reihe > * { flex: 0 0 84% !important; scroll-snap-align: start; min-width: 0; }
-  .wisch-knopf.wisch-knopf { display: block; }
+  .wisch-reihe::-webkit-scrollbar {
+    display: none;
+  }
+  .wisch-reihe > * {
+    flex: 0 0 84% !important;
+    scroll-snap-align: start;
+    min-width: 0;
+  }
+  .wisch-knopf.wisch-knopf {
+    display: block;
+  }
 }
 @media (orientation: landscape) and (max-height: 500px) {
-  .wisch-reihe > * { flex-basis: 46% !important; }
+  .wisch-reihe > * {
+    flex-basis: 46% !important;
+  }
 }
 /* Hinweis-Knopf unter der Wisch-Reihe */
 .wisch-knopf {
-  display: none; margin: 2px auto 14px; padding: 8px 14px; min-height: 36px;
-  background: none; border: 0; border-radius: 8px; cursor: pointer;
-  font-family: var(--font-sans); font-size: 0.8125rem; letter-spacing: 0.04em; color: var(--text-muted);
+  display: none;
+  margin: 2px auto 14px;
+  padding: 8px 14px;
+  min-height: 36px;
+  background: none;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
 }
-.wisch-knopf:hover { color: var(--olive-haupt); }
-.wisch-knopf[hidden] { display: none !important; }
-.wisch-knopf:focus-visible { outline: 2px solid var(--olive-haupt); outline-offset: 2px; }
+.wisch-knopf:hover {
+  color: var(--olive-haupt);
+}
+.wisch-knopf[hidden] {
+  display: none;
+}
+.wisch-knopf:focus-visible {
+  outline: 2px solid var(--olive-haupt);
+  outline-offset: 2px;
+}
 
-/* ---------- Hero quer (Desktop, Tablet quer, Nest Hub) nach Vorlage: vollflaechig ----------
-   Foto rechts in voller Hero-Hoehe, nie groesser als nativ (427x640). Links Raumton + dunkles
-   Praxisgruen hinter dem Text, Namenskarte und Termin-Kachel unten rechts. */
 @media (min-width: 768px) and (min-height: 501px) and (orientation: landscape) {
   .hero {
     --hh: min(640px, calc(100vh - 78px));
     --fw: calc(var(--hh) * 427 / 640);
     --fr: max(28px, calc(50% - 582px));
     --fl: calc(100% - var(--fr) - var(--fw));
-    min-height: var(--hh); padding: 40px 0 !important;
-    display: flex; align-items: center;
-    background-color: #DCC4AC !important;
+    min-height: var(--hh);
+    padding: 40px 0;
+    display: flex;
+    align-items: center;
+    background-color: #dcc4ac;
     background-image:
-      linear-gradient(90deg, #22301F 0%, #2A3A26 calc(var(--fl) - 140px), rgba(42,58,38,0.92) calc(var(--fl) - 70px), rgba(42,58,38,0) calc(var(--fl) + 30px)),
-      linear-gradient(180deg, #EBD3BA 0%, #DCC6B0 45%, #D6B89F 100%) !important;
+      linear-gradient(
+        90deg,
+        #22301f 0%,
+        #2a3a26 calc(var(--fl) - 140px),
+        rgba(42, 58, 38, 0.92) calc(var(--fl) - 70px),
+        rgba(42, 58, 38, 0) calc(var(--fl) + 30px)
+      ),
+      linear-gradient(180deg, #ebd3ba 0%, #dcc6b0 45%, #d6b89f 100%);
   }
-  .hero > .container { position: static; width: 100%; }
-  .hero-layout { display: block !important; }
-  .hero-text-col { position: relative; z-index: 2; max-width: min(600px, calc(100vw - var(--fr) - var(--fw) - 28px - 40px)) !important; }
+  .hero > .container {
+    position: static;
+    width: 100%;
+  }
+  .hero-layout {
+    display: block;
+  }
+  .hero-text-col {
+    position: relative;
+    z-index: 2;
+    max-width: min(600px, calc(100vw - var(--fr) - var(--fw) - 28px - 40px));
+  }
   .hero-portrait-col.foto-spalte {
-    display: block !important; position: absolute; z-index: 1; bottom: 0; right: var(--fr);
-    width: var(--fw); height: var(--hh); max-width: none !important; padding: 0 !important; margin: 0;
+    display: block;
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    right: var(--fr);
+    width: var(--fw);
+    height: var(--hh);
+    max-width: none;
+    padding: 0;
+    margin: 0;
   }
-  .hero .foto-rahmen { padding: 0; background: none; border-radius: 0; height: 100%; position: static; }
-  .hero .foto-rahmen picture { display: block; height: 100%; }
-  .hero .foto-rahmen img {
-    width: 100%; height: 100%; max-height: 640px; aspect-ratio: auto; object-fit: cover; object-position: 50% 0;
+  .hero .foto-rahmen {
+    padding: 0;
+    background: none;
     border-radius: 0;
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16%, #000 88%, transparent 100%), linear-gradient(180deg, transparent 0, #000 6%);
-    -webkit-mask-composite: source-in; mask-image: linear-gradient(90deg, transparent 0, #000 16%, #000 88%, transparent 100%), linear-gradient(180deg, transparent 0, #000 6%);
+    height: 100%;
+    position: static;
+  }
+  .hero .foto-rahmen picture {
+    display: block;
+    height: 100%;
+  }
+  .hero .foto-rahmen img {
+    width: 100%;
+    height: 100%;
+    max-height: 640px;
+    aspect-ratio: auto;
+    object-fit: cover;
+    object-position: 50% 0;
+    border-radius: 0;
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent 0, #000 16%, #000 88%, transparent 100%),
+      linear-gradient(180deg, transparent 0, #000 6%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(90deg, transparent 0, #000 16%, #000 88%, transparent 100%),
+      linear-gradient(180deg, transparent 0, #000 6%);
     mask-composite: intersect;
   }
   /* Text hell auf Gruen */
-  .hero .hero-eyebrow { color: #D5CBBF; opacity: 1; }
-  .hero .hero-title-main { color: #fff; }
-  .hero .hero-title-main em { color: #E3B29C !important; }
-  .hero .hero-sub { color: #F2ECE4; opacity: 1; }
-  .hero .hero-location { color: #D5CBBF; }
-  .hero .hero-lead-text { color: #E9E4DA; }
-  .hero .hero-divider { background: linear-gradient(90deg, #E3B29C 0%, rgba(227,178,156,0.3) 100%); }
-  .hero .hero-chip:focus-visible { outline-color: #fff; }
-  /* Namenskarte + Termin-Kachel unten rechts */
-  .hero .slot-card { z-index: 3; right: calc(var(--fr) + 16px) !important; bottom: 24px !important; width: min(300px, calc(var(--fw) - 32px)) !important; }
-  .hero .foto-name {
-    display: block; position: absolute; z-index: 3; right: 16px; bottom: 210px;
-    background: #2A3A26; color: #fff; border-radius: 10px; padding: 8px 14px; margin: 0;
-    font-size: 0.875rem; line-height: 1.35; text-align: right;
+  .hero .hero-eyebrow {
+    color: #d5cbbf;
+    opacity: 1;
   }
-  .hero .fn-name { display: block; font-weight: 600; }
-  .hero .fn-titel { display: block; font-size: 0.8125rem; color: #E9E4DA; }
-  .hero .fn-trenn { display: none; }
+  .hero .hero-title-main {
+    color: #fff;
+  }
+  .hero .hero-title-main em {
+    color: #e3b29c !important;
+  }
+  .hero .hero-sub {
+    color: #f2ece4;
+    opacity: 1;
+  }
+  .hero .hero-location {
+    color: #d5cbbf;
+  }
+  .hero .hero-lead-text {
+    color: #e9e4da;
+  }
+  .hero .hero-divider {
+    background: linear-gradient(90deg, #e3b29c 0%, rgba(227, 178, 156, 0.3) 100%);
+  }
+  .hero .hero-chip:focus-visible {
+    outline-color: #fff;
+  }
+  /* Namenskarte + Termin-Kachel unten rechts */
+  .hero .slot-card {
+    z-index: 3;
+    right: calc(var(--fr) + 16px);
+    bottom: 24px;
+    width: min(300px, calc(var(--fw) - 32px));
+  }
+  .hero .foto-name {
+    display: block;
+    position: absolute;
+    z-index: 3;
+    right: 16px;
+    bottom: 210px;
+    background: #2a3a26;
+    color: #fff;
+    border-radius: 10px;
+    padding: 8px 14px;
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.35;
+    text-align: right;
+  }
+  .hero .fn-name {
+    display: block;
+    font-weight: 600;
+  }
+  .hero .fn-titel {
+    display: block;
+    font-size: 0.8125rem;
+    color: #e9e4da;
+  }
+  .hero .fn-trenn {
+    display: none;
+  }
 }
-/* Nest Hub & Co. (quer, wenig Hoehe): kompakter */
 @media (min-width: 768px) and (min-height: 501px) and (max-height: 700px) and (orientation: landscape) {
-  .hero { padding: 24px 0 !important; }
-  .hero .slot-card { bottom: 16px !important; }
-  .hero .foto-name { bottom: 200px; }
+  .hero {
+    padding: 24px 0;
+  }
+  .hero .slot-card {
+    bottom: 16px;
+  }
+  .hero .foto-name {
+    bottom: 200px;
+  }
 }
 
-/* Unterseiten: Grid-Spalten duerfen schmaler als ihr laengstes Wort werden (360px: 4px Ueberstand) */
-.inhalt-grid > * { min-width: 0; }
-.akk-kopf .akk-btn > span:first-child { overflow-wrap: break-word; hyphens: auto; }
+.inhalt-grid > * {
+  min-width: 0;
+}
 
-/* ================= Mobil: Bild + Text sinnvoll anordnen (statt stumpf untereinander) ================= */
+/* Mobil: Bild + Text sinnvoll anordnen (statt stumpf untereinander) */
 /* Leistungen (Startseite): kleines Bild rechts, Text fliesst daneben */
 @media (max-width: 767px), (orientation: landscape) and (max-height: 500px) {
-  .service-body:not([hidden]) { display: block; }
-  .service-body::after { content: ""; display: block; clear: both; }
-  .leist-bild { float: right; width: 40%; max-width: 160px; margin: 4px 0 8px 14px; padding: 4px; border-radius: 12px; }
-  .leist-bild img { border-radius: 8px; }
+  .service-body:not([hidden]) {
+    display: block;
+  }
+  .service-body::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+  .leist-bild {
+    float: right;
+    width: 40%;
+    max-width: 160px;
+    margin: 4px 0 8px 14px;
+    padding: 4px;
+    border-radius: 12px;
+  }
+  .leist-bild img {
+    border-radius: 8px;
+  }
 }
-/* „Ganzheitlich versorgt“ bis 599px hochkant: Bild als flacher Streifen UEBER dem Text (16:7, Sandrahmen),
-   Text darunter volle Breite – kein schmaler Textkanal neben einem kleinen Bild */
 @media (max-width: 599px) and (orientation: portrait) {
-  .leist-bild { float: none; width: 100%; max-width: 640px; margin: 2px 0 12px; }
-  .leist-bild img { width: 100%; height: auto; aspect-ratio: 16 / 7; object-fit: cover; object-position: 50% 0%; }
-  .leist-bild img[src*="ernaehrungsberatung"] { object-position: 50% 8%; }
-  .leist-bild img[src*="impfung"] { object-position: 50% 55%; }
-  /* alle Chips der 3 Akkordeons gleich hoch (Platz fuer zwei Zeilen, z. B. „Land Harz GesundheitsCheck“) */
-  #leistungen .service-tag-pill { min-height: calc(2.6em + 12px); }
+  .leist-bild {
+    float: none;
+    width: 100%;
+    max-width: 640px;
+    margin: 2px 0 12px;
+  }
+  .leist-bild img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 7;
+    object-fit: cover;
+    object-position: 50% 0%;
+  }
+  .leist-bild img[src*='ernaehrungsberatung'] {
+    object-position: 50% 8%;
+  }
+  .leist-bild img[src*='impfung'] {
+    object-position: 50% 55%;
+  }
+  #leistungen .service-tag-pill {
+    min-height: calc(2.6em + 12px);
+  }
 }
-/* Stichwort-Chips: alle gleich hoch, Text mittig, normaler Zeilenabstand beim Umbruch */
 @media (max-width: 767px), (orientation: landscape) and (max-height: 500px) {
-  #leistungen .service-tags { grid-auto-rows: 1fr; align-items: stretch; }
-  #leistungen .service-tag-pill { display: flex; align-items: center; justify-content: center; line-height: 1.3 !important; padding: 6px 10px !important; min-height: 36px; }
+  #leistungen .service-tags {
+    grid-auto-rows: 1fr;
+    align-items: stretch;
+  }
+  #leistungen .service-tag-pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.3;
+    padding: 6px 10px !important;
+    min-height: 36px;
+  }
 }
-/* Hausarzt-Karten, Handy hoch: Vorschaubild links, Titel daneben, Liste darunter */
 @media (max-width: 599px) and (orientation: portrait) {
-  .haus-karte { display: grid; grid-template-columns: 112px minmax(0, 1fr); grid-template-areas: "bild titel" "liste liste"; column-gap: 14px; padding: 10px 10px 4px; }
-  .haus-karte-bild, .haus-karte-zahl { grid-area: bild; margin: 0; }
-  .haus-karte-bild { padding: 4px; border-radius: 10px; }
-  .haus-karte-bild img { aspect-ratio: 1 / 1; object-position: 45% 35%; border-radius: 7px; }
-  .haus-karte-zahl { aspect-ratio: 1 / 1; padding: 8px; }
-  .haus-zahl-gross { font-size: 2.2rem; }
-  .haus-zahl-text { font-size: 0.8125rem; line-height: 1.2; margin-top: 4px; }
-  .haus-karte h3 { grid-area: titel; align-self: center; margin: 0; font-size: 1.2rem; }
-  .haus-karte .leistungs-liste { grid-area: liste; margin: 8px 4px 4px; }
-  .haus-karte-nr { top: 4px; left: 4px; width: 28px; height: 28px; font-size: 0.75rem; }
+  .haus-karte {
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
+    grid-template-areas: 'bild titel' 'liste liste';
+    column-gap: 14px;
+    padding: 10px 10px 4px;
+  }
+  .haus-karte-bild,
+  .haus-karte-zahl {
+    grid-area: bild;
+    margin: 0;
+  }
+  .haus-karte-bild {
+    padding: 4px;
+    border-radius: 10px;
+  }
+  .haus-karte-bild img {
+    aspect-ratio: 1 / 1;
+    object-position: 45% 35%;
+    border-radius: 7px;
+  }
+  .haus-karte-zahl {
+    aspect-ratio: 1 / 1;
+    padding: 8px;
+  }
+  .haus-zahl-gross {
+    font-size: 2.2rem;
+  }
+  .haus-zahl-text {
+    font-size: 0.8125rem;
+    line-height: 1.2;
+    margin-top: 4px;
+  }
+  .haus-karte h3 {
+    grid-area: titel;
+    align-self: center;
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  .haus-karte .leistungs-liste {
+    grid-area: liste;
+    margin: 8px 4px 4px;
+  }
+  .haus-karte-nr {
+    top: 4px;
+    left: 4px;
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
 }
 /* Ernaehrung "Ein Blick": flacher Bildstreifen mit Bildunterschrift-Karte */
 @media (max-width: 599px) {
-  .blick-bild { max-width: 640px; }
-  .blick-bild img { aspect-ratio: 16 / 9; object-position: 50% 30%; }
+  .blick-bild {
+    max-width: 640px;
+  }
+  .blick-bild img {
+    aspect-ratio: 16 / 9;
+    object-position: 50% 30%;
+  }
 }
-/* Praevention: Seitenleisten-Bild unten als flacher Streifen statt Grossbild */
 @media (max-width: 599px) {
-  .sidebar .seiten-bild { max-width: 640px; }
-  .sidebar .seiten-bild img { aspect-ratio: 21 / 9; object-fit: cover; object-position: 60% 45%; }
+  .sidebar .seiten-bild {
+    max-width: 640px;
+  }
+  .sidebar .seiten-bild img {
+    aspect-ratio: 21 / 9;
+    object-fit: cover;
+    object-position: 60% 45%;
+  }
 }
 
-/* ================= Standorte: Telefon antippbar, Kacheln mobil kompakter ================= */
-#standort .nw, .loc-tel { white-space: nowrap; }
-.loc-tel { color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
-.loc-tel:focus-visible { outline: 2px solid var(--olive-haupt); outline-offset: 2px; border-radius: 3px; }
+/* Standorte: Telefon antippbar, Kacheln mobil kompakter */
+#standort .nw,
+.loc-tel {
+  white-space: nowrap;
+}
+.loc-tel {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.loc-tel:focus-visible {
+  outline: 2px solid var(--olive-haupt);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
 @media (max-width: 679px) and (orientation: portrait), (orientation: landscape) and (max-height: 500px) {
-  #standort .loc-box { padding: 14px 16px !important; }
-  #standort .loc-box > span:first-child { font-size: 0.9375rem !important; padding: 1px 8px !important; margin-bottom: 6px !important; }
-  #standort .loc-box h3 { font-size: 1.25rem !important; margin-bottom: 6px !important; }
-  #standort .loc-box p { font-size: 0.9375rem !important; line-height: 1.4 !important; margin: 0 0 2px !important; }
-  #standort .loc-box p:nth-of-type(3) { margin: 6px 0 8px !important; }
-  #standort .loc-box p:nth-of-type(4) { margin: 0 !important; letter-spacing: 0.04em; }
+  #standort .loc-box {
+    padding: 14px 16px !important;
+  }
+  #standort .loc-box > span:first-child {
+    font-size: 0.9375rem !important;
+    padding: 1px 8px !important;
+    margin-bottom: 6px !important;
+  }
+  #standort .loc-box h3 {
+    font-size: 1.25rem !important;
+    margin-bottom: 6px !important;
+  }
+  #standort .loc-box p {
+    font-size: 0.9375rem !important;
+    line-height: 1.4 !important;
+    margin: 0 0 2px !important;
+  }
+  #standort .loc-box p:nth-of-type(3) {
+    margin: 6px 0 8px !important;
+  }
+  #standort .loc-box p:nth-of-type(4) {
+    margin: 0 !important;
+    letter-spacing: 0.04em;
+  }
   /* Telefon: Zeile darf 44px hoch werden, damit das Ziel gross genug ist */
-  #standort .loc-tel { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; vertical-align: middle; margin: -8px 0; }
-  #standort .hours-table { margin-top: 4px !important; }
-  #standort .hours-table td { font-size: 0.9375rem !important; line-height: 1.3; padding: 4px 0 !important; vertical-align: top; }
-  #standort .hours-table td:first-child { white-space: nowrap; padding-right: 10px !important; }
-  #standort .loc-box .btn-smart { margin-top: 12px !important; }
+  #standort .loc-tel {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    min-width: 44px;
+    vertical-align: middle;
+    margin: -8px 0;
+  }
+  #standort .hours-table {
+    margin-top: 4px;
+  }
+  #standort .hours-table td {
+    font-size: 0.9375rem;
+    line-height: 1.3;
+    padding: 4px 0;
+    vertical-align: top;
+  }
+  #standort .hours-table td:first-child {
+    white-space: nowrap;
+    padding-right: 10px;
+  }
+  #standort .loc-box .btn-smart {
+    margin-top: 12px !important;
+  }
 }
 @media (pointer: coarse) {
-  #standort .loc-tel { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; vertical-align: middle; margin: -10px 0; }
+  #standort .loc-tel {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    min-width: 44px;
+    vertical-align: middle;
+    margin: -10px 0;
+  }
 }
 
-/* Desktop: Hilfe-Button nur anheben, wenn die Demo-Knoepfe sichtbar sind (Schalter PRAXIS.funktionen.demoKnoepfe) */
 @media (min-width: 1025px) {
-  html.demo-knoepfe-an .pxa-btn { bottom: calc(101px + env(safe-area-inset-bottom, 0px)) !important; }
-  html.demo-knoepfe-an .pxa-panel { bottom: calc(165px + env(safe-area-inset-bottom, 0px)); max-height: min(680px, calc(100vh - 185px)); }
+  html.demo-knoepfe-an .pxa-btn {
+    bottom: calc(101px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  html.demo-knoepfe-an .pxa-panel {
+    bottom: calc(165px + env(safe-area-inset-bottom, 0px));
+    max-height: min(680px, calc(100vh - 185px));
+  }
 }
 
-/* Handy quer: Kopf „Digitaler Empfang“ wie hochkant gestapelt (sonst 4 Zeilen in schmaler Spalte bei 667px);
-   Hero-Standort-Knoepfe passen wieder in eine Zeile (bei 667px fehlten 5px -> Umbruch unter die Termin-Leiste) */
 @media (orientation: landscape) and (max-height: 500px) {
-  #empfang .journal-header { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 18px; }
-  #empfang .journal-title { font-size: 1.6rem; }
-  #empfang .journal-sub { max-width: 100%; }
-  .hero .hero-chip { padding-left: 7px; padding-right: 7px; }
+  #empfang .journal-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  #empfang .journal-title {
+    font-size: 1.6rem;
+  }
+  #empfang .journal-sub {
+    max-width: 100%;
+  }
+  .hero .hero-chip {
+    padding-left: 7px;
+    padding-right: 7px;
+  }
 }
 
-/* Handy hochkant schmal: Praxis-Kompass-Karte mit 18px statt 44px Rand – die 3 Anliegen-Knoepfe bekommen Platz
-   (vorher „Sym-ptom“, „Ernäh-rungs-medizin“ in drei Zeilen) */
 @media (max-width: 479px) and (orientation: portrait) {
-  #kompass.compass-sec, #kompass .compass-sec { padding-left: 18px !important; padding-right: 18px !important; }
-  #kompass .compass-btn { padding: 10px 6px !important; }
+  #kompass.compass-sec,
+  #kompass .compass-sec {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+  #kompass .compass-btn {
+    padding: 10px 6px !important;
+  }
 }
 
-/* Tablet hochkant (bis 900px): Kopf „Digitaler Empfang“ gestapelt statt 3–4 Zeilen in schmaler Spalte;
-   „Ihre Unterlagen“ nicht mehr zweizeilig neben dem Plus */
 @media (min-width: 680px) and (max-width: 900px) and (min-height: 501px) {
-  #empfang .journal-header { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 24px; }
-  #empfang .journal-title { font-size: 2rem; }
-  #empfang .journal-sub { max-width: 100%; }
-  .download-v2-head h3 { white-space: nowrap; }
+  #empfang .journal-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  #empfang .journal-title {
+    font-size: 2rem;
+  }
+  #empfang .journal-sub {
+    max-width: 100%;
+  }
+  .download-head h3 {
+    white-space: nowrap;
+  }
 }
-/* Tablet (680–1024px): Instagram-Raster nutzt die volle Breite statt 560px mit leerer rechter Haelfte */
 @media (min-width: 680px) and (max-width: 1024px) and (min-height: 501px) {
-  .insta-raster { max-width: none; }
+  .insta-raster {
+    max-width: none;
+  }
 }
 @media (min-width: 900px) and (max-width: 1024px) and (min-height: 501px) {
-  .insta-raster { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
-  .insta-post { padding: 12px; }
-  .insta-post-titel { font-size: 1rem; }
+  .insta-raster {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .insta-post {
+    padding: 12px;
+  }
+  .insta-post-titel {
+    font-size: 1rem;
+  }
 }
-/* Handy quer ab 760px: Instagram wie am Desktop – Kopf links, Raster rechts (statt Raster links und leerer rechter Haelfte) */
 @media (orientation: landscape) and (max-height: 500px) and (min-width: 760px) {
-  .insta-sec .container { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 480px); gap: 28px; align-items: center; }
-  .insta-kopf { flex-direction: column; align-items: flex-start; margin-bottom: 0; }
-  .insta-raster { max-width: none; gap: 10px; }
-  .insta-post { padding: 10px; }
-  .insta-post-titel { font-size: 0.95rem; }
+  .insta-sec .container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 480px);
+    gap: 28px;
+    align-items: center;
+  }
+  .insta-kopf {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 0;
+  }
+  .insta-raster {
+    max-width: none;
+    gap: 10px;
+  }
+  .insta-post {
+    padding: 10px;
+  }
+  .insta-post-titel {
+    font-size: 0.95rem;
+  }
 }
-/* Handy quer: Banner mind. 220px hoch, damit Kopf der Frau UND Terminal-Display im Self-Check-in-Bild bleiben */
 @media (orientation: landscape) and (max-height: 500px) {
-  .digi-banner { min-height: 220px; }
+  .digi-banner {
+    min-height: 220px;
+  }
 }
 
 /* T2med-Buttons bleiben aus, bis der Schalter in js/land-harz.js an ist */
-.t2med-btn[hidden] { display: none !important; }
+.t2med-btn[hidden] {
+  display: none;
+}
 
 /* Woran Sie uns messen dürfen: fünf Punkte */
-.mess-liste { list-style: none; padding: 0; margin: 0; grid-template-columns: repeat(5, minmax(0, 1fr)); }
-.mess-liste .mess-kachel { justify-content: flex-start; }
-.mess-liste .mess-kachel { padding: 22px 20px 24px; }
-.mess-liste .mess-kachel h3 { margin: 0; font-size: 1.1rem; hyphens: auto; overflow-wrap: break-word; }
-.mess-nr { font-size: 0.8rem; letter-spacing: 0.08em; color: var(--terracotta); margin-bottom: 10px; }
-@media (max-width: 1024px) { .mess-liste { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 600px) { .mess-liste { grid-template-columns: 1fr; } }
+.mess-liste {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.mess-liste .mess-kachel {
+  justify-content: flex-start;
+}
+.mess-liste .mess-kachel {
+  padding: 22px 20px 24px;
+}
+.mess-liste .mess-kachel h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+.mess-nr {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: var(--terracotta);
+  margin-bottom: 10px;
+}
+@media (max-width: 1024px) {
+  .mess-liste {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .mess-liste {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* Leistungen: Spektrum */
-.spektrum-box { border-left: 2px solid var(--terracotta); padding: 2px 0 2px 16px; margin: 0 0 28px; }
-.spektrum-titel { font-family: var(--font-sans); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--olive-haupt); margin: 0 0 8px; }
-.spektrum-box p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.7; margin: 0; }
+.spektrum-box {
+  border-left: 2px solid var(--terracotta);
+  padding: 2px 0 2px 16px;
+  margin: 0 0 28px;
+}
+.spektrum-titel {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--olive-haupt);
+  margin: 0 0 8px;
+}
+.spektrum-box p {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  margin: 0;
+}
 
 /* Woran Sie uns messen dürfen: Handy als Wisch-Reihe, Kacheln kompakt */
 @media (max-width: 679px) and (orientation: portrait), (orientation: landscape) and (max-height: 500px) {
-  .mess-liste.wisch-reihe > * { flex-basis: 62% !important; }
-  .mess-liste .mess-kachel { padding: 18px 18px 20px; min-height: 120px; }
-  .mess-liste .mess-kachel h3 { font-size: 1.05rem; hyphens: manual; }
+  .mess-liste.wisch-reihe > * {
+    flex-basis: 62% !important;
+  }
+  .mess-liste .mess-kachel {
+    padding: 18px 18px 20px;
+    min-height: 120px;
+  }
+  .mess-liste .mess-kachel h3 {
+    font-size: 1.05rem;
+    hyphens: manual;
+  }
 }
 @media (orientation: landscape) and (max-height: 500px) {
-  .mess-liste.wisch-reihe > * { flex-basis: 30% !important; }
+  .mess-liste.wisch-reihe > * {
+    flex-basis: 30% !important;
+  }
 }
 
-/* Termin-Leiste Handy hoch: volle Breite, zwei gleich breite Buttons, Hilfe-Button darueber */
-.bar-kal { display: none; flex-shrink: 0; }
+.bar-kal {
+  display: none;
+  flex-shrink: 0;
+}
 @media (max-width: 679px) and (orientation: portrait) {
   .mobile-bottom-bar {
-    left: calc(12px + env(safe-area-inset-left, 0px)) !important;
-    right: calc(12px + env(safe-area-inset-right, 0px)) !important;
-    bottom: calc(12px + env(safe-area-inset-bottom, 0px)) !important;
-    padding: 8px !important; gap: 8px !important; border-radius: 14px !important;
+    left: calc(12px + env(safe-area-inset-left, 0px));
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    padding: 8px !important;
+    gap: 8px !important;
+    border-radius: 14px !important;
   }
-  .mobile-bottom-bar .bar-divider, .mobile-bottom-bar .terracotta-dot { display: none !important; }
+  .mobile-bottom-bar .bar-divider,
+  .mobile-bottom-bar .terracotta-dot {
+    display: none;
+  }
   .mobile-bottom-bar .bar-loc-btn {
-    flex: 1 1 0 !important; min-width: 0; min-height: 50px;
-    justify-content: center !important; gap: 10px !important; padding: 8px 10px !important;
-    border-radius: 10px; background: var(--olive-haupt); color: #fff;
+    flex: 1 1 0 !important;
+    min-height: 50px;
+    justify-content: center;
+    gap: 10px !important;
+    padding: 8px 10px !important;
+    border-radius: 10px;
+    background: var(--olive-haupt);
+    color: #fff;
     border: 1px solid var(--olive-haupt);
   }
-  .mobile-bottom-bar .bar-loc-btn.bar-loc-zwei { background: #fff; color: var(--olive-haupt); }
-  .mobile-bottom-bar .bar-loc-btn:active { opacity: .85; }
-  .mobile-bottom-bar .bar-kal { display: block; }
-  .mobile-bottom-bar .bar-loc-text { flex-direction: column-reverse; gap: 0; }
-  .mobile-bottom-bar .bar-hint { font-size: 0.75rem !important; color: inherit; opacity: .8; letter-spacing: .02em; }
-  .mobile-bottom-bar .bar-city { font-size: 0.95rem !important; color: inherit; }
-  .pxa-btn { bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important; }
+  .mobile-bottom-bar .bar-loc-btn.bar-loc-zwei {
+    background: #fff;
+    color: var(--olive-haupt);
+  }
+  .mobile-bottom-bar .bar-loc-btn:active {
+    opacity: 0.85;
+  }
+  .mobile-bottom-bar .bar-loc-text {
+    flex-direction: column-reverse;
+    gap: 0;
+  }
+  .mobile-bottom-bar .bar-hint {
+    font-size: 0.75rem !important;
+    color: inherit;
+    opacity: 0.8;
+    letter-spacing: 0.02em;
+  }
+  .mobile-bottom-bar .bar-city {
+    font-size: 0.95rem !important;
+    color: inherit;
+  }
 }
 
 /* Tablet: fuenf Kacheln als 3 + 2 statt 2 + 2 + 1 */
 @media (min-width: 680px) and (max-width: 1024px) and (min-height: 501px) {
-  .mess-liste { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-  .mess-liste > * { grid-column: span 2; }
-  .mess-liste > :nth-child(n+4) { grid-column: span 3; }
+  .mess-liste {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .mess-liste > * {
+    grid-column: span 2;
+  }
+  .mess-liste > :nth-child(n + 4) {
+    grid-column: span 3;
+  }
 }
 
 /* Tablet hoch: Termin-Kachel im Hero ueber volle Breite */
 @media (min-width: 680px) and (max-width: 1024px) and (orientation: portrait) {
-  .hero .slot-card { max-width: none !important; }
+  .hero .slot-card {
+    max-width: none;
+  }
 }
 /* Tablet quer: Termin-Kachel im Hero mit Abstand zum Hilfe-Button rechts */
 @media (min-width: 768px) and (max-width: 1399px) and (min-height: 501px) and (orientation: landscape) {
-  .hero .slot-card { right: max(calc(var(--fr) + 16px), calc(88px + env(safe-area-inset-right, 0px))) !important; }
+  .hero .slot-card {
+    right: max(calc(var(--fr) + 16px), calc(88px + env(safe-area-inset-right, 0px)));
+  }
 }
-/* Tablet: Termin-Buttons als zentrierte Leiste unten statt links ueber dem Inhalt */
 .tablet-float-cta {
-  left: 50%; right: auto; bottom: calc(16px + env(safe-area-inset-bottom, 0px));
-  flex-direction: row; gap: 8px; padding: 8px;
-  background: rgba(255,255,255,0.96); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
-  border: 1px solid rgba(56,78,51,0.18); border-radius: 14px; box-shadow: 0 8px 30px rgba(0,0,0,0.14);
+  left: 50%;
+  right: auto;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  flex-direction: row;
+  gap: 8px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(56, 78, 51, 0.18);
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.14);
   transform: translate(-50%, 160%);
 }
-.tablet-float-cta.tfc-visible { transform: translate(-50%, 0); }
-.tablet-float-cta .tfc-btn { min-width: 200px; justify-content: center; padding: 12px 20px; box-shadow: none; }
-.tablet-float-cta .tfc-btn:first-child { background: var(--olive-haupt); border-color: var(--olive-haupt); }
-.tablet-float-cta .tfc-btn:first-child .tfc-city, .tablet-float-cta .tfc-btn:first-child .tfc-label, .tablet-float-cta .tfc-btn:first-child svg { color: #fff; stroke: #fff; }
-.tablet-float-cta .tfc-btn svg { width: 18px !important; height: 18px !important; flex-shrink: 0; }
+.tablet-float-cta.tfc-visible {
+  transform: translate(-50%, 0);
+}
+.tablet-float-cta .tfc-btn {
+  min-width: 200px;
+  justify-content: center;
+  padding: 12px 20px;
+  box-shadow: none;
+}
+.tablet-float-cta .tfc-btn:first-child {
+  background: var(--olive-haupt);
+  border-color: var(--olive-haupt);
+}
+.tablet-float-cta .tfc-btn:first-child .tfc-city,
+.tablet-float-cta .tfc-btn:first-child .tfc-label,
+.tablet-float-cta .tfc-btn:first-child svg {
+  color: #fff;
+  stroke: #fff;
+}
+.tablet-float-cta .tfc-btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
 
 /* Footer bei kurzen Seiten unten am Bildschirm */
-body { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; }
-body > * { flex-shrink: 0; }
-body > main { flex: 1 0 auto; width: 100%; }
-body > footer { margin-top: auto; width: 100%; }
-
-/* ---------- Nov. 2026: Feedback Dr. Müller ---------- */
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+body > * {
+  flex-shrink: 0;
+}
+body > main {
+  flex: 1 0 auto;
+  width: 100%;
+}
+body > footer {
+  margin-top: auto;
+  width: 100%;
+}
 
 /* Harz-Zeile im Hero: am Handy die kurze Fassung */
-.hero-harz-kurz { display: none; }
+.hero-harz-kurz {
+  display: none;
+}
 @media (max-width: 679px) and (orientation: portrait), (orientation: landscape) and (max-height: 500px) {
-  .hero-harz-kurz { display: block; font-size: 1rem; line-height: 1.35; color: var(--olive-dark); margin: 2px 0 8px; }
+  .hero-harz-kurz {
+    display: block;
+    font-size: 1rem;
+    line-height: 1.35;
+    color: var(--olive-dark);
+    margin: 2px 0 8px;
+  }
 }
 
 /* Zweigstandort Heudeber */
-.zweig-sec { padding: 56px 0; background: #fff; border-top: 1px solid rgba(56,78,51,0.08); }
-.zweig-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 24px 56px; align-items: start; }
-.zweig-text { color: var(--text-muted); font-size: 1rem; line-height: 1.7; max-width: 520px; margin: 0; }
-.zweig-liste { list-style: none; margin: 0; padding: 0; grid-row: span 2; }
-.zweig-liste li { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(56,78,51,0.12); }
-.zweig-liste li:first-child { border-top: 1px solid rgba(56,78,51,0.12); }
-.zweig-liste strong { display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; color: var(--terracotta-caps); margin-bottom: 2px; }
-.zweig-liste a { color: var(--olive-haupt); font-weight: 600; }
-.zweig-nr { font-family: var(--font-serif); color: var(--olive-light); font-size: 1.1rem; min-width: 28px; }
-.zweig-knoepfe { display: flex; flex-wrap: wrap; gap: 12px; }
+.zweig-sec {
+  padding: 56px 0;
+  background: #fff;
+  border-top: 1px solid rgba(56, 78, 51, 0.08);
+}
+.zweig-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 24px 56px;
+  align-items: start;
+}
+.zweig-text {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 520px;
+  margin: 0;
+}
+.zweig-liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  grid-row: span 2;
+}
+.zweig-liste li {
+  display: flex;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(56, 78, 51, 0.12);
+}
+.zweig-liste li:first-child {
+  border-top: 1px solid rgba(56, 78, 51, 0.12);
+}
+.zweig-liste strong {
+  display: block;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--terracotta-caps);
+  margin-bottom: 2px;
+}
+.zweig-liste a {
+  color: var(--olive-haupt);
+  font-weight: 600;
+}
+.zweig-nr {
+  font-family: var(--font-serif);
+  color: var(--olive-light);
+  font-size: 1.1rem;
+  min-width: 28px;
+}
+.zweig-knoepfe {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
 @media (max-width: 760px) {
-  .zweig-sec { padding: 40px 0; }
-  .zweig-grid { grid-template-columns: 1fr; }
-  .zweig-liste { grid-row: auto; }
+  .zweig-sec {
+    padding: 40px 0;
+  }
+  .zweig-grid {
+    grid-template-columns: 1fr;
+  }
+  .zweig-liste {
+    grid-row: auto;
+  }
 }
 
 /* Unterseiten: Text offen statt Akkordeon, weniger Leerraum */
 @media (min-width: 1025px) {
-  .inhalt { padding: 48px 0 64px; }
+  .inhalt {
+    padding: 48px 0 64px;
+  }
 }
-.prose .inhalt-text > :first-child { margin-top: 0; }
+.prose .inhalt-text > :first-child {
+  margin-top: 0;
+}
 
 /* Ablauf in drei Schritten (Ernährungsmedizin) */
-.ablauf { margin-top: 40px; padding: 26px 28px; background: #fff; border: 1px solid rgba(56,78,51,0.12); border-left: 3px solid var(--terracotta); border-radius: 0 14px 14px 0; }
-.ablauf h2 { margin-top: 0; }
-.ablauf-liste { list-style: none; margin: 16px 0 14px; padding: 0; }
-.ablauf-liste li { display: flex; gap: 16px; padding: 12px 0; border-bottom: 1px solid rgba(56,78,51,0.1); }
-.ablauf-liste li:last-child { border-bottom: none; }
-.ablauf-liste strong { color: var(--text); }
-.ablauf-liste p { margin: 4px 0 0; color: var(--text-muted); font-size: 0.95rem; }
-.ablauf-nr { font-family: var(--font-serif); color: var(--olive-light); font-size: 1.15rem; min-width: 30px; }
-.ablauf-notiz { font-size: 0.9rem; color: var(--terracotta-caps); font-weight: 600; margin: 0 0 16px; }
+.ablauf {
+  margin-top: 40px;
+  padding: 26px 28px;
+  background: #fff;
+  border: 1px solid rgba(56, 78, 51, 0.12);
+  border-left: 3px solid var(--terracotta);
+  border-radius: 0 14px 14px 0;
+}
+.ablauf h2 {
+  margin-top: 0;
+}
+.ablauf-liste {
+  list-style: none;
+  margin: 16px 0 14px;
+  padding: 0;
+}
+.ablauf-liste li {
+  display: flex;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(56, 78, 51, 0.1);
+}
+.ablauf-liste li:last-child {
+  border-bottom: none;
+}
+.ablauf-liste strong {
+  color: var(--text);
+}
+.ablauf-liste p {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+.ablauf-nr {
+  font-family: var(--font-serif);
+  color: var(--olive-light);
+  font-size: 1.15rem;
+  min-width: 30px;
+}
+.ablauf-notiz {
+  font-size: 0.9rem;
+  color: var(--terracotta-caps);
+  font-weight: 600;
+  margin: 0 0 16px;
+}
 
 /* Weitere Themen: interne Links kompakt als Raster */
-.themen-links { margin-top: 40px; }
-.themen-links h2 { font-size: 1.35rem; margin: 0 0 14px; }
-.themen-links ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.themen-links a { display: block; height: 100%; padding: 14px 16px; border: 1px solid rgba(56,78,51,0.14); border-radius: 12px; background: var(--bg); text-decoration: none; transition: border-color .2s, background .2s; }
-.themen-links a:hover, .themen-links a:focus-visible { border-color: var(--olive-haupt); background: var(--olive-soft); }
-.themen-links strong { display: block; color: var(--olive-haupt); font-weight: 600; font-size: 0.98rem; }
-.themen-links span { display: block; color: var(--text-muted); font-size: 0.88rem; margin-top: 2px; }
-@media (max-width: 560px) { .themen-links ul { grid-template-columns: 1fr; } .ablauf { padding: 20px 18px; } }
-.insta-hinweis { margin-top: 24px; font-size: 0.95rem; color: var(--text-muted); }
-.insta-hinweis a { color: var(--olive-haupt); font-weight: 600; }
+.themen-links {
+  margin-top: 40px;
+}
+.themen-links h2 {
+  font-size: 1.35rem;
+  margin: 0 0 14px;
+}
+.themen-links ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.themen-links a {
+  display: block;
+  height: 100%;
+  padding: 14px 16px;
+  border: 1px solid rgba(56, 78, 51, 0.14);
+  border-radius: 12px;
+  background: var(--bg);
+  text-decoration: none;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+.themen-links a:hover,
+.themen-links a:focus-visible {
+  border-color: var(--olive-haupt);
+  background: var(--olive-soft);
+}
+.themen-links strong {
+  display: block;
+  color: var(--olive-haupt);
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+.themen-links span {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin-top: 2px;
+}
+@media (max-width: 560px) {
+  .themen-links ul {
+    grid-template-columns: 1fr;
+  }
+  .ablauf {
+    padding: 20px 18px;
+  }
+}
+.insta-hinweis {
+  margin-top: 24px;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+.insta-hinweis a {
+  color: var(--olive-haupt);
+  font-weight: 600;
+}
 
-/* Handy hoch: Hilfe-Knopf rechts NEBEN die Termin-Leiste statt darüber – verdeckt so keinen Text */
 @media (max-width: 679px) and (orientation: portrait) {
-  .mobile-bottom-bar { right: calc(64px + env(safe-area-inset-right, 0px)) !important; }
-  .mobile-bottom-bar .bar-loc-btn { padding-left: 8px !important; padding-right: 8px !important; min-width: 0; }
-  .mobile-bottom-bar .bar-kal { display: none !important; }
-  .pxa-btn { right: calc(12px + env(safe-area-inset-right, 0px)) !important; bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important; }
-  body:not(:has(.mobile-bottom-bar)) .pxa-btn { bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important; }
+  .mobile-bottom-bar {
+    right: calc(64px + env(safe-area-inset-right, 0px)) !important;
+  }
+  .mobile-bottom-bar .bar-loc-btn {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    min-width: 0;
+  }
+  .mobile-bottom-bar .bar-kal {
+    display: none;
+  }
+  .pxa-btn {
+    right: calc(12px + env(safe-area-inset-right, 0px)) !important;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  body:not(:has(.mobile-bottom-bar)) .pxa-btn {
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important;
+  }
 }
 
-/* Kopfzeile: Termin-Knopf auf allen Seiten im Praxisdesign (vorher teils Browser-Blau) */
 .nav-right .nav-termin-btn {
-  display: inline-flex; align-items: center; min-height: 38px; padding: 8px 16px;
-  border-radius: 7px; border: 1px solid var(--olive-haupt); background: var(--olive-haupt);
-  color: #fff !important; font-family: var(--font-sans); font-size: 0.88rem; font-weight: 600;
-  text-decoration: none !important; white-space: nowrap; opacity: 1 !important; transition: background .2s, border-color .2s;
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 8px 16px;
+  border-radius: 7px;
+  border: 1px solid var(--olive-haupt);
+  background: var(--olive-haupt);
+  color: #fff !important;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  white-space: nowrap;
+  opacity: 1;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
 }
-.nav-right .nav-termin-btn:visited { color: #fff !important; }
-.nav-right .nav-termin-btn:hover, .nav-right .nav-termin-btn:focus-visible, .nav-right .nav-termin-btn:active {
-  background: var(--olive-dark); border-color: var(--olive-dark); color: #fff !important;
+.nav-right .nav-termin-btn:visited {
+  color: #fff !important;
 }
-@media (max-width: 679px) { .nav-right .nav-termin-btn { display: none !important; } }
-@media (min-width: 680px) and (max-width: 1024px) { .nav-right .nav-termin-btn { min-height: 36px; padding: 6px 12px; font-size: 0.82rem; } }
+.nav-right .nav-termin-btn:hover,
+.nav-right .nav-termin-btn:focus-visible,
+.nav-right .nav-termin-btn:active {
+  background: var(--olive-dark);
+  border-color: var(--olive-dark);
+  color: #fff !important;
+}
+@media (max-width: 679px) {
+  .nav-right .nav-termin-btn {
+    display: none;
+  }
+}
+@media (min-width: 680px) and (max-width: 1024px) {
+  .nav-right .nav-termin-btn {
+    min-height: 36px;
+    padding: 6px 12px;
+    font-size: 0.82rem;
+  }
+}
 
-/* Kopfleiste beim Scrollen: bleibt oben, wird schmaler – Status und Termin-Knopf immer sichtbar */
-header { transition: padding .2s ease, box-shadow .2s ease; }
-header.kopf-schmal { padding-top: 8px !important; padding-bottom: 8px !important; box-shadow: 0 2px 12px rgba(42,58,38,0.08); }
+header {
+  transition:
+    padding 0.2s ease,
+    box-shadow 0.2s ease;
+}
+header.kopf-schmal {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  box-shadow: 0 2px 12px rgba(42, 58, 38, 0.08);
+}
 
-/* Kontrast: Links in allen Zuständen gut lesbar (Brotkrumen wurden beim Drüberfahren weiß) */
-.breadcrumb a, .breadcrumb a:visited { color: var(--olive-haupt); }
-.breadcrumb a:hover, .breadcrumb a:focus-visible, .breadcrumb a:active { color: var(--olive-dark) !important; text-decoration: underline; text-underline-offset: 3px; }
-.ptc-row:hover, .ptc-row:focus-visible { color: var(--terracotta-caps) !important; }
-.service-num { color: var(--olive-haupt) !important; }
-.compass-btn { color: var(--olive-haupt); }
-.wochen-cta { background: linear-gradient(135deg, var(--terracotta-caps) 0%, #7A5143 100%) !important; }
-.wochen-cta p { color: #fff !important; }
-.wochen-cta .btn-smart { background: #fff !important; border-color: #fff !important; color: var(--olive-haupt) !important; }
-.wochen-cta .btn-smart .btn-circle { color: var(--olive-haupt) !important; }
-.wochen-cta .btn-smart:hover, .wochen-cta .btn-smart:focus-visible { background: var(--olive-soft) !important; border-color: var(--olive-soft) !important; color: var(--olive-dark) !important; }
-.footer-links-inline a:visited { color: var(--text-muted); }
-.footer-links-inline a:hover, .footer-links-inline a:focus-visible, .footer-links-inline a:active { color: var(--olive-haupt) !important; text-decoration: underline; text-underline-offset: 3px; }
+.breadcrumb a,
+.breadcrumb a:visited {
+  color: var(--olive-haupt);
+}
+.breadcrumb a:hover,
+.breadcrumb a:focus-visible,
+.breadcrumb a:active {
+  color: var(--olive-dark) !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ptc-row:hover,
+.ptc-row:focus-visible {
+  color: var(--terracotta-caps) !important;
+}
+.service-num {
+  color: var(--olive-haupt);
+}
+.compass-btn {
+  color: var(--olive-haupt);
+}
+.wochen-cta {
+  background: linear-gradient(135deg, var(--terracotta-caps) 0%, #7a5143 100%) !important;
+}
+.wochen-cta p {
+  color: #fff;
+}
+.wochen-cta .btn-smart {
+  background: #fff !important;
+  border-color: #fff !important;
+  color: var(--olive-haupt) !important;
+}
+.wochen-cta .btn-smart .btn-circle {
+  color: var(--olive-haupt) !important;
+}
+.wochen-cta .btn-smart:hover,
+.wochen-cta .btn-smart:focus-visible {
+  background: var(--olive-soft) !important;
+  border-color: var(--olive-soft) !important;
+  color: var(--olive-dark) !important;
+}
+.footer-links-inline a:visited {
+  color: var(--text-muted);
+}
+.footer-links-inline a:hover,
+.footer-links-inline a:focus-visible,
+.footer-links-inline a:active {
+  color: var(--olive-haupt) !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 
-/* Unterseiten Desktop: Kopf in zwei Spalten (Titel links, Einleitung rechts) statt leerer rechter Hälfte */
 @media (min-width: 1025px) {
-  .seiten-kopf .kopf-geteilt { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); column-gap: 64px; align-items: end; }
-  .seiten-kopf .kopf-geteilt > * { grid-column: 1; justify-self: start; }
-  .seiten-kopf .kopf-geteilt > h1 { grid-row: 3; margin-bottom: 0; }
-  .seiten-kopf .kopf-geteilt > p, .seiten-kopf .kopf-geteilt > .kopf-text { grid-column: 2; grid-row: 3; align-self: end; max-width: none; margin: 0 0 8px; padding-left: 28px; border-left: 2px solid rgba(56,78,51,0.15); }
-  .seiten-kopf .kopf-geteilt > .kopf-text p:last-child { margin-bottom: 0; }
+  .seiten-kopf .kopf-geteilt {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    column-gap: 64px;
+    align-items: end;
+  }
+  .seiten-kopf .kopf-geteilt > * {
+    grid-column: 1;
+    justify-self: start;
+  }
+  .seiten-kopf .kopf-geteilt > h1 {
+    grid-row: 3;
+    margin-bottom: 0;
+  }
+  .seiten-kopf .kopf-geteilt > p {
+    grid-column: 2;
+    grid-row: 3;
+    align-self: end;
+    max-width: none;
+    margin: 0 0 8px;
+    padding-left: 28px;
+    border-left: 2px solid rgba(56, 78, 51, 0.15);
+  }
 }
 
 /* Unterseiten: Ablauf und Themen-Links über die volle Breite */
-.unten-breit .ablauf { margin-top: 48px; }
+.unten-breit .ablauf {
+  margin-top: 48px;
+}
 @media (min-width: 681px) {
-  .unten-breit .ablauf { padding: 30px 34px; }
-  .unten-breit .ablauf-liste { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 18px 0 20px; }
-  .unten-breit .ablauf-liste li { flex-direction: column; gap: 6px; border-bottom: none; border-top: 1px solid rgba(56,78,51,0.12); padding: 14px 0 0; }
-  .unten-breit .themen-links ul { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .unten-breit .ablauf {
+    padding: 30px 34px;
+  }
+  .unten-breit .ablauf-liste {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    margin: 18px 0 20px;
+  }
+  .unten-breit .ablauf-liste li {
+    flex-direction: column;
+    gap: 6px;
+    border-bottom: none;
+    border-top: 1px solid rgba(56, 78, 51, 0.12);
+    padding: 14px 0 0;
+  }
+  .unten-breit .themen-links ul {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 @media (min-width: 1025px) {
-  .unten-breit .themen-links ul { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  .unten-breit .themen-links ul {
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  }
 }
-.unten-breit .insta-hinweis { margin-top: 18px; }
+.unten-breit .insta-hinweis {
+  margin-top: 18px;
+}
 @media (min-width: 1025px) {
-  .seiten-kopf .kopf-geteilt > .lead-sub { grid-column: 1; grid-row: 4; padding-left: 0; border-left: none; margin: 8px 0 0; }
-  .seiten-kopf .kopf-geteilt:has(> .lead-sub) > p.lead { grid-row: 3 / span 2; }
+  .seiten-kopf .kopf-geteilt > .lead-sub {
+    grid-column: 1;
+    grid-row: 4;
+    padding-left: 0;
+    border-left: none;
+    margin: 8px 0 0;
+  }
+  .seiten-kopf .kopf-geteilt:has(> .lead-sub) > p.lead {
+    grid-row: 3 / span 2;
+  }
 }
 
-/* overflow-x: hidden auf html und body macht body zum Scroll-Container – dann klebt die Kopfleiste nicht.
-   clip schneidet genauso ab, ohne Scroll-Container. */
-html, body { overflow-x: clip !important; overflow-y: visible !important; }
+html,
+body {
+  overflow-x: clip !important;
+  overflow-y: visible !important;
+}
 
-/* Tablet hochkant: Status und Termin-Knopf auch auf den Unterseiten neben dem Burger */
 @media (min-width: 680px) and (max-width: 1024px) and (orientation: portrait) {
-  .nav-right { display: flex !important; align-items: center; gap: 10px; margin-left: auto; margin-right: 10px; }
-  .nav-right .live-status-pill { font-size: 0.75rem; padding: 4px 10px; }
-  .tablet-float-cta { display: none !important; }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+    margin-right: 10px;
+  }
+  .nav-right .live-status-pill {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+  }
+  .tablet-float-cta {
+    display: none !important;
+  }
 }
 
 /* Instagram ohne Kacheln: ruhiger Block mit Text und Knopf (Raster per Schalter instaRaster) */
-.insta-sec.ohne-raster { padding: 56px 0 !important; }
-.insta-sec.ohne-raster .container { display: block !important; }
+.insta-sec.ohne-raster {
+  padding: 56px 0 !important;
+}
+.insta-sec.ohne-raster .container {
+  display: block !important;
+}
 .insta-sec.ohne-raster .insta-kopf {
-  display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: space-between;
-  gap: 24px 40px; margin: 0 !important; padding: 28px 32px; flex-wrap: wrap;
-  background: var(--bg); border: 1px solid rgba(56,78,51,0.12); border-left: 4px solid var(--olive-haupt); border-radius: 14px;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between;
+  gap: 24px 40px;
+  margin: 0 !important;
+  padding: 28px 32px;
+  flex-wrap: wrap;
+  background: var(--bg);
+  border: 1px solid rgba(56, 78, 51, 0.12);
+  border-left: 4px solid var(--olive-haupt);
+  border-radius: 14px;
 }
-.insta-sec.ohne-raster .insta-kopf > div:first-child { flex: 1 1 320px; min-width: 0; }
-.insta-sec.ohne-raster .sec-title { font-size: clamp(1.4rem, 2.2vw, 1.9rem); }
-.insta-sec.ohne-raster .insta-folgen:visited { color: #fff; }
+.insta-sec.ohne-raster .insta-kopf > div:first-child {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+.insta-sec.ohne-raster .sec-title {
+  font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+}
+.insta-sec.ohne-raster .insta-folgen:visited {
+  color: #fff;
+}
 @media (max-width: 679px), (orientation: landscape) and (max-height: 500px) {
-  .insta-sec.ohne-raster { padding: 36px 0 !important; }
-  .insta-sec.ohne-raster .insta-kopf { flex-direction: column !important; align-items: flex-start !important; padding: 22px 20px; }
-  .insta-sec.ohne-raster .insta-kopf > div:first-child { flex-basis: auto; }
+  .insta-sec.ohne-raster {
+    padding: 36px 0 !important;
+  }
+  .insta-sec.ohne-raster .insta-kopf {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 22px 20px;
+  }
+  .insta-sec.ohne-raster .insta-kopf > div:first-child {
+    flex-basis: auto;
+  }
 }
-.insta-raster[hidden] { display: none !important; }
+.insta-raster[hidden] {
+  display: none;
+}
 
-/* Praxis-Kompass: nicht mehr kleben, sobald er den Digitalen Empfang verdecken wuerde.
-   position bleibt im Dokumentfluss, damit der Empfang nicht nach oben springt. */
 #kompass.kompass-weg {
   position: relative !important;
   top: auto !important;
   z-index: 1;
 }
 
-/* Kartenlinks im Digitalen Empfang: unterstrichen statt Pfeil, ganze Karte bleibt klickbar */
 .karten-link {
   display: inline-block;
   margin-top: 24px;
@@ -921,22 +2386,26 @@ html, body { overflow-x: clip !important; overflow-y: visible !important; }
 }
 .journal-card:hover .karten-link,
 .journal-card:focus-visible .karten-link {
-  color: #6E4A3D;
+  color: #6e4a3d;
 }
-/* Wo die Karten nebeneinander stehen, bleibt „Videotermin vereinbaren“ in einer Zeile */
 @media (min-width: 680px) {
-  .karten-link.eine-zeile { white-space: nowrap; }
+  .karten-link.eine-zeile {
+    white-space: nowrap;
+  }
 }
 @media (min-width: 1025px) and (max-width: 1180px) {
-  .karten-link.eine-zeile { font-size: 0.7rem; letter-spacing: 0; }
+  .karten-link.eine-zeile {
+    font-size: 0.7rem;
+    letter-spacing: 0;
+  }
 }
-
 
 /* Terminkasten ohne Nummer: auf dem Tablet nicht als leere breite Leiste */
 @media (min-width: 680px) and (max-width: 1024px) and (orientation: portrait) {
-  .hero .slot-card.nur-ort { width: 340px !important; }
+  .hero .slot-card.nur-ort {
+    width: 340px;
+  }
 }
-
 
 /* Karte im Digitalen Empfang darf auch ein Link sein */
 a.journal-card {

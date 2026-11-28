@@ -9,7 +9,7 @@
   var F = P.funktionen || {};
   var SPEICHER = 'lhpEingang'; // nur Vorschau: Eingänge in diesem Browser (für team-demo)
 
-  // ---------- Grunddaten ----------
+  // Grunddaten
   var GRUENDE = [
     { id: 'akut', titel: 'Akute Beschwerden', text: 'Infekt, Schmerzen, plötzliche Beschwerden' },
     { id: 'kontrolle', titel: 'Kontrolle oder Dauerbehandlung', text: 'Blutdruck, Diabetes, Schilddrüse, Befundbesprechung' },
@@ -55,7 +55,7 @@
     return false;
   }
 
-  // ---------- Senden: eine Stelle für alles ----------
+  // Senden: eine Stelle für alles
   // ziel 'endpunkt' oder gesetzter Endpunkt: per https an den Server (von dort ins Dashboard)
   // sonst Vorschau: nur in diesem Browser speichern, nichts verlässt das Gerät
   function senden(eingang, endpunkt) {
@@ -74,7 +74,7 @@
   }
   window.lhpSenden = senden;
 
-  // ---------- Dialog (ein Fenster für alles) ----------
+  // Dialog (ein Fenster für alles)
   var dlg, dlgBox, dlgKopf, dlgInhalt, dlgFuss, zuletztFokus;
   function dialogBauen() {
     if (dlg) return;
@@ -144,7 +144,7 @@
     if (w) w.addEventListener('click', weiter);
   }
 
-  // ---------- Termin-Ablauf ----------
+  // Termin-Ablauf
   var T; // aktuelle Angaben
   function neu(grund, standort) {
     T = { art: 'termin', patient: '', standort: standort || '', grund: grund || '', ernaehrung: { form: '', thema: '' },
@@ -480,7 +480,7 @@
     sAnliegen();
   }
 
-  // ---------- Rezept (bestehendes Fenster auf der Startseite) ----------
+  // Rezept (bestehendes Fenster auf der Startseite)
   function rezeptSenden() {
     var q = function (id) { var el = document.getElementById(id); return el ? (el.type === 'checkbox' ? el.checked : el.value.trim()) : ''; };
     if (!q('rz-vorname') || !q('rz-nachname')) return alert('Bitte geben Sie Ihren Namen ein.');
@@ -506,7 +506,7 @@
     }).catch(function () { alert('Das hat leider nicht geklappt. Bitte rufen Sie uns an: ' + st('wn').tel); });
   }
 
-  // ---------- Rückruf ----------
+  // Rückruf
   function rueckruf(standort) {
     auf('Telefon', 'Rückruf anfordern'); fortschritt(0);
     var tz = D.telefonsprechstunde || {};
@@ -531,7 +531,7 @@
     });
   }
 
-  // ---------- Telefonsprechstunde: Anruf-Knopf nur in der Zeit, sonst Rückruf ----------
+  // Telefonsprechstunde: Anruf-Knopf nur in der Zeit, sonst Rückruf
   function telefonBox() {
     document.querySelectorAll('[data-telefon]').forEach(function (box) {
       var tz = D.telefonsprechstunde || {}, h = '';
@@ -546,7 +546,7 @@
     });
   }
 
-  // ---------- kleine Info-Fenster ----------
+  // kleine Info-Fenster
   function info(ueber, titel, html) {
     auf(ueber, titel); fortschritt(0);
     dlgInhalt.innerHTML = html;
@@ -562,7 +562,7 @@
       '<p>Einen Termin vereinbaren Sie auf dieser Seite oder telefonisch: <a href="' + st('wn').telLink + '">' + st('wn').tel + '</a>.</p>');
   }
 
-  // ---------- an die Seite hängen ----------
+  // an die Seite hängen
   // Kopfleiste schmaler, sobald gescrollt wird
   function kopfleiste() {
     var h = document.querySelector('header');
